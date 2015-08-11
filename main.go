@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 import "os"
+import "time"
 import "io"
 import "io/ioutil"
 import "encoding/xml"
@@ -21,7 +22,7 @@ func hasAttr(se xml.StartElement, name string, value string) bool {
 	return err == nil && v == value
 }
 
-func parse(f string, r io.Reader) {
+func parse(f string, r io.Reader) int {
 	d := xml.NewDecoder(r)
 	hrefs := []string{}
 	var t xml.Token
@@ -46,21 +47,49 @@ func parse(f string, r io.Reader) {
 	}
 
 	fmt.Printf("found %v hrefs in %v.\n", len(hrefs), f)
+	return len(hrefs)
+}
+
+func scan(dir string) (int, int, error) {
+	var fileCount, hrefCount int
+
+	fs, err := ioutil.ReadDir(dir)
+	if err != nil {
+		fmt.Printf("can't read dir %v, err %v\n", dir, err)
+		return 0, 0, err
+	}
+
+	for _, f := range fs {
+		path := dir + string(os.PathSeparator) + f.Name()
+
+		if f.IsDir() {
+			fc, lc, err := scan(path)
+			if err != nil {
+				return fileCount, hrefCount, err
+			}
+			fileCount += fc
+			hrefCount += lc
+			continue
+		}
+
+		r, err := os.Open(path)
+		if err != nil {
+			fmt.Printf("can't open file %v, err %v\n", path, err)
+			continue
+		}
+
+		lc := parse(path, r)
+		fileCount++
+		hrefCount += lc
+	}
+
+	return fileCount, hrefCount, nil
 }
 
 func main() {
-	path := "./scala-docs-2.11.7/api/scala-library/scala/collection/"
-
-	fs, _ := ioutil.ReadDir(path)
-
-	fmt.Printf("found %v files\n", len(fs))
-	for _, f := range fs {
-		if !f.IsDir() {
-			r, err := os.Open(path + f.Name())
-			if err != nil {
-				fmt.Printf("can't open file %v, err %v\n", f.Name(), err)
-			}
-			parse(f.Name(), r)
-		}
-	}
+	path := "./scala-docs-2.11.7/api/scala-library/scala/"
+	start := time.Now()
+	fc, lc, _ := scan(path)
+	elapsed := time.Now().Sub(start)
+	fmt.Printf("found %v links (%.1ff/s).\n", lc, float64(fc)/elapsed.Seconds())
 }

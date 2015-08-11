@@ -3,6 +3,7 @@ package main
 import "runtime"
 import "fmt"
 import "os"
+import "strings"
 import "time"
 import "io"
 import "io/ioutil"
@@ -66,9 +67,10 @@ func scan(dir string) (int, int, error) {
 	dirs := []os.FileInfo{}
 
 	for _, f := range fs {
-		if f.IsDir() {
+		switch {
+		case f.IsDir():
 			dirs = append(dirs, f)
-		} else {
+		case strings.HasSuffix(f.Name(), "html") || strings.HasSuffix(f.Name(), "xml"):
 			files = append(files, f)
 		}
 	}
@@ -112,7 +114,7 @@ func scan(dir string) (int, int, error) {
 }
 
 func main() {
-	path := "./scala-docs-2.11.7/api/scala-library/scala/"
+	path := "./scala-docs-2.11.7/api/"
 	start := time.Now()
 	fc, lc, _ := scan(path)
 	elapsed := time.Now().Sub(start)

@@ -1,5 +1,6 @@
 package main
 
+import "runtime"
 import "fmt"
 import "os"
 import "time"
@@ -50,6 +51,8 @@ func parse(f string, r io.Reader) int {
 	return len(hrefs)
 }
 
+type empty struct{}
+
 func scan(dir string) (int, int, error) {
 	var fileCount, hrefCount int
 
@@ -59,27 +62,49 @@ func scan(dir string) (int, int, error) {
 		return 0, 0, err
 	}
 
+	files := []os.FileInfo{}
+	dirs := []os.FileInfo{}
+
 	for _, f := range fs {
-		path := dir + string(os.PathSeparator) + f.Name()
-
 		if f.IsDir() {
-			fc, lc, err := scan(path)
+			dirs = append(dirs, f)
+		} else {
+			files = append(files, f)
+		}
+	}
+
+	runtime.GOMAXPROCS(runtime.NumCPU())
+	sem := make(chan empty, len(files))
+	for _, f := range files {
+		go func(f os.FileInfo) {
+			path := dir + string(os.PathSeparator) + f.Name()
+
+			r, err := os.Open(path)
+			defer r.Close()
 			if err != nil {
-				return fileCount, hrefCount, err
+				fmt.Printf("can't open file %v, err %v\n", path, err)
+				sem <- empty{}
+				return
 			}
-			fileCount += fc
+
+			lc := parse(path, r)
+			fileCount++
 			hrefCount += lc
-			continue
-		}
+			sem <- empty{}
+		}(f)
+	}
 
-		r, err := os.Open(path)
+	for i := 0; i < len(files); i++ {
+		<-sem
+	}
+
+	for _, d := range dirs {
+		path := dir + string(os.PathSeparator) + d.Name()
+		fc, lc, err := scan(path)
 		if err != nil {
-			fmt.Printf("can't open file %v, err %v\n", path, err)
-			continue
+			return 0, 0, err
 		}
-
-		lc := parse(path, r)
-		fileCount++
+		fileCount += fc
 		hrefCount += lc
 	}
 

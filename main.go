@@ -52,28 +52,38 @@ func (e entry) eq(other entry) bool {
 		e.signature == other.signature
 }
 
-func parseScalaEntry(s string) (entry, error) {
+func parseEntry(s string) (entry, error) {
 	e := entry{}
-	pat, err := regexp.Compile("(.+)\\.([^@]+)@(.+?)(\\(.*)$")
+	funPat, err := regexp.Compile("(.+)\\.([^@]+)@(.+?)(\\(.*)?$")
 	if err != nil {
-		return e, nil
+		return e, err
+	}
+	entPat, err := regexp.Compile("(.+)\\.(.+)$")
+	if err != nil {
+		return e, err
 	}
 
-	ms := pat.FindAllStringSubmatch(s, -1)
-	if len(ms[0]) != 5 {
-		return e, fmt.Errorf("incorrect match for string [%v]", s)
+	ms := funPat.FindAllStringSubmatch(s, -1)
+	if len(ms) < 1 || len(ms[0]) != 5 {
+		ms = entPat.FindAllStringSubmatch(s, -1)
+		if len(ms) < 1 || len(ms[0]) != 3 {
+			return e, fmt.Errorf("incorrect match for string [%v]", s)
+		}
 	}
+
 	e.namespace = strings.Split(ms[0][1], ".")
 	e.entity = ms[0][2]
-	e.function = ms[0][3]
-	e.signature = ms[0][4]
+	if len(ms[0]) == 5 {
+		e.function = ms[0][3]
+		e.signature = ms[0][4]
+	}
 
 	return e, nil
 }
 
 func parse(f string, r io.Reader) int {
 	d := xml.NewDecoder(r)
-	hrefs := []string{}
+	entries := []entry{}
 	var t xml.Token
 	var err error
 
@@ -91,9 +101,13 @@ func parse(f string, r io.Reader) int {
 				if err == nil {
 					subs := strings.SplitAfterN(href, "#", 2)
 					if len(subs) > 1 {
-
-						fmt.Printf("found fragment %v\n", subs[1])
-						hrefs = append(hrefs, href)
+						// fmt.Printf("found fragment %v\n", subs[1])
+						e, err := parseEntry(subs[1])
+						if err != nil {
+							fmt.Println(err)
+						} else {
+							entries = append(entries, e)
+						}
 
 					}
 				}
@@ -101,7 +115,7 @@ func parse(f string, r io.Reader) int {
 		}
 	}
 
-	return len(hrefs)
+	return len(entries)
 }
 
 type empty struct{}

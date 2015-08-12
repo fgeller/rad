@@ -32,6 +32,10 @@ type entry struct {
 	signature string
 }
 
+func (e entry) String() string {
+	return fmt.Sprintf("entry{namespace: %v, entity: %v, function: %v, signature: %v}", e.namespace, e.entity, e.function, e.signature)
+}
+
 func (e entry) eq(other entry) bool {
 	if len(e.namespace) != len(other.namespace) {
 		return false
@@ -50,7 +54,7 @@ func (e entry) eq(other entry) bool {
 
 func parseScalaEntry(s string) (entry, error) {
 	e := entry{}
-	pat, err := regexp.Compile("(.+)\\.([^@]+)@(.+)(\\(.*)$")
+	pat, err := regexp.Compile("(.+)\\.([^@]+)@(.+?)(\\(.*)$")
 	if err != nil {
 		return e, nil
 	}

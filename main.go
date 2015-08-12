@@ -5,6 +5,7 @@ import "fmt"
 import "os"
 import "strings"
 import "time"
+import "regexp"
 import "io"
 import "io/ioutil"
 import "encoding/xml"
@@ -22,6 +23,48 @@ func attr(se xml.StartElement, name string) (string, error) {
 func hasAttr(se xml.StartElement, name string, value string) bool {
 	v, err := attr(se, name)
 	return err == nil && v == value
+}
+
+type entry struct {
+	namespace []string
+	entity    string
+	function  string
+	signature string
+}
+
+func (e entry) eq(other entry) bool {
+	if len(e.namespace) != len(other.namespace) {
+		return false
+	}
+
+	for i, n := range e.namespace {
+		if other.namespace[i] != n {
+			return false
+		}
+	}
+
+	return e.entity == other.entity &&
+		e.function == other.function &&
+		e.signature == other.signature
+}
+
+func parseScalaEntry(s string) (entry, error) {
+	e := entry{}
+	pat, err := regexp.Compile("(.+)\\.([^@]+)@(.+)(\\(.*)$")
+	if err != nil {
+		return e, nil
+	}
+
+	ms := pat.FindAllStringSubmatch(s, -1)
+	if len(ms[0]) != 5 {
+		return e, fmt.Errorf("incorrect match for string [%v]", s)
+	}
+	e.namespace = strings.Split(ms[0][1], ".")
+	e.entity = ms[0][2]
+	e.function = ms[0][3]
+	e.signature = ms[0][4]
+
+	return e, nil
 }
 
 func parse(f string, r io.Reader) int {
@@ -42,13 +85,18 @@ func parse(f string, r io.Reader) int {
 
 				href, err := attr(se, "href")
 				if err == nil {
-					hrefs = append(hrefs, href)
+					subs := strings.SplitAfterN(href, "#", 2)
+					if len(subs) > 1 {
+
+						fmt.Printf("found fragment %v\n", subs[1])
+						hrefs = append(hrefs, href)
+
+					}
 				}
 			}
 		}
 	}
 
-	fmt.Printf("found %v hrefs in %v.\n", len(hrefs), f)
 	return len(hrefs)
 }
 

@@ -123,7 +123,7 @@ func scan(dir string) (int, int, error) {
 		}
 	}
 
-	runtime.GOMAXPROCS(runtime.NumCPU())
+	runtime.GOMAXPROCS(runtime.NumCPU() / 2)
 	sem := make(chan empty, len(files))
 	for _, f := range files {
 		go func(f os.FileInfo) {

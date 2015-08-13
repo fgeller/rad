@@ -149,6 +149,11 @@ func findDirsAndMarkupFiles(dir string) ([]os.FileInfo, error) {
 	return files, nil
 }
 
+type scanResult struct {
+	entries        []entry
+	processedFiles int
+}
+
 func scan(dir string) (int, []entry, error) {
 
 	files, err := findDirsAndMarkupFiles(dir)
@@ -157,29 +162,31 @@ func scan(dir string) (int, []entry, error) {
 		return 0, []entry{}, err
 	}
 
-	rc := make(chan []entry)
+	rc := make(chan scanResult)
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	for _, p := range files {
-		go func(dir string, f os.FileInfo, c chan []entry) {
+		go func(dir string, f os.FileInfo, c chan scanResult) {
 			path := dir + string(os.PathSeparator) + f.Name()
 			switch {
 			case f.IsDir():
-				_, es, _ := scan(path)
-				c <- es
+				fs, es, _ := scan(path)
+				c <- scanResult{es, fs}
 			default:
-				c <- scanFile(path)
+				c <- scanResult{scanFile(path), 1}
 			}
 		}(dir, p, rc)
 	}
 
 	results := []entry{}
+	fc := 0
 	for i := 0; i < len(files); i++ {
-		es := <-rc
-		results = append(results, es...)
+		r := <-rc
+		fc += r.processedFiles
+		results = append(results, r.entries...)
 	}
 
-	return len(files), results, nil
+	return fc, results, nil
 }
 
 func main() {

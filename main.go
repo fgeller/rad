@@ -81,11 +81,11 @@ func parseEntry(s string) (entry, error) {
 	return e, nil
 }
 
-func parse(f string, r io.Reader) int {
+func parse(f string, r io.Reader) []entry {
 	d := xml.NewDecoder(r)
-	entries := []entry{}
 	var t xml.Token
 	var err error
+	entries := []entry{}
 
 	for ; err == nil; t, err = d.Token() {
 		if se, ok := t.(xml.StartElement); ok {
@@ -115,74 +115,83 @@ func parse(f string, r io.Reader) int {
 		}
 	}
 
-	return len(entries)
+	return entries
 }
 
-type empty struct{}
+func scanFile(path string) []entry {
+	r, err := os.Open(path)
+	defer r.Close()
+	if err != nil {
+		fmt.Printf("can't open file %v, err %v\n", path, err)
+		return []entry{}
+	}
 
-func scan(dir string) (int, int, error) {
-	var fileCount, hrefCount int
+	return parse(path, r)
+}
+
+func findDirsAndMarkupFiles(dir string) ([]string, []string, error) {
+	files := []string{}
+	dirs := []string{}
 
 	fs, err := ioutil.ReadDir(dir)
 	if err != nil {
 		fmt.Printf("can't read dir %v, err %v\n", dir, err)
-		return 0, 0, err
+		return dirs, files, err
 	}
 
-	files := []os.FileInfo{}
-	dirs := []os.FileInfo{}
-
 	for _, f := range fs {
+		path := dir + string(os.PathSeparator) + f.Name()
 		switch {
 		case f.IsDir():
-			dirs = append(dirs, f)
+			dirs = append(dirs, path)
 		case strings.HasSuffix(f.Name(), "html") || strings.HasSuffix(f.Name(), "xml"):
-			files = append(files, f)
+			files = append(files, path)
 		}
 	}
 
-	runtime.GOMAXPROCS(runtime.NumCPU() / 2)
-	sem := make(chan empty, len(files))
-	for _, f := range files {
-		go func(f os.FileInfo) {
-			path := dir + string(os.PathSeparator) + f.Name()
+	return dirs, files, nil
+}
 
-			r, err := os.Open(path)
-			defer r.Close()
-			if err != nil {
-				fmt.Printf("can't open file %v, err %v\n", path, err)
-				sem <- empty{}
-				return
-			}
+func scan(dir string) (int, []entry, error) {
 
-			lc := parse(path, r)
-			fileCount++
-			hrefCount += lc
-			sem <- empty{}
-		}(f)
+	dirs, files, err := findDirsAndMarkupFiles(dir)
+	if err != nil {
+		fmt.Printf("can't read dir %v, err %v\n", dir, err)
+		return 0, []entry{}, err
 	}
 
+	rc := make(chan []entry)
+	runtime.GOMAXPROCS(2)
+
+	for _, p := range files {
+		go func(path string, c chan []entry) {
+			c <- scanFile(path)
+		}(p, rc)
+	}
+
+	fileCount := len(files)
+	results := []entry{}
 	for i := 0; i < len(files); i++ {
-		<-sem
+		es := <-rc
+		results = append(results, es...)
 	}
 
 	for _, d := range dirs {
-		path := dir + string(os.PathSeparator) + d.Name()
-		fc, lc, err := scan(path)
+		fc, es, err := scan(d)
 		if err != nil {
-			return 0, 0, err
+			return 0, []entry{}, err
 		}
+		results = append(results, es...)
 		fileCount += fc
-		hrefCount += lc
 	}
 
-	return fileCount, hrefCount, nil
+	return fileCount, results, nil
 }
 
 func main() {
 	path := "./scala-docs-2.11.7/api/"
 	start := time.Now()
-	fc, lc, _ := scan(path)
+	fc, es, _ := scan(path)
 	elapsed := time.Now().Sub(start)
-	fmt.Printf("found %v links (%.1ff/s).\n", lc, float64(fc)/elapsed.Seconds())
+	fmt.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
 }

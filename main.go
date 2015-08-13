@@ -129,63 +129,57 @@ func scanFile(path string) []entry {
 	return parse(path, r)
 }
 
-func findDirsAndMarkupFiles(dir string) ([]string, []string, error) {
-	files := []string{}
-	dirs := []string{}
+func findDirsAndMarkupFiles(dir string) ([]os.FileInfo, error) {
+	files := []os.FileInfo{}
 
 	fs, err := ioutil.ReadDir(dir)
 	if err != nil {
 		fmt.Printf("can't read dir %v, err %v\n", dir, err)
-		return dirs, files, err
+		return files, err
 	}
 
 	for _, f := range fs {
-		path := dir + string(os.PathSeparator) + f.Name()
-		switch {
-		case f.IsDir():
-			dirs = append(dirs, path)
-		case strings.HasSuffix(f.Name(), "html") || strings.HasSuffix(f.Name(), "xml"):
-			files = append(files, path)
+		if f.IsDir() ||
+			strings.HasSuffix(f.Name(), "html") ||
+			strings.HasSuffix(f.Name(), "xml") {
+			files = append(files, f)
 		}
 	}
 
-	return dirs, files, nil
+	return files, nil
 }
 
 func scan(dir string) (int, []entry, error) {
 
-	dirs, files, err := findDirsAndMarkupFiles(dir)
+	files, err := findDirsAndMarkupFiles(dir)
 	if err != nil {
 		fmt.Printf("can't read dir %v, err %v\n", dir, err)
 		return 0, []entry{}, err
 	}
 
 	rc := make(chan []entry)
-	runtime.GOMAXPROCS(2)
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	for _, p := range files {
-		go func(path string, c chan []entry) {
-			c <- scanFile(path)
-		}(p, rc)
+		go func(dir string, f os.FileInfo, c chan []entry) {
+			path := dir + string(os.PathSeparator) + f.Name()
+			switch {
+			case f.IsDir():
+				_, es, _ := scan(path)
+				c <- es
+			default:
+				c <- scanFile(path)
+			}
+		}(dir, p, rc)
 	}
 
-	fileCount := len(files)
 	results := []entry{}
 	for i := 0; i < len(files); i++ {
 		es := <-rc
 		results = append(results, es...)
 	}
 
-	for _, d := range dirs {
-		fc, es, err := scan(d)
-		if err != nil {
-			return 0, []entry{}, err
-		}
-		results = append(results, es...)
-		fileCount += fc
-	}
-
-	return fileCount, results, nil
+	return len(files), results, nil
 }
 
 func main() {

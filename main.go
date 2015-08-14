@@ -4,7 +4,9 @@ import "runtime"
 import "fmt"
 import "os"
 import "strings"
-import "time"
+import "net/http"
+
+// import "time"
 import "regexp"
 import "io"
 import "io/ioutil"
@@ -189,10 +191,28 @@ func scan(dir string) (int, []entry, error) {
 	return fc, results, nil
 }
 
+func download() (string, error) {
+
+	fileName := "scala-doc.zip"
+
+	out, _ := os.Create(fileName)
+	defer out.Close()
+
+	resp, _ := http.Get("http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.zip")
+	defer resp.Body.Close()
+
+	n, _ := io.Copy(out, resp.Body)
+	fmt.Printf("copied %v bytes", n)
+
+	return fileName, nil
+}
+
 func main() {
-	path := "./scala-docs-2.11.7/api/"
-	start := time.Now()
-	fc, es, _ := scan(path)
-	elapsed := time.Now().Sub(start)
-	fmt.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
+
+	download()
+	// path := "./scala-docs-2.11.7/api/"
+	// start := time.Now()
+	// fc, es, _ := scan(path)
+	// elapsed := time.Now().Sub(start)
+	// fmt.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
 }

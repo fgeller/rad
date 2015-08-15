@@ -228,6 +228,23 @@ func indexScalaApi() {
 	docs["scala"] = es
 }
 
+func findEntries(pkg string, name string) ([]entry, error) {
+
+	es, ok := docs[pkg]
+	if !ok {
+		return es, fmt.Errorf("Package [%v] not installed.", pkg)
+	}
+
+	results := []entry{}
+	for _, e := range es {
+		if e.entity == name {
+			results = append(results, e)
+		}
+	}
+
+	return results, nil
+}
+
 func main() {
 	indexScalaApi()
 }

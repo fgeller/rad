@@ -1,16 +1,17 @@
-package rad
+package main
 
 import "runtime"
 import "fmt"
 import "os"
 import "strings"
 import "net/http"
-
+import "log"
 import "time"
 import "regexp"
 import "io"
 import "io/ioutil"
 import "encoding/xml"
+import "encoding/json"
 
 var docs = map[string][]entry{}
 
@@ -30,30 +31,30 @@ func hasAttr(se xml.StartElement, name string, value string) bool {
 }
 
 type entry struct {
-	namespace []string
-	entity    string
-	function  string
-	signature string
+	Namespace []string
+	Entity    string
+	Function  string
+	Signature string
 }
 
 func (e entry) String() string {
-	return fmt.Sprintf("entry{namespace: %v, entity: %v, function: %v, signature: %v}", e.namespace, e.entity, e.function, e.signature)
+	return fmt.Sprintf("entry{Namespace: %v, Entity: %v, Function: %v, Signature: %v}", e.Namespace, e.Entity, e.Function, e.Signature)
 }
 
 func (e entry) eq(other entry) bool {
-	if len(e.namespace) != len(other.namespace) {
+	if len(e.Namespace) != len(other.Namespace) {
 		return false
 	}
 
-	for i, n := range e.namespace {
-		if other.namespace[i] != n {
+	for i, n := range e.Namespace {
+		if other.Namespace[i] != n {
 			return false
 		}
 	}
 
-	return e.entity == other.entity &&
-		e.function == other.function &&
-		e.signature == other.signature
+	return e.Entity == other.Entity &&
+		e.Function == other.Function &&
+		e.Signature == other.Signature
 }
 
 func parseEntry(s string) (entry, error) {
@@ -71,15 +72,15 @@ func parseEntry(s string) (entry, error) {
 	if len(ms) < 1 || len(ms[0]) != 5 {
 		ms = entPat.FindAllStringSubmatch(s, -1)
 		if len(ms) < 1 || len(ms[0]) != 3 {
-			return e, fmt.Errorf("incorrect match for string [%v]", s)
+			return e, fmt.Errorf("couldn't match Scala entry [%v].", s)
 		}
 	}
 
-	e.namespace = strings.Split(ms[0][1], ".")
-	e.entity = ms[0][2]
+	e.Namespace = strings.Split(ms[0][1], ".")
+	e.Entity = ms[0][2]
 	if len(ms[0]) == 5 {
-		e.function = ms[0][3]
-		e.signature = ms[0][4]
+		e.Function = ms[0][3]
+		e.Signature = ms[0][4]
 	}
 
 	return e, nil
@@ -108,7 +109,7 @@ func parse(f string, r io.Reader) []entry {
 						// fmt.Printf("found fragment %v\n", subs[1])
 						e, err := parseEntry(subs[1])
 						if err != nil {
-							fmt.Println(err)
+							log.Println(err)
 						} else {
 							entries = append(entries, e)
 						}
@@ -219,13 +220,18 @@ func download() (string, error) {
 
 func indexScalaApi() {
 	path := "./scala-docs-2.11.7/api/"
+	log.Printf("about to index scala api in [%v]\n", path)
 	es, err := scan(path)
 	if err != nil {
-		fmt.Printf("Encountered error while indexing Scala api [%v].", err)
+		log.Fatalf("Encountered error while indexing Scala api [%v].", err)
 		return
 	}
 
 	docs["scala"] = es
+}
+
+func index() {
+	indexScalaApi()
 }
 
 func findEntries(pkg string, name string) ([]entry, error) {
@@ -237,7 +243,7 @@ func findEntries(pkg string, name string) ([]entry, error) {
 
 	results := []entry{}
 	for _, e := range es {
-		if e.entity == name {
+		if e.Entity == name {
 			results = append(results, e)
 		}
 	}
@@ -245,6 +251,25 @@ func findEntries(pkg string, name string) ([]entry, error) {
 	return results, nil
 }
 
+func queryHandler(w http.ResponseWriter, r *http.Request) {
+	pkg := r.FormValue("p")
+	entity := r.FormValue("e")
+	res, _ := findEntries(pkg, entity)
+
+	js, _ := json.Marshal(res)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
+
+func serve() {
+	http.HandleFunc("/s", queryHandler)
+	addr := ":3024"
+	log.Printf("serving on addr %v\n", addr)
+	log.Fatal(http.ListenAndServe(":3024", nil))
+}
+
 func main() {
-	indexScalaApi()
+	index()
+	serve()
 }

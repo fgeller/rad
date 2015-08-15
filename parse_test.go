@@ -1,4 +1,4 @@
-package rad
+package sad
 
 import "testing"
 

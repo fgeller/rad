@@ -6,7 +6,7 @@ import "os"
 import "strings"
 import "net/http"
 
-// import "time"
+import "time"
 import "regexp"
 import "io"
 import "io/ioutil"
@@ -156,7 +156,7 @@ type scanResult struct {
 	processedFiles int
 }
 
-func scan(dir string) (int, []entry, error) {
+func scanDir(dir string) (int, []entry, error) {
 
 	files, err := findDirsAndMarkupFiles(dir)
 	if err != nil {
@@ -172,7 +172,7 @@ func scan(dir string) (int, []entry, error) {
 			path := dir + string(os.PathSeparator) + f.Name()
 			switch {
 			case f.IsDir():
-				fs, es, _ := scan(path)
+				fs, es, _ := scanDir(path)
 				c <- scanResult{es, fs}
 			default:
 				c <- scanResult{scanFile(path), 1}
@@ -191,8 +191,16 @@ func scan(dir string) (int, []entry, error) {
 	return fc, results, nil
 }
 
-func download() (string, error) {
+func scan(path string) ([]entry, error) {
+	start := time.Now()
+	fc, es, err := scanDir(path)
+	elapsed := time.Now().Sub(start)
+	fmt.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
 
+	return es, err
+}
+
+func download() (string, error) {
 	fileName := "scala-doc.zip"
 
 	out, _ := os.Create(fileName)
@@ -202,17 +210,14 @@ func download() (string, error) {
 	defer resp.Body.Close()
 
 	n, _ := io.Copy(out, resp.Body)
-	fmt.Printf("copied %v bytes", n)
+	fmt.Printf("Downloaded %v bytes", n)
 
 	return fileName, nil
 }
 
 func main() {
+	// download()
 
-	download()
-	// path := "./scala-docs-2.11.7/api/"
-	// start := time.Now()
-	// fc, es, _ := scan(path)
-	// elapsed := time.Now().Sub(start)
-	// fmt.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
+	path := "./scala-docs-2.11.7/api/"
+	scan(path)
 }

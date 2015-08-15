@@ -12,6 +12,8 @@ import "io"
 import "io/ioutil"
 import "encoding/xml"
 
+var docs = map[string][]entry{}
+
 func attr(se xml.StartElement, name string) (string, error) {
 	for _, att := range se.Attr {
 		if att.Name.Local == name {
@@ -215,9 +217,17 @@ func download() (string, error) {
 	return fileName, nil
 }
 
-func main() {
-	// download()
-
+func indexScalaApi() {
 	path := "./scala-docs-2.11.7/api/"
-	scan(path)
+	es, err := scan(path)
+	if err != nil {
+		fmt.Printf("Encountered error while indexing Scala api [%v].", err)
+		return
+	}
+
+	docs["scala"] = es
+}
+
+func main() {
+	indexScalaApi()
 }

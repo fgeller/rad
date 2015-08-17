@@ -59,7 +59,7 @@ func (e entry) eq(other entry) bool {
 		e.Signature == other.Signature
 }
 
-func parseEntry(source string, s string) (entry, error) {
+func parseEntry(source string, target string, s string) (entry, error) {
 	e := entry{}
 	funPat, err := regexp.Compile("(.+)\\.([^@]+)@(.+?)(\\(.*)?$")
 	if err != nil {
@@ -80,6 +80,21 @@ func parseEntry(source string, s string) (entry, error) {
 
 	e.Namespace = strings.Split(ms[0][1], ".")
 	e.Entity = ms[0][2]
+
+	targetSplits := strings.Split(target, "/")
+	upCount := 0
+	for i, v := range targetSplits {
+		if v != ".." {
+			upCount = i
+			break
+		}
+	}
+	sourceSplits := strings.Split(source, "/")
+	newSplits := sourceSplits[1 : len(sourceSplits)-(upCount+1)]
+	newSplits = append(newSplits, targetSplits[len(targetSplits)-1]+s)
+	newTarget := strings.Join(newSplits, "/")
+	e.Target = newTarget
+	e.source = source
 	if len(ms[0]) == 5 {
 		e.Function = ms[0][3]
 		e.Signature = ms[0][4]
@@ -109,7 +124,7 @@ func parse(f string, r io.Reader) []entry {
 					subs := strings.SplitAfterN(href, "#", 2)
 					if len(subs) > 1 {
 						// fmt.Printf("found fragment %v\n", subs[1])
-						e, err := parseEntry(subs[1])
+						e, err := parseEntry(f, subs[0], subs[1])
 						if err != nil {
 							log.Println(err)
 						} else {

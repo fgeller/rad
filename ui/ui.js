@@ -33,7 +33,8 @@ var Search = React.createClass({
     render:function(){
         var entries = [];
         this.state.results.forEach(function(r) {
-            entries.push(<div><code>{r}</code></div>)
+            var target = "/" + r["Target"];
+            entries.push(<div><a href={target}>{r["Entity"]} {r["Function"]}</a> {r["Signature"]}</div>)
         });
 
         return (<div>

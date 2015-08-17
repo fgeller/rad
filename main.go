@@ -35,6 +35,8 @@ type entry struct {
 	Entity    string
 	Function  string
 	Signature string
+	Target    string
+	source    string
 }
 
 func (e entry) String() string {
@@ -57,7 +59,7 @@ func (e entry) eq(other entry) bool {
 		e.Signature == other.Signature
 }
 
-func parseEntry(s string) (entry, error) {
+func parseEntry(source string, s string) (entry, error) {
 	e := entry{}
 	funPat, err := regexp.Compile("(.+)\\.([^@]+)@(.+?)(\\(.*)?$")
 	if err != nil {
@@ -219,7 +221,7 @@ func download() (string, error) {
 }
 
 func indexScalaApi() {
-	path := "./scala-docs-2.11.7/api/"
+	path := "./pkgs/scala"
 	log.Printf("about to index scala api in [%v]\n", path)
 	es, err := scan(path)
 	if err != nil {
@@ -255,6 +257,7 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	pkg := r.FormValue("p")
 	entity := r.FormValue("e")
 	res, _ := findEntries(pkg, entity)
+	log.Printf("got request for p[%v] and e[%v], found [%v] entries.", pkg, entity, len(res))
 
 	js, _ := json.Marshal(res)
 
@@ -264,7 +267,12 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 
 func serve() {
 	http.HandleFunc("/s", queryHandler)
+
+	fs := http.FileServer(http.Dir("./pkgs"))
+	http.Handle("/pkgs/", http.StripPrefix("/pkgs/", fs))
+
 	addr := ":3024"
+
 	log.Printf("serving on addr %v\n", addr)
 	log.Fatal(http.ListenAndServe(":3024", nil))
 }

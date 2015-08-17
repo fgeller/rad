@@ -283,8 +283,11 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 func serve() {
 	http.HandleFunc("/s", queryHandler)
 
-	fs := http.FileServer(http.Dir("./pkgs"))
-	http.Handle("/pkgs/", http.StripPrefix("/pkgs/", fs))
+	pkgs := http.FileServer(http.Dir("./pkgs"))
+	http.Handle("/pkgs/", http.StripPrefix("/pkgs/", pkgs))
+
+	ui := http.FileServer(http.Dir("./ui"))
+	http.Handle("/ui/", http.StripPrefix("/ui/", ui))
 
 	addr := ":3024"
 

@@ -37,10 +37,11 @@ var Search = React.createClass({
     },
     render: function(){
         var entries = [];
-        this.state.results.forEach(function(r) {
-            var target = "/" + r["Target"];
-            entries.push(<div onClick={this.loadDoc.bind(this, target)}><a href={target}>{r["Entity"]} {r["Function"]}</a> {r["Signature"]}</div>)
-        }.bind(this));
+        for (var i = 0; i < this.state.results.length && i < 5; i++) {
+            var entry = this.state.results[i]
+            var target = "/" + entry["Target"];
+            entries.push(<div onClick={this.loadDoc.bind(this, target)}><a href={target}>{entry["Entity"]} {entry["Function"]}</a> {entry["Signature"]}</div>)
+        }
 
         return (<div>
                   <SearchField query={this.state.query} search={this.search}/>

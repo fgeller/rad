@@ -24,22 +24,30 @@ var Search = React.createClass({
             }.bind(this));
         }
     },
-    getInitialState:function(){
+    getInitialState: function(){
         return{
             query:'',
             results: []
         }
     },
-    render:function(){
+    loadDoc: function(target) {
+        console.log("target", target);
+        document.getElementById("ifrm").src = target;
+        this.setState({loadedTarget: target});
+    },
+    render: function(){
         var entries = [];
         this.state.results.forEach(function(r) {
             var target = "/" + r["Target"];
-            entries.push(<div><a href={target}>{r["Entity"]} {r["Function"]}</a> {r["Signature"]}</div>)
-        });
+            entries.push(<div onClick={this.loadDoc.bind(this, target)}><a href={target}>{r["Entity"]} {r["Function"]}</a> {r["Signature"]}</div>)
+        }.bind(this));
 
         return (<div>
                   <SearchField query={this.state.query} search={this.search}/>
                   <div>{entries}</div>
+                  <div>
+                    <iframe id="ifrm" src="/" style={{width:'1000px',height:'400px'}} />
+                  </div>
                 </div>
         );
     }

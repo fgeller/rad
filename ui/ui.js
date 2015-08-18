@@ -47,9 +47,9 @@ var Search = React.createClass({
                   <SearchField query={this.state.query} search={this.search}/>
                   <div>{entries}</div>
                   <div>
-                    <iframe id="ifrm" src="" style={{width:'1000px',height:'400px'}} />
+                  <iframe id="ifrm" src="" />
+                    </div>
                   </div>
-                </div>
         );
     }
 });

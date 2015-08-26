@@ -35,4 +35,6 @@ func TestUnzip(t *testing.T) {
 	if err != nil || testContent != string(content) {
 		t.Errorf("expected to find [%v] in %v. Got: [%v]", testContent, testFileWithContent, string(content))
 	}
+
+	os.RemoveAll(testDir)
 }

@@ -13,6 +13,8 @@ import "io/ioutil"
 import "encoding/xml"
 import "encoding/json"
 
+import "archive/zip"
+
 var docs = map[string][]entry{}
 
 func attr(se xml.StartElement, name string) (string, error) {
@@ -220,19 +222,57 @@ func scan(path string) ([]entry, error) {
 	return es, err
 }
 
-func download() (string, error) {
-	fileName := "scala-doc.zip"
+func unzip(src string, dest string) error {
+	r, err := zip.OpenReader(src)
+	if err != nil {
+		log.Fatal("failed to open zip: %v", src)
+		return err
+	}
+	defer r.Close()
 
-	out, _ := os.Create(fileName)
+	for _, f := range r.File {
+		path := dest + string(os.PathSeparator) + f.Name
+		if f.FileInfo().IsDir() {
+			os.Mkdir(path, f.Mode())
+			continue
+		}
+
+		fc, err := f.Open()
+
+		if err != nil {
+			return err
+		}
+
+		dst, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, f.Mode())
+		if err != nil {
+			return err
+		}
+
+		_, err = io.Copy(dst, fc)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func download() (string, error) {
+	remote := "http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.zip"
+	local := "scala-doc.zip"
+
+	out, _ := os.Create(local)
 	defer out.Close()
 
-	resp, _ := http.Get("http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.zip")
+	resp, _ := http.Get(remote)
 	defer resp.Body.Close()
 
-	n, _ := io.Copy(out, resp.Body)
-	fmt.Printf("Downloaded %v bytes", n)
+	log.Printf("Downloading %v to local %v.\n", remote, local)
 
-	return fileName, nil
+	n, _ := io.Copy(out, resp.Body)
+	fmt.Printf("Downloaded %v bytes\n", n)
+
+	return local, nil
 }
 
 func indexScalaApi() {

@@ -1,4 +1,4 @@
-package rad
+package main
 
 import "testing"
 
@@ -15,16 +15,16 @@ func TestFindEntry(t *testing.T) {
 	docs = map[string][]entry{
 		"scala": []entry{
 			entry{
-				namespace: []string{"scala", "sys"},
-				entity:    "SystemProperties",
-				function:  "",
-				signature: "",
+				Namespace: []string{"scala", "sys"},
+				Entity:    "SystemProperties",
+				Function:  "",
+				Signature: "",
 			},
 			entry{
-				namespace: []string{"scala", "collection"},
-				entity:    "SetProxy",
-				function:  "",
-				signature: "",
+				Namespace: []string{"scala", "collection"},
+				Entity:    "SetProxy",
+				Function:  "",
+				Signature: "",
 			},
 		},
 	}
@@ -40,9 +40,9 @@ func TestFindEntry(t *testing.T) {
 		return
 	}
 
-	if es[0].namespace[0] != "scala" ||
-		es[0].namespace[1] != "collection" ||
-		es[0].entity != "SetProxy" {
+	if es[0].Namespace[0] != "scala" ||
+		es[0].Namespace[1] != "collection" ||
+		es[0].Entity != "SetProxy" {
 		t.Errorf("expected to find SetProxy entry but got [%v]", es[0])
 		return
 	}

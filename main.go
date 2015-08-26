@@ -258,7 +258,7 @@ func unzip(src string, dest string) error {
 }
 
 func download() (string, error) {
-	remote := "http://downloads.typesafe.com/scala/2.11.7/scala-2.11.7.zip"
+	remote := "http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip"
 	local := "scala-doc.zip"
 
 	out, _ := os.Create(local)
@@ -271,6 +271,9 @@ func download() (string, error) {
 
 	n, _ := io.Copy(out, resp.Body)
 	fmt.Printf("Downloaded %v bytes\n", n)
+
+	unzip(local, ".")
+	os.Rename("scala-docs-2.11.7", "pkgs/scala")
 
 	return local, nil
 }
@@ -336,6 +339,7 @@ func serve() {
 }
 
 func main() {
+	download()
 	index()
 	serve()
 }

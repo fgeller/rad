@@ -354,8 +354,8 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 func serve() {
 	http.HandleFunc("/s", queryHandler)
 
-	pkgs := http.FileServer(http.Dir("./pkgs"))
-	http.Handle("/pkgs/", http.StripPrefix("/pkgs/", pkgs))
+	packs := http.FileServer(http.Dir("./packs"))
+	http.Handle("/packs/", http.StripPrefix("/packs/", packs))
 
 	ui := http.FileServer(http.Dir("./ui"))
 	http.Handle("/ui/", http.StripPrefix("/ui/", ui))

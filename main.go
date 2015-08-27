@@ -17,6 +17,13 @@ import "archive/zip"
 
 var docs = map[string][]entry{}
 
+type indexer func() []entry
+type packConfig struct {
+	name    string
+	url     string
+	indexer indexer
+}
+
 func attr(se xml.StartElement, name string) (string, error) {
 	for _, att := range se.Attr {
 		if att.Name.Local == name {
@@ -223,6 +230,11 @@ func scan(path string) ([]entry, error) {
 }
 
 func unzip(src string, dest string) error {
+	err := os.MkdirAll(dest, 0755)
+	if err != nil {
+		return err
+	}
+
 	r, err := zip.OpenReader(src)
 	if err != nil {
 		log.Fatal("failed to open zip: %v", src)
@@ -257,23 +269,33 @@ func unzip(src string, dest string) error {
 	return nil
 }
 
-func download() (string, error) {
-	remote := "http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip"
-	local := "scala-doc.zip"
+func download(remote string) (string, error) {
+	local := remote[strings.LastIndex(remote, "/")+1:]
+	fmt.Printf("trying to download to local [%v]\n", local)
 
-	out, _ := os.Create(local)
+	out, err := os.Create(local)
+	if err != nil {
+		return "", err
+	}
 	defer out.Close()
 
-	resp, _ := http.Get(remote)
+	resp, err := http.Get(remote)
+	if err != nil {
+		return "", err
+	}
 	defer resp.Body.Close()
 
-	log.Printf("Downloading %v to local %v.\n", remote, local)
+	log.Printf("Downloading [%v] to local [%v].\n", remote, local)
 
-	n, _ := io.Copy(out, resp.Body)
-	fmt.Printf("Downloaded %v bytes\n", n)
+	n, err := io.Copy(out, resp.Body)
+	if err != nil {
+		return "", err
+	}
+	log.Printf("Downloaded %v bytes.\n", n)
 
-	unzip(local, ".")
-	os.Rename("scala-docs-2.11.7", "pkgs/scala")
+	// // TODO: identify type
+	// unzip(local, )
+	// os.Rename("scala-docs-2.11.7", "pkgs/scala")
 
 	return local, nil
 }
@@ -292,6 +314,25 @@ func indexScalaApi() {
 
 func index() {
 	indexScalaApi()
+}
+
+func install(pack packConfig) error {
+	local, err := download(pack.url)
+	if err != nil {
+		log.Fatalf("Failed to download [%v] err: %v.\n", pack.url, err)
+		return err
+	}
+	defer os.Remove(local)
+
+	err = unzip(local, "packs"+string(os.PathSeparator)+pack.name)
+	if err != nil {
+		log.Fatalf("Failed to unzip archive [%v], err: %v", local, err)
+		return err
+	}
+
+	docs[pack.name] = pack.indexer()
+	log.Printf("Installed [%v] entries for pack [%v].", len(docs[pack.name]), pack.name)
+	return nil
 }
 
 func findEntries(pkg string, name string) ([]entry, error) {
@@ -339,7 +380,7 @@ func serve() {
 }
 
 func main() {
-	download()
-	index()
+	// download("http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip")
+	// index()
 	serve()
 }

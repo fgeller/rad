@@ -17,8 +17,8 @@ import "archive/zip"
 
 var docs = map[string][]entry{}
 
-type indexer func() []entry
-type packConfig struct {
+type indexer func() ([]entry, error)
+type pack struct {
 	name    string
 	url     string
 	indexer indexer
@@ -271,8 +271,6 @@ func unzip(src string, dest string) error {
 
 func download(remote string) (string, error) {
 	local := remote[strings.LastIndex(remote, "/")+1:]
-	fmt.Printf("trying to download to local [%v]\n", local)
-
 	out, err := os.Create(local)
 	if err != nil {
 		return "", err
@@ -293,30 +291,16 @@ func download(remote string) (string, error) {
 	}
 	log.Printf("Downloaded %v bytes.\n", n)
 
-	// // TODO: identify type
-	// unzip(local, )
-	// os.Rename("scala-docs-2.11.7", "pkgs/scala")
-
 	return local, nil
 }
 
-func indexScalaApi() {
-	path := "./pkgs/scala"
-	log.Printf("about to index scala api in [%v]\n", path)
-	es, err := scan(path)
-	if err != nil {
-		log.Fatalf("Encountered error while indexing Scala api [%v].", err)
-		return
-	}
-
-	docs["scala"] = es
+func indexScalaApi() ([]entry, error) {
+	path := "packs/scala"
+	log.Printf("About to index scala api in [%v]\n", path)
+	return scan(path)
 }
 
-func index() {
-	indexScalaApi()
-}
-
-func install(pack packConfig) error {
+func install(pack pack) error {
 	local, err := download(pack.url)
 	if err != nil {
 		log.Fatalf("Failed to download [%v] err: %v.\n", pack.url, err)
@@ -330,13 +314,16 @@ func install(pack packConfig) error {
 		return err
 	}
 
-	docs[pack.name] = pack.indexer()
+	docs[pack.name], err = pack.indexer()
+	if err != nil {
+		return err
+	}
+
 	log.Printf("Installed [%v] entries for pack [%v].", len(docs[pack.name]), pack.name)
 	return nil
 }
 
 func findEntries(pkg string, name string) ([]entry, error) {
-
 	es, ok := docs[pkg]
 	if !ok {
 		return es, fmt.Errorf("Package [%v] not installed.", pkg)
@@ -382,5 +369,10 @@ func serve() {
 func main() {
 	// download("http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip")
 	// index()
+	install(pack{
+		name:    "scala",
+		url:     "http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip",
+		indexer: indexScalaApi,
+	})
 	serve()
 }

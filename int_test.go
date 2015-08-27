@@ -19,7 +19,7 @@ func TestInstallPack(t *testing.T) {
 	// possible race condition here?
 	go serveZip(":8881")
 
-	conf := packConfig{
+	conf := pack{
 		name:    "blubb",
 		url:     "http://localhost:8881/test.zip",
 		indexer: indexer,

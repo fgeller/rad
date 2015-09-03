@@ -269,8 +269,15 @@ func unzip(src string, dest string) error {
 	return nil
 }
 
-func download(remote string) (string, error) {
+type downloader func(string) (*http.Response, error)
+
+func download(d downloader, remote string) (string, error) {
 	local := remote[strings.LastIndex(remote, "/")+1:]
+	if _, err := os.Stat(local); !os.IsNotExist(err) {
+		log.Printf("Already downloaded [%v].", local)
+		return local, nil
+	}
+
 	out, err := os.Create(local)
 	if err != nil {
 		return "", err

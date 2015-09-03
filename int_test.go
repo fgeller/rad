@@ -8,7 +8,7 @@ import "net/http"
 func TestInstallPack(t *testing.T) {
 
 	sampleEntry := entry{[]string{"main"}, "Entity", "Function", "Signature", "Target", "source"}
-	indexer := func() []entry { return []entry{sampleEntry} }
+	indexer := func() ([]entry, error) { return []entry{sampleEntry}, nil }
 	serveZip := func(addr string) {
 		http.HandleFunc("/test.zip", func(w http.ResponseWriter, r *http.Request) {
 			http.ServeFile(w, r, "./testdata/test.zip")

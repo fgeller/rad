@@ -39,8 +39,8 @@ var Search = React.createClass({
         var entries = [];
         for (var i = 0; i < this.state.results.length && i < 5; i++) {
             var entry = this.state.results[i]
-            var target = "/" + entry["Target"];
-            entries.push(<div onClick={this.loadDoc.bind(this, target)}><a href={target}>{entry["Entity"]} {entry["Function"]}</a> {entry["Signature"]}</div>)
+            var target = "/packs/" + entry["Target"];
+            entries.push(<div onClick={this.loadDoc.bind(this, target)}>{entry["Entity"]} {entry["Function"]} {entry["Signature"]}</div>)
         }
 
         return (<div>

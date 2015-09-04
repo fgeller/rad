@@ -16,6 +16,7 @@ import "encoding/json"
 import "archive/zip"
 
 var docs = map[string][]entry{}
+var packsDir = "packs"
 
 type indexer func() ([]entry, error)
 type pack struct {
@@ -44,7 +45,7 @@ type entry struct {
 	Entity    string
 	Function  string
 	Signature string
-	Target    string
+	Target    string // location relative to `packsDir` where to find documentation
 	source    string
 }
 
@@ -301,21 +302,23 @@ func download(d downloader, remote string) (string, error) {
 	return local, nil
 }
 
-func indexScalaApi() ([]entry, error) {
-	path := "packs/scala"
-	log.Printf("About to index scala api in [%v]\n", path)
-	return scan(path)
+func indexScalaApi(packName string) func() ([]entry, error) {
+	return func() ([]entry, error) {
+		path := packsDir + "/" + packName
+		log.Printf("About to index scala api in [%v]\n", path)
+		return scan(path)
+	}
 }
 
 func install(pack pack) error {
-	local, err := download(pack.url)
+	local, err := download(http.Get, pack.url)
 	if err != nil {
 		log.Fatalf("Failed to download [%v] err: %v.\n", pack.url, err)
 		return err
 	}
 	defer os.Remove(local)
 
-	err = unzip(local, "packs"+string(os.PathSeparator)+pack.name)
+	err = unzip(local, packsDir+string(os.PathSeparator)+pack.name)
 	if err != nil {
 		log.Fatalf("Failed to unzip archive [%v], err: %v", local, err)
 		return err
@@ -330,10 +333,10 @@ func install(pack pack) error {
 	return nil
 }
 
-func findEntries(pkg string, name string) ([]entry, error) {
-	es, ok := docs[pkg]
+func findEntries(pack string, name string) ([]entry, error) {
+	es, ok := docs[pack]
 	if !ok {
-		return es, fmt.Errorf("Package [%v] not installed.", pkg)
+		return es, fmt.Errorf("Package [%v] not installed.", pack)
 	}
 
 	results := []entry{}
@@ -347,10 +350,10 @@ func findEntries(pkg string, name string) ([]entry, error) {
 }
 
 func queryHandler(w http.ResponseWriter, r *http.Request) {
-	pkg := r.FormValue("p")
+	pack := r.FormValue("p")
 	entity := r.FormValue("e")
-	res, _ := findEntries(pkg, entity)
-	log.Printf("got request for p[%v] and e[%v], found [%v] entries.", pkg, entity, len(res))
+	res, _ := findEntries(pack, entity)
+	log.Printf("got request for p[%v] and e[%v], found [%v] entries.", pack, entity, len(res))
 
 	js, _ := json.Marshal(res)
 
@@ -361,8 +364,8 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 func serve() {
 	http.HandleFunc("/s", queryHandler)
 
-	packs := http.FileServer(http.Dir("./packs"))
-	http.Handle("/packs/", http.StripPrefix("/packs/", packs))
+	packs := http.FileServer(http.Dir("./" + packsDir))
+	http.Handle(fmt.Sprintf("/%v/", packsDir), http.StripPrefix(fmt.Sprintf("/%v/", packsDir), packs))
 
 	ui := http.FileServer(http.Dir("./ui"))
 	http.Handle("/ui/", http.StripPrefix("/ui/", ui))
@@ -374,12 +377,12 @@ func serve() {
 }
 
 func main() {
-	// download("http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip")
-	// index()
-	install(pack{
-		name:    "scala",
-		url:     "http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip",
-		indexer: indexScalaApi,
-	})
+	install(
+		pack{
+			name:    "scala",
+			url:     "http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip",
+			indexer: indexScalaApi("scala"),
+		},
+	)
 	serve()
 }

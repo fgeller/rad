@@ -27,7 +27,7 @@ func TestInstallPack(t *testing.T) {
 
 	install(conf)
 
-	actual, err := findEntries(conf.name, "Entity")
+	actual, err := findEntityFunction(conf.name, "Entity", "")
 	if err != nil || len(actual) < 1 || !reflect.DeepEqual(sampleEntry, actual[0]) {
 		t.Errorf("Expected to find sample entry, got %v [err: %v].\n", actual, err)
 	}

@@ -333,15 +333,16 @@ func install(pack pack) error {
 	return nil
 }
 
-func findEntries(pack string, name string) ([]entry, error) {
+func findEntityFunction(pack string, entity string, fun string) ([]entry, error) {
 	es, ok := docs[pack]
 	if !ok {
 		return es, fmt.Errorf("Package [%v] not installed.", pack)
 	}
 
 	results := []entry{}
+
 	for _, e := range es {
-		if e.Entity == name {
+		if e.Entity == entity && strings.HasPrefix(e.Function, fun) {
 			results = append(results, e)
 		}
 	}
@@ -352,7 +353,7 @@ func findEntries(pack string, name string) ([]entry, error) {
 func queryHandler(w http.ResponseWriter, r *http.Request) {
 	pack := r.FormValue("p")
 	entity := r.FormValue("e")
-	res, _ := findEntries(pack, entity)
+	res, _ := findEntityFunction(pack, entity, "")
 	log.Printf("got request for p[%v] and e[%v], found [%v] entries.", pack, entity, len(res))
 
 	js, _ := json.Marshal(res)

@@ -31,18 +31,21 @@ var SearchResult = React.createClass({
         }
     },
     render: function() {
+        // \00a0 = &nbsp;
+        var namespace = this.props.entry["Namespace"].join(".") || "\u00a0";
         var entName = this.props.entry["Entity"];
-        var funName = this.props.entry["Function"] || "\u00a0"; // &nbsp;
+        var funName = this.props.entry["Function"] || "\u00a0";
         if (funName.length > 20) {
-            funName = funName.substring(0, 20) + "..."
+            funName = funName.substring(0, 20) + "...";
         }
         var clsName = "search-result"
         if (this.props.index == 0) {
-            clsName += " first-search-result"
+            clsName += " first-search-result";
         }
         return <div className={clsName} onClick={this.open}>
                  <div className="entity-name">{entName}</div>
                  <div className="function-name">{funName}</div>
+                 <div className="namespace">{namespace}</div>
                </div>
     }
 });

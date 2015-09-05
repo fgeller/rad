@@ -74,13 +74,13 @@ var Search = React.createClass({
             entries.push(<SearchResult entry={entry} index={i} />)
         }
 
-        return (<div>
-                <div id="search-field-container">
-                  <SearchField query={this.state.query} search={this.search}/>
-                </div>
-                <div id="search-result-container">{entries}</div>
-                <div>
-                <iframe id="ifrm" src="" />
+        return (<div id="main-container">
+                  <div id="search-field-container">
+                    <SearchField query={this.state.query} search={this.search}/>
+                  </div>
+                  <div id="search-result-container">{entries}</div>
+                  <div id="ifrm-container">
+                    <iframe id="ifrm" src="" />
                   </div>
                 </div>
         );

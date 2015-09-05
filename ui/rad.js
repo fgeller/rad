@@ -5,11 +5,28 @@ var SearchField = React.createClass({
     },
     render: function() {
         return <input
+                 id="search-field"
                  type="text"
                  ref="search"
                  placeholder="Search me..."
                  value={this.props.query}
                  onChange={this.search} />
+    }
+});
+
+var SearchResult = React.createClass({
+    open: function() {
+        var href = "/packs/" + this.props.entry["Target"];
+        console.log("opening target", href);
+        document.getElementById("ifrm").src = href;
+    },
+    render: function() {
+        var entName = this.props.entry["Entity"];
+        var funName = this.props.entry["Function"] || "\u00a0"; // &nbsp;
+        return <div className="search-result" onClick={this.open.bind(this)}>
+                 <div className="entity-name">{entName}</div>
+                 <div className="function-name">{funName}</div>
+               </div>
     }
 });
 
@@ -33,26 +50,22 @@ var Search = React.createClass({
             results: []
         }
     },
-    loadDoc: function(target) {
-        console.log("target", target);
-        document.getElementById("ifrm").src = target;
-        this.setState({loadedTarget: target});
-    },
     render: function(){
         var entries = [];
         for (var i = 0; i < this.state.results.length && i < 5; i++) {
             var entry = this.state.results[i]
-            var target = "/packs/" + entry["Target"];
-            entries.push(<div onClick={this.loadDoc.bind(this, target)}>{entry["Entity"]} {entry["Function"]} {entry["Signature"]}</div>)
+            entries.push(<SearchResult entry={entry} />)
         }
 
         return (<div>
+                <div id="search-field-container">
                   <SearchField query={this.state.query} search={this.search}/>
-                  <div>{entries}</div>
-                  <div>
-                  <iframe id="ifrm" src="" />
-                    </div>
+                </div>
+                <div id="search-result-container">{entries}</div>
+                <div>
+                <iframe id="ifrm" src="" />
                   </div>
+                </div>
         );
     }
 });

@@ -271,11 +271,16 @@ func unzip(src string, dest string) error {
 	return nil
 }
 
+func fileExists(path string) bool {
+	_, err := os.Stat(path)
+	return !os.IsNotExist(err)
+}
+
 type downloader func(string) (*http.Response, error)
 
 func download(d downloader, remote string) (string, error) {
 	local := remote[strings.LastIndex(remote, "/")+1:]
-	if _, err := os.Stat(local); !os.IsNotExist(err) {
+	if fileExists(local) {
 		log.Printf("Already downloaded [%v].", local)
 		return local, nil
 	}
@@ -312,6 +317,28 @@ func indexScalaApi(packName string) func() ([]entry, error) {
 }
 
 func install(pack pack) error {
+	dataPath := packDir + string(os.PathSeparator) +
+		pack.name + string(os.PathSeparator) +
+		"rad-data.json"
+
+	if fileExists(dataPath) {
+		log.Printf("Already installed pack [%v], deserializing entries.", pack.name)
+
+		data, err := ioutil.ReadFile(dataPath)
+		if err != nil {
+			return err // TODO: or re-download?
+		}
+
+		var es []entry
+		err = json.Unmarshal(data, &es)
+		if err != nil {
+			return err // TODO: or re-download?
+		}
+
+		docs[pack.name] = es
+		return nil
+	}
+
 	local, err := download(http.Get, pack.url)
 	if err != nil {
 		log.Fatalf("Failed to download [%v] err: %v.\n", pack.url, err)

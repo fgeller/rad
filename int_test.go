@@ -5,12 +5,10 @@ import "fmt"
 import "os"
 import "testing"
 import "time"
-import "reflect"
 import "net/http"
 import "encoding/json"
 
 func TestInstallPack(t *testing.T) {
-
 	e := entry{[]string{"main"}, "Entity", "Function", "Signature", "Target", "source"}
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return es, nil }
@@ -33,21 +31,67 @@ func TestInstallPack(t *testing.T) {
 	install(conf)
 
 	actual, err := findEntityFunction(conf.name, "Entity", "", 10)
-	if err != nil || len(actual) < 1 || !reflect.DeepEqual(e, actual[0]) {
-		t.Errorf("Expected to find sample entry, got %v [err: %v].\n", actual, err)
-	}
-
-	dat, err := ioutil.ReadFile("packs/" + conf.name + "/rad-data.json")
 	if err != nil {
-		t.Errorf("unexpected error while reading serialized data: %v", err)
+		t.Errorf("unexpected error while finding entries: %v", err)
 		return
 	}
 
-	exDat, err := json.Marshal(es)
-	if string(exDat) != string(dat) {
-		t.Errorf("expected serialized data\n%v\nbut got\n%v", err, exDat, string(dat))
+	if len(actual) != 1 {
+		t.Errorf("expected to find 1 entry, got: %v", len(actual))
+		return
 	}
 
+	if !e.eq(actual[0]) {
+		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", es, actual)
+	}
+}
+
+func TestInstallExistingSerializedPack(t *testing.T) {
+
+	e := entry{[]string{"main"}, "Entity", "Function", "Signature", "Target", "source"}
+	es := []entry{e}
+	indexer := func() ([]entry, error) { return []entry{}, nil }
+	conf := pack{
+		name:    "blubb",
+		url:     "http://localhost:8881/test.zip",
+		indexer: indexer,
+	}
+	os.RemoveAll("packs/" + conf.name)
+
+	err := os.MkdirAll("packs/"+conf.name, 0755)
+	if err != nil {
+		t.Errorf("unexpected error when creating dir: %v", err)
+		return
+	}
+	data, err := json.Marshal(es)
+	if err != nil {
+		t.Errorf("unexpected error when serializing data: %v", err)
+		return
+	}
+	dataPath := "packs/" + conf.name + "/rad-data.json"
+	err = ioutil.WriteFile(dataPath, data, 0644)
+	if err != nil {
+		t.Errorf("unexpected error when writing serialized data: %v", err)
+		return
+	}
+	fmt.Printf("checking if file exists in test: %v\n", fileExists(dataPath))
+
+	install(conf)
+
+	actual, err := findEntityFunction(conf.name, "Entity", "", 10)
+	if err != nil {
+		t.Errorf("unexpected error while finding entries: %v", err)
+		return
+	}
+
+	if len(actual) != 1 {
+		t.Errorf("expected to find 1 entry, got: %v", len(actual))
+		return
+	}
+
+	if !e.eq(actual[0]) {
+		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", es, actual)
+	}
 }
 
 func TestFindEntityFunctions(t *testing.T) {

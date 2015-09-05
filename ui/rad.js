@@ -19,6 +19,9 @@ var Search = React.createClass({
         var qs = text.split(" ");
         if (qs.length > 1) {
             var q = "/s?p=" + qs[0] + "&e=" + qs[1]
+            if (qs.length > 2) {
+                q += "&f=" + qs[2]
+            }
             $.get(q, function(result) {
                 this.setState({results: result});
             }.bind(this));

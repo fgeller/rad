@@ -345,6 +345,9 @@ func findEntityFunction(pack string, entity string, fun string) ([]entry, error)
 		if strings.HasPrefix(e.Entity, entity) &&
 			strings.HasPrefix(e.Function, fun) {
 			results = append(results, e)
+			if len(results) == 10 {
+				return results, nil
+			}
 		}
 	}
 

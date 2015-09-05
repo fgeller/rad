@@ -49,6 +49,20 @@ func TestFindEntityFunctions(t *testing.T) {
 		{[]string{"main"}, entity, "d", "Signature", "Target", "source"},
 		{[]string{"main"}, entity + "suffix", "x", "Signature", "Target", "source"},
 		{[]string{"main"}, entity + "suffix", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zzz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zyz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zzy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yzz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zyy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yyz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yyy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yzy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yxz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_xyz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yyx", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_xxz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yxz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_xxx", "a", "Signature", "Target", "source"},
 	}
 	docs = map[string][]entry{}
 	docs[pack] = samples
@@ -70,14 +84,22 @@ func TestFindEntityFunctions(t *testing.T) {
 		return
 	}
 
-	expected, err := json.Marshal(samples[1:])
+	expectedEntries := []entry{
+		{[]string{"main"}, entity, "a", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "ab", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "abc", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "d", "Signature", "Target", "source"},
+		{[]string{"main"}, entity + "suffix", "x", "Signature", "Target", "source"},
+		{[]string{"main"}, entity + "suffix", "a", "Signature", "Target", "source"},
+	}
+	expected, err := json.Marshal(expectedEntries)
 	if err != nil {
 		t.Errorf("unexpected error while marshaling to json: %v", err)
 		return
 	}
 
 	if string(byts) != string(expected) {
-		t.Errorf("unexpected response: %v", string(byts))
+		t.Errorf("unexpected response, got\n%v\nbut expected\n%v\n", string(byts), string(expected))
 	}
 
 	// find all with given function prefix
@@ -94,11 +116,46 @@ func TestFindEntityFunctions(t *testing.T) {
 		return
 	}
 
-	expectedEntries := []entry{
+	expectedEntries = []entry{
 		{[]string{"main"}, entity, "a", "Signature", "Target", "source"},
 		{[]string{"main"}, entity, "ab", "Signature", "Target", "source"},
 		{[]string{"main"}, entity, "abc", "Signature", "Target", "source"},
 		{[]string{"main"}, entity + "suffix", "a", "Signature", "Target", "source"},
+	}
+	expected, err = json.Marshal(expectedEntries)
+	if err != nil {
+		t.Errorf("unexpected error while marshaling to json: %v", err)
+		return
+	}
+
+	if string(byts) != string(expected) {
+		t.Errorf("unexpected response, got \n%v\nbut expected\n%v\n", string(byts), string(expected))
+	}
+
+	// limit the results by default to 10
+	res, err = http.Get("http://" + addr + "/s?p=" + pack + "&e=_")
+	if err != nil {
+		t.Errorf("unexpected error while finding entries: %v", err)
+		return
+	}
+
+	byts, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Errorf("unexpected error while reading response body: %v", err)
+		return
+	}
+
+	expectedEntries = []entry{
+		{[]string{"main"}, "_zzz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zyz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zzy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yzz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zyy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yyz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yyy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yzy", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_yxz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_xyz", "a", "Signature", "Target", "source"},
 	}
 	expected, err = json.Marshal(expectedEntries)
 	if err != nil {

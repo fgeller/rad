@@ -47,6 +47,8 @@ func TestFindEntityFunctions(t *testing.T) {
 		{[]string{"main"}, entity, "ab", "Signature", "Target", "source"},
 		{[]string{"main"}, entity, "abc", "Signature", "Target", "source"},
 		{[]string{"main"}, entity, "d", "Signature", "Target", "source"},
+		{[]string{"main"}, entity + "suffix", "x", "Signature", "Target", "source"},
+		{[]string{"main"}, entity + "suffix", "a", "Signature", "Target", "source"},
 	}
 	docs = map[string][]entry{}
 	docs[pack] = samples
@@ -56,7 +58,6 @@ func TestFindEntityFunctions(t *testing.T) {
 	time.Sleep(200)
 
 	// find all for entity
-
 	res, err := http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity)
 	if err != nil {
 		t.Errorf("unexpected error while finding entries: %v", err)
@@ -93,7 +94,13 @@ func TestFindEntityFunctions(t *testing.T) {
 		return
 	}
 
-	expected, err = json.Marshal(samples[1:4])
+	expectedEntries := []entry{
+		{[]string{"main"}, entity, "a", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "ab", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "abc", "Signature", "Target", "source"},
+		{[]string{"main"}, entity + "suffix", "a", "Signature", "Target", "source"},
+	}
+	expected, err = json.Marshal(expectedEntries)
 	if err != nil {
 		t.Errorf("unexpected error while marshaling to json: %v", err)
 		return

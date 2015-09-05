@@ -342,7 +342,8 @@ func findEntityFunction(pack string, entity string, fun string) ([]entry, error)
 	results := []entry{}
 
 	for _, e := range es {
-		if e.Entity == entity && strings.HasPrefix(e.Function, fun) {
+		if strings.HasPrefix(e.Entity, entity) &&
+			strings.HasPrefix(e.Function, fun) {
 			results = append(results, e)
 		}
 	}

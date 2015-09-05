@@ -70,4 +70,10 @@ var Search = React.createClass({
     }
 });
 
+key('/', function(event) {
+    $("#search-field").focus();
+    event.cancelBubble = true;
+    return false;
+});
+
 React.render(<Search />, document.body);

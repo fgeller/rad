@@ -362,7 +362,7 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
-func serve() {
+func serve(addr string) {
 	http.HandleFunc("/s", queryHandler)
 
 	packs := http.FileServer(http.Dir("./" + packsDir))
@@ -371,10 +371,8 @@ func serve() {
 	ui := http.FileServer(http.Dir("./ui"))
 	http.Handle("/ui/", http.StripPrefix("/ui/", ui))
 
-	addr := ":3024"
-
-	log.Printf("serving on addr %v\n", addr)
-	log.Fatal(http.ListenAndServe(":3024", nil))
+	log.Printf("Serving on addr %v\n", addr)
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
 
 func main() {
@@ -385,5 +383,6 @@ func main() {
 			indexer: indexScalaApi("scala"),
 		},
 	)
-	serve()
+
+	serve("0.0.0.0:3024")
 }

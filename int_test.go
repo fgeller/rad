@@ -1,7 +1,9 @@
 package main
 
+import "io/ioutil"
 import "os"
 import "testing"
+import "time"
 import "reflect"
 import "net/http"
 
@@ -33,4 +35,36 @@ func TestInstallPack(t *testing.T) {
 	}
 
 	os.RemoveAll("packs/" + conf.name)
+}
+
+func TestFindEntries(t *testing.T) {
+	pack := "test"
+	entity := "Entity"
+	fun := "Function"
+	sample := entry{[]string{"main"}, entity, fun, "Signature", "Target", "source"}
+	docs = map[string][]entry{}
+	docs[pack] = []entry{sample}
+
+	addr := "0.0.0.0:3025"
+	go serve(addr)
+	time.Sleep(200)
+
+	res, err := http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity)
+
+	if err != nil {
+		t.Errorf("unexpected error while finding entries: %v", err)
+		return
+	}
+
+	byts, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Errorf("unexpected error while reading response body: %v", err)
+		return
+	}
+
+	expected := `[{"Namespace":["main"],"Entity":"Entity","Function":"Function","Signature":"Signature","Target":"Target"}]`
+	bdy := string(byts)
+	if bdy != expected {
+		t.Errorf("unexpected response: %v", bdy)
+	}
 }

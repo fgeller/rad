@@ -1,16 +1,17 @@
 body {
     font-family: sans-serif;
+    padding: 0px;
+    margin: 0px;
 }
 
 #ifrm {
     min-height: 600px;
-    min-width: 800px;
-    max-width: 100%;
     max-height: 500px;
+    width: 100%;
 }
 
 #search-field-container {
-    background-color: #ccc;
+    background-color: #fff;
     display: inline-block;
     vertical-align: top;
 }
@@ -18,33 +19,35 @@ body {
 #search-field {
     height: 34pt;
     width: 175pt;
-    padding: 1pt;
+    padding-left: 3pt;
+    padding-right: 3pt;
     font-size: 16pt;
     color: #666;
 }
 
 #search-result-container {
-    background-color: #ccc;
+    background-color: #fff;
     display: inline-block;
 }
 
 .search-result {
-    background-color: #aaa;
+    background-color: #fff;
     width: 100pt;
     display: inline-block;
-    border: 1px solid white;
     margin: 2pt;
+    padding-right: 3pt;
+    padding-left: 3pt;
 }
 
 .search-result .entity-name {
-    background-color: #00aa00;
+    background-color: #fff;
     font-size: 13pt;
     padding: 2pt;
 }
 
 .search-result .function-name {
-    background-color: #00cc00;
-    font-size: 10pt;
+    background-color: #fff;
+    font-size: 9pt;
     padding: 2pt;
 }
 

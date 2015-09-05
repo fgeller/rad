@@ -21,14 +21,14 @@ var SearchResult = React.createClass({
         document.getElementById("ifrm").src = href;
     },
     componentDidMount: function() {
-	if (this.props.index == 0) {
-	    key.unbind('return');
-	    key('return', function(event) {
-		this.open();
-		event.cancelBubble = true;
-		return false;
-	    }.bind(this));
-	}
+        if (this.props.index == 0) {
+            key.unbind('return');
+            key('return', function(event) {
+                this.open();
+                event.cancelBubble = true;
+                return false;
+            }.bind(this));
+        }
     },
     render: function() {
         var entName = this.props.entry["Entity"];
@@ -89,7 +89,7 @@ key('/', function(event) {
 key.filter = function(event){
     var tagName = (event.target || event.srcElement).tagName;
     if (event.target && event.target.id && event.target.id == "search-field") {
-	return true;
+        return true;
     }
     return !(tagName == 'INPUT' || tagName == 'SELECT' || tagName == 'TEXTAREA');
 }

@@ -84,3 +84,6 @@ func TestParseScalaEntry(t *testing.T) {
 		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
 	}
 }
+
+// TODO: MapLike$DefaultValuesIterable should be DefaultValuesIterable
+// TODO: Map$ should be Map

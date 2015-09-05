@@ -134,7 +134,6 @@ func parse(f string, r io.Reader) []entry {
 				if err == nil {
 					subs := strings.SplitAfterN(href, "#", 2)
 					if len(subs) > 1 {
-						// fmt.Printf("found fragment %v\n", subs[1])
 						e, err := parseEntry(f, subs[0], subs[1])
 						if err != nil {
 							log.Println(err)
@@ -226,7 +225,7 @@ func scan(path string) ([]entry, error) {
 	start := time.Now()
 	fc, es, err := scanDir(path)
 	elapsed := time.Now().Sub(start)
-	fmt.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
+	log.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
 
 	return es, err
 }

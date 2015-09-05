@@ -11,32 +11,43 @@ import "encoding/json"
 
 func TestInstallPack(t *testing.T) {
 
-	sampleEntry := entry{[]string{"main"}, "Entity", "Function", "Signature", "Target", "source"}
-	indexer := func() ([]entry, error) { return []entry{sampleEntry}, nil }
+	e := entry{[]string{"main"}, "Entity", "Function", "Signature", "Target", "source"}
+	es := []entry{e}
+	indexer := func() ([]entry, error) { return es, nil }
 	serveZip := func(addr string) {
 		http.HandleFunc("/test.zip", func(w http.ResponseWriter, r *http.Request) {
 			http.ServeFile(w, r, "./testdata/test.zip")
 		})
 		http.ListenAndServe(addr, nil)
 	}
-
-	// possible race condition here?
-	go serveZip(":8881")
-
 	conf := pack{
 		name:    "blubb",
 		url:     "http://localhost:8881/test.zip",
 		indexer: indexer,
 	}
 
+	// possible race condition here?
+	go serveZip(":8881")
+	defer os.RemoveAll("packs/" + conf.name)
+
 	install(conf)
 
 	actual, err := findEntityFunction(conf.name, "Entity", "", 10)
-	if err != nil || len(actual) < 1 || !reflect.DeepEqual(sampleEntry, actual[0]) {
+	if err != nil || len(actual) < 1 || !reflect.DeepEqual(e, actual[0]) {
 		t.Errorf("Expected to find sample entry, got %v [err: %v].\n", actual, err)
 	}
 
-	os.RemoveAll("packs/" + conf.name)
+	dat, err := ioutil.ReadFile("packs/" + conf.name + "/rad-data.json")
+	if err != nil {
+		t.Errorf("unexpected error while reading serialized data: %v", err)
+		return
+	}
+
+	exDat, err := json.Marshal(es)
+	if string(exDat) != string(dat) {
+		t.Errorf("expected serialized data\n%v\nbut got\n%v", err, exDat, string(dat))
+	}
+
 }
 
 func TestFindEntityFunctions(t *testing.T) {

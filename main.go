@@ -17,7 +17,7 @@ import "encoding/json"
 import "archive/zip"
 
 var docs = map[string][]entry{}
-var packsDir = "packs"
+var packDir = "packs"
 
 type indexer func() ([]entry, error)
 type pack struct {
@@ -46,7 +46,7 @@ type entry struct {
 	Entity    string
 	Function  string
 	Signature string
-	Target    string // location relative to `packsDir` where to find documentation
+	Target    string // location relative to `packDir` where to find documentation
 	source    string
 }
 
@@ -305,7 +305,7 @@ func download(d downloader, remote string) (string, error) {
 
 func indexScalaApi(packName string) func() ([]entry, error) {
 	return func() ([]entry, error) {
-		path := packsDir + "/" + packName
+		path := packDir + "/" + packName
 		log.Printf("About to index scala api in [%v]\n", path)
 		return scan(path)
 	}
@@ -319,13 +319,27 @@ func install(pack pack) error {
 	}
 	defer os.Remove(local)
 
-	err = unzip(local, packsDir+string(os.PathSeparator)+pack.name)
+	err = unzip(local, packDir+string(os.PathSeparator)+pack.name)
 	if err != nil {
 		log.Fatalf("Failed to unzip archive [%v], err: %v", local, err)
 		return err
 	}
 
 	docs[pack.name], err = pack.indexer()
+	if err != nil {
+		return err
+	}
+
+	datPath := packDir + string(os.PathSeparator) +
+		pack.name + string(os.PathSeparator) +
+		"rad-data.json"
+
+	data, err := json.Marshal(docs[pack.name])
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(datPath, data, 0644)
 	if err != nil {
 		return err
 	}
@@ -376,8 +390,8 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 func serve(addr string) {
 	http.HandleFunc("/s", queryHandler)
 
-	packs := http.FileServer(http.Dir("./" + packsDir))
-	http.Handle(fmt.Sprintf("/%v/", packsDir), http.StripPrefix(fmt.Sprintf("/%v/", packsDir), packs))
+	packs := http.FileServer(http.Dir("./" + packDir))
+	http.Handle(fmt.Sprintf("/%v/", packDir), http.StripPrefix(fmt.Sprintf("/%v/", packDir), packs))
 
 	ui := http.FileServer(http.Dir("./ui"))
 	http.Handle("/ui/", http.StripPrefix("/ui/", ui))

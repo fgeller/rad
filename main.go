@@ -422,7 +422,12 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
+func pingHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("pong"))
+}
+
 func serve(addr string) {
+	http.HandleFunc("/ping", pingHandler)
 	http.HandleFunc("/s", queryHandler)
 
 	packs := http.FileServer(http.Dir("./" + packDir))

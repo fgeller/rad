@@ -74,7 +74,6 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 		t.Errorf("unexpected error when writing serialized data: %v", err)
 		return
 	}
-	fmt.Printf("checking if file exists in test: %v\n", fileExists(dataPath))
 
 	install(conf)
 
@@ -125,7 +124,7 @@ func TestFindEntityFunctions(t *testing.T) {
 
 	addr := "0.0.0.0:3025"
 	go serve(addr)
-	time.Sleep(200)
+	awaitPing(addr)
 
 	// find all for entity
 	res, err := http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity)
@@ -249,5 +248,15 @@ func TestFindEntityFunctions(t *testing.T) {
 
 	if string(byts) != string(expected) {
 		t.Errorf("unexpected response, got \n%v\nbut expected\n%v\n", string(byts), string(expected))
+	}
+}
+
+func awaitPing(addr string) {
+	for i := 0; i < 10; i++ {
+		_, err := http.Get("http://" + addr + "/ping")
+		if err == nil {
+			return
+		}
+		time.Sleep(100)
 	}
 }

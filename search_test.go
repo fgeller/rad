@@ -92,6 +92,50 @@ func TestFindEntityByPrefix(t *testing.T) {
 
 }
 
+func TestFindIsCaseInsentitive(t *testing.T) {
+	docs = map[string][]entry{
+		"scala": []entry{
+			entry{
+				Namespace: []string{"scala", "sys"},
+				Entity:    "SystemProperties",
+				Function:  "hans",
+				Signature: "",
+			},
+			entry{
+				Namespace: []string{"scala", "sys"},
+				Entity:    "SYSTEMThings",
+				Function:  "HANS",
+				Signature: "",
+			},
+			entry{
+				Namespace: []string{"scala", "sys"},
+				Entity:    "systemThings",
+				Function:  "hAnS",
+				Signature: "",
+			},
+		},
+	}
+	es, err := findEntityFunction("scala", "SyS", "haNS", 10)
+
+	if err != nil {
+		t.Errorf("unexpected error [%v]", err)
+		return
+	}
+
+	if len(es) != 3 {
+		t.Errorf("expected to find three entries but got [%v]", es)
+		return
+	}
+
+	if !es[0].eq(docs["scala"][0]) ||
+		!es[1].eq(docs["scala"][1]) ||
+		!es[2].eq(docs["scala"][2]) {
+		t.Errorf("expected to find System entries but got [%v]", es)
+		return
+	}
+
+}
+
 func TestFindFunction(t *testing.T) {
 	docs = map[string][]entry{
 		"scala": []entry{

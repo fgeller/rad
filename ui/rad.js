@@ -20,6 +20,16 @@ var SearchResult = React.createClass({
         console.log("opening target", href);
         document.getElementById("ifrm").src = href;
     },
+    componentDidMount: function() {
+	if (this.props.index == 0) {
+	    key.unbind('return');
+	    key('return', function(event) {
+		this.open();
+		event.cancelBubble = true;
+		return false;
+	    }.bind(this));
+	}
+    },
     render: function() {
         var entName = this.props.entry["Entity"];
         var funName = this.props.entry["Function"] || "\u00a0"; // &nbsp;
@@ -54,7 +64,7 @@ var Search = React.createClass({
         var entries = [];
         for (var i = 0; i < this.state.results.length && i < 5; i++) {
             var entry = this.state.results[i]
-            entries.push(<SearchResult entry={entry} />)
+            entries.push(<SearchResult entry={entry} index={i} />)
         }
 
         return (<div>
@@ -75,5 +85,13 @@ key('/', function(event) {
     event.cancelBubble = true;
     return false;
 });
+
+key.filter = function(event){
+    var tagName = (event.target || event.srcElement).tagName;
+    if (event.target && event.target.id && event.target.id == "search-field") {
+	return true;
+    }
+    return !(tagName == 'INPUT' || tagName == 'SELECT' || tagName == 'TEXTAREA');
+}
 
 React.render(<Search />, document.body);

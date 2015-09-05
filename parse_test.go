@@ -22,7 +22,7 @@ func TestParseScalaEntry(t *testing.T) {
 	// scala.reflect.reify.utils.Extractors$SymDef$@notifyAll():Unit
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils"},
-		Entity:    "Extractors$SymDef$",
+		Entity:    "SymDef",
 		Function:  "notifyAll",
 		Signature: "():Unit",
 	}
@@ -35,7 +35,7 @@ func TestParseScalaEntry(t *testing.T) {
 	// scala.reflect.reify.utils.Extractors$SymDef$@unapply(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils"},
-		Entity:    "Extractors$SymDef$",
+		Entity:    "SymDef",
 		Function:  "unapply",
 		Signature: "(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]",
 	}
@@ -61,14 +61,14 @@ func TestParseScalaEntry(t *testing.T) {
 	// scala.tools.cmd.Spec$@InfoextendsAnyRef
 	expected = entry{
 		Namespace: []string{"scala", "tools", "cmd"},
-		Entity:    "Spec$",
+		Entity:    "Spec",
 		Function:  "InfoextendsAnyRef",
 		Signature: "",
 	}
 
 	actual, _ = parseEntry(source, target, "scala.tools.cmd.Spec$@InfoextendsAnyRef")
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
 	}
 
 	// scala.tools.ant.FastScalac
@@ -82,6 +82,43 @@ func TestParseScalaEntry(t *testing.T) {
 	actual, _ = parseEntry(source, target, "scala.tools.ant.FastScalac")
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
+	}
+
+	// scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]
+	expected = entry{
+		Namespace: []string{"scala", "collection"},
+		Entity:    "FilteredKeys",
+		Function:  "andThen",
+		Signature: "[C](k:B=>C):PartialFunction[A,C]",
+	}
+
+	actual, _ = parseEntry(source, target, "scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]")
+	if !expected.eq(actual) {
+		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
+	}
+
+	// scala.util.Success@isFailure:Boolean
+	expected = entry{
+		Namespace: []string{"scala", "util"},
+		Entity:    "Success",
+		Function:  "isFailure",
+		Signature: ":Boolean",
+	}
+
+	actual, _ = parseEntry(source, target, "scala.util.Success@isFailure:Boolean")
+	if !expected.eq(actual) {
+		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
+	}
+
+	// package
+	expected = entry{
+		Namespace: []string{},
+		Entity:    "package",
+	}
+
+	actual, _ = parseEntry(source, target, "package")
+	if !expected.eq(actual) {
+		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
 	}
 }
 

@@ -71,27 +71,58 @@ func (e entry) eq(other entry) bool {
 }
 
 func parseEntry(source string, target string, s string) (entry, error) {
-	e := entry{}
-	funPat, err := regexp.Compile("(.+)\\.([^@]+)@(.+?)(\\(.*)?$")
-	if err != nil {
-		return e, err
+	e := entry{source: source}
+
+	// ns0.ns1.ns2.e1$entity @ method
+	splits := strings.Split(s, "@")
+	fqEnt := splits[0]
+	meth := ""
+	if len(splits) > 0 {
+		meth = strings.Join(splits[1:], "")
 	}
-	entPat, err := regexp.Compile("(.+)\\.(.+)$")
+
+	// ns0.ns1.ns2 . e1$entity
+	entPat, err := regexp.Compile("(.+)\\.(.+)")
 	if err != nil {
 		return e, err
 	}
 
-	ms := funPat.FindAllStringSubmatch(s, -1)
-	if len(ms) < 1 || len(ms[0]) != 5 {
-		ms = entPat.FindAllStringSubmatch(s, -1)
-		if len(ms) < 1 || len(ms[0]) != 3 {
-			return e, fmt.Errorf("couldn't match Scala entry [%v].", s)
+	// [[ns0.ns1.ns2.e1$entity ns0.ns1.ns2 e1$entity]]
+	ms := entPat.FindAllStringSubmatch(fqEnt, -1)
+
+	// [ns0 ns1 ns2]
+	namespace := []string{}
+	entity := ""
+	if len(ms) == 0 {
+		entity = fqEnt
+	} else {
+		namespace = strings.Split(ms[0][1], ".")
+		// [e1 entity]
+		obj := strings.Split(ms[0][2], "$")
+		for i := len(obj) - 1; i >= 0; i-- {
+			if len(obj[i]) > 0 {
+				entity = obj[i]
+				break
+			}
 		}
 	}
 
-	e.Namespace = strings.Split(ms[0][1], ".")
-	e.Entity = ms[0][2]
+	// name[A](...
+	// name(...
+	sigIdx := strings.IndexAny(meth, ":[(")
+	function := meth
+	signature := ""
+	if sigIdx > 0 {
+		function = meth[:sigIdx]
+		signature = meth[sigIdx:]
+	}
 
+	e.Namespace = namespace
+	e.Entity = entity
+	e.Function = function
+	e.Signature = signature
+
+	// find target link
 	targetSplits := strings.Split(target, "/")
 	upCount := 0
 	for i, v := range targetSplits {
@@ -105,11 +136,6 @@ func parseEntry(source string, target string, s string) (entry, error) {
 	newSplits = append(newSplits, targetSplits[len(targetSplits)-1]+s)
 	newTarget := strings.Join(newSplits, "/")
 	e.Target = newTarget
-	e.source = source
-	if len(ms[0]) == 5 {
-		e.Function = ms[0][3]
-		e.Signature = ms[0][4]
-	}
 
 	return e, nil
 }

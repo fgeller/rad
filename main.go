@@ -323,6 +323,7 @@ func install(pack pack) error {
 
 	if fileExists(dataPath) {
 		log.Printf("Already installed pack [%v], deserializing entries.", pack.name)
+		start := time.Now()
 
 		data, err := ioutil.ReadFile(dataPath)
 		if err != nil {
@@ -336,6 +337,13 @@ func install(pack pack) error {
 		}
 
 		docs[pack.name] = es
+		log.Printf(
+			"Deserialized [%v] entries for [%v] in %v.",
+			len(es),
+			pack.name,
+			time.Since(start),
+		)
+
 		return nil
 	}
 

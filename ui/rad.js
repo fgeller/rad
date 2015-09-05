@@ -33,6 +33,9 @@ var SearchResult = React.createClass({
     render: function() {
         var entName = this.props.entry["Entity"];
         var funName = this.props.entry["Function"] || "\u00a0"; // &nbsp;
+        if (funName.length > 20) {
+            funName = funName.substring(0, 20) + "..."
+        }
         var clsName = "search-result"
         if (this.props.index == 0) {
             clsName += " first-search-result"

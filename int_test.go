@@ -1,6 +1,7 @@
 package main
 
 import "io/ioutil"
+import "fmt"
 import "os"
 import "testing"
 import "time"
@@ -30,7 +31,7 @@ func TestInstallPack(t *testing.T) {
 
 	install(conf)
 
-	actual, err := findEntityFunction(conf.name, "Entity", "")
+	actual, err := findEntityFunction(conf.name, "Entity", "", 10)
 	if err != nil || len(actual) < 1 || !reflect.DeepEqual(sampleEntry, actual[0]) {
 		t.Errorf("Expected to find sample entry, got %v [err: %v].\n", actual, err)
 	}
@@ -156,6 +157,34 @@ func TestFindEntityFunctions(t *testing.T) {
 		{[]string{"main"}, "_yzy", "a", "Signature", "Target", "source"},
 		{[]string{"main"}, "_yxz", "a", "Signature", "Target", "source"},
 		{[]string{"main"}, "_xyz", "a", "Signature", "Target", "source"},
+	}
+	expected, err = json.Marshal(expectedEntries)
+	if err != nil {
+		t.Errorf("unexpected error while marshaling to json: %v", err)
+		return
+	}
+
+	if string(byts) != string(expected) {
+		t.Errorf("unexpected response, got \n%v\nbut expected\n%v\n", string(byts), string(expected))
+	}
+
+	// allow custom limit
+	limit := 2
+	res, err = http.Get(fmt.Sprintf("http://%v/s?p=%v&e=%v&limit=%v", addr, pack, "_", limit))
+	if err != nil {
+		t.Errorf("unexpected error while finding entries: %v", err)
+		return
+	}
+
+	byts, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Errorf("unexpected error while reading response body: %v", err)
+		return
+	}
+
+	expectedEntries = []entry{
+		{[]string{"main"}, "_zzz", "a", "Signature", "Target", "source"},
+		{[]string{"main"}, "_zyz", "a", "Signature", "Target", "source"},
 	}
 	expected, err = json.Marshal(expectedEntries)
 	if err != nil {

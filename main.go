@@ -4,6 +4,7 @@ import "runtime"
 import "fmt"
 import "os"
 import "strings"
+import "strconv"
 import "net/http"
 import "log"
 import "time"
@@ -333,7 +334,7 @@ func install(pack pack) error {
 	return nil
 }
 
-func findEntityFunction(pack string, entity string, fun string) ([]entry, error) {
+func findEntityFunction(pack string, entity string, fun string, limit int) ([]entry, error) {
 	es, ok := docs[pack]
 	if !ok {
 		return es, fmt.Errorf("Package [%v] not installed.", pack)
@@ -345,7 +346,7 @@ func findEntityFunction(pack string, entity string, fun string) ([]entry, error)
 		if strings.HasPrefix(e.Entity, entity) &&
 			strings.HasPrefix(e.Function, fun) {
 			results = append(results, e)
-			if len(results) == 10 {
+			if len(results) == limit {
 				return results, nil
 			}
 		}
@@ -358,7 +359,12 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	pack := r.FormValue("p")
 	entity := r.FormValue("e")
 	fun := r.FormValue("f")
-	res, _ := findEntityFunction(pack, entity, fun)
+	limit, err := strconv.ParseInt(r.FormValue("limit"), 10, 32)
+	if err != nil {
+		limit = 10
+	}
+
+	res, _ := findEntityFunction(pack, entity, fun, int(limit))
 	log.Printf("got request for p[%v] and e[%v] and f[%v], found [%v] entries.", pack, entity, fun, len(res))
 
 	js, _ := json.Marshal(res) // TODO: return proper err

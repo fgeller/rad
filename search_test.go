@@ -4,7 +4,7 @@ import "testing"
 
 func TestFindEntryMissingPackage(t *testing.T) {
 	docs = map[string][]entry{}
-	_, err := findEntityFunction("scala", "abc", "def")
+	_, err := findEntityFunction("scala", "abc", "def", 10)
 
 	if err.Error() != "Package [scala] not installed." {
 		t.Errorf("expected error when accessing non existant package, got [%v]", err)
@@ -28,7 +28,7 @@ func TestFindEntry(t *testing.T) {
 			},
 		},
 	}
-	es, err := findEntityFunction("scala", "SetProxy", "")
+	es, err := findEntityFunction("scala", "SetProxy", "", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
@@ -72,7 +72,7 @@ func TestFindEntityByPrefix(t *testing.T) {
 			},
 		},
 	}
-	es, err := findEntityFunction("scala", "Syst", "")
+	es, err := findEntityFunction("scala", "Syst", "", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
@@ -104,7 +104,7 @@ func TestFindFunction(t *testing.T) {
 		},
 	}
 
-	es, err := findEntityFunction("scala", "HashMap", "clearTable")
+	es, err := findEntityFunction("scala", "HashMap", "clearTable", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
@@ -136,7 +136,7 @@ func TestFindFunctionByPrefix(t *testing.T) {
 		},
 	}
 
-	es, err := findEntityFunction("scala", "HashMap", "clear")
+	es, err := findEntityFunction("scala", "HashMap", "clear", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)

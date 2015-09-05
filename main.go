@@ -353,10 +353,11 @@ func findEntityFunction(pack string, entity string, fun string) ([]entry, error)
 func queryHandler(w http.ResponseWriter, r *http.Request) {
 	pack := r.FormValue("p")
 	entity := r.FormValue("e")
-	res, _ := findEntityFunction(pack, entity, "")
-	log.Printf("got request for p[%v] and e[%v], found [%v] entries.", pack, entity, len(res))
+	fun := r.FormValue("f")
+	res, _ := findEntityFunction(pack, entity, fun)
+	log.Printf("got request for p[%v] and e[%v] and f[%v], found [%v] entries.", pack, entity, fun, len(res))
 
-	js, _ := json.Marshal(res)
+	js, _ := json.Marshal(res) // TODO: return proper err
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)

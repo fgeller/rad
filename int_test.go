@@ -6,6 +6,7 @@ import "testing"
 import "time"
 import "reflect"
 import "net/http"
+import "encoding/json"
 
 func TestInstallPack(t *testing.T) {
 
@@ -37,20 +38,26 @@ func TestInstallPack(t *testing.T) {
 	os.RemoveAll("packs/" + conf.name)
 }
 
-func TestFindEntries(t *testing.T) {
+func TestFindEntityFunctions(t *testing.T) {
 	pack := "test"
 	entity := "Entity"
-	fun := "Function"
-	sample := entry{[]string{"main"}, entity, fun, "Signature", "Target", "source"}
+	samples := []entry{
+		{[]string{"main"}, "AnotherEntity", "abc", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "a", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "ab", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "abc", "Signature", "Target", "source"},
+		{[]string{"main"}, entity, "d", "Signature", "Target", "source"},
+	}
 	docs = map[string][]entry{}
-	docs[pack] = []entry{sample}
+	docs[pack] = samples
 
 	addr := "0.0.0.0:3025"
 	go serve(addr)
 	time.Sleep(200)
 
-	res, err := http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity)
+	// find all for entity
 
+	res, err := http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity)
 	if err != nil {
 		t.Errorf("unexpected error while finding entries: %v", err)
 		return
@@ -62,9 +69,37 @@ func TestFindEntries(t *testing.T) {
 		return
 	}
 
-	expected := `[{"Namespace":["main"],"Entity":"Entity","Function":"Function","Signature":"Signature","Target":"Target"}]`
-	bdy := string(byts)
-	if bdy != expected {
-		t.Errorf("unexpected response: %v", bdy)
+	expected, err := json.Marshal(samples[1:])
+	if err != nil {
+		t.Errorf("unexpected error while marshaling to json: %v", err)
+		return
+	}
+
+	if string(byts) != string(expected) {
+		t.Errorf("unexpected response: %v", string(byts))
+	}
+
+	// find all with given function prefix
+
+	res, err = http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity + "&f=a")
+	if err != nil {
+		t.Errorf("unexpected error while finding entries: %v", err)
+		return
+	}
+
+	byts, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Errorf("unexpected error while reading response body: %v", err)
+		return
+	}
+
+	expected, err = json.Marshal(samples[1:4])
+	if err != nil {
+		t.Errorf("unexpected error while marshaling to json: %v", err)
+		return
+	}
+
+	if string(byts) != string(expected) {
+		t.Errorf("unexpected response, got \n%v\nbut expected\n%v\n", string(byts), string(expected))
 	}
 }

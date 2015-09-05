@@ -8,10 +8,10 @@ body {
     min-height: 600px;
     max-height: 500px;
     width: 100%;
+    border: 0px;
 }
 
 #search-field-container {
-    background-color: #fff;
     display: inline-block;
     vertical-align: top;
 }
@@ -26,28 +26,29 @@ body {
 }
 
 #search-result-container {
-    background-color: #fff;
     display: inline-block;
 }
 
 .search-result {
-    background-color: #fff;
     width: 100pt;
     display: inline-block;
-    margin: 2pt;
+    padding-top: 2.5pt;
+    padding-bottom: 2.5pt;
     padding-right: 3pt;
     padding-left: 3pt;
 }
 
 .search-result .entity-name {
-    background-color: #fff;
     font-size: 13pt;
     padding: 2pt;
 }
 
 .search-result .function-name {
-    background-color: #fff;
     font-size: 9pt;
     padding: 2pt;
+}
+
+.first-search-result {
+    background-color: #f1c40f;
 }
 

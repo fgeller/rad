@@ -33,7 +33,11 @@ var SearchResult = React.createClass({
     render: function() {
         var entName = this.props.entry["Entity"];
         var funName = this.props.entry["Function"] || "\u00a0"; // &nbsp;
-        return <div className="search-result" onClick={this.open}>
+        var clsName = "search-result"
+        if (this.props.index == 0) {
+            clsName += " first-search-result"
+        }
+        return <div className={clsName} onClick={this.open}>
                  <div className="entity-name">{entName}</div>
                  <div className="function-name">{funName}</div>
                </div>

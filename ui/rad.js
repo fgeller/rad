@@ -8,7 +8,7 @@ var SearchField = React.createClass({
                  id="search-field"
                  type="text"
                  ref="search"
-                 placeholder="Search me..."
+                 placeholder="Search here..."
                  value={this.props.query}
                  onChange={this.search} />
     }
@@ -81,7 +81,9 @@ var Search = React.createClass({
                   <div id="search-field-container">
                     <SearchField query={this.state.query} search={this.search}/>
                   </div>
-                  <div id="search-result-container">{entries}</div>
+                  <div id="search-result-container">
+                    {entries}
+                  </div>
                   <div id="ifrm-container">
                     <iframe id="ifrm" src="" />
                   </div>
@@ -104,4 +106,4 @@ key.filter = function(event){
     return !(tagName == 'INPUT' || tagName == 'SELECT' || tagName == 'TEXTAREA');
 }
 
-React.render(<Search />, document.body);
+React.render(<Search />, document.getElementById("search"));

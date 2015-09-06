@@ -1,7 +1,31 @@
+html {
+    background: url(/ui/owl.jpg) 50% 50% / cover no-repeat fixed;
+}
+
 body {
     font-family: sans-serif;
     padding: 0px;
     margin: 0px;
+}
+
+#header {
+    position: absolute;
+    top: 0;
+    margin: 0px;
+    width: 100%;
+    z-index: -1;
+    background-color: rgba(255, 255, 255, .6);
+    height: 42pt;
+    padding: 5pt;
+    text-align: right;
+}
+
+#header span {
+    margin-right: .5em;
+    font-family: Raleway, sans-serif;
+    font-size: 30pt;
+    font-weight: 100;
+    color: #666;
 }
 
 #main-container {
@@ -17,7 +41,7 @@ body {
     vertical-align: top;
     position: relative;
     left: 0;
-    top: 0;
+    top: 5pt;
 }
 
 #search-field {
@@ -32,7 +56,7 @@ body {
 #search-result-container {
     display: inline-block;
     position: relative;
-    top: 0;
+    top: 5pt;
     left: 0;
 }
 
@@ -43,6 +67,7 @@ body {
     padding-bottom: 2.5pt;
     padding-right: 3pt;
     padding-left: 3pt;
+    background-color: white;
 }
 
 .search-result .entity-name {
@@ -69,7 +94,7 @@ body {
 #ifrm-container {
     position: relative;
     left: 0;
-    top: 0;
+    top: 10pt;
     width: 100%;
     height: 100%;
 }

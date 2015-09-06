@@ -21,7 +21,7 @@ func TestParseScalaEntry(t *testing.T) {
 
 	// scala.reflect.reify.utils.Extractors$SymDef$@notifyAll():Unit
 	expected = entry{
-		Namespace: []string{"scala", "reflect", "reify", "utils"},
+		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
 		Entity:    "SymDef",
 		Function:  "notifyAll",
 		Signature: "():Unit",
@@ -34,7 +34,7 @@ func TestParseScalaEntry(t *testing.T) {
 
 	// scala.reflect.reify.utils.Extractors$SymDef$@unapply(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]
 	expected = entry{
-		Namespace: []string{"scala", "reflect", "reify", "utils"},
+		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
 		Entity:    "SymDef",
 		Function:  "unapply",
 		Signature: "(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]",
@@ -86,7 +86,7 @@ func TestParseScalaEntry(t *testing.T) {
 
 	// scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]
 	expected = entry{
-		Namespace: []string{"scala", "collection"},
+		Namespace: []string{"scala", "collection", "MapLike"},
 		Entity:    "FilteredKeys",
 		Function:  "andThen",
 		Signature: "[C](k:B=>C):PartialFunction[A,C]",
@@ -121,6 +121,3 @@ func TestParseScalaEntry(t *testing.T) {
 		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
 	}
 }
-
-// TODO: MapLike$DefaultValuesIterable should be DefaultValuesIterable
-// TODO: Map$ should be Map

@@ -102,6 +102,9 @@ func parseEntry(source string, target string, s string) (entry, error) {
 		for i := len(obj) - 1; i >= 0; i-- {
 			if len(obj[i]) > 0 {
 				entity = obj[i]
+				for _, e := range obj[:i] {
+					namespace = append(namespace, e)
+				}
 				break
 			}
 		}

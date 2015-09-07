@@ -72,7 +72,7 @@ var Search = React.createClass({
     },
     render: function(){
         var entries = [];
-        for (var i = 0; i < this.state.results.length && i < 5; i++) {
+        for (var i = 0; i < this.state.results.length && i < 3; i++) {
             var entry = this.state.results[i]
             entries.push(<SearchResult entry={entry} index={i} />)
         }

@@ -7,12 +7,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
 var docs = map[string][]entry{}
-var packDir = "packs"
 
 type indexer func() ([]entry, error)
 type downloader func(string) (*http.Response, error)
@@ -51,70 +49,28 @@ func (e entry) eq(other entry) bool {
 		e.Signature == other.Signature // TODO: expand
 }
 
-func install(pack pack) error {
-	dataPath := packDir + string(os.PathSeparator) +
-		pack.name + string(os.PathSeparator) +
-		"rad-data.json"
+func unmarshalPack(pack pack, dataPath string) error {
+	start := time.Now()
 
-	if fileExists(dataPath) {
-		log.Printf("Already installed pack [%v], deserializing entries.", pack.name)
-		start := time.Now()
-
-		data, err := ioutil.ReadFile(dataPath)
-		if err != nil {
-			return err // TODO: or re-download?
-		}
-
-		var es []entry
-		err = json.Unmarshal(data, &es)
-		if err != nil {
-			return err // TODO: or re-download?
-		}
-
-		docs[pack.name] = es
-		log.Printf(
-			"Deserialized [%v] entries for [%v] in %v.",
-			len(es),
-			pack.name,
-			time.Since(start),
-		)
-
-		return nil
-	}
-
-	local, err := download(http.Get, pack.url)
+	data, err := ioutil.ReadFile(dataPath)
 	if err != nil {
-		log.Fatalf("Failed to download [%v] err: %v.\n", pack.url, err)
-		return err
+		return err // TODO: or re-download?
 	}
-	defer os.Remove(local)
 
-	err = unzip(local, packDir+string(os.PathSeparator)+pack.name)
+	var es []entry
+	err = json.Unmarshal(data, &es)
 	if err != nil {
-		log.Fatalf("Failed to unzip archive [%v], err: %v", local, err)
-		return err
+		return err // TODO: or re-download?
 	}
 
-	docs[pack.name], err = pack.indexer()
-	if err != nil {
-		return err
-	}
+	docs[pack.name] = es
+	log.Printf(
+		"Deserialized [%v] entries for [%v] in %v.",
+		len(es),
+		pack.name,
+		time.Since(start),
+	)
 
-	datPath := packDir + string(os.PathSeparator) +
-		pack.name + string(os.PathSeparator) +
-		"rad-data.json"
-
-	data, err := json.Marshal(docs[pack.name])
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(datPath, data, 0644)
-	if err != nil {
-		return err
-	}
-
-	log.Printf("Installed [%v] entries for pack [%v].", len(docs[pack.name]), pack.name)
 	return nil
 }
 

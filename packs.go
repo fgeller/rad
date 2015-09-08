@@ -24,18 +24,15 @@ func load(pack pack, dataPath string) error {
 		return err
 	}
 
-	docs[pack.name], err = pack.indexer()
-	if err != nil {
+	if docs[pack.name], err = pack.indexer(); err != nil {
 		return err
 	}
 
-	data, err := json.Marshal(docs[pack.name])
-	if err != nil {
+	if data, err := json.Marshal(docs[pack.name]); err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(dataPath, data, 0644)
-	if err != nil {
+	if err = ioutil.WriteFile(dataPath, data, 0644); err != nil {
 		return err
 	}
 

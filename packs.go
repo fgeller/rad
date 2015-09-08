@@ -28,7 +28,8 @@ func load(pack pack, dataPath string) error {
 		return err
 	}
 
-	if data, err := json.Marshal(docs[pack.name]); err != nil {
+	data, err := json.Marshal(docs[pack.name])
+	if err != nil {
 		return err
 	}
 

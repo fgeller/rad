@@ -53,7 +53,7 @@ var SearchResult = React.createClass({
 var Search = React.createClass({
     search: function(text){
         this.setState({query: text});
-        var qs = text.split(" ");
+        var qs = text.split(" ").map(encodeURIComponent);
         if (qs.length > 1) {
             var q = "/s?p=" + qs[0] + "&e=" + qs[1]
             if (qs.length > 2) {

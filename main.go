@@ -1,46 +1,30 @@
 package main
 
-import "runtime"
-import "fmt"
-import "os"
-import "strings"
-import "strconv"
-import "net/http"
-import "log"
-import "time"
-import "regexp"
-import "io"
-import "io/ioutil"
-import "encoding/xml"
-import "encoding/json"
-
-import "archive/zip"
+import (
+	"archive/zip"
+	"encoding/json"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"runtime"
+	"strconv"
+	"strings"
+	"time"
+)
 
 var docs = map[string][]entry{}
 var packDir = "packs"
 
 type indexer func() ([]entry, error)
+type parser func(string, io.Reader) []entry
 type pack struct {
 	name    string
 	url     string
 	indexer indexer
 }
-
-func attr(se xml.StartElement, name string) (string, error) {
-	for _, att := range se.Attr {
-		if att.Name.Local == name {
-			return att.Value, nil
-		}
-	}
-
-	return "", fmt.Errorf("could not find attr %v", name)
-}
-
-func hasAttr(se xml.StartElement, name string, value string) bool {
-	v, err := attr(se, name)
-	return err == nil && v == value
-}
-
 type entry struct {
 	Namespace []string
 	Entity    string
@@ -67,119 +51,10 @@ func (e entry) eq(other entry) bool {
 
 	return e.Entity == other.Entity &&
 		e.Function == other.Function &&
-		e.Signature == other.Signature
+		e.Signature == other.Signature // TODO: expand
 }
 
-func parseEntry(source string, target string, s string) (entry, error) {
-	e := entry{source: source}
-
-	// ns0.ns1.ns2.e1$entity @ method
-	splits := strings.Split(s, "@")
-	fqEnt := splits[0]
-	meth := ""
-	if len(splits) > 0 {
-		meth = strings.Join(splits[1:], "")
-	}
-
-	// ns0.ns1.ns2 . e1$entity
-	entPat, err := regexp.Compile("(.+)\\.(.+)")
-	if err != nil {
-		return e, err
-	}
-
-	// [[ns0.ns1.ns2.e1$entity ns0.ns1.ns2 e1$entity]]
-	ms := entPat.FindAllStringSubmatch(fqEnt, -1)
-
-	// [ns0 ns1 ns2]
-	namespace := []string{}
-	entity := ""
-	if len(ms) == 0 {
-		entity = fqEnt
-	} else {
-		namespace = strings.Split(ms[0][1], ".")
-		// [e1 entity]
-		obj := strings.Split(ms[0][2], "$")
-		for i := len(obj) - 1; i >= 0; i-- {
-			if len(obj[i]) > 0 {
-				entity = obj[i]
-				for _, e := range obj[:i] {
-					namespace = append(namespace, e)
-				}
-				break
-			}
-		}
-	}
-
-	// name[A](...
-	// name(...
-	sigIdx := strings.IndexAny(meth, ":[(")
-	function := meth
-	signature := ""
-	if sigIdx > 0 {
-		function = meth[:sigIdx]
-		signature = meth[sigIdx:]
-	}
-
-	e.Namespace = namespace
-	e.Entity = entity
-	e.Function = function
-	e.Signature = signature
-
-	// find target link
-	targetSplits := strings.Split(target, "/")
-	upCount := 0
-	for i, v := range targetSplits {
-		if v != ".." {
-			upCount = i
-			break
-		}
-	}
-	sourceSplits := strings.Split(source, "/")
-	newSplits := sourceSplits[1 : len(sourceSplits)-(upCount+1)]
-	newSplits = append(newSplits, targetSplits[len(targetSplits)-1]+s)
-	newTarget := strings.Join(newSplits, "/")
-	e.Target = newTarget
-
-	return e, nil
-}
-
-func parse(f string, r io.Reader) []entry {
-	d := xml.NewDecoder(r)
-	var t xml.Token
-	var err error
-	entries := []entry{}
-
-	for ; err == nil; t, err = d.Token() {
-		if se, ok := t.(xml.StartElement); ok {
-			switch {
-			case se.Name.Local == "a" && hasAttr(se, "title", "Permalink"):
-				// <a href="../../index.html#scala.collection.TraversableLike@WithFilterextendsFilterMonadic[A,Repr]"
-				//    title="Permalink"
-				//    target="_top">
-				//    <img src="../../../lib/permalink.png" alt="Permalink" />
-				//  </a>
-
-				href, err := attr(se, "href")
-				if err == nil {
-					subs := strings.SplitAfterN(href, "#", 2)
-					if len(subs) > 1 {
-						e, err := parseEntry(f, subs[0], subs[1])
-						if err != nil {
-							log.Println(err)
-						} else {
-							entries = append(entries, e)
-						}
-
-					}
-				}
-			}
-		}
-	}
-
-	return entries
-}
-
-func scanFile(path string) []entry {
+func scanFile(path string, p parser) []entry {
 	r, err := os.Open(path)
 	defer r.Close()
 	if err != nil {
@@ -187,7 +62,7 @@ func scanFile(path string) []entry {
 		return []entry{}
 	}
 
-	return parse(path, r)
+	return p(path, r)
 }
 
 func findDirsAndMarkupFiles(dir string) ([]os.FileInfo, error) {
@@ -215,7 +90,7 @@ type scanResult struct {
 	processedFiles int
 }
 
-func scanDir(dir string) (int, []entry, error) {
+func scanDir(dir string, p parser) (int, []entry, error) {
 
 	files, err := findDirsAndMarkupFiles(dir)
 	if err != nil {
@@ -226,17 +101,17 @@ func scanDir(dir string) (int, []entry, error) {
 	rc := make(chan scanResult)
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
-	for _, p := range files {
+	for _, fi := range files {
 		go func(dir string, f os.FileInfo, c chan scanResult) {
 			path := dir + string(os.PathSeparator) + f.Name()
 			switch {
 			case f.IsDir():
-				fs, es, _ := scanDir(path)
+				fs, es, _ := scanDir(path, p)
 				c <- scanResult{es, fs}
 			default:
-				c <- scanResult{scanFile(path), 1}
+				c <- scanResult{scanFile(path, p), 1}
 			}
-		}(dir, p, rc)
+		}(dir, fi, rc)
 	}
 
 	results := []entry{}
@@ -250,9 +125,9 @@ func scanDir(dir string) (int, []entry, error) {
 	return fc, results, nil
 }
 
-func scan(path string) ([]entry, error) {
+func scan(path string, p parser) ([]entry, error) {
 	start := time.Now()
-	fc, es, err := scanDir(path)
+	fc, es, err := scanDir(path, p)
 	elapsed := time.Now().Sub(start)
 	log.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
 
@@ -334,14 +209,6 @@ func download(d downloader, remote string) (string, error) {
 	log.Printf("Downloaded %v bytes.\n", n)
 
 	return local, nil
-}
-
-func indexScalaApi(packName string) func() ([]entry, error) {
-	return func() ([]entry, error) {
-		path := packDir + "/" + packName
-		log.Printf("About to index scala api in [%v]\n", path)
-		return scan(path)
-	}
 }
 
 func install(pack pack) error {

@@ -9,7 +9,14 @@ import "net/http"
 import "encoding/json"
 
 func TestInstallPack(t *testing.T) {
-	e := entry{[]string{"main"}, "Entity", "Function", "Signature", "Target", "source"}
+	e := entry{
+		Namespace: []string{"main"},
+		Entity:    "Entity",
+		Function:  "Function",
+		Signature: "Signature",
+		Target:    "Target",
+		Source:    "source",
+	}
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return es, nil }
 	serveZip := func(addr string) {
@@ -42,13 +49,20 @@ func TestInstallPack(t *testing.T) {
 	}
 
 	if !e.eq(actual[0]) {
-		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", es, actual)
+		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", actual, es)
 	}
 }
 
 func TestInstallExistingSerializedPack(t *testing.T) {
 
-	e := entry{[]string{"main"}, "Entity", "Function", "Signature", "Target", "source"}
+	e := entry{
+		Namespace: []string{"main"},
+		Entity:    "Entity",
+		Function:  "Function",
+		Signature: "Signature",
+		Target:    "Target",
+		Source:    "source",
+	}
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return []entry{}, nil }
 	conf := pack{
@@ -89,7 +103,7 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 	}
 
 	if !e.eq(actual[0]) {
-		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", es, actual)
+		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", actual, es)
 	}
 }
 

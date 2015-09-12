@@ -7,116 +7,135 @@ func TestParseScalaEntry(t *testing.T) {
 	source := "/some source file"
 	target := "some target"
 
+	v := "scala.reflect.macros.contexts.Parsers@notify():Unit"
 	expected := entry{
 		Namespace: []string{"scala", "reflect", "macros", "contexts"},
 		Entity:    "Parsers",
 		Function:  "notify",
 		Signature: "():Unit",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ := parseEntry(source, target, "scala.reflect.macros.contexts.Parsers@notify():Unit")
+	actual, _ := parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got %v expected %v.", actual, expected)
 	}
 
-	// scala.reflect.reify.utils.Extractors$SymDef$@notifyAll():Unit
+	v = "scala.reflect.reify.utils.Extractors$SymDef$@notifyAll():Unit"
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
 		Entity:    "SymDef",
 		Function:  "notifyAll",
 		Signature: "():Unit",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "scala.reflect.reify.utils.Extractors$SymDef$@notifyAll():Unit")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
 	}
 
-	// scala.reflect.reify.utils.Extractors$SymDef$@unapply(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]
+	v = "scala.reflect.reify.utils.Extractors$SymDef$@unapply(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]"
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
 		Entity:    "SymDef",
 		Function:  "unapply",
 		Signature: "(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "scala.reflect.reify.utils.Extractors$SymDef$@unapply(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
 	}
 
-	// scala.AnyRef@notify():Unit
+	v = "scala.AnyRef@notify():Unit"
 	expected = entry{
 		Namespace: []string{"scala"},
 		Entity:    "AnyRef",
 		Function:  "notify",
 		Signature: "():Unit",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "scala.AnyRef@notify():Unit")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
 	}
 
-	// scala.tools.cmd.Spec$@InfoextendsAnyRef
+	v = "scala.tools.cmd.Spec$@InfoextendsAnyRef"
 	expected = entry{
 		Namespace: []string{"scala", "tools", "cmd"},
 		Entity:    "Spec",
 		Function:  "InfoextendsAnyRef",
 		Signature: "",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "scala.tools.cmd.Spec$@InfoextendsAnyRef")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
 	}
 
-	// scala.tools.ant.FastScalac
+	v = "scala.tools.ant.FastScalac"
 	expected = entry{
 		Namespace: []string{"scala", "tools", "ant"},
 		Entity:    "FastScalac",
 		Function:  "",
 		Signature: "",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "scala.tools.ant.FastScalac")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
 	}
 
-	// scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]
+	v = "scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]"
 	expected = entry{
 		Namespace: []string{"scala", "collection", "MapLike"},
 		Entity:    "FilteredKeys",
 		Function:  "andThen",
 		Signature: "[C](k:B=>C):PartialFunction[A,C]",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
 	}
 
-	// scala.util.Success@isFailure:Boolean
+	v = "scala.util.Success@isFailure:Boolean"
 	expected = entry{
 		Namespace: []string{"scala", "util"},
 		Entity:    "Success",
 		Function:  "isFailure",
 		Signature: ":Boolean",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "scala.util.Success@isFailure:Boolean")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
 	}
 
-	// package
+	v = "package"
 	expected = entry{
 		Namespace: []string{},
 		Entity:    "package",
+		Target:    target + v,
+		Source:    source,
 	}
 
-	actual, _ = parseEntry(source, target, "package")
+	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
 	}

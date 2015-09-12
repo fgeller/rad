@@ -26,14 +26,22 @@ type entry struct {
 	Function  string
 	Signature string
 	Target    string // location relative to `packDir` where to find documentation
-	source    string
+	Source    string
 }
 
 func (e entry) String() string {
-	return fmt.Sprintf("entry{Namespace: %v, Entity: %v, Function: %v, Signature: %v}", e.Namespace, e.Entity, e.Function, e.Signature)
+	return fmt.Sprintf(
+		"entry{Namespace: %v, Entity: %v, Function: %v, Signature: %v, Target: %v, Source: %v}",
+		e.Namespace,
+		e.Entity,
+		e.Function,
+		e.Signature,
+		e.Target,
+		e.Source,
+	)
 }
 
-func (e entry) eq(other entry) bool {
+func (e entry) eq(other entry) bool { // TODO: reflect.DeepEqual?
 	if len(e.Namespace) != len(other.Namespace) {
 		return false
 	}
@@ -44,9 +52,11 @@ func (e entry) eq(other entry) bool {
 		}
 	}
 
-	return e.Entity == other.Entity &&
+	return (e.Entity == other.Entity &&
 		e.Function == other.Function &&
-		e.Signature == other.Signature // TODO: expand
+		e.Signature == other.Signature &&
+		e.Target == other.Target &&
+		e.Source == other.Source)
 }
 
 func unmarshalPack(pack pack, dataPath string) error {

@@ -53,7 +53,7 @@ func parseScalaDocFile(f string, r io.Reader) []entry {
 }
 
 func parseEntry(source string, target string, s string) (entry, error) {
-	e := entry{source: source}
+	e := entry{Source: source}
 
 	// ns0.ns1.ns2.e1$entity @ method
 	splits := strings.Split(s, "@")

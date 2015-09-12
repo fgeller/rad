@@ -87,6 +87,14 @@ func unmarshalPack(pack pack, dataPath string) error {
 func main() {
 	install(
 		pack{
+			name:    "java",
+			url:     "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-docs-all.zip",
+			indexer: indexJavaApi("java"),
+		},
+	)
+
+	install(
+		pack{
 			name:    "scala",
 			url:     "http://downloads.typesafe.com/scala/2.11.7/scala-docs-2.11.7.zip",
 			indexer: indexScalaApi("scala"),

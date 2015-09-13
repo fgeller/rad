@@ -43,6 +43,8 @@ func load(pack pack, dataPath string) error {
 }
 
 func install(pack pack) error {
+	log.Printf("Installing pack [%v].\n", pack.name)
+
 	dataPath := mkPath(packDir, pack.name, "rad-data.json")
 
 	if fileExists(dataPath) {

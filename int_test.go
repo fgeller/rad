@@ -1,12 +1,26 @@
 package main
 
-import "io/ioutil"
-import "fmt"
-import "os"
-import "testing"
-import "time"
-import "net/http"
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"testing"
+	"time"
+)
+
+type zipServe struct{}
+
+func (z *zipServe) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	switch {
+	case r.URL.Path == "/ping":
+		w.Write([]byte("pong"))
+	case r.URL.Path == "/test.zip":
+		http.ServeFile(w, r, "./testdata/test.zip")
+	}
+
+}
 
 func TestInstallPack(t *testing.T) {
 	e := entry{
@@ -19,21 +33,19 @@ func TestInstallPack(t *testing.T) {
 	}
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return es, nil }
-	serveZip := func(addr string) {
-		http.HandleFunc("/test.zip", func(w http.ResponseWriter, r *http.Request) {
-			http.ServeFile(w, r, "./testdata/test.zip")
-		})
-		http.ListenAndServe(addr, nil)
-	}
+	serveZip := func(addr string) { http.ListenAndServe(addr, &zipServe{}) }
+	zipAddr := "0.0.0.0:8881"
 	conf := pack{
 		name:    "blubb",
-		url:     "http://localhost:8881/test.zip",
+		url:     "http://" + zipAddr + "/test.zip",
 		indexer: indexer,
 	}
 
-	// possible race condition here?
-	go serveZip(":8881")
 	defer os.RemoveAll("packs/" + conf.name)
+	defer os.RemoveAll("test.zip")
+
+	go serveZip(zipAddr)
+	awaitPing(zipAddr)
 
 	install(conf)
 

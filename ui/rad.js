@@ -16,7 +16,7 @@ var SearchField = React.createClass({
 
 var SearchResult = React.createClass({
     open: function() {
-        var href = "/packs/" + this.props.entry["Target"];
+        var href = "/" + this.props.entry["Target"];
         console.log("opening target", href);
         document.getElementById("ifrm").src = href;
     },

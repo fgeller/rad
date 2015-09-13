@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"io"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -25,6 +26,7 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 	var t xml.Token
 	var err error
 	var inMemberNameLink bool
+	var inMemberSummary bool
 	entries := []entry{}
 
 	for ; err == nil; t, err = d.Token() {
@@ -34,9 +36,11 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 		// </span>
 		if se, ok := t.(xml.StartElement); ok {
 			switch {
+			case se.Name.Local == "table" && hasAttr(se, "class", "memberSummary"):
+				inMemberSummary = true
 			case se.Name.Local == "span" && hasAttr(se, "class", "memberNameLink"):
 				inMemberNameLink = true
-			case inMemberNameLink && se.Name.Local == "a":
+			case inMemberSummary && inMemberNameLink && se.Name.Local == "a":
 				// href="../../../javax/xml/parsers/SAXParser.html#getParser--"
 				href, err := attr(se, "href")
 				if err != nil {
@@ -73,8 +77,15 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 				fun := last[fstart:fend]
 
 				// ["../", "../", "../", "javax/xml/parsers/SAXParser.html#getParser--"]
-				ps := strings.SplitAfterN(href, "/", lvls+1)
-				tgt := "java/docs/api/" + ps[len(ps)-1]
+				// ls := strings.SplitAfterN(href, "/", lvls+1)
+				// ["packs", "java", "docs", "api", "javax", "xml", "parsers", "SAXParser.html"]
+				ps := strings.Split(path, string(os.PathSeparator))
+				// ["..", "..", "..", "javax", "xml", "parsers", "SAXParser.html#getParser--"]
+				hs := strings.Split(href, "/")
+				// "SAXParser.html#getParser--"
+				fl := hs[len(hs)-1]
+				// "packs/java/docs/api/javax/xml/parsers/SAXParser.html#getParser--"
+				tgt := strings.Join(append(ps[:len(ps)-1], fl), "/")
 
 				e := entry{
 					Namespace: ns,
@@ -91,10 +102,11 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 			switch {
 			case se.Name.Local == "span": // assumes no span nested in memberNameLink
 				inMemberNameLink = false
+			case se.Name.Local == "table": // assumes no table nested in memberSummary
+				inMemberSummary = false
 			}
 		}
 	}
 
-	log.Printf("found %v entries in %v.\n", len(entries), path)
 	return entries
 }

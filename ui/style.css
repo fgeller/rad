@@ -3,7 +3,8 @@ html {
 }
 
 body {
-    font-family: sans-serif;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
     padding: 0px;
     margin: 0px;
 }
@@ -14,7 +15,7 @@ body {
     margin: 0px;
     width: 100%;
     z-index: -1;
-    background-color: rgba(255, 255, 255, .6);
+    background-color: rgba(255, 255, 255, .8);
     height: 42pt;
     padding: 5pt;
     text-align: right;
@@ -45,6 +46,7 @@ body {
 }
 
 #search-field {
+    font-family: Roboto, sans-serif;
     height: 36pt;
     width: 175pt;
     padding-left: 3pt;
@@ -66,17 +68,18 @@ body {
     padding-top: 2.5pt;
     padding-bottom: 2.5pt;
     padding-right: 3pt;
-    padding-left: 3pt;
-    background-color: white;
+    padding-left: 5pt;
+    margin-left: 5pt;
+    border-left: 1px solid #666;
+    color: #666;
 }
 
 .search-result .entity-name {
-    font-size: 10pt;
-    font-weight: bold;
+    font-size: 12pt;
     overflow-x: overlay;
 }
 
-.search-result .function-name {
+.search-result .member-name {
     font-size: 10pt;
     display: inline-block;
     overflow-x: overlay;
@@ -88,7 +91,8 @@ body {
 }
 
 .first-search-result {
-    background-color: #f1c40f;
+    border-left: 0px;
+    color: #000;
 }
 
 #ifrm-container {

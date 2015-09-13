@@ -13,13 +13,14 @@ body {
     z-index: -1;
     height: 42pt;
     padding: 5pt;
+    padding-top: 30pt;
     text-align: right;
 }
 
 #header span {
     margin-right: .5em;
     font-family: Raleway, Roboto, sans-serif;
-    font-size: 30pt;
+    font-size: 16pt;
     font-weight: 100;
     color: #3f51b5;
 }

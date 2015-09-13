@@ -34,9 +34,9 @@ var SearchResult = React.createClass({
         // \00a0 = &nbsp;
         var namespace = this.props.entry["Namespace"].join(".") || "\u00a0";
         var entName = this.props.entry["Entity"];
-        var funName = this.props.entry["Function"] || "\u00a0";
-        if (funName.length > 20) {
-            funName = funName.substring(0, 20) + "...";
+        var memName = this.props.entry["Member"] || "\u00a0";
+        if (memName.length > 20) {
+            memName = memName.substring(0, 20) + "...";
         }
         var clsName = "search-result"
         if (this.props.index == 0) {
@@ -44,7 +44,7 @@ var SearchResult = React.createClass({
         }
         return <div className={clsName} onClick={this.open}>
                  <div className="entity-name">{entName}</div>
-                 <div className="function-name">{funName}</div>
+                 <div className="member-name">{memName}</div>
                  <div className="namespace">{namespace}</div>
                </div>
     }

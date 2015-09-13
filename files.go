@@ -104,6 +104,7 @@ func findDirsAndMarkupFiles(dir string) ([]os.FileInfo, error) {
 
 	return files, nil
 }
+
 func unzip(src string, dest string) error {
 	err := os.MkdirAll(dest, 0755)
 	if err != nil {

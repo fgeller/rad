@@ -36,9 +36,9 @@ func TestInstallPack(t *testing.T) {
 	serveZip := func(addr string) { http.ListenAndServe(addr, &zipServe{}) }
 	zipAddr := "0.0.0.0:8881"
 	conf := pack{
-		name:    "blubb",
-		url:     "http://" + zipAddr + "/test.zip",
-		indexer: indexer,
+		name:     "blubb",
+		location: "http://" + zipAddr + "/test.zip",
+		indexer:  indexer,
 	}
 
 	defer os.RemoveAll("packs/" + conf.name)
@@ -78,9 +78,9 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return []entry{}, nil }
 	conf := pack{
-		name:    "blubb",
-		url:     "http://localhost:8881/test.zip",
-		indexer: indexer,
+		name:     "blubb",
+		location: "http://localhost:8881/test.zip",
+		indexer:  indexer,
 	}
 	os.RemoveAll("packs/" + conf.name)
 

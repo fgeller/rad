@@ -11,9 +11,11 @@ import (
 var packDir = "packs"
 
 func load(pack pack, dataPath string) error {
-	local, err := download(http.Get, pack.url)
+	log.Printf("Loading remote pack [%v].\n", pack.name)
+
+	local, err := download(http.Get, pack.location)
 	if err != nil {
-		log.Fatalf("Failed to download [%v] err: %v.\n", pack.url, err)
+		log.Fatalf("Failed to download [%v] err: %v.\n", pack.location, err)
 		return err
 	}
 	defer os.Remove(local)
@@ -38,7 +40,6 @@ func load(pack pack, dataPath string) error {
 	}
 
 	log.Printf("Installed [%v] entries for pack [%v].", len(docs[pack.name]), pack.name)
-
 	return nil
 }
 

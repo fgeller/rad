@@ -116,6 +116,8 @@ func parseEntry(source string, target string, s string) (entry, error) {
 			break
 		}
 	}
+
+	// TODO: clarify this a bit
 	sourceSplits := strings.Split(source, "/")
 	newSplits := sourceSplits[:len(sourceSplits)-(upCount+1)]
 	newSplits = append(newSplits, targetSplits[len(targetSplits)-1]+s)

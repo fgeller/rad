@@ -79,7 +79,7 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 				e := entry{
 					Namespace: ns,
 					Entity:    ent,
-					Function:  fun,
+					Member:    fun,
 					Target:    tgt,
 					Source:    path,
 				}

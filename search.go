@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func findEntityFunction(pack string, entity string, fun string, limit int) ([]entry, error) {
+func findEntityMember(pack string, entity string, fun string, limit int) ([]entry, error) {
 	es, ok := docs[pack]
 	if !ok {
 		return es, fmt.Errorf("Package [%v] not installed.", pack)
@@ -15,7 +15,7 @@ func findEntityFunction(pack string, entity string, fun string, limit int) ([]en
 
 	for _, e := range es {
 		if strings.HasPrefix(strings.ToLower(e.Entity), strings.ToLower(entity)) &&
-			strings.HasPrefix(strings.ToLower(e.Function), strings.ToLower(fun)) {
+			strings.HasPrefix(strings.ToLower(e.Member), strings.ToLower(fun)) {
 			results = append(results, e)
 			if len(results) == limit {
 				return results, nil

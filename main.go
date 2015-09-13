@@ -23,7 +23,7 @@ type pack struct {
 type entry struct {
 	Namespace []string
 	Entity    string
-	Function  string
+	Member    string
 	Signature string
 	Target    string // location relative to `packDir` where to find documentation
 	Source    string
@@ -31,10 +31,10 @@ type entry struct {
 
 func (e entry) String() string {
 	return fmt.Sprintf(
-		"entry{Namespace: %v, Entity: %v, Function: %v, Signature: %v, Target: %v, Source: %v}",
+		"entry{Namespace: %v, Entity: %v, Member: %v, Signature: %v, Target: %v, Source: %v}",
 		e.Namespace,
 		e.Entity,
-		e.Function,
+		e.Member,
 		e.Signature,
 		e.Target,
 		e.Source,
@@ -53,7 +53,7 @@ func (e entry) eq(other entry) bool { // TODO: reflect.DeepEqual?
 	}
 
 	return (e.Entity == other.Entity &&
-		e.Function == other.Function &&
+		e.Member == other.Member &&
 		e.Signature == other.Signature &&
 		e.Target == other.Target &&
 		e.Source == other.Source)

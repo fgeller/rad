@@ -4,7 +4,7 @@ import "testing"
 
 func TestFindEntryMissingPackage(t *testing.T) {
 	docs = map[string][]entry{}
-	_, err := findEntityFunction("scala", "abc", "def", 10)
+	_, err := findEntityMember("scala", "abc", "def", 10)
 
 	if err.Error() != "Package [scala] not installed." {
 		t.Errorf("expected error when accessing non existant package, got [%v]", err)
@@ -17,18 +17,18 @@ func TestFindEntry(t *testing.T) {
 			entry{
 				Namespace: []string{"scala", "sys"},
 				Entity:    "SystemProperties",
-				Function:  "",
+				Member:    "",
 				Signature: "",
 			},
 			entry{
 				Namespace: []string{"scala", "collection"},
 				Entity:    "SetProxy",
-				Function:  "",
+				Member:    "",
 				Signature: "",
 			},
 		},
 	}
-	es, err := findEntityFunction("scala", "SetProxy", "", 10)
+	es, err := findEntityMember("scala", "SetProxy", "", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
@@ -55,24 +55,24 @@ func TestFindEntityByPrefix(t *testing.T) {
 			entry{
 				Namespace: []string{"scala", "sys"},
 				Entity:    "SystemProperties",
-				Function:  "",
+				Member:    "",
 				Signature: "",
 			},
 			entry{
 				Namespace: []string{"scala", "sys"},
 				Entity:    "SystemThings",
-				Function:  "",
+				Member:    "",
 				Signature: "",
 			},
 			entry{
 				Namespace: []string{"scala", "collection"},
 				Entity:    "SetProxy",
-				Function:  "",
+				Member:    "",
 				Signature: "",
 			},
 		},
 	}
-	es, err := findEntityFunction("scala", "Syst", "", 10)
+	es, err := findEntityMember("scala", "Syst", "", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
@@ -98,24 +98,24 @@ func TestFindIsCaseInsentitive(t *testing.T) {
 			entry{
 				Namespace: []string{"scala", "sys"},
 				Entity:    "SystemProperties",
-				Function:  "hans",
+				Member:    "hans",
 				Signature: "",
 			},
 			entry{
 				Namespace: []string{"scala", "sys"},
 				Entity:    "SYSTEMThings",
-				Function:  "HANS",
+				Member:    "HANS",
 				Signature: "",
 			},
 			entry{
 				Namespace: []string{"scala", "sys"},
 				Entity:    "systemThings",
-				Function:  "hAnS",
+				Member:    "hAnS",
 				Signature: "",
 			},
 		},
 	}
-	es, err := findEntityFunction("scala", "SyS", "haNS", 10)
+	es, err := findEntityMember("scala", "SyS", "haNS", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
@@ -136,19 +136,19 @@ func TestFindIsCaseInsentitive(t *testing.T) {
 
 }
 
-func TestFindFunction(t *testing.T) {
+func TestFindMember(t *testing.T) {
 	docs = map[string][]entry{
 		"scala": []entry{
 			entry{
 				Namespace: []string{"scala", "collection", "mutable"},
 				Entity:    "HashMap",
-				Function:  "clearTable",
+				Member:    "clearTable",
 				Signature: "():Unit",
 			},
 		},
 	}
 
-	es, err := findEntityFunction("scala", "HashMap", "clearTable", 10)
+	es, err := findEntityMember("scala", "HashMap", "clearTable", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
@@ -168,19 +168,19 @@ func TestFindFunction(t *testing.T) {
 
 }
 
-func TestFindFunctionByPrefix(t *testing.T) {
+func TestFindMemberByPrefix(t *testing.T) {
 	docs = map[string][]entry{
 		"scala": []entry{
 			entry{
 				Namespace: []string{"scala", "collection", "mutable"},
 				Entity:    "HashMap",
-				Function:  "clearTable",
+				Member:    "clearTable",
 				Signature: "():Unit",
 			},
 		},
 	}
 
-	es, err := findEntityFunction("scala", "HashMap", "clear", 10)
+	es, err := findEntityMember("scala", "HashMap", "clear", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)

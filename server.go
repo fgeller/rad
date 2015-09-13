@@ -17,7 +17,7 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 		limit = 10
 	}
 
-	res, _ := findEntityFunction(pack, entity, fun, int(limit))
+	res, _ := findEntityMember(pack, entity, fun, int(limit))
 	log.Printf("got request for p[%v] and e[%v] and f[%v], found [%v] entries.", pack, entity, fun, len(res))
 
 	js, _ := json.Marshal(res) // TODO: return proper err

@@ -95,16 +95,16 @@ func parseEntry(source string, target string, s string) (entry, error) {
 	// name[A](...
 	// name(...
 	sigIdx := strings.IndexAny(meth, ":[(")
-	function := meth
+	member := meth
 	signature := ""
 	if sigIdx > 0 {
-		function = meth[:sigIdx]
+		member = meth[:sigIdx]
 		signature = meth[sigIdx:]
 	}
 
 	e.Namespace = namespace
 	e.Entity = entity
-	e.Function = function
+	e.Member = member
 	e.Signature = signature
 
 	// find target link

@@ -23,7 +23,7 @@ func TestJavaParseFileMethods(t *testing.T) {
 	fstExpected := entry{
 		Namespace: []string{"javax", "xml", "parsers"},
 		Entity:    "SAXParser",
-		Function:  "SAXParser",
+		Member:    "SAXParser",
 		Signature: "",
 		Target:    "java/docs/api/javax/xml/parsers/SAXParser.html#SAXParser--",
 		Source:    path,
@@ -32,7 +32,7 @@ func TestJavaParseFileMethods(t *testing.T) {
 	sndExpected := entry{
 		Namespace: []string{"javax", "xml", "parsers"},
 		Entity:    "SAXParser",
-		Function:  "getParser",
+		Member:    "getParser",
 		Signature: "",
 		Target:    "java/docs/api/javax/xml/parsers/SAXParser.html#getParser--",
 		Source:    path,
@@ -67,7 +67,7 @@ func TestJavaParseFileFields(t *testing.T) {
 	fstExpected := entry{
 		Namespace: []string{"java", "awt", "event"},
 		Entity:    "ActionEvent",
-		Function:  "ACTION_FIRST",
+		Member:    "ACTION_FIRST",
 		Signature: "",
 		Target:    "java/docs/api/java/awt/event/ActionEvent.html#ACTION_FIRST",
 		Source:    path,

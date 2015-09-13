@@ -28,7 +28,7 @@ func TestInstallPack(t *testing.T) {
 	e := entry{
 		Namespace: []string{"main"},
 		Entity:    "Entity",
-		Function:  "Function",
+		Member:    "Member",
 		Signature: "Signature",
 		Target:    "Target",
 		Source:    "source",
@@ -51,7 +51,7 @@ func TestInstallPack(t *testing.T) {
 
 	install(conf)
 
-	actual, err := findEntityFunction(conf.name, "Entity", "", 10)
+	actual, err := findEntityMember(conf.name, "Entity", "", 10)
 	if err != nil {
 		t.Errorf("unexpected error while finding entries: %v", err)
 		return
@@ -71,7 +71,7 @@ func TestInstallLocalPack(t *testing.T) {
 	e := entry{
 		Namespace: []string{"com", "example"},
 		Entity:    "Entity",
-		Function:  "Function",
+		Member:    "Member",
 		Signature: "Signature",
 		Target:    "Target",
 		Source:    "source",
@@ -86,7 +86,7 @@ func TestInstallLocalPack(t *testing.T) {
 
 	install(p)
 
-	found, err := findEntityFunction(p.name, e.Entity, e.Function, 10)
+	found, err := findEntityMember(p.name, e.Entity, e.Member, 10)
 	if err != nil {
 		t.Errorf("unexpected error when trying to find entries: %v\n", err)
 		return
@@ -109,7 +109,7 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 	e := entry{
 		Namespace: []string{"main"},
 		Entity:    "Entity",
-		Function:  "Function",
+		Member:    "Member",
 		Signature: "Signature",
 		Target:    "Target",
 		Source:    "source",
@@ -142,7 +142,7 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 
 	install(conf)
 
-	actual, err := findEntityFunction(conf.name, "Entity", "", 10)
+	actual, err := findEntityMember(conf.name, "Entity", "", 10)
 	if err != nil {
 		t.Errorf("unexpected error while finding entries: %v", err)
 		return
@@ -158,7 +158,7 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 	}
 }
 
-func TestFindEntityFunctions(t *testing.T) {
+func TestFindEntityMembers(t *testing.T) {
 	pack := "test"
 	entity := "Entity"
 	samples := []entry{
@@ -222,7 +222,7 @@ func TestFindEntityFunctions(t *testing.T) {
 		t.Errorf("unexpected response, got\n%v\nbut expected\n%v\n", string(byts), string(expected))
 	}
 
-	// find all with given function prefix
+	// find all with given member prefix
 
 	res, err = http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity + "&f=a")
 	if err != nil {

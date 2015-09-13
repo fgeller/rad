@@ -11,7 +11,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected := entry{
 		Namespace: []string{"scala", "reflect", "macros", "contexts"},
 		Entity:    "Parsers",
-		Function:  "notify",
+		Member:    "notify",
 		Signature: "():Unit",
 		Target:    target + v,
 		Source:    source,
@@ -26,7 +26,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
 		Entity:    "SymDef",
-		Function:  "notifyAll",
+		Member:    "notifyAll",
 		Signature: "():Unit",
 		Target:    target + v,
 		Source:    source,
@@ -41,7 +41,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
 		Entity:    "SymDef",
-		Function:  "unapply",
+		Member:    "unapply",
 		Signature: "(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]",
 		Target:    target + v,
 		Source:    source,
@@ -56,7 +56,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala"},
 		Entity:    "AnyRef",
-		Function:  "notify",
+		Member:    "notify",
 		Signature: "():Unit",
 		Target:    target + v,
 		Source:    source,
@@ -71,7 +71,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala", "tools", "cmd"},
 		Entity:    "Spec",
-		Function:  "InfoextendsAnyRef",
+		Member:    "InfoextendsAnyRef",
 		Signature: "",
 		Target:    target + v,
 		Source:    source,
@@ -86,7 +86,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala", "tools", "ant"},
 		Entity:    "FastScalac",
-		Function:  "",
+		Member:    "",
 		Signature: "",
 		Target:    target + v,
 		Source:    source,
@@ -101,7 +101,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala", "collection", "MapLike"},
 		Entity:    "FilteredKeys",
-		Function:  "andThen",
+		Member:    "andThen",
 		Signature: "[C](k:B=>C):PartialFunction[A,C]",
 		Target:    target + v,
 		Source:    source,
@@ -116,7 +116,7 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala", "util"},
 		Entity:    "Success",
-		Function:  "isFailure",
+		Member:    "isFailure",
 		Signature: ":Boolean",
 		Target:    target + v,
 		Source:    source,

@@ -5,24 +5,17 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
+	"net/url"
 )
 
 var packDir = "packs"
 
-func load(pack pack, dataPath string) error {
-	log.Printf("Loading remote pack [%v].\n", pack.name)
+func load(pack pack, localPath string) error {
+	log.Printf("Loading pack [%v] for [%v].\n", pack.name, localPath)
 
-	local, err := download(http.Get, pack.location)
+	err := unzip(localPath, mkPath(packDir, pack.name))
 	if err != nil {
-		log.Fatalf("Failed to download [%v] err: %v.\n", pack.location, err)
-		return err
-	}
-	defer os.Remove(local)
-
-	err = unzip(local, mkPath(packDir, pack.name))
-	if err != nil {
-		log.Fatalf("Failed to unzip archive [%v], err: %v", local, err)
+		log.Fatalf("Failed to unzip archive [%v], err: %v", localPath, err)
 		return err
 	}
 
@@ -35,12 +28,25 @@ func load(pack pack, dataPath string) error {
 		return err
 	}
 
+	dataPath := mkPath(packDir, pack.name, "rad-data.json")
 	if err = ioutil.WriteFile(dataPath, data, 0644); err != nil {
 		return err
 	}
 
 	log.Printf("Installed [%v] entries for pack [%v].", len(docs[pack.name]), pack.name)
 	return nil
+}
+
+func fetchRemote(pack pack) (string, error) {
+	log.Printf("Loading remote pack [%v].\n", pack.name)
+
+	local, err := download(http.Get, pack.location)
+	if err != nil {
+		log.Fatalf("Failed to download [%v] err: %v.\n", pack.location, err)
+		return local, err
+	}
+
+	return local, nil
 }
 
 func install(pack pack) error {
@@ -53,5 +59,13 @@ func install(pack pack) error {
 		return unmarshalPack(pack, dataPath)
 	}
 
-	return load(pack, dataPath)
+	local := pack.location
+	if u, err := url.Parse(pack.location); err == nil && u.Scheme != "" {
+		local, err = fetchRemote(pack)
+		if err != nil {
+			return err
+		}
+	}
+
+	return load(pack, local)
 }

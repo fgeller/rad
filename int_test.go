@@ -23,6 +23,8 @@ func (z *zipServe) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func TestInstallPack(t *testing.T) {
+	os.RemoveAll("test.zip") // TODO: clean this up
+
 	e := entry{
 		Namespace: []string{"main"},
 		Entity:    "Entity",
@@ -63,6 +65,43 @@ func TestInstallPack(t *testing.T) {
 	if !e.eq(actual[0]) {
 		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", actual, es)
 	}
+}
+
+func TestInstallLocalPack(t *testing.T) {
+	e := entry{
+		Namespace: []string{"com", "example"},
+		Entity:    "Entity",
+		Function:  "Function",
+		Signature: "Signature",
+		Target:    "Target",
+		Source:    "source",
+	}
+	es := []entry{e}
+	indexer := func() ([]entry, error) { return es, nil }
+	p := pack{
+		name:     "testpack",
+		indexer:  indexer,
+		location: "testdata/test.zip",
+	}
+
+	install(p)
+
+	found, err := findEntityFunction(p.name, e.Entity, e.Function, 10)
+	if err != nil {
+		t.Errorf("unexpected error when trying to find entries: %v\n", err)
+		return
+	}
+
+	if len(found) != 1 {
+		t.Errorf("expected to find single test entry got\n%v\n", found)
+		return
+	}
+
+	if !found[0].eq(e) {
+		t.Errorf("expected to find test entry\n%v\ngot\n%v\n", e, found[0])
+		return
+	}
+
 }
 
 func TestInstallExistingSerializedPack(t *testing.T) {

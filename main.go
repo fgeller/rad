@@ -88,7 +88,7 @@ func main() {
 	install(
 		pack{
 			name:     "java",
-			location: "jdk-8u60-docs-all.zip",
+			location: "/Users/fgeller/Downloads/jdk-8u60-docs-all.zip",
 			indexer:  indexJavaApi("java"),
 		},
 	)

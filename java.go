@@ -27,8 +27,6 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 	var inMemberNameLink bool
 	entries := []entry{}
 
-	log.Printf("about to parse %v for java doc entries\n", path)
-
 	for ; err == nil; t, err = d.Token() {
 
 		// <span class="memberNameLink">

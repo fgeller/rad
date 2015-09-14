@@ -101,4 +101,16 @@ func TestJavaParseFileFields(t *testing.T) {
 		t.Errorf("expected to find inherited getSource method, but wasn't found\n")
 		return
 	}
+
+	var foundActionEventMask bool
+	for _, e := range results {
+		if e.Entity == "AWTEvent" && e.Member == "ACTION_EVENT_MASK" {
+			foundActionEventMask = true
+		}
+	}
+
+	if !foundActionEventMask {
+		t.Errorf("expected to find inherited ACTION_EVENT_MASK field, but wasn't found\n")
+		return
+	}
 }

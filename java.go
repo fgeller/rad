@@ -80,7 +80,7 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 	var inMemberSummary bool
 	var inInheritedBlock bool
 	entries := []entry{}
-	inheritedBlockPattern, _ := regexp.Compile("^methods\\.inherited.+") // TODO: err
+	inheritedBlockPattern, _ := regexp.Compile("^(methods|fields)\\.inherited.+") // TODO: err
 
 	for ; err == nil; t, err = d.Token() {
 

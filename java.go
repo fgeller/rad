@@ -41,9 +41,11 @@ func parseHref(href string, path string) entry {
 
 	// "getParser"
 	fstart := strings.Index(last, "#") + 1
-	fend := strings.Index(last, "-")
+	fend := strings.Index(last[fstart:], "-")
 	if fend < 0 {
 		fend = len(last)
+	} else {
+		fend += fstart
 	}
 	fun := last[fstart:fend]
 

@@ -114,3 +114,25 @@ func TestJavaParseFileFields(t *testing.T) {
 		return
 	}
 }
+
+func TestParseHref(t *testing.T) {
+	// 2015/09/14 21:31:46 href ../../../../com/sun/source/util/DocTreeScanner.html#DocTreeScanner--
+	// 2015/09/14 21:31:46 fstart 20 fend 14 -- for last DocTreeScanner.html#DocTreeScanner--
+
+	path := "/x/y/z"
+
+	href := "../../../../com/sun/source/util/DocTreeScanner.html#DocTreeScanner--"
+	expected := entry{
+		Namespace: []string{"com", "sun", "source", "util"},
+		Entity:    "DocTreeScanner",
+		Member:    "DocTreeScanner",
+		Signature: "",
+		Source:    path,
+		Target:    "/x/y/DocTreeScanner.html#DocTreeScanner--",
+	}
+	actual := parseHref(href, path)
+	if !expected.eq(actual) {
+		t.Errorf("expected to parse\n%v\nto entry\n%v\nbut got\n%v\n", href, expected, actual)
+		return
+	}
+}

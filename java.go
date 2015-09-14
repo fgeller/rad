@@ -81,6 +81,7 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 	var inMemberNameLink bool
 	var inMemberSummary bool
 	var inInheritedBlock bool
+	var inheritedBlock string
 	entries := []entry{}
 	inheritedBlockPattern, _ := regexp.Compile("^(methods|fields)\\.inherited.+") // TODO: err
 
@@ -97,14 +98,26 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 				inMemberNameLink = true
 			case se.Name.Local == "a" && hasAttrMatches(se, "name", inheritedBlockPattern):
 				inInheritedBlock = true
+				inheritedBlock, _ = attr(se, "name") // TODO err
 			case inInheritedBlock && se.Name.Local == "a":
-				// TODO: should be matching href
 				href, err := attr(se, "href")
 				if err != nil {
 					return entries // TODO: , err
 				}
 
+				// ["testdata", "ActionEvent.html"]
+				ps := strings.Split(path, string(os.PathSeparator))
+				// "ActionEvent.html"
+				ef := ps[len(ps)-1]
+				// "ActionEvent"
+				ent := ef[:strings.Index(ef, ".")]
+
+				// testdata/ActionEvent.html#inheritedBlock
+				tgt := strings.Join(ps, "/") + "#" + inheritedBlock
+
 				e := parseHref(href, path)
+				e.Entity = ent
+				e.Target = tgt
 				entries = append(entries, e)
 
 			case inMemberSummary && inMemberNameLink && se.Name.Local == "a":

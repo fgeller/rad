@@ -50,7 +50,9 @@ func TestJavaParseFileMethods(t *testing.T) {
 
 	var foundClone bool
 	for _, e := range results {
-		if e.Entity == "Object" && e.Member == "clone" {
+		if e.Entity == "SAXParser" &&
+			e.Member == "clone" &&
+			e.Target == "testdata/SAXParser.html#methods.inherited.from.class.java.lang.Object" {
 			foundClone = true
 		}
 	}
@@ -92,7 +94,7 @@ func TestJavaParseFileFields(t *testing.T) {
 
 	var foundGetSource bool
 	for _, e := range results {
-		if e.Entity == "EventObject" && e.Member == "getSource" {
+		if e.Entity == "ActionEvent" && e.Member == "getSource" {
 			foundGetSource = true
 		}
 	}
@@ -104,7 +106,7 @@ func TestJavaParseFileFields(t *testing.T) {
 
 	var foundActionEventMask bool
 	for _, e := range results {
-		if e.Entity == "AWTEvent" && e.Member == "ACTION_EVENT_MASK" {
+		if e.Entity == "ActionEvent" && e.Member == "ACTION_EVENT_MASK" {
 			foundActionEventMask = true
 		}
 	}

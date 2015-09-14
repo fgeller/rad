@@ -47,6 +47,18 @@ func TestJavaParseFileMethods(t *testing.T) {
 		t.Errorf("expected second result to be\n%v\nbut got\n%v", sndExpected, results[1])
 		return
 	}
+
+	var foundClone bool
+	for _, e := range results {
+		if e.Entity == "Object" && e.Member == "clone" {
+			foundClone = true
+		}
+	}
+
+	if !foundClone {
+		t.Errorf("expected to find inherited clone method, but wasn't found\n")
+		return
+	}
 }
 
 func TestJavaParseFileFields(t *testing.T) {
@@ -75,6 +87,18 @@ func TestJavaParseFileFields(t *testing.T) {
 
 	if !fstExpected.eq(results[0]) {
 		t.Errorf("expected first result to be\n%v\nbut got\n%v", fstExpected, results[0])
+		return
+	}
+
+	var foundGetSource bool
+	for _, e := range results {
+		if e.Entity == "EventObject" && e.Member == "getSource" {
+			foundGetSource = true
+		}
+	}
+
+	if !foundGetSource {
+		t.Errorf("expected to find inherited getSource method, but wasn't found\n")
 		return
 	}
 }

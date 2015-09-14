@@ -1,7 +1,10 @@
 package main
 
-import "encoding/xml"
-import "fmt"
+import (
+	"encoding/xml"
+	"fmt"
+	"regexp"
+)
 
 func attr(se xml.StartElement, name string) (string, error) {
 	for _, att := range se.Attr {
@@ -16,4 +19,9 @@ func attr(se xml.StartElement, name string) (string, error) {
 func hasAttr(se xml.StartElement, name string, value string) bool {
 	v, err := attr(se, name)
 	return err == nil && v == value
+}
+
+func hasAttrMatches(se xml.StartElement, name string, pattern *regexp.Regexp) bool {
+	v, err := attr(se, name)
+	return err == nil && pattern.MatchString(v)
 }

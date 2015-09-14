@@ -13,13 +13,13 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "Parsers",
 		Member:    "notify",
 		Signature: "():Unit",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ := parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got %v expected %v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
 	}
 
 	v = "scala.reflect.reify.utils.Extractors$SymDef$@notifyAll():Unit"
@@ -28,13 +28,13 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "SymDef",
 		Member:    "notifyAll",
 		Signature: "():Unit",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v expected \n%v.", actual, expected)
 	}
 
 	v = "scala.reflect.reify.utils.Extractors$SymDef$@unapply(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]"
@@ -43,13 +43,13 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "SymDef",
 		Member:    "unapply",
 		Signature: "(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v expected \n%v.", actual, expected)
 	}
 
 	v = "scala.AnyRef@notify():Unit"
@@ -58,13 +58,13 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "AnyRef",
 		Member:    "notify",
 		Signature: "():Unit",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v expected \n%v.", actual, expected)
 	}
 
 	v = "scala.tools.cmd.Spec$@InfoextendsAnyRef"
@@ -73,13 +73,13 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "Spec",
 		Member:    "InfoextendsAnyRef",
 		Signature: "",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
 	}
 
 	v = "scala.tools.ant.FastScalac"
@@ -88,13 +88,13 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "FastScalac",
 		Member:    "",
 		Signature: "",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v expected \n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v expected \n%v.", actual, expected)
 	}
 
 	v = "scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]"
@@ -103,13 +103,13 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "FilteredKeys",
 		Member:    "andThen",
 		Signature: "[C](k:B=>C):PartialFunction[A,C]",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
 	}
 
 	v = "scala.util.Success@isFailure:Boolean"
@@ -118,25 +118,25 @@ func TestParseScalaEntry(t *testing.T) {
 		Entity:    "Success",
 		Member:    "isFailure",
 		Signature: ":Boolean",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
 	}
 
 	v = "package"
 	expected = entry{
 		Namespace: []string{},
 		Entity:    "package",
-		Target:    target + v,
+		Target:    "/" + target + v,
 		Source:    source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
 	if !expected.eq(actual) {
-		t.Errorf("parsing scala entry failed. got \n%v\nexpected\n%v.", actual, expected)
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
 	}
 }

@@ -25,7 +25,7 @@ func TestJavaParseFileMethods(t *testing.T) {
 		Entity:    "SAXParser",
 		Member:    "SAXParser",
 		Signature: "",
-		Target:    "java/docs/api/javax/xml/parsers/SAXParser.html#SAXParser--",
+		Target:    "testdata/SAXParser.html#SAXParser--",
 		Source:    path,
 	}
 
@@ -34,7 +34,7 @@ func TestJavaParseFileMethods(t *testing.T) {
 		Entity:    "SAXParser",
 		Member:    "getParser",
 		Signature: "",
-		Target:    "java/docs/api/javax/xml/parsers/SAXParser.html#getParser--",
+		Target:    "testdata/SAXParser.html#getParser--",
 		Source:    path,
 	}
 
@@ -69,7 +69,7 @@ func TestJavaParseFileFields(t *testing.T) {
 		Entity:    "ActionEvent",
 		Member:    "ACTION_FIRST",
 		Signature: "",
-		Target:    "java/docs/api/java/awt/event/ActionEvent.html#ACTION_FIRST",
+		Target:    "testdata/ActionEvent.html#ACTION_FIRST",
 		Source:    path,
 	}
 

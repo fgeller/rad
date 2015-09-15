@@ -71,8 +71,8 @@ func TestParseScalaEntry(t *testing.T) {
 	expected = entry{
 		Namespace: []string{"scala", "tools", "cmd"},
 		Entity:    "Spec",
-		Member:    "InfoextendsAnyRef",
-		Signature: "",
+		Member:    "Info",
+		Signature: "extendsAnyRef",
 		Target:    "/" + target + v,
 		Source:    source,
 	}
@@ -147,6 +147,21 @@ func TestParseScalaEntry(t *testing.T) {
 		Member:    "Coll",
 		Target:    "/" + target + v,
 		Signature: "=CC[_,_]",
+		Source:    source,
+	}
+
+	actual, _ = parseEntry(source, target, v)
+	if !expected.eq(actual) {
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
+	}
+
+	v = "scala.collection.MapLike@FilteredKeysextendsAbstractMap[A,B]withDefaultMap[A,B]"
+	expected = entry{
+		Namespace: []string{"scala", "collection"},
+		Entity:    "MapLike",
+		Member:    "FilteredKeys",
+		Target:    "/" + target + v,
+		Signature: "extendsAbstractMap[A,B]withDefaultMap[A,B]",
 		Source:    source,
 	}
 

@@ -95,6 +95,16 @@ func parseEntry(source string, target string, s string) (entry, error) {
 	// name[A](...
 	// name(...
 	sigIdx := strings.IndexAny(meth, ":[(=")
+	extendsIdx := strings.Index(meth, "extends")
+
+	// want: smaller one that's larger than 0
+	if extendsIdx > 0 && sigIdx > 0 && extendsIdx < sigIdx {
+		sigIdx = extendsIdx
+	}
+	if extendsIdx > 0 && sigIdx < 0 {
+		sigIdx = extendsIdx
+	}
+
 	member := meth
 	signature := ""
 	if sigIdx > 0 {

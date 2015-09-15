@@ -139,4 +139,19 @@ func TestParseScalaEntry(t *testing.T) {
 	if !expected.eq(actual) {
 		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
 	}
+
+	v = "scala.collection.concurrent.TrieMap$@Coll=CC[_,_]"
+	expected = entry{
+		Namespace: []string{"scala", "collection", "concurrent"},
+		Entity:    "TrieMap",
+		Member:    "Coll",
+		Target:    "/" + target + v,
+		Signature: "=CC[_,_]",
+		Source:    source,
+	}
+
+	actual, _ = parseEntry(source, target, v)
+	if !expected.eq(actual) {
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
+	}
 }

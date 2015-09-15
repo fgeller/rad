@@ -94,7 +94,7 @@ func parseEntry(source string, target string, s string) (entry, error) {
 
 	// name[A](...
 	// name(...
-	sigIdx := strings.IndexAny(meth, ":[(")
+	sigIdx := strings.IndexAny(meth, ":[(=")
 	member := meth
 	signature := ""
 	if sigIdx > 0 {

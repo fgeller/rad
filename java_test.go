@@ -22,19 +22,15 @@ func TestJavaParseFileMethods(t *testing.T) {
 
 	fstExpected := entry{
 		Namespace: []string{"javax", "xml", "parsers"},
-		Entity:    "SAXParser",
-		Member:    "SAXParser",
-		Signature: "",
-		Target:    "testdata/SAXParser.html#SAXParser--",
+		Name:      "SAXParser",
+		Members:   []member{{Name: "SAXParser", Signature: "", Target: "testdata/SAXParser.html#SAXParser--", Source: path}},
 		Source:    path,
 	}
 
 	sndExpected := entry{
 		Namespace: []string{"javax", "xml", "parsers"},
-		Entity:    "SAXParser",
-		Member:    "getParser",
-		Signature: "",
-		Target:    "testdata/SAXParser.html#getParser--",
+		Name:      "SAXParser",
+		Members:   []member{{Name: "getParser", Signature: "", Target: "testdata/SAXParser.html#getParser--", Source: path}},
 		Source:    path,
 	}
 
@@ -50,10 +46,13 @@ func TestJavaParseFileMethods(t *testing.T) {
 
 	var foundClone bool
 	for _, e := range results {
-		if e.Entity == "SAXParser" &&
-			e.Member == "clone" &&
-			e.Target == "testdata/SAXParser.html#methods.inherited.from.class.java.lang.Object" {
-			foundClone = true
+		if e.Name == "SAXParser" {
+			for _, m := range e.Members {
+				if m.Name == "clone" &&
+					m.Target == "testdata/SAXParser.html#methods.inherited.from.class.java.lang.Object" {
+					foundClone = true
+				}
+			}
 		}
 	}
 
@@ -80,10 +79,8 @@ func TestJavaParseFileFields(t *testing.T) {
 
 	fstExpected := entry{
 		Namespace: []string{"java", "awt", "event"},
-		Entity:    "ActionEvent",
-		Member:    "ACTION_FIRST",
-		Signature: "",
-		Target:    "testdata/ActionEvent.html#ACTION_FIRST",
+		Name:      "ActionEvent",
+		Members:   []member{{Name: "ACTION_FIRST", Signature: "", Target: "testdata/ActionEvent.html#ACTION_FIRST", Source: path}},
 		Source:    path,
 	}
 
@@ -94,7 +91,7 @@ func TestJavaParseFileFields(t *testing.T) {
 
 	var foundGetSource bool
 	for _, e := range results {
-		if e.Entity == "ActionEvent" && e.Member == "getSource" {
+		if e.Name == "ActionEvent" && e.Members[0].Name == "getSource" {
 			foundGetSource = true
 		}
 	}
@@ -106,7 +103,7 @@ func TestJavaParseFileFields(t *testing.T) {
 
 	var foundActionEventMask bool
 	for _, e := range results {
-		if e.Entity == "ActionEvent" && e.Member == "ACTION_EVENT_MASK" {
+		if e.Name == "ActionEvent" && e.Members[0].Name == "ACTION_EVENT_MASK" {
 			foundActionEventMask = true
 		}
 	}
@@ -126,11 +123,9 @@ func TestParseHref(t *testing.T) {
 	href := "../../../../com/sun/source/util/DocTreeScanner.html#DocTreeScanner--"
 	expected := entry{
 		Namespace: []string{"com", "sun", "source", "util"},
-		Entity:    "DocTreeScanner",
-		Member:    "DocTreeScanner",
-		Signature: "",
+		Name:      "DocTreeScanner",
+		Members:   []member{{Name: "DocTreeScanner", Signature: "", Source: path, Target: "/x/y/DocTreeScanner.html#DocTreeScanner--"}},
 		Source:    path,
-		Target:    "/x/y/DocTreeScanner.html#DocTreeScanner--",
 	}
 	actual := parseHref(href, path)
 	if !expected.eq(actual) {

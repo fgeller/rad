@@ -10,10 +10,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v := "scala.reflect.macros.contexts.Parsers@notify():Unit"
 	expected := entry{
 		Namespace: []string{"scala", "reflect", "macros", "contexts"},
-		Entity:    "Parsers",
-		Member:    "notify",
-		Signature: "():Unit",
-		Target:    "/" + target + v,
+		Name:      "Parsers",
+		Members:   []member{{Name: "notify", Signature: "():Unit", Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -25,10 +23,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.reflect.reify.utils.Extractors$SymDef$@notifyAll():Unit"
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
-		Entity:    "SymDef",
-		Member:    "notifyAll",
-		Signature: "():Unit",
-		Target:    "/" + target + v,
+		Name:      "SymDef",
+		Members:   []member{{Name: "notifyAll", Signature: "():Unit", Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -40,11 +36,12 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.reflect.reify.utils.Extractors$SymDef$@unapply(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]"
 	expected = entry{
 		Namespace: []string{"scala", "reflect", "reify", "utils", "Extractors"},
-		Entity:    "SymDef",
-		Member:    "unapply",
-		Signature: "(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]",
-		Target:    "/" + target + v,
-		Source:    source,
+		Name:      "SymDef",
+		Members: []member{{Name: "unapply",
+			Signature: "(tree:Extractors.this.global.Tree):Option[(Extractors.this.global.Tree,Extractors.this.global.TermName,Long,Boolean)]",
+			Target:    "/" + target + v,
+			Source:    source}},
+		Source: source,
 	}
 
 	actual, _ = parseEntry(source, target, v)
@@ -55,10 +52,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.AnyRef@notify():Unit"
 	expected = entry{
 		Namespace: []string{"scala"},
-		Entity:    "AnyRef",
-		Member:    "notify",
-		Signature: "():Unit",
-		Target:    "/" + target + v,
+		Name:      "AnyRef",
+		Members:   []member{{Name: "notify", Signature: "():Unit", Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -70,10 +65,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.tools.cmd.Spec$@InfoextendsAnyRef"
 	expected = entry{
 		Namespace: []string{"scala", "tools", "cmd"},
-		Entity:    "Spec",
-		Member:    "Info",
-		Signature: "extendsAnyRef",
-		Target:    "/" + target + v,
+		Name:      "Spec",
+		Members:   []member{{Name: "Info", Signature: "extendsAnyRef", Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -85,10 +78,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.tools.ant.FastScalac"
 	expected = entry{
 		Namespace: []string{"scala", "tools", "ant"},
-		Entity:    "FastScalac",
-		Member:    "",
-		Signature: "",
-		Target:    "/" + target + v,
+		Name:      "FastScalac",
+		Members:   []member{{Name: "", Signature: "", Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -100,10 +91,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.collection.MapLike$FilteredKeys@andThen[C](k:B=>C):PartialFunction[A,C]"
 	expected = entry{
 		Namespace: []string{"scala", "collection", "MapLike"},
-		Entity:    "FilteredKeys",
-		Member:    "andThen",
-		Signature: "[C](k:B=>C):PartialFunction[A,C]",
-		Target:    "/" + target + v,
+		Name:      "FilteredKeys",
+		Members:   []member{{Name: "andThen", Signature: "[C](k:B=>C):PartialFunction[A,C]", Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -115,10 +104,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.util.Success@isFailure:Boolean"
 	expected = entry{
 		Namespace: []string{"scala", "util"},
-		Entity:    "Success",
-		Member:    "isFailure",
-		Signature: ":Boolean",
-		Target:    "/" + target + v,
+		Name:      "Success",
+		Members:   []member{{Name: "isFailure", Signature: ":Boolean", Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -130,8 +117,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "package"
 	expected = entry{
 		Namespace: []string{},
-		Entity:    "package",
-		Target:    "/" + target + v,
+		Name:      "package",
+		Members:   []member{{Target: "/" + target + v, Source: source}},
 		Source:    source,
 	}
 
@@ -143,10 +130,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.collection.concurrent.TrieMap$@Coll=CC[_,_]"
 	expected = entry{
 		Namespace: []string{"scala", "collection", "concurrent"},
-		Entity:    "TrieMap",
-		Member:    "Coll",
-		Target:    "/" + target + v,
-		Signature: "=CC[_,_]",
+		Name:      "TrieMap",
+		Members:   []member{{Name: "Coll", Target: "/" + target + v, Signature: "=CC[_,_]", Source: source}},
 		Source:    source,
 	}
 
@@ -158,10 +143,8 @@ func TestParseScalaEntry(t *testing.T) {
 	v = "scala.collection.MapLike@FilteredKeysextendsAbstractMap[A,B]withDefaultMap[A,B]"
 	expected = entry{
 		Namespace: []string{"scala", "collection"},
-		Entity:    "MapLike",
-		Member:    "FilteredKeys",
-		Target:    "/" + target + v,
-		Signature: "extendsAbstractMap[A,B]withDefaultMap[A,B]",
+		Name:      "MapLike",
+		Members:   []member{{Name: "FilteredKeys", Target: "/" + target + v, Signature: "extendsAbstractMap[A,B]withDefaultMap[A,B]", Source: source}},
 		Source:    source,
 	}
 

@@ -105,17 +105,12 @@ func parseEntry(source string, target string, s string) (entry, error) {
 		sigIdx = extendsIdx
 	}
 
-	member := meth
+	m := meth
 	signature := ""
 	if sigIdx > 0 {
-		member = meth[:sigIdx]
+		m = meth[:sigIdx]
 		signature = meth[sigIdx:]
 	}
-
-	e.Namespace = namespace
-	e.Entity = entity
-	e.Member = member
-	e.Signature = signature
 
 	// find target link
 	targetSplits := strings.Split(target, "/")
@@ -132,7 +127,10 @@ func parseEntry(source string, target string, s string) (entry, error) {
 	newSplits := sourceSplits[:len(sourceSplits)-(upCount+1)]
 	newSplits = append(newSplits, targetSplits[len(targetSplits)-1]+s)
 	newTarget := strings.Join(newSplits, "/")
-	e.Target = newTarget
+
+	e.Namespace = namespace
+	e.Name = entity
+	e.Members = []member{{Name: m, Signature: signature, Target: newTarget, Source: source}}
 
 	return e, nil
 }

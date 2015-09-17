@@ -8,6 +8,26 @@ import (
 	"strconv"
 )
 
+type searchResult struct {
+	Entity    string
+	Namespace []string
+	Member    string
+	Signature string
+	Target    string
+	Source    string
+}
+
+func (e entry) searchResult() searchResult {
+	return searchResult{
+		Entity:    e.Name,
+		Namespace: e.Namespace,
+		Member:    e.Members[0].Name,
+		Signature: e.Members[0].Signature,
+		Target:    e.Members[0].Target,
+		Source:    e.Members[0].Source,
+	}
+}
+
 func queryHandler(w http.ResponseWriter, r *http.Request) {
 	pack := r.FormValue("p")
 	entity := r.FormValue("e")
@@ -20,7 +40,11 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	res, _ := findEntityMember(pack, entity, fun, int(limit))
 	log.Printf("got request for p[%v] and e[%v] and f[%v], found [%v] entries.", pack, entity, fun, len(res))
 
-	js, _ := json.Marshal(res) // TODO: return proper err
+	results := []searchResult{}
+	for _, sr := range res {
+		results = append(results, sr.searchResult())
+	}
+	js, _ := json.Marshal(results) // TODO: return proper err
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)

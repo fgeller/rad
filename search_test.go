@@ -16,15 +16,13 @@ func TestFindEntry(t *testing.T) {
 		"scala": []entry{
 			entry{
 				Namespace: []string{"scala", "sys"},
-				Entity:    "SystemProperties",
-				Member:    "",
-				Signature: "",
+				Name:      "SystemProperties",
+				Members:   []member{{Name: "", Signature: ""}},
 			},
 			entry{
 				Namespace: []string{"scala", "collection"},
-				Entity:    "SetProxy",
-				Member:    "",
-				Signature: "",
+				Name:      "SetProxy",
+				Members:   []member{{Name: "", Signature: ""}},
 			},
 		},
 	}
@@ -42,7 +40,7 @@ func TestFindEntry(t *testing.T) {
 
 	if es[0].Namespace[0] != "scala" ||
 		es[0].Namespace[1] != "collection" ||
-		es[0].Entity != "SetProxy" {
+		es[0].Name != "SetProxy" {
 		t.Errorf("expected to find SetProxy entry but got [%v]", es[0])
 		return
 	}
@@ -54,21 +52,18 @@ func TestFindEntityByPrefix(t *testing.T) {
 		"scala": []entry{
 			entry{
 				Namespace: []string{"scala", "sys"},
-				Entity:    "SystemProperties",
-				Member:    "",
-				Signature: "",
+				Name:      "SystemProperties",
+				Members:   []member{{Name: "", Signature: ""}},
 			},
 			entry{
 				Namespace: []string{"scala", "sys"},
-				Entity:    "SystemThings",
-				Member:    "",
-				Signature: "",
+				Name:      "SystemThings",
+				Members:   []member{{Name: "", Signature: ""}},
 			},
 			entry{
 				Namespace: []string{"scala", "collection"},
-				Entity:    "SetProxy",
-				Member:    "",
-				Signature: "",
+				Name:      "SetProxy",
+				Members:   []member{{Name: "", Signature: ""}},
 			},
 		},
 	}
@@ -97,21 +92,18 @@ func TestFindIsCaseInsentitive(t *testing.T) {
 		"scala": []entry{
 			entry{
 				Namespace: []string{"scala", "sys"},
-				Entity:    "SystemProperties",
-				Member:    "hans",
-				Signature: "",
+				Name:      "SystemProperties",
+				Members:   []member{{Name: "hans", Signature: ""}},
 			},
 			entry{
 				Namespace: []string{"scala", "sys"},
-				Entity:    "SYSTEMThings",
-				Member:    "HANS",
-				Signature: "",
+				Name:      "SYSTEMThings",
+				Members:   []member{{Name: "HANS", Signature: ""}},
 			},
 			entry{
 				Namespace: []string{"scala", "sys"},
-				Entity:    "systemThings",
-				Member:    "hAnS",
-				Signature: "",
+				Name:      "systemThings",
+				Members:   []member{{Name: "hAnS", Signature: ""}},
 			},
 		},
 	}
@@ -141,9 +133,8 @@ func TestFindMember(t *testing.T) {
 		"scala": []entry{
 			entry{
 				Namespace: []string{"scala", "collection", "mutable"},
-				Entity:    "HashMap",
-				Member:    "clearTable",
-				Signature: "():Unit",
+				Name:      "HashMap",
+				Members:   []member{{Name: "clearTable", Signature: "():Unit"}},
 			},
 		},
 	}
@@ -173,9 +164,8 @@ func TestFindMemberByPrefix(t *testing.T) {
 		"scala": []entry{
 			entry{
 				Namespace: []string{"scala", "collection", "mutable"},
-				Entity:    "HashMap",
-				Member:    "clearTable",
-				Signature: "():Unit",
+				Name:      "HashMap",
+				Members:   []member{{Name: "clearTable", Signature: "():Unit"}},
 			},
 		},
 	}

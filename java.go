@@ -62,9 +62,8 @@ func parseHref(href string, path string) entry {
 
 	return entry{
 		Namespace: ns,
-		Entity:    ent,
-		Member:    fun,
-		Target:    tgt,
+		Name:      ent,
+		Members:   []member{member{Name: fun, Target: tgt, Source: path}},
 		Source:    path,
 	}
 }
@@ -116,8 +115,10 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 				tgt := strings.Join(ps, "/") + "#" + inheritedBlock
 
 				e := parseHref(href, path)
-				e.Entity = ent
-				e.Target = tgt
+				e.Name = ent
+				for i := range e.Members {
+					e.Members[i].Target = tgt
+				}
 				entries = append(entries, e)
 
 			case inMemberSummary && inMemberNameLink && se.Name.Local == "a":

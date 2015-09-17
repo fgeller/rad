@@ -14,11 +14,14 @@ func findEntityMember(pack string, entity string, fun string, limit int) ([]entr
 	results := []entry{}
 
 	for _, e := range es {
-		if strings.HasPrefix(strings.ToLower(e.Entity), strings.ToLower(entity)) &&
-			strings.HasPrefix(strings.ToLower(e.Member), strings.ToLower(fun)) {
-			results = append(results, e)
-			if len(results) == limit {
-				return results, nil
+		if strings.HasPrefix(strings.ToLower(e.Name), strings.ToLower(entity)) {
+			for _, m := range e.Members {
+				if strings.HasPrefix(strings.ToLower(m.Name), strings.ToLower(fun)) {
+					results = append(results, e)
+					if len(results) == limit {
+						return results, nil
+					}
+				}
 			}
 		}
 	}

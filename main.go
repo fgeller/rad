@@ -20,29 +20,38 @@ type pack struct {
 	location string // can be URL http:// or local path
 	indexer  indexer
 }
+type member struct {
+	Name      string
+	Signature string
+	Target    string
+	Source    string
+}
 type entry struct {
 	Namespace []string
-	Entity    string
-	Member    string
-	Signature string
-	Target    string // location relative to `packDir` where to find documentation
+	Name      string
+	Members   []member
 	Source    string
 }
 
-func (e entry) String() string {
+func (m member) eq(other member) bool {
+	return m.Name == other.Name &&
+		m.Signature == other.Signature &&
+		m.Target == other.Target &&
+		m.Source == other.Source
+}
+
+func (m member) String() string {
 	return fmt.Sprintf(
-		"entry{Namespace: %v, Entity: %v, Member: %v, Signature: %v, Target: %v, Source: %v}",
-		e.Namespace,
-		e.Entity,
-		e.Member,
-		e.Signature,
-		e.Target,
-		e.Source,
+		"member{Name: %v, Target: %v, Signature: %v, Source: %v}",
+		m.Name,
+		m.Target,
+		m.Signature,
+		m.Source,
 	)
 }
 
 func (e entry) eq(other entry) bool { // TODO: reflect.DeepEqual?
-	if len(e.Namespace) != len(other.Namespace) {
+	if len(e.Namespace) != len(other.Namespace) || len(e.Members) != len(other.Members) {
 		return false
 	}
 
@@ -52,11 +61,23 @@ func (e entry) eq(other entry) bool { // TODO: reflect.DeepEqual?
 		}
 	}
 
-	return (e.Entity == other.Entity &&
-		e.Member == other.Member &&
-		e.Signature == other.Signature &&
-		e.Target == other.Target &&
-		e.Source == other.Source)
+	for i, m := range e.Members {
+		if !other.Members[i].eq(m) {
+			return false
+		}
+	}
+
+	return (e.Name == other.Name && e.Source == other.Source)
+}
+
+func (e entry) String() string {
+	return fmt.Sprintf(
+		"entry{Name: %v, Namespace: %v, Members: %v, Source: %v}",
+		e.Name,
+		e.Namespace,
+		e.Members,
+		e.Source,
+	)
 }
 
 func unmarshalPack(pack pack, dataPath string) error {

@@ -122,5 +122,13 @@ func main() {
 		},
 	)
 
+	install(
+		pack{
+			name:     "akka",
+			location: "/Users/fgeller/Downloads/akka-2.3.14/doc/akka-2.3.14.zip",
+			indexer:  indexScalaApi("akka"),
+		},
+	)
+
 	serve("0.0.0.0:3024")
 }

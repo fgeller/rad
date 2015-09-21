@@ -4,7 +4,7 @@ module.exports = (robot) ->
     pkg = res.match[1]
     ent = res.match[2]
     mem = res.match[3]
-    robot.http("#{rad_url}/s?p=" + pkg + "&e=" + ent + "&f=" + mem)
+    robot.http("#{rad_url}/s?p=" + pkg + "&e=" + ent + "&m=" + mem)
       .get() (err, result, body) ->
         if err
           res.reply "Error while asking for pack [#{pkg}] entity [#{ent}] member [#{mem}]"

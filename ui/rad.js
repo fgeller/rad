@@ -77,6 +77,14 @@ var Search = React.createClass({
             entries.push(<SearchResult entry={entry} index={i} />)
         }
 
+        var params = window.location.search.substring(1);
+        var arrParam = params.split("=");
+
+        var doc = ""
+        if (arrParam.length == 2 && arrParam[0] == "doc") {
+            doc = "/" + arrParam[1] + window.location.hash;
+        }
+
         return (<div id="main-container">
                   <div id="search-field-container">
                     <SearchField query={this.state.query} search={this.search}/>
@@ -85,7 +93,7 @@ var Search = React.createClass({
                     {entries}
                   </div>
                   <div id="ifrm-container">
-                    <iframe id="ifrm" src="" />
+                    <iframe id="ifrm" src={doc} />
                   </div>
                 </div>
         );

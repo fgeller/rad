@@ -1,3 +1,15 @@
+# Description:
+#   Interfaces with github.com/fgeller/rad to search API documentation
+#
+# Configuration:
+#   RAD_URL
+#
+# Commands:
+#   hubot rad <pack> <entity> <member> - queries api documentation
+#
+# Author:
+#   fgeller
+
 module.exports = (robot) ->
   robot.respond /rad ([^ ]+) ([^ ]+) ([^ ]+)/i, (res) ->
     rad_url = process.env.RAD_URL

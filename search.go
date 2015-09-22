@@ -17,7 +17,7 @@ func findEntityMember(pack string, entity string, fun string, limit int) ([]entr
 				if iPrefix(e.Name, entity) {
 					for _, m := range e.Members {
 						if iPrefix(m.Name, fun) {
-							results = append(results, e)
+							results = append(results, e) // TODO: this should only return e + m
 							if len(results) == limit {
 								return results, nil
 							}

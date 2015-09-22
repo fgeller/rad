@@ -48,7 +48,7 @@ func TestFindEntry(t *testing.T) {
 
 	if es[0].Namespace[0] != "scala" ||
 		es[0].Namespace[1] != "collection" ||
-		es[0].Name != "SetProxy" {
+		es[0].Entity != "SetProxy" {
 		t.Errorf("expected to find SetProxy entry but got [%v]", es[0])
 		return
 	}
@@ -87,8 +87,8 @@ func TestFindEntityByPrefix(t *testing.T) {
 		return
 	}
 
-	if !es[0].eq(docs["scala"][0]) ||
-		!es[1].eq(docs["scala"][1]) {
+	if !es[0].eq(NewSearchResult(docs["scala"][0], 0)) ||
+		!es[1].eq(NewSearchResult(docs["scala"][1], 0)) {
 		t.Errorf("expected to find System entries but got [%v]", es)
 		return
 	}
@@ -127,9 +127,9 @@ func TestFindIsCaseInsentitive(t *testing.T) {
 		return
 	}
 
-	if !es[0].eq(docs["scala"][0]) ||
-		!es[1].eq(docs["scala"][1]) ||
-		!es[2].eq(docs["scala"][2]) {
+	if !es[0].eq(NewSearchResult(docs["scala"][0], 0)) ||
+		!es[1].eq(NewSearchResult(docs["scala"][1], 0)) ||
+		!es[2].eq(NewSearchResult(docs["scala"][2], 0)) {
 		t.Errorf("expected to find System entries but got [%v]", es)
 		return
 	}
@@ -160,7 +160,7 @@ func TestFindMember(t *testing.T) {
 	}
 
 	actual := es[0]
-	expected := docs["scala"][0]
+	expected := NewSearchResult(docs["scala"][0], 0)
 	if !actual.eq(expected) {
 		t.Errorf("expected to find\n%v\nbut got\n%v", expected, actual)
 	}
@@ -191,7 +191,7 @@ func TestFindMemberByPrefix(t *testing.T) {
 	}
 
 	actual := es[0]
-	expected := docs["scala"][0]
+	expected := NewSearchResult(docs["scala"][0], 0)
 	if !actual.eq(expected) {
 		t.Errorf("expected to find\n%v\nbut got\n%v", expected, actual)
 	}

@@ -31,6 +31,7 @@ func TestInstallPack(t *testing.T) {
 		Members:   []member{{Name: "Member", Signature: "Signature", Target: "Target", Source: "source"}},
 		Source:    "source",
 	}
+	sr := NewSearchResult(e, 0)
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return es, nil }
 	serveZip := func(addr string) { http.ListenAndServe(addr, &zipServe{}) }
@@ -60,7 +61,7 @@ func TestInstallPack(t *testing.T) {
 		return
 	}
 
-	if !e.eq(actual[0]) {
+	if !sr.eq(actual[0]) {
 		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", actual, es)
 	}
 }
@@ -72,6 +73,7 @@ func TestInstallLocalPack(t *testing.T) {
 		Members:   []member{{Name: "Member", Signature: "Signature", Target: "Target", Source: "source"}},
 		Source:    "source",
 	}
+	sr := NewSearchResult(e, 0)
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return es, nil }
 	p := pack{
@@ -96,7 +98,7 @@ func TestInstallLocalPack(t *testing.T) {
 		return
 	}
 
-	if !found[0].eq(e) {
+	if !found[0].eq(sr) {
 		t.Errorf("expected to find test entry\n%v\ngot\n%v\n", e, found[0])
 		return
 	}
@@ -111,6 +113,7 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 		Members:   []member{{Name: "Member", Signature: "Signature", Target: "Target", Source: "source"}},
 		Source:    "source",
 	}
+	sr := NewSearchResult(e, 0)
 	es := []entry{e}
 	indexer := func() ([]entry, error) { return []entry{}, nil }
 	conf := pack{
@@ -150,7 +153,7 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 		return
 	}
 
-	if !e.eq(actual[0]) {
+	if !sr.eq(actual[0]) {
 		t.Errorf("Expected to find sample entry, got \n%v\nbut expected\n%v", actual, es)
 	}
 }
@@ -202,12 +205,12 @@ func TestFindEntityMembers(t *testing.T) {
 	}
 
 	expectedEntries := []searchResult{
-		(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "ab", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "abc", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "d", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity + "suffix", Members: []member{{Name: "x", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity + "suffix", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "ab", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "abc", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "d", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity + "suffix", Members: []member{{Name: "x", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity + "suffix", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
 	}
 	expected, err := json.Marshal(expectedEntries)
 	if err != nil {
@@ -221,7 +224,7 @@ func TestFindEntityMembers(t *testing.T) {
 
 	// find all with given member prefix
 
-	res, err = http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity + "&m=a")
+	res, err = http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity + "&f=a")
 	if err != nil {
 		t.Errorf("unexpected error while finding entries: %v", err)
 		return
@@ -234,10 +237,10 @@ func TestFindEntityMembers(t *testing.T) {
 	}
 
 	expectedEntries = []searchResult{
-		(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "ab", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "abc", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: entity + "suffix", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "ab", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity, Members: []member{{Name: "abc", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: entity + "suffix", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
 	}
 	expected, err = json.Marshal(expectedEntries)
 	if err != nil {
@@ -263,16 +266,16 @@ func TestFindEntityMembers(t *testing.T) {
 	}
 
 	expectedEntries = []searchResult{
-		(entry{Namespace: []string{"main"}, Name: "_zzz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_zyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_zzy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_yzz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_zyy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_yyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_yyy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_yzy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_yxz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_xyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_zzz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_zyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_zzy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_yzz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_zyy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_yyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_yyy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_yzy", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_yxz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_xyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
 	}
 	expected, err = json.Marshal(expectedEntries)
 	if err != nil {
@@ -299,8 +302,8 @@ func TestFindEntityMembers(t *testing.T) {
 	}
 
 	expectedEntries = []searchResult{
-		(entry{Namespace: []string{"main"}, Name: "_zzz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
-		(entry{Namespace: []string{"main"}, Name: "_zyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}).searchResult(),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_zzz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
+		NewSearchResult(entry{Namespace: []string{"main"}, Name: "_zyz", Members: []member{{Name: "a", Signature: "Signature", Target: "Target", Source: "source"}}, Source: "source"}, 0),
 	}
 	expected, err = json.Marshal(expectedEntries)
 	if err != nil {

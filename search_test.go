@@ -2,12 +2,20 @@ package main
 
 import "testing"
 
-func TestFindEntryMissingPackage(t *testing.T) {
-	docs = map[string][]entry{}
-	_, err := findEntityMember("scala", "abc", "def", 10)
+func TestFindPackageByPrefix(t *testing.T) {
+	docs = map[string][]entry{
+		"aa": []entry{{Name: "entity1", Members: []member{{Name: "member1"}}}},
+		"ab": []entry{{Name: "entity1", Members: []member{{Name: "member1"}}}},
+		"cd": []entry{{Name: "entity1", Members: []member{{Name: "member1"}}}},
+	}
+	res, err := findEntityMember("a", "entity", "member", 10)
 
-	if err.Error() != "Package [scala] not installed." {
-		t.Errorf("expected error when accessing non existant package, got [%v]", err)
+	if err != nil {
+		t.Errorf("unexpected error when accessing packages, got [%v]", err)
+	}
+
+	if len(res) != 2 {
+		t.Errorf("expected two results, got [%v]", res)
 	}
 }
 

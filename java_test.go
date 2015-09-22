@@ -15,38 +15,32 @@ func TestJavaParseFileMethods(t *testing.T) {
 	}
 
 	results := parseJavaDocFile(path, fh)
-	if len(results) < 2 {
+	if len(results) < 1 {
 		t.Errorf("expected results when parsing [%v], but got: %v", path, results)
 		return
 	}
 
-	fstExpected := entry{
+	expectedStart := entry{
 		Namespace: []string{"javax", "xml", "parsers"},
 		Name:      "SAXParser",
-		Members:   []member{{Name: "SAXParser", Signature: "", Target: "testdata/SAXParser.html#SAXParser--", Source: path}},
-		Source:    path,
+		Members: []member{
+			{Name: "SAXParser", Signature: "", Target: "testdata/SAXParser.html#SAXParser--", Source: path},
+			{Name: "getParser", Signature: "", Target: "testdata/SAXParser.html#getParser--", Source: path},
+		},
+		Source: path,
 	}
 
-	sndExpected := entry{
-		Namespace: []string{"javax", "xml", "parsers"},
-		Name:      "SAXParser",
-		Members:   []member{{Name: "getParser", Signature: "", Target: "testdata/SAXParser.html#getParser--", Source: path}},
-		Source:    path,
-	}
+	actualStart := results[0]
+	actualStart.Members = actualStart.Members[:2]
 
-	if !fstExpected.eq(results[0]) {
-		t.Errorf("expected first result to be\n%v\nbut got\n%v", fstExpected, results[0])
-		return
-	}
-
-	if !sndExpected.eq(results[1]) {
-		t.Errorf("expected second result to be\n%v\nbut got\n%v", sndExpected, results[1])
+	if !expectedStart.eq(actualStart) {
+		t.Errorf("expected first results to be\n%v\nbut got\n%v", expectedStart, actualStart)
 		return
 	}
 
 	var foundClone bool
 	for _, e := range results {
-		if e.Name == "SAXParser" {
+		if e.Name == "SAXParser" { // TODO
 			for _, m := range e.Members {
 				if m.Name == "clone" &&
 					m.Target == "testdata/SAXParser.html#methods.inherited.from.class.java.lang.Object" {
@@ -84,15 +78,20 @@ func TestJavaParseFileFields(t *testing.T) {
 		Source:    path,
 	}
 
-	if !fstExpected.eq(results[0]) {
+	fstActual := results[0]
+	fstActual.Members = fstActual.Members[:1]
+
+	if !fstExpected.eq(fstActual) {
 		t.Errorf("expected first result to be\n%v\nbut got\n%v", fstExpected, results[0])
 		return
 	}
 
 	var foundGetSource bool
 	for _, e := range results {
-		if e.Name == "ActionEvent" && e.Members[0].Name == "getSource" {
-			foundGetSource = true
+		for _, m := range e.Members {
+			if e.Name == "ActionEvent" && m.Name == "getSource" {
+				foundGetSource = true
+			}
 		}
 	}
 
@@ -103,8 +102,10 @@ func TestJavaParseFileFields(t *testing.T) {
 
 	var foundActionEventMask bool
 	for _, e := range results {
-		if e.Name == "ActionEvent" && e.Members[0].Name == "ACTION_EVENT_MASK" {
-			foundActionEventMask = true
+		for _, m := range e.Members {
+			if e.Name == "ActionEvent" && m.Name == "ACTION_EVENT_MASK" {
+				foundActionEventMask = true
+			}
 		}
 	}
 

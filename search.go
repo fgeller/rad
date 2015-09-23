@@ -1,6 +1,7 @@
 package main
 
 import (
+	"reflect"
 	"strings"
 )
 
@@ -14,21 +15,7 @@ type searchResult struct {
 }
 
 func (s searchResult) eq(o searchResult) bool {
-	if len(s.Namespace) != len(o.Namespace) {
-		return false
-	}
-
-	for i := range s.Namespace {
-		if s.Namespace[i] != o.Namespace[i] {
-			return false
-		}
-	}
-
-	return s.Entity == o.Entity &&
-		s.Member == o.Member &&
-		s.Signature == o.Signature &&
-		s.Target == o.Target &&
-		s.Source == o.Source
+	return reflect.DeepEqual(s, o)
 }
 
 // TODO: always a member available?

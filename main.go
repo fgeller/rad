@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"reflect"
 	"time"
 )
 
@@ -34,10 +35,7 @@ type entry struct {
 }
 
 func (m member) eq(other member) bool {
-	return m.Name == other.Name &&
-		m.Signature == other.Signature &&
-		m.Target == other.Target &&
-		m.Source == other.Source
+	return reflect.DeepEqual(m, other)
 }
 
 func (m member) String() string {
@@ -50,24 +48,8 @@ func (m member) String() string {
 	)
 }
 
-func (e entry) eq(other entry) bool { // TODO: reflect.DeepEqual?
-	if len(e.Namespace) != len(other.Namespace) || len(e.Members) != len(other.Members) {
-		return false
-	}
-
-	for i, n := range e.Namespace {
-		if other.Namespace[i] != n {
-			return false
-		}
-	}
-
-	for i, m := range e.Members {
-		if !other.Members[i].eq(m) {
-			return false
-		}
-	}
-
-	return (e.Name == other.Name && e.Source == other.Source)
+func (e entry) eq(other entry) bool {
+	return reflect.DeepEqual(e, other)
 }
 
 func (e entry) String() string {

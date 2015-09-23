@@ -1,6 +1,30 @@
 package main
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
+
+func TestNewSearchResult(t *testing.T) {
+	e := entry{
+		Name: "entity",
+	}
+
+	expected := searchResult{
+		Entity: "entity",
+	}
+
+	actual := NewSearchResult(e, 0)
+
+	if !reflect.DeepEqual(expected, actual) {
+
+		t.Errorf(
+			"Expected graceful handling of missing members. Expected\n%v\ngot\n%v\n",
+			expected,
+			actual,
+		)
+	}
+}
 
 func TestFindPackageByPrefix(t *testing.T) {
 	docs = map[string][]entry{

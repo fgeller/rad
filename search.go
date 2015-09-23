@@ -18,8 +18,15 @@ func (s searchResult) eq(o searchResult) bool {
 	return reflect.DeepEqual(s, o)
 }
 
-// TODO: always a member available?
 func NewSearchResult(e entry, memberIdx int) searchResult {
+
+	if len(e.Members) == 0 {
+		return searchResult{
+			Entity:    e.Name,
+			Namespace: e.Namespace,
+		}
+	}
+
 	return searchResult{
 		Entity:    e.Name,
 		Namespace: e.Namespace,

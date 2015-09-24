@@ -10,6 +10,12 @@ import (
 	"time"
 )
 
+func setup() {
+	packDir = "/tmp/rad/test-packs"
+	os.RemoveAll("test.zip")
+	os.RemoveAll(packDir)
+}
+
 type zipServe struct{}
 
 func (z *zipServe) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -22,8 +28,19 @@ func (z *zipServe) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func awaitPing(addr string) {
+	for i := 0; i < 10; i++ {
+		_, err := http.Get("http://" + addr + "/ping")
+		if err == nil {
+			return
+		}
+		time.Sleep(100)
+	}
+}
+
 func TestInstallPack(t *testing.T) {
-	os.RemoveAll("test.zip") // TODO: clean this up, after added conf for packsDir
+	setup()
+	defer setup()
 
 	e := entry{
 		Namespace: []string{"main"},
@@ -41,9 +58,7 @@ func TestInstallPack(t *testing.T) {
 		indexer:  indexer,
 	}
 
-	defer os.RemoveAll("packs/" + conf.name)
-	defer os.RemoveAll("test.zip")
-
+	defer os.RemoveAll(packDir + string(os.PathSeparator) + conf.name)
 	go serveZip(zipAddr)
 	awaitPing(zipAddr)
 
@@ -65,7 +80,49 @@ func TestInstallPack(t *testing.T) {
 	}
 }
 
+func TestInstallIntoConfiguredDirectory(t *testing.T) {
+	setup()
+	defer setup()
+
+	testDir := packDir + string(os.PathSeparator) + "test-packDir-configuration"
+	packDir = testDir
+
+	e := entry{
+		Namespace: []string{"main"},
+		Name:      "Entity",
+		Members:   []member{{Name: "Member", Signature: "Signature", Target: "Target"}},
+	}
+	es := []entry{e}
+	indexer := func() ([]entry, error) { return es, nil }
+	serveZip := func(addr string) { http.ListenAndServe(addr, &zipServe{}) }
+	zipAddr := "0.0.0.0:8881"
+	conf := pack{
+		name:     "blubb",
+		location: "http://" + zipAddr + "/test.zip",
+		indexer:  indexer,
+	}
+
+	go serveZip(zipAddr)
+	awaitPing(zipAddr)
+
+	testPack := testDir + string(os.PathSeparator) + conf.name
+	if fileExists(testPack) {
+		t.Errorf("test pack should not yet exist.")
+		return
+	}
+
+	install(conf)
+
+	if !fileExists(testPack) {
+		t.Errorf("test pack should exist after install.")
+		return
+	}
+}
+
 func TestInstallLocalPack(t *testing.T) {
+	setup()
+	defer setup()
+
 	e := entry{
 		Namespace: []string{"com", "example"},
 		Name:      "Entity",
@@ -80,8 +137,6 @@ func TestInstallLocalPack(t *testing.T) {
 		location: "testdata/test.zip",
 	}
 	docs = map[string][]entry{}
-	os.RemoveAll("packs/" + p.name)
-	defer os.RemoveAll("packs/" + p.name)
 
 	install(p)
 
@@ -104,6 +159,8 @@ func TestInstallLocalPack(t *testing.T) {
 }
 
 func TestInstallExistingSerializedPack(t *testing.T) {
+	setup()
+	defer setup()
 
 	e := entry{
 		Namespace: []string{"main"},
@@ -118,9 +175,8 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 		location: "http://localhost:8881/test.zip",
 		indexer:  indexer,
 	}
-	os.RemoveAll("packs/" + conf.name)
 
-	err := os.MkdirAll("packs/"+conf.name, 0755)
+	err := os.MkdirAll(packDir+string(os.PathSeparator)+conf.name, 0755)
 	if err != nil {
 		t.Errorf("unexpected error when creating dir: %v", err)
 		return
@@ -130,7 +186,7 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 		t.Errorf("unexpected error when serializing data: %v", err)
 		return
 	}
-	dataPath := "packs/" + conf.name + "/rad-data.json"
+	dataPath := packDir + string(os.PathSeparator) + conf.name + string(os.PathSeparator) + "rad-data.json"
 	err = ioutil.WriteFile(dataPath, data, 0644)
 	if err != nil {
 		t.Errorf("unexpected error when writing serialized data: %v", err)
@@ -156,6 +212,9 @@ func TestInstallExistingSerializedPack(t *testing.T) {
 }
 
 func TestFindEntityMembers(t *testing.T) {
+	setup()
+	defer setup()
+
 	pack := "test"
 	entity := "Entity"
 	samples := []entry{
@@ -310,15 +369,5 @@ func TestFindEntityMembers(t *testing.T) {
 
 	if string(byts) != string(expected) {
 		t.Errorf("unexpected response, got \n%v\nbut expected\n%v\n", string(byts), string(expected))
-	}
-}
-
-func awaitPing(addr string) {
-	for i := 0; i < 10; i++ {
-		_, err := http.Get("http://" + addr + "/ping")
-		if err == nil {
-			return
-		}
-		time.Sleep(100)
 	}
 }

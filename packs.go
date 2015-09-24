@@ -8,8 +8,6 @@ import (
 	"net/url"
 )
 
-var packDir = "packs"
-
 func load(pack pack, localPath string) error {
 	log.Printf("Loading pack [%v] for [%v].\n", pack.name, localPath)
 

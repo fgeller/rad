@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -12,6 +13,7 @@ import (
 )
 
 var docs = map[string][]entry{}
+var packDir string
 
 type indexer func() ([]entry, error)
 type downloader func(string) (*http.Response, error)
@@ -120,6 +122,9 @@ func unmarshalPack(pack pack, dataPath string) error {
 }
 
 func main() {
+	flag.StringVar(&packDir, "packDir", "packs", "Path where packages will be installed")
+	flag.Parse()
+
 	install(
 		pack{
 			name:     "java",

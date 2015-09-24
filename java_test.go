@@ -40,7 +40,7 @@ func TestJavaParseFileMethods(t *testing.T) {
 
 	var foundClone bool
 	for _, e := range results {
-		if e.Name == "SAXParser" { // TODO
+		if e.Name == "SAXParser" {
 			for _, m := range e.Members {
 				if m.Name == "clone" &&
 					m.Target == "testdata/SAXParser.html#methods.inherited.from.class.java.lang.Object" {

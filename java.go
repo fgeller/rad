@@ -153,39 +153,3 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 
 	return mergeEntries(entries)
 }
-
-func isSameEntry(a entry, b entry) bool {
-	if a.Name != b.Name ||
-		len(a.Namespace) != len(b.Namespace) {
-		return false
-	}
-	for i := range a.Namespace {
-		if a.Namespace[i] != b.Namespace[i] {
-			return false
-		}
-	}
-
-	return true
-}
-
-func mergeEntries(entries []entry) []entry {
-	if len(entries) < 1 {
-		return entries
-	}
-
-	unmerged := entries[1:]
-	merged := []entry{entries[0]}
-
-merging:
-	for ui := range unmerged {
-		for mi := range merged {
-			if isSameEntry(unmerged[ui], merged[mi]) {
-				merged[mi].Members = append(merged[mi].Members, unmerged[ui].Members...)
-				continue merging
-			}
-		}
-		merged = append(merged, unmerged[ui])
-	}
-
-	return merged
-}

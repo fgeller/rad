@@ -12,7 +12,11 @@ func indexScalaApi(packName string) func() ([]entry, error) {
 	return func() ([]entry, error) {
 		path := packDir + "/" + packName
 		log.Printf("About to index scala api in [%v]\n", path)
-		return scan(path, parseScalaDocFile)
+		entries, err := scan(path, parseScalaDocFile)
+		if err != nil {
+			return entries, err
+		}
+		return mergeEntries(entries), nil
 	}
 }
 

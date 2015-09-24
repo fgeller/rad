@@ -221,7 +221,7 @@ func TestFindEntityMembers(t *testing.T) {
 
 	// find all with given member prefix
 
-	res, err = http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity + "&f=a")
+	res, err = http.Get("http://" + addr + "/s?p=" + pack + "&e=" + entity + "&m=a")
 	if err != nil {
 		t.Errorf("unexpected error while finding entries: %v", err)
 		return

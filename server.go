@@ -17,10 +17,19 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 		limit = 10
 	}
 
-	res, _ := findEntityMember(pack, entity, fun, int(limit))
+	res, err := findEntityMember(pack, entity, fun, int(limit))
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
 	log.Printf("got request for p[%v] and e[%v] and f[%v], found [%v] entries.", pack, entity, fun, len(res))
 
-	js, _ := json.Marshal(res) // TODO: return proper err
+	js, err := json.Marshal(res)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)

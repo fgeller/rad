@@ -82,7 +82,10 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 	var inInheritedBlock bool
 	var inheritedBlock string
 	entries := []entry{}
-	inheritedBlockPattern, _ := regexp.Compile("^(methods|fields)\\.inherited.+") // TODO: err
+	inheritedBlockPattern, err := regexp.Compile("^(methods|fields)\\.inherited.+")
+	if err != nil {
+		log.Fatal("Can't compile pattern for Java doc parsing: %v\n", err)
+	}
 
 	for ; err == nil; t, err = d.Token() {
 
@@ -97,11 +100,15 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 				inMemberNameLink = true
 			case se.Name.Local == "a" && hasAttrMatches(se, "name", inheritedBlockPattern):
 				inInheritedBlock = true
-				inheritedBlock, _ = attr(se, "name") // TODO err
+				inheritedBlock, err = attr(se, "name")
+				if err != nil {
+					log.Fatal("Unexpected error while accessing attr 'name': %v\n", err)
+				}
+
 			case inInheritedBlock && se.Name.Local == "a":
 				href, err := attr(se, "href")
 				if err != nil {
-					return entries // TODO: , err
+					log.Fatal("Unexpected error while accessing attr 'href: %v\n", err)
 				}
 
 				// ["testdata", "ActionEvent.html"]
@@ -125,7 +132,7 @@ func parseJavaDocFile(path string, r io.Reader) []entry {
 				// href="../../../javax/xml/parsers/SAXParser.html#getParser--"
 				href, err := attr(se, "href")
 				if err != nil {
-					return entries // TODO: , err
+					log.Fatal("Unexpected error while accessing attr 'href': %v\n", err)
 				}
 
 				e := parseHref(href, path)
@@ -158,8 +165,6 @@ func isSameEntry(a entry, b entry) bool {
 			return false
 		}
 	}
-
-	// TODO check source?
 
 	return true
 }

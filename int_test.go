@@ -23,7 +23,7 @@ func (z *zipServe) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func TestInstallPack(t *testing.T) {
-	os.RemoveAll("test.zip") // TODO: clean this up
+	os.RemoveAll("test.zip") // TODO: clean this up, after added conf for packsDir
 
 	e := entry{
 		Namespace: []string{"main"},

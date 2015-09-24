@@ -67,13 +67,13 @@ func unmarshalPack(pack pack, dataPath string) error {
 
 	data, err := ioutil.ReadFile(dataPath)
 	if err != nil {
-		return err // TODO: or re-download?
+		return err
 	}
 
 	var es []entry
 	err = json.Unmarshal(data, &es)
 	if err != nil {
-		return err // TODO: or re-download?
+		return err
 	}
 
 	docs[pack.name] = es

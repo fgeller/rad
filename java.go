@@ -63,8 +63,7 @@ func parseHref(href string, path string) entry {
 	return entry{
 		Namespace: ns,
 		Name:      ent,
-		Members:   []member{member{Name: fun, Target: tgt, Source: path}},
-		Source:    path,
+		Members:   []member{member{Name: fun, Target: tgt}},
 	}
 }
 

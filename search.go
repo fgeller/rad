@@ -33,7 +33,6 @@ func NewSearchResult(e entry, memberIdx int) searchResult {
 		Member:    e.Members[memberIdx].Name,
 		Signature: e.Members[memberIdx].Signature,
 		Target:    e.Members[memberIdx].Target,
-		Source:    e.Members[memberIdx].Source,
 	}
 }
 

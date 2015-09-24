@@ -25,13 +25,11 @@ type member struct {
 	Name      string
 	Signature string
 	Target    string
-	Source    string
 }
 type entry struct {
 	Namespace []string
 	Name      string
 	Members   []member
-	Source    string
 }
 
 func (m member) eq(other member) bool {
@@ -40,11 +38,10 @@ func (m member) eq(other member) bool {
 
 func (m member) String() string {
 	return fmt.Sprintf(
-		"member{Name: %v, Target: %v, Signature: %v, Source: %v}",
+		"member{Name: %v, Target: %v, Signature: %v}",
 		m.Name,
 		m.Target,
 		m.Signature,
-		m.Source,
 	)
 }
 
@@ -54,11 +51,10 @@ func (e entry) eq(other entry) bool {
 
 func (e entry) String() string {
 	return fmt.Sprintf(
-		"entry{Name: %v, Namespace: %v, Members: %v, Source: %v}",
+		"entry{Name: %v, Namespace: %v, Members: %v}",
 		e.Name,
 		e.Namespace,
 		e.Members,
-		e.Source,
 	)
 }
 

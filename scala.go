@@ -53,7 +53,7 @@ func parseScalaDocFile(f string, r io.Reader) []entry {
 }
 
 func parseEntry(source string, target string, s string) (entry, error) {
-	e := entry{Source: source}
+	e := entry{}
 
 	// ns0.ns1.ns2.e1$entity @ method
 	splits := strings.Split(s, "@")
@@ -130,7 +130,7 @@ func parseEntry(source string, target string, s string) (entry, error) {
 
 	e.Namespace = namespace
 	e.Name = entity
-	e.Members = []member{{Name: m, Signature: signature, Target: newTarget, Source: source}}
+	e.Members = []member{{Name: m, Signature: signature, Target: newTarget}}
 
 	return e, nil
 }

@@ -24,10 +24,9 @@ func TestJavaParseFileMethods(t *testing.T) {
 		Namespace: []string{"javax", "xml", "parsers"},
 		Name:      "SAXParser",
 		Members: []member{
-			{Name: "SAXParser", Signature: "", Target: "testdata/SAXParser.html#SAXParser--", Source: path},
-			{Name: "getParser", Signature: "", Target: "testdata/SAXParser.html#getParser--", Source: path},
+			{Name: "SAXParser", Signature: "", Target: "testdata/SAXParser.html#SAXParser--"},
+			{Name: "getParser", Signature: "", Target: "testdata/SAXParser.html#getParser--"},
 		},
-		Source: path,
 	}
 
 	actualStart := results[0]
@@ -74,8 +73,7 @@ func TestJavaParseFileFields(t *testing.T) {
 	fstExpected := entry{
 		Namespace: []string{"java", "awt", "event"},
 		Name:      "ActionEvent",
-		Members:   []member{{Name: "ACTION_FIRST", Signature: "", Target: "testdata/ActionEvent.html#ACTION_FIRST", Source: path}},
-		Source:    path,
+		Members:   []member{{Name: "ACTION_FIRST", Signature: "", Target: "testdata/ActionEvent.html#ACTION_FIRST"}},
 	}
 
 	fstActual := results[0]
@@ -125,8 +123,7 @@ func TestParseHref(t *testing.T) {
 	expected := entry{
 		Namespace: []string{"com", "sun", "source", "util"},
 		Name:      "DocTreeScanner",
-		Members:   []member{{Name: "DocTreeScanner", Signature: "", Source: path, Target: "/x/y/DocTreeScanner.html#DocTreeScanner--"}},
-		Source:    path,
+		Members:   []member{{Name: "DocTreeScanner", Signature: "", Target: "/x/y/DocTreeScanner.html#DocTreeScanner--"}},
 	}
 	actual := parseHref(href, path)
 	if !expected.eq(actual) {

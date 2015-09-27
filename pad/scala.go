@@ -9,18 +9,6 @@ import (
 	"strings"
 )
 
-// func indexScalaApi(packName string) func() ([]shared.Entry, error) {
-// 	return func() ([]shared.Entry, error) {
-// 		path := packDir + "/" + packName
-// 		log.Printf("About to index scala api in [%v]\n", path)
-// 		entries, err := scan(path, parseScalaDocFile)
-// 		if err != nil {
-// 			return entries, err
-// 		}
-// 		return shared.MergeEntries(entries), nil
-// 	}
-// }
-
 func parseScalaDocFile(f string, r io.Reader) []shared.Entry {
 	d := xml.NewDecoder(r)
 	var t xml.Token

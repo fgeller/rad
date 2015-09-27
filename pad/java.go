@@ -10,14 +10,6 @@ import (
 	"strings"
 )
 
-// func indexJavaApi(packName string) func() ([]shared.Entry, error) {
-// 	return func() ([]shared.Entry, error) {
-// 		path := packDir + "/" + packName
-// 		log.Printf("About to index java api in [%v]\n", path)
-// 		return scan(path, parseJavaDocFile)
-// 	}
-// }
-
 func parseHref(href string, path string) shared.Entry {
 	// ds=["..", "..", "..", "javax", "xml", "parsers", "SAXParser.html#getParser--"]
 	ds := strings.Split(href, "/")

@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"time"
@@ -120,20 +121,25 @@ func unzip(src string, dest string) error {
 	defer r.Close()
 
 	for _, f := range r.File {
-		path := dest + string(os.PathSeparator) + f.Name
+		path := filepath.Join(dest, f.Name)
 		if f.FileInfo().IsDir() {
-			os.Mkdir(path, f.Mode())
+			fmt.Printf("unzip|creating directory for path\n%v\n", path)
+			os.MkdirAll(path, f.Mode())
 			continue
 		}
 
+		if !fileExists(filepath.Dir(path)) {
+			os.MkdirAll(filepath.Dir(path), 0755)
+		}
 		fc, err := f.Open()
-
 		if err != nil {
+			fmt.Printf("unzip|error while opening f %v\n", f.Name)
 			return err
 		}
 
-		dst, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, f.Mode())
+		dst, err := os.Create(path)
 		if err != nil {
+			fmt.Printf("unzip|error while opening dst\n%v\n%v\n", path, err)
 			return err
 		}
 
@@ -179,4 +185,85 @@ func download(d downloader, remote string) (string, error) {
 	log.Printf("Downloaded %v bytes.\n", n)
 
 	return local, nil
+}
+
+func zipDir(out *os.File, in string) error {
+
+	w := zip.NewWriter(out)
+	tld := filepath.Dir(in)
+
+	walker := func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if info.IsDir() {
+			return nil // no need to zip directories
+		}
+
+		rel, err := filepath.Rel(tld, path)
+		if err != nil {
+			return err
+		}
+
+		f, err := w.Create(rel)
+		if err != nil {
+			return err
+		}
+
+		contents, err := ioutil.ReadFile(path)
+		if err != nil {
+			return err
+		}
+
+		_, err = f.Write(contents)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	err := filepath.Walk(in, walker)
+	if err != nil {
+		return err
+	}
+
+	err = w.Close()
+	return err
+}
+
+func copy(source string, dest string) error {
+
+	// TODO: ensure src/dst are directories
+
+	absSource, err := filepath.Abs(source)
+	if err != nil {
+		return err
+	}
+	source = absSource
+
+	walker := func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		target := filepath.Join(dest, path[len(filepath.Dir(source)):])
+		if info.IsDir() {
+			return os.MkdirAll(target, 0755)
+		}
+
+		out, err := os.Create(target)
+		if err != nil {
+			return err
+		}
+		in, err := os.Open(path)
+		if err != nil {
+			return err
+		}
+		_, err = io.Copy(out, in)
+		return err
+	}
+
+	return filepath.Walk(source, walker)
 }

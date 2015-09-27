@@ -9,6 +9,7 @@ import (
 func TestJavaParseFileMethods(t *testing.T) {
 
 	path := "testdata/SAXParser.html"
+
 	fh, err := os.Open(path)
 	if err != nil {
 		t.Errorf("failed to open test file: %v", err)

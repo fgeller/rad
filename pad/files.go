@@ -114,7 +114,7 @@ func unzip(src string, dest string) error {
 
 	r, err := zip.OpenReader(src)
 	if err != nil {
-		log.Fatalf("failed to open zip: %v", src)
+		log.Printf("failed to open zip: %v", src)
 		return err
 	}
 	defer r.Close()

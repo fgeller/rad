@@ -1,4 +1,4 @@
-package pad
+package main
 
 import (
 	"encoding/xml"

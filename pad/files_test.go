@@ -1,4 +1,4 @@
-package pad
+package main
 
 import "os"
 import "net/http"

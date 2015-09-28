@@ -112,7 +112,7 @@ func mkPack(conf config) (string, error) {
 			entries[e].Members[m].Target = rel
 		}
 	}
-	log.Printf("Make targets relative.\n")
+	log.Printf("Made targets relative to pack folder.\n")
 
 	pack := shared.Pack{
 		Name: conf.name,

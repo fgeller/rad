@@ -120,7 +120,7 @@ func mkPack(conf config) (string, error) {
 	}
 
 	// 2. serialize conf
-	jsonPack, err := json.Marshal(pack)
+	jsonPack, err := json.MarshalIndent(pack, "", "  ")
 	if err != nil {
 		return "", err
 	}
@@ -145,7 +145,7 @@ func mkPack(conf config) (string, error) {
 	}
 
 	// 3. serialize entries
-	jsonEntries, err := json.Marshal(entries)
+	jsonEntries, err := json.MarshalIndent(entries, "", "  ")
 	if err != nil {
 		return "", err
 	}

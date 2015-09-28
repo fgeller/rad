@@ -90,11 +90,11 @@ func mkPack(conf config) (string, error) {
 	//   /tmp-dir/scala/scala-docs/
 	//   /tmp-dir/scala/pack.json
 	//   /tmp-dir/scala/data.json
-	err = copy(conf.source, targetDir)
+	c, err := copy(conf.source, targetDir)
 	if err != nil {
 		return "", err
 	}
-	log.Printf("Copied files over to %v.\n", targetDir)
+	log.Printf("Copied %v files over to %v.\n", c, targetDir)
 
 	// 1. index
 	entries, err := conf.indexer(targetDir)

@@ -233,13 +233,14 @@ func zipDir(out *os.File, in string) error {
 	return err
 }
 
-func copy(source string, dest string) error {
+func copy(source string, dest string) (int, error) {
 
 	// TODO: ensure src/dst are directories
 
+	c := 0
 	absSource, err := filepath.Abs(source)
 	if err != nil {
-		return err
+		return c, err
 	}
 	source = absSource
 
@@ -261,9 +262,11 @@ func copy(source string, dest string) error {
 		if err != nil {
 			return err
 		}
+
 		_, err = io.Copy(out, in)
+		c++
 		return err
 	}
 
-	return filepath.Walk(source, walker)
+	return c, filepath.Walk(source, walker)
 }

@@ -8,14 +8,13 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"net/http"
+
 	"os"
 	"path/filepath"
 )
 
 type indexer func(string) ([]shared.Entry, error)
 type parser func(string, io.Reader) []shared.Entry
-type downloader func(string) (*http.Response, error)
 
 type config struct {
 	indexer indexer
@@ -27,7 +26,7 @@ type config struct {
 func isValidConfig(conf config) bool {
 	return len(conf.name) > 0 &&
 		len(conf.Type) > 0 &&
-		fileExists(conf.source) &&
+		shared.FileExists(conf.source) &&
 		conf.indexer != nil
 }
 
@@ -90,7 +89,7 @@ func mkPack(conf config) (string, error) {
 	//   /tmp-dir/scala/scala-docs/
 	//   /tmp-dir/scala/pack.json
 	//   /tmp-dir/scala/data.json
-	c, err := copy(conf.source, targetDir)
+	c, err := shared.CopyDir(conf.source, targetDir)
 	if err != nil {
 		return "", err
 	}
@@ -176,7 +175,7 @@ func mkPack(conf config) (string, error) {
 	}
 	defer out.Close()
 
-	err = zipDir(out, filepath.Join(tmpDir, conf.name))
+	err = shared.ZipDir(out, filepath.Join(tmpDir, conf.name))
 	if err != nil {
 		return "", err
 	}

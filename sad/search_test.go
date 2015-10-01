@@ -1,12 +1,13 @@
 package main
 
 import (
+	"../shared"
 	"reflect"
 	"testing"
 )
 
 func TestNewSearchResult(t *testing.T) {
-	e := entry{
+	e := shared.Entry{
 		Name: "entity",
 	}
 
@@ -27,10 +28,10 @@ func TestNewSearchResult(t *testing.T) {
 }
 
 func TestFindPackageByPrefix(t *testing.T) {
-	docs = map[string][]entry{
-		"aa": []entry{{Name: "entity1", Members: []member{{Name: "member1"}}}},
-		"ab": []entry{{Name: "entity1", Members: []member{{Name: "member1"}}}},
-		"cd": []entry{{Name: "entity1", Members: []member{{Name: "member1"}}}},
+	docs = map[string][]shared.Entry{
+		"aa": []shared.Entry{{Name: "entity1", Members: []shared.Member{{Name: "member1"}}}},
+		"ab": []shared.Entry{{Name: "entity1", Members: []shared.Member{{Name: "member1"}}}},
+		"cd": []shared.Entry{{Name: "entity1", Members: []shared.Member{{Name: "member1"}}}},
 	}
 	res, err := findEntityMember("a", "entity", "member", 10)
 
@@ -44,17 +45,17 @@ func TestFindPackageByPrefix(t *testing.T) {
 }
 
 func TestFindEntry(t *testing.T) {
-	docs = map[string][]entry{
-		"scala": []entry{
-			entry{
+	docs = map[string][]shared.Entry{
+		"scala": []shared.Entry{
+			shared.Entry{
 				Namespace: []string{"scala", "sys"},
 				Name:      "SystemProperties",
-				Members:   []member{{Name: "", Signature: ""}},
+				Members:   []shared.Member{{Name: "", Signature: ""}},
 			},
-			entry{
+			shared.Entry{
 				Namespace: []string{"scala", "collection"},
 				Name:      "SetProxy",
-				Members:   []member{{Name: "", Signature: ""}},
+				Members:   []shared.Member{{Name: "", Signature: ""}},
 			},
 		},
 	}
@@ -80,22 +81,22 @@ func TestFindEntry(t *testing.T) {
 }
 
 func TestFindEntityByPrefix(t *testing.T) {
-	docs = map[string][]entry{
-		"scala": []entry{
-			entry{
+	docs = map[string][]shared.Entry{
+		"scala": []shared.Entry{
+			shared.Entry{
 				Namespace: []string{"scala", "sys"},
 				Name:      "SystemProperties",
-				Members:   []member{{Name: "", Signature: ""}},
+				Members:   []shared.Member{{Name: "", Signature: ""}},
 			},
-			entry{
+			shared.Entry{
 				Namespace: []string{"scala", "sys"},
 				Name:      "SystemThings",
-				Members:   []member{{Name: "", Signature: ""}},
+				Members:   []shared.Member{{Name: "", Signature: ""}},
 			},
-			entry{
+			shared.Entry{
 				Namespace: []string{"scala", "collection"},
 				Name:      "SetProxy",
-				Members:   []member{{Name: "", Signature: ""}},
+				Members:   []shared.Member{{Name: "", Signature: ""}},
 			},
 		},
 	}
@@ -120,22 +121,22 @@ func TestFindEntityByPrefix(t *testing.T) {
 }
 
 func TestFindIsCaseInsentitive(t *testing.T) {
-	docs = map[string][]entry{
-		"scala": []entry{
-			entry{
+	docs = map[string][]shared.Entry{
+		"scala": []shared.Entry{
+			shared.Entry{
 				Namespace: []string{"scala", "sys"},
 				Name:      "SystemProperties",
-				Members:   []member{{Name: "hans", Signature: ""}},
+				Members:   []shared.Member{{Name: "hans", Signature: ""}},
 			},
-			entry{
+			shared.Entry{
 				Namespace: []string{"scala", "sys"},
 				Name:      "SYSTEMThings",
-				Members:   []member{{Name: "HANS", Signature: ""}},
+				Members:   []shared.Member{{Name: "HANS", Signature: ""}},
 			},
-			entry{
+			shared.Entry{
 				Namespace: []string{"scala", "sys"},
 				Name:      "systemThings",
-				Members:   []member{{Name: "hAnS", Signature: ""}},
+				Members:   []shared.Member{{Name: "hAnS", Signature: ""}},
 			},
 		},
 	}
@@ -161,12 +162,12 @@ func TestFindIsCaseInsentitive(t *testing.T) {
 }
 
 func TestFindMember(t *testing.T) {
-	docs = map[string][]entry{
-		"scala": []entry{
-			entry{
+	docs = map[string][]shared.Entry{
+		"scala": []shared.Entry{
+			shared.Entry{
 				Namespace: []string{"scala", "collection", "mutable"},
 				Name:      "HashMap",
-				Members:   []member{{Name: "clearTable", Signature: "():Unit"}},
+				Members:   []shared.Member{{Name: "clearTable", Signature: "():Unit"}},
 			},
 		},
 	}
@@ -192,12 +193,12 @@ func TestFindMember(t *testing.T) {
 }
 
 func TestFindMemberByPrefix(t *testing.T) {
-	docs = map[string][]entry{
-		"scala": []entry{
-			entry{
+	docs = map[string][]shared.Entry{
+		"scala": []shared.Entry{
+			shared.Entry{
 				Namespace: []string{"scala", "collection", "mutable"},
 				Name:      "HashMap",
-				Members:   []member{{Name: "clearTable", Signature: "():Unit"}},
+				Members:   []shared.Member{{Name: "clearTable", Signature: "():Unit"}},
 			},
 		},
 	}

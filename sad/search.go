@@ -1,6 +1,7 @@
 package main
 
 import (
+	"../shared"
 	"reflect"
 	"strings"
 )
@@ -18,7 +19,7 @@ func (s searchResult) eq(o searchResult) bool {
 	return reflect.DeepEqual(s, o)
 }
 
-func NewSearchResult(e entry, memberIdx int) searchResult {
+func NewSearchResult(e shared.Entry, memberIdx int) searchResult {
 
 	if len(e.Members) == 0 {
 		return searchResult{

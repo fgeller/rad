@@ -1,30 +1,8 @@
-package main
+package shared
 
 import "os"
-import "net/http"
 import "testing"
 import "io/ioutil"
-
-func TestInstallNotReDownloading(t *testing.T) {
-	var df bool
-	td := func(r string) (*http.Response, error) {
-		df = true
-		return &http.Response{}, nil
-	}
-
-	local := "gerd"
-	url := "http://hans/" + local
-
-	os.Create(local)
-	defer os.Remove(local)
-
-	download(td, url)
-
-	if df {
-		t.Errorf("Expected download to shortcircuit as file exists.")
-	}
-
-}
 
 func TestUnzip(t *testing.T) {
 	dataDir := "testdata"
@@ -42,7 +20,7 @@ func TestUnzip(t *testing.T) {
 		return
 	}
 
-	unzip(archive, dataDir)
+	Unzip(archive, dataDir)
 
 	files := []string{testDir, testNestedDir, testFile, testFileWithContent}
 	for _, f := range files {

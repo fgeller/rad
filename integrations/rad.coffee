@@ -23,7 +23,11 @@ module.exports = (robot) ->
           return
 
         results = JSON.parse(body)
-        res.reply "rad found #{results.length} entries:"
+        if results.length == 0
+          res.reply "rad found no entries."
+        else
+          res.reply "rad found #{results.length} entries:"
+
         for r in results
           robot.adapter.customMessage {
             channel: res.message.room

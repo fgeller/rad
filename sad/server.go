@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
+	"path/filepath"
 	"strconv"
 )
 
@@ -49,8 +49,13 @@ func serve(addr string) {
 	http.HandleFunc("/ping", pingHandler)
 	http.HandleFunc("/s", queryHandler)
 
-	packs := http.FileServer(http.Dir("./" + packDir))
-	http.Handle(fmt.Sprintf("/%v/", packDir), http.StripPrefix(fmt.Sprintf("/%v/", packDir), packs))
+	pd, err := filepath.Abs(packDir)
+	if err != nil {
+		log.Fatalf("Can't find absolute path to packDir %v: %v\n", packDir, err)
+	}
+
+	packs := http.FileServer(http.Dir(pd))
+	http.Handle("/pack/", http.StripPrefix("/pack/", packs))
 
 	ui := http.FileServer(http.Dir("./ui"))
 	http.Handle("/ui/", http.StripPrefix("/ui/", ui))

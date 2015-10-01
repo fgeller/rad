@@ -33,7 +33,7 @@ func NewSearchResult(e shared.Entry, memberIdx int) searchResult {
 		Namespace: e.Namespace,
 		Member:    e.Members[memberIdx].Name,
 		Signature: e.Members[memberIdx].Signature,
-		Target:    e.Members[memberIdx].Target,
+		Target:    "/pack/" + e.Members[memberIdx].Target,
 	}
 }
 

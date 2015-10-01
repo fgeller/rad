@@ -32,7 +32,7 @@ func scan(path string, p parser) ([]shared.Entry, error) {
 	start := time.Now()
 	fc, es, err := scanDir(path, p)
 	elapsed := time.Now().Sub(start)
-	log.Printf("found %v links (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
+	log.Printf("Found %v entries (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
 
 	return es, err
 }

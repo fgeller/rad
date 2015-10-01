@@ -37,8 +37,6 @@ func mkIndexer(name string, source string) indexer {
 		}
 	}
 
-	fmt.Printf("SOURCE: %v\n", source)
-
 	switch name {
 	case "java":
 		return mk(parseJavaDocFile)
@@ -84,6 +82,7 @@ func mkPack(conf config) (string, error) {
 		return "", err
 	}
 
+	log.Printf("Copying files over to %v.\n", targetDir)
 	// expected: name: scala, source: /some/path/to/scala-docs
 	// created:
 	//   /tmp-dir/scala/scala-docs/
@@ -93,7 +92,7 @@ func mkPack(conf config) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	log.Printf("Copied %v files over to %v.\n", c, targetDir)
+	log.Printf("Copied %v files over.\n", c)
 
 	// 1. index
 	entries, err := conf.indexer(targetDir)
@@ -208,6 +207,10 @@ func main() {
 	}
 
 	result, err := mkPack(conf)
-	fmt.Printf("RESULT: %v\nERR: %v\n", result, err)
+	if err != nil {
+		log.Fatalf("Failed to create pack: %v\n", err)
+		return
+	}
 
+	log.Printf("Created pack: %v\n", result)
 }

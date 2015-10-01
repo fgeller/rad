@@ -23,6 +23,15 @@ module.exports = (robot) ->
           return
 
         results = JSON.parse(body)
+        res.reply "rad found #{results.length} entries:"
         for r in results
-          res.reply "#{r.Entity} #{r.Member} #{rad_url}/ui/?doc=#{r.Target}"
-
+          robot.adapter.customMessage {
+            channel: res.message.room
+            attachments: [
+              {
+                title: "#{r.Entity} #{r.Member}",
+                title_link: "#{rad_url}/ui/?doc=#{r.Target.substring(1)}",
+                mrkdwn_in: ["text"]
+              }
+            ]
+          }

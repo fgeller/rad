@@ -49,11 +49,13 @@ func Unzip(src string, dest string) error {
 		if err != nil {
 			return err
 		}
+		defer fc.Close()
 
 		dst, err := os.Create(path)
 		if err != nil {
 			return err
 		}
+		defer dst.Close()
 
 		_, err = io.Copy(dst, fc)
 		if err != nil {

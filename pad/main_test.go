@@ -30,7 +30,7 @@ func TestMkPack(t *testing.T) {
 
 	tmpDir, err := ioutil.TempDir("", "pad-test-pack")
 	if err != nil {
-		t.Errorf("Unexpected error while creating temporary directory", err)
+		t.Errorf("Unexpected error while creating temporary directory: %v", err)
 		return
 	}
 	// defer os.RemoveAll(tmpDir)

@@ -26,7 +26,7 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
 	entries := []shared.Entry{}
 	inheritedBlockPattern, err := regexp.Compile("^(methods|fields)\\.inherited.+")
 	if err != nil {
-		log.Fatal("Can't compile pattern for Java doc parsing: %v\n", err)
+		log.Fatalf("Can't compile pattern for Java doc parsing: %v\n", err)
 	}
 
 	for ; err == nil; t, err = d.Token() {
@@ -44,13 +44,13 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
 				inInheritedBlock = true
 				inheritedBlock, err = attr(se, "name")
 				if err != nil {
-					log.Fatal("Unexpected error while accessing attr 'name': %v\n", err)
+					log.Fatalf("Unexpected error while accessing attr 'name': %v\n", err)
 				}
 
 			case inInheritedBlock && se.Name.Local == "a":
 				href, err := attr(se, "href")
 				if err != nil {
-					log.Fatal("Unexpected error while accessing attr 'href: %v\n", err)
+					log.Fatalf("Unexpected error while accessing attr 'href: %v\n", err)
 				}
 
 				// ["testdata", "ActionEvent.html"]
@@ -74,7 +74,7 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
 				// href="../../../javax/xml/parsers/SAXParser.html#getParser--"
 				href, err := attr(se, "href")
 				if err != nil {
-					log.Fatal("Unexpected error while accessing attr 'href': %v\n", err)
+					log.Fatalf("Unexpected error while accessing attr 'href': %v\n", err)
 				}
 
 				e := parseHref(href, path)

@@ -203,7 +203,7 @@ func main() {
 		*source,
 	)
 	if err != nil {
-		log.Fatal("Invalid configuration %v", conf)
+		log.Fatalf("Invalid configuration %v", conf)
 	}
 
 	result, err := mkPack(conf)

@@ -25,6 +25,7 @@ module.exports = (robot) ->
         results = JSON.parse(body)
         if results.length == 0
           res.reply "rad found no entries."
+          return
         else
           res.reply "rad found #{results.length} entries:"
 

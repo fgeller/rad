@@ -32,12 +32,18 @@ func Unzip(src string, dest string) error {
 	for _, f := range r.File {
 		path := filepath.Join(dest, f.Name)
 		if f.FileInfo().IsDir() {
-			os.MkdirAll(path, f.Mode())
+			err = os.MkdirAll(path, f.Mode())
+			if err != nil {
+				return err
+			}
 			continue
 		}
 
 		if !FileExists(filepath.Dir(path)) {
-			os.MkdirAll(filepath.Dir(path), 0755)
+			err = os.MkdirAll(filepath.Dir(path), 0755)
+			if err != nil {
+				return err
+			}
 		}
 		fc, err := f.Open()
 		if err != nil {

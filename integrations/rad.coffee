@@ -35,7 +35,7 @@ module.exports = (robot) ->
             attachments: [
               {
                 title: "#{r.Entity} #{r.Member}",
-                title_link: "#{rad_url}/ui/?doc=#{r.Target.substring(1)}",
+                title_link: "#{rad_url}/ui/?doc=#{r.Target}",
                 mrkdwn_in: ["text"]
               }
             ]

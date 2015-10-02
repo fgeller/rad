@@ -82,7 +82,7 @@ var Search = React.createClass({
 
         var doc = ""
         if (arrParam.length == 2 && arrParam[0] == "doc") {
-            doc = "/" + arrParam[1] + decodeURIComponent(window.location.hash).replace(/&gt;/g, ">").replace(/&lt;/g, "<");
+            doc = arrParam[1] + decodeURIComponent(window.location.hash).replace(/&gt;/g, ">").replace(/&lt;/g, "<");
         }
 
         return (<div id="main-container">

@@ -14,6 +14,34 @@ import (
 
 type downloader func(string) (*http.Response, error)
 
+func unzipFile(f *zip.File, dest string) error {
+	path := filepath.Join(dest, f.Name)
+	if f.FileInfo().IsDir() {
+		return os.MkdirAll(path, f.Mode())
+	}
+
+	if !FileExists(filepath.Dir(path)) {
+		err := os.MkdirAll(filepath.Dir(path), 0755)
+		if err != nil {
+			return err
+		}
+	}
+	fc, err := f.Open()
+	if err != nil {
+		return err
+	}
+	defer fc.Close()
+
+	dst, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer dst.Close()
+
+	_, err = io.Copy(dst, fc)
+	return err
+}
+
 func Unzip(src string, dest string) error {
 	err := os.MkdirAll(dest, 0755)
 	if err != nil {
@@ -30,34 +58,7 @@ func Unzip(src string, dest string) error {
 	defer r.Close()
 
 	for _, f := range r.File {
-		path := filepath.Join(dest, f.Name)
-		if f.FileInfo().IsDir() {
-			err = os.MkdirAll(path, f.Mode())
-			if err != nil {
-				return err
-			}
-			continue
-		}
-
-		if !FileExists(filepath.Dir(path)) {
-			err = os.MkdirAll(filepath.Dir(path), 0755)
-			if err != nil {
-				return err
-			}
-		}
-		fc, err := f.Open()
-		if err != nil {
-			return err
-		}
-		defer fc.Close()
-
-		dst, err := os.Create(path)
-		if err != nil {
-			return err
-		}
-		defer dst.Close()
-
-		_, err = io.Copy(dst, fc)
+		err = unzipFile(f, dest)
 		if err != nil {
 			return err
 		}

@@ -82,7 +82,7 @@ func mkPack(conf config) (string, error) {
 		return "", err
 	}
 
-	log.Printf("Copying files over to %v.\n", targetDir)
+	log.Printf("Copying files to %v\n", targetDir)
 	// expected: name: scala, source: /some/path/to/scala-docs
 	// created:
 	//   /tmp-dir/scala/scala-docs/

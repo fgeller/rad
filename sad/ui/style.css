@@ -70,11 +70,6 @@ body {
     color: #666;
 }
 
-.search-result .entity-name {
-    font-size: 12pt;
-    overflow-x: overlay;
-}
-
 .search-result .member-name {
     font-size: 10pt;
     display: inline-block;

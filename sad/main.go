@@ -12,5 +12,6 @@ func main() {
 	flag.StringVar(&packDir, "packDir", "packs", "Path where packages will be installed")
 	flag.Parse()
 
+	loadInstalled()
 	serve("0.0.0.0:3024")
 }

@@ -61,13 +61,15 @@ body {
 .search-result {
     width: 110pt;
     display: inline-block;
-    padding-top: 7pt;
-    padding-bottom: 2.5pt;
+    padding-top: 6pt;
+    padding-bottom: 3.5pt;
     padding-right: 3pt;
     padding-left: 5pt;
+    margin-top: 2pt;
     margin-left: 5pt;
-    border-left: 1px solid #666;
     color: #666;
+    background-color: #E8EAF6;
+    cursor: pointer;
 }
 
 .search-result .member-name {
@@ -86,12 +88,14 @@ body {
 }
 
 .selected-search-result {
-    color: #3f51b5;
+    color: #fff;
+    background-color: #7986CB;
     font-weight: 400;
 }
 
 #ifrm-container {
     position: relative;
+    margin-top: .6em;
     left: 0;
     top: 10pt;
     width: 100%;

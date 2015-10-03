@@ -16,11 +16,13 @@ var SearchField = React.createClass({
 
 var SearchResult = React.createClass({
     open: function() {
+        if (!this.props.selected){
+            this.props.selectResult(this.props.index);
+        }
+
         var href = this.props.entry["Target"];
         console.log("Opening target", href);
         document.getElementById("ifrm").src = href;
-    },
-    componentDidMount: function() {
     },
     render: function() {
         if (this.props.selected) {
@@ -73,7 +75,12 @@ var Search = React.createClass({
             results: []
         }
     },
-    selectResult: function(left, right) {
+    selectResult: function(idx) {
+        if (idx >= 0 && idx <= 3 && idx < this.state.results.length) {
+            this.setState({selected: idx})
+        }
+    },
+    shiftSelection: function(left, right) {
         // if left: try -1
         var sub1 = this.state.selected - 1
         if (left && sub1 >= 0) {
@@ -97,13 +104,13 @@ var Search = React.createClass({
         key.unbind('shift+left');
 
         key('shift+right', function(event) {
-            this.selectResult(false, true)
+            this.shiftSelection(false, true)
             event.cancelBubble = true;
             return false;
         }.bind(this));
 
         key('shift+left', function(event) {
-            this.selectResult(true, false)
+            this.shiftSelection(true, false)
             event.cancelBubble = true;
             return false;
         }.bind(this));
@@ -112,7 +119,11 @@ var Search = React.createClass({
         var entries = [];
         for (var i = 0; i < this.state.results.length && i < 3; i++) {
             var entry = this.state.results[i]
-            entries.push(<SearchResult entry={entry} index={i} selected={i == this.state.selected} />)
+            entries.push(<SearchResult
+                             entry={entry}
+                             index={i}
+                             selected={i == this.state.selected}
+                             selectResult={this.selectResult} />)
         }
 
         var params = window.location.search.substring(1);

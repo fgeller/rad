@@ -17,11 +17,13 @@ var SearchField = React.createClass({
 var SearchResult = React.createClass({
     open: function() {
         var href = this.props.entry["Target"];
-        console.log("opening target", href);
+        console.log("Opening target", href);
         document.getElementById("ifrm").src = href;
     },
     componentDidMount: function() {
-        if (this.props.index == 0) {
+    },
+    render: function() {
+        if (this.props.selected) {
             key.unbind('return');
             key('return', function(event) {
                 this.open();
@@ -29,15 +31,17 @@ var SearchResult = React.createClass({
                 return false;
             }.bind(this));
         }
-    },
-    render: function() {
+
         // \00a0 = &nbsp;
-        var namespace = this.props.entry["Namespace"].join(".") || "\u00a0";
+        var namespace = this.props.entry["Namespace"].join(".") || "\00a0";
         var memName = this.props.entry["Member"] || "\u00a0";
         if (memName.length > 20) {
             memName = memName.substring(0, 20) + "...";
         }
         var clsName = "search-result"
+        if (this.props.selected) {
+            clsName += " selected-search-result";
+        }
         if (this.props.index == 0) {
             clsName += " first-search-result";
         }
@@ -50,7 +54,7 @@ var SearchResult = React.createClass({
 
 var Search = React.createClass({
     search: function(text){
-        this.setState({query: text});
+        this.setState({query: text, selected: 0});
         var qs = text.split(" ").map(encodeURIComponent);
         if (qs.length > 1) {
             var q = "/s?p=" + qs[0] + "&e=" + qs[1]
@@ -64,15 +68,51 @@ var Search = React.createClass({
     },
     getInitialState: function(){
         return{
+            selected: 0,
             query:'',
             results: []
         }
+    },
+    selectResult: function(left, right) {
+        // if left: try -1
+        var sub1 = this.state.selected - 1
+        if (left && sub1 >= 0) {
+            this.setState({selected: sub1})
+            return
+        }
+        // if right: try +1
+        var add1 = this.state.selected + 1
+        if (right && add1 < 3 && add1 < this.state.results.length) { // TODO magic number
+            this.setState({selected: add1})
+            return
+        }
+        // if none: 0
+        if (!left && !right) {
+            this.setState({selected: 0})
+            return
+        }
+    },
+    componentDidMount: function() {
+        key.unbind('shift+right');
+        key.unbind('shift+left');
+
+        key('shift+right', function(event) {
+            this.selectResult(false, true)
+            event.cancelBubble = true;
+            return false;
+        }.bind(this));
+
+        key('shift+left', function(event) {
+            this.selectResult(true, false)
+            event.cancelBubble = true;
+            return false;
+        }.bind(this));
     },
     render: function(){
         var entries = [];
         for (var i = 0; i < this.state.results.length && i < 3; i++) {
             var entry = this.state.results[i]
-            entries.push(<SearchResult entry={entry} index={i} />)
+            entries.push(<SearchResult entry={entry} index={i} selected={i == this.state.selected} />)
         }
 
         var params = window.location.search.substring(1);

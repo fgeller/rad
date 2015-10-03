@@ -22,7 +22,7 @@ body {
     font-family: Raleway, Roboto, sans-serif;
     font-size: 16pt;
     font-weight: 100;
-    color: #3f51b5;
+    color: #c5cae9;
 }
 
 #main-container {
@@ -83,7 +83,10 @@ body {
 
 .first-search-result {
     border-left: 0px;
-    color: #000;
+}
+
+.selected-search-result {
+    color: #3f51b5;
     font-weight: 400;
 }
 

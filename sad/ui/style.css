@@ -44,10 +44,10 @@ body {
 #search-field {
     font-family: Roboto, sans-serif;
     height: 36pt;
-    width: 175pt;
+    width: 180pt;
     padding-left: 3pt;
     padding-right: 3pt;
-    font-size: 11pt;
+    font-size: 12pt;
     color: #666;
 }
 
@@ -59,7 +59,7 @@ body {
 }
 
 .search-result {
-    width: 100pt;
+    width: 110pt;
     display: inline-block;
     padding-top: 7pt;
     padding-bottom: 2.5pt;
@@ -71,7 +71,7 @@ body {
 }
 
 .search-result .member-name {
-    font-size: 14pt;
+    font-size: 12pt;
     display: inline-block;
     overflow-x: overlay;
 }

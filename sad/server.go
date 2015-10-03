@@ -9,26 +9,22 @@ import (
 )
 
 func queryHandler(w http.ResponseWriter, r *http.Request) {
-	pack := r.FormValue("p")
-	entity := r.FormValue("e")
+	pack := r.FormValue("pk")
+	ns := r.FormValue("ns")
 	mem := r.FormValue("m")
 	limit, err := strconv.ParseInt(r.FormValue("limit"), 10, 32)
 	if err != nil {
 		limit = 10
 	}
 
-	res, err := findEntityMember(pack, entity, mem, int(limit))
+	res, err := find(pack, ns, mem, int(limit))
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
 	log.Printf(
-		"got request for p[%v] and e[%v] and m[%v], found [%v] entries.",
-		pack,
-		entity,
-		mem,
-		len(res),
+		"Request pk[%v] and ns[%v] and m[%v] found [%v] entries.", pack, ns, mem, len(res),
 	)
 
 	js, err := json.Marshal(res)

@@ -2,7 +2,9 @@ package main
 
 import (
 	"../shared"
+	"fmt"
 	"reflect"
+	"regexp"
 	"strings"
 )
 
@@ -31,21 +33,57 @@ func NewSearchResult(n shared.Namespace, memberIdx int) searchResult {
 	}
 }
 
-func iPrefix(s string, pfx string) bool {
-	return strings.HasPrefix(strings.ToLower(s), strings.ToLower(pfx))
+func maybeInsensitive(pat string) string {
+	if strings.ToLower(pat) == pat {
+		return fmt.Sprintf("(?i)%v", pat)
+	}
+	return pat
 }
 
-func findEntityMember(pack string, entity string, fun string, limit int) ([]searchResult, error) {
-	results := []searchResult{}
+type searchParams struct {
+	pack   *regexp.Regexp
+	path   *regexp.Regexp
+	member *regexp.Regexp
+	limit  int
+}
 
-	for packName, ns := range docs {
-		if iPrefix(packName, pack) {
-			for _, n := range ns {
-				if iPrefix(n.Last(), entity) {
-					for mi, m := range n.Members {
-						if iPrefix(m.Name, fun) {
-							results = append(results, NewSearchResult(n, mi))
-							if len(results) == limit {
+func compileParams(pk, pt, m string, limit int) (searchParams, error) {
+	var result searchParams
+	var pats [3]*regexp.Regexp
+
+	for i, p := range [3]string{pk, pt, m} {
+		pat := maybeInsensitive(p)
+		cp, err := regexp.Compile(pat)
+		if err != nil {
+			return result, err
+		}
+		pats[i] = cp
+	}
+
+	result.pack = pats[0]
+	result.path = pats[1]
+	result.member = pats[2]
+	result.limit = limit
+
+	return result, nil
+}
+
+func find(packPattern, pathPattern, memberPattern string, limit int) ([]searchResult, error) {
+	var results []searchResult
+	args, err := compileParams(packPattern, pathPattern, memberPattern, limit)
+	if err != nil {
+		return results, err
+	}
+
+	for pack, namespaces := range docs {
+		if args.pack.MatchString(pack) {
+			for _, namespace := range namespaces {
+				normalizedPath := strings.Join(namespace.Path, ".")
+				if args.path.MatchString(normalizedPath) {
+					for mi, member := range namespace.Members {
+						if args.member.MatchString(member.Name) {
+							results = append(results, NewSearchResult(namespace, mi))
+							if len(results) >= limit {
 								return results, nil
 							}
 						}

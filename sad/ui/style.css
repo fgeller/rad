@@ -61,7 +61,7 @@ body {
 .search-result {
     width: 100pt;
     display: inline-block;
-    padding-top: 2.5pt;
+    padding-top: 7pt;
     padding-bottom: 2.5pt;
     padding-right: 3pt;
     padding-left: 5pt;
@@ -71,7 +71,7 @@ body {
 }
 
 .search-result .member-name {
-    font-size: 10pt;
+    font-size: 14pt;
     display: inline-block;
     overflow-x: overlay;
 }

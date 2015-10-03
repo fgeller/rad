@@ -23,6 +23,6 @@ wget --wait=0.5 \
      http://godoc.org/-/go
 
 # don't show page header and footer
-echo ".navbar-default, #x-footer, #x-pkginfo { display: none; }" >> `find $PFX -name "site.css*"`
+echo ".navbar-default, #x-footer, #x-pkginfo p { display: none; }" >> `find $PFX -name "site.css*"`
 
 rm -v $PFX/godoc.org/-/index.html

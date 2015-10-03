@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"strconv"
+	"time"
 )
 
 func queryHandler(w http.ResponseWriter, r *http.Request) {
@@ -17,6 +18,7 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 		limit = 10
 	}
 
+	start := time.Now()
 	res, err := find(pack, ns, mem, int(limit))
 	if err != nil {
 		http.Error(w, err.Error(), 500)
@@ -24,7 +26,12 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf(
-		"Request pk[%v] and ns[%v] and m[%v] found [%v] entries.", pack, ns, mem, len(res),
+		"Request pk[%v] and ns[%v] and m[%v] found [%v] entries in %v.",
+		pack,
+		ns,
+		mem,
+		len(res),
+		time.Since(start),
 	)
 
 	js, err := json.Marshal(res)

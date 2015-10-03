@@ -38,161 +38,129 @@ func TestFind(t *testing.T) {
 		},
 	}
 
-	// exact matching on full path
-	limit := 10
-	packPat := "go"
-	pathPat := "io.ioutil"
-	memPat := "ReadAll"
-	expected := []searchResult{
+	testData := []struct {
+		name     string
+		limit    int
+		packPat  string
+		pathPat  string
+		memPat   string
+		expected []searchResult
+	}{
 		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadAll",
-			Target:    "/pack/",
+			name:    "exact matching on full path",
+			limit:   10,
+			packPat: "go",
+			pathPat: "io.ioutil",
+			memPat:  "ReadAll",
+			expected: []searchResult{
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadAll",
+					Target:    "/pack/",
+				},
+			},
+		},
+
+		{
+			name:    "regexp matches 1",
+			limit:   10,
+			packPat: "o",
+			pathPat: "ou",
+			memPat:  "ea",
+			expected: []searchResult{
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadAll",
+					Target:    "/pack/",
+				},
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadDir",
+					Target:    "/pack/",
+				},
+			},
+		},
+
+		{
+			name:    "regexp matches 2",
+			limit:   10,
+			packPat: "g.",
+			pathPat: "i.\\.i.u.i.",
+			memPat:  "^Rea.+$",
+			expected: []searchResult{
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadAll",
+					Target:    "/pack/",
+				},
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadDir",
+					Target:    "/pack/",
+				},
+			},
+		},
+
+		{
+			name:    "limit results",
+			limit:   1,
+			packPat: "o",
+			pathPat: "ou",
+			memPat:  "ea",
+			expected: []searchResult{
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadAll",
+					Target:    "/pack/",
+				},
+			},
+		},
+
+		{
+			name:    "case insensitive when all lower case",
+			limit:   10,
+			packPat: "go",
+			pathPat: "io.ioutil",
+			memPat:  "readall",
+			expected: []searchResult{
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadAll",
+					Target:    "/pack/",
+				},
+			},
+		},
+
+		{
+			name:    "empty string matches anything",
+			limit:   10,
+			packPat: "go",
+			pathPat: "io.ioutil",
+			memPat:  "",
+			expected: []searchResult{
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadAll",
+					Target:    "/pack/",
+				},
+				{
+					Namespace: []string{"io", "ioutil"},
+					Member:    "ReadDir",
+					Target:    "/pack/",
+				},
+			},
 		},
 	}
 
-	actual, err := find(packPat, pathPat, memPat, limit)
-
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-		return
-	}
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected\n%v\nbut got:\n%v\n", expected, actual)
-		return
-	}
-
-	// regexp matches
-	limit = 10
-	packPat = "o"
-	pathPat = "ou"
-	memPat = "ea"
-	expected = []searchResult{
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadAll",
-			Target:    "/pack/",
-		},
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadDir",
-			Target:    "/pack/",
-		},
-	}
-
-	actual, err = find(packPat, pathPat, memPat, limit)
-
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-		return
-	}
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected\n%v\nbut got:\n%v\n", expected, actual)
-		return
-	}
-
-	limit = 10
-	packPat = "g."
-	pathPat = "i.\\.i.u.i."
-	memPat = "^Rea.+$"
-	expected = []searchResult{
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadAll",
-			Target:    "/pack/",
-		},
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadDir",
-			Target:    "/pack/",
-		},
-	}
-
-	actual, err = find(packPat, pathPat, memPat, limit)
-
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-		return
-	}
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected\n%v\nbut got:\n%v\n", expected, actual)
-		return
-	}
-
-	// limit results
-	limit = 1
-	packPat = "o"
-	pathPat = "ou"
-	memPat = "ea"
-	expected = []searchResult{
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadAll",
-			Target:    "/pack/",
-		},
-	}
-
-	actual, err = find(packPat, pathPat, memPat, limit)
-
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-		return
-	}
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected\n%v\nbut got:\n%v\n", expected, actual)
-		return
-	}
-
-	// case insensitive when all lower case
-	limit = 10
-	packPat = "go"
-	pathPat = "io.ioutil"
-	memPat = "readall"
-	expected = []searchResult{
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadAll",
-			Target:    "/pack/",
-		},
-	}
-
-	actual, err = find(packPat, pathPat, memPat, limit)
-
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-		return
-	}
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected\n%v\nbut got:\n%v\n", expected, actual)
-		return
-	}
-
-	// empty string matches anything
-	limit = 10
-	packPat = "go"
-	pathPat = "io.ioutil"
-	memPat = ""
-	expected = []searchResult{
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadAll",
-			Target:    "/pack/",
-		},
-		{
-			Namespace: []string{"io", "ioutil"},
-			Member:    "ReadDir",
-			Target:    "/pack/",
-		},
-	}
-
-	actual, err = find(packPat, pathPat, memPat, limit)
-
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-		return
-	}
-	if !reflect.DeepEqual(actual, expected) {
-		t.Errorf("Expected\n%v\nbut got:\n%v\n", expected, actual)
-		return
+	for _, data := range testData {
+		actual, err := find(data.packPat, data.pathPat, data.memPat, data.limit)
+		if err != nil {
+			t.Errorf("Unexpected error for test %v: %v", data.name, err)
+			return
+		}
+		if !reflect.DeepEqual(actual, data.expected) {
+			t.Errorf("Test [%v] expected\n%v\nbut got:\n%v\n", data.name, data.expected, actual)
+			return
+		}
 	}
 }

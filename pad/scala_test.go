@@ -5,6 +5,33 @@ import (
 	"testing"
 )
 
+// TODO
+
+// {
+//   "Path": [
+//     "scala",
+//     "AnyRef"
+//   ],
+//   "Members": [
+//     {
+//       "Name": "==(x$1:Any):Boolean",
+//       "Target": "scala/scala-docs-2.11.7/api/scala-reflect/index.html#scala.AnyRef@==(x$1:Any):Boolean"
+//     }
+//   ]
+// },
+
+// {
+//   "Path": [
+//     "package"
+//   ],
+//   "Members": [
+//     {
+//       "Name": "",
+//       "Target": "scala/scala-docs-2.11.7/api/scala-reflect/index.html#package"
+//     }
+//   ]
+// },
+
 func TestParseScalaEntry(t *testing.T) {
 
 	source := "/some source file"

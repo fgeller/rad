@@ -22,12 +22,11 @@ func TestJavaParseFileMethods(t *testing.T) {
 		return
 	}
 
-	expectedStart := shared.Entry{
-		Namespace: []string{"javax", "xml", "parsers"},
-		Name:      "SAXParser",
+	expectedStart := shared.Namespace{
+		Path: []string{"javax", "xml", "parsers", "SAXParser"},
 		Members: []shared.Member{
-			{Name: "SAXParser", Signature: "", Target: "testdata/SAXParser.html#SAXParser--"},
-			{Name: "getParser", Signature: "", Target: "testdata/SAXParser.html#getParser--"},
+			{Name: "SAXParser", Target: "testdata/SAXParser.html#SAXParser--"},
+			{Name: "getParser", Target: "testdata/SAXParser.html#getParser--"},
 		},
 	}
 
@@ -40,9 +39,9 @@ func TestJavaParseFileMethods(t *testing.T) {
 	}
 
 	var foundClone bool
-	for _, e := range results {
-		if e.Name == "SAXParser" {
-			for _, m := range e.Members {
+	for _, n := range results {
+		if n.Path[len(n.Path)-1] == "SAXParser" {
+			for _, m := range n.Members {
 				if m.Name == "clone" &&
 					m.Target == "testdata/SAXParser.html#methods.inherited.from.class.java.lang.Object" {
 					foundClone = true
@@ -72,10 +71,9 @@ func TestJavaParseFileFields(t *testing.T) {
 		return
 	}
 
-	fstExpected := shared.Entry{
-		Namespace: []string{"java", "awt", "event"},
-		Name:      "ActionEvent",
-		Members:   []shared.Member{{Name: "ACTION_FIRST", Signature: "", Target: "testdata/ActionEvent.html#ACTION_FIRST"}},
+	fstExpected := shared.Namespace{
+		Path:    []string{"java", "awt", "event", "ActionEvent"},
+		Members: []shared.Member{{Name: "ACTION_FIRST", Target: "testdata/ActionEvent.html#ACTION_FIRST"}},
 	}
 
 	fstActual := results[0]
@@ -87,9 +85,9 @@ func TestJavaParseFileFields(t *testing.T) {
 	}
 
 	var foundGetSource bool
-	for _, e := range results {
-		for _, m := range e.Members {
-			if e.Name == "ActionEvent" && m.Name == "getSource" {
+	for _, n := range results {
+		for _, m := range n.Members {
+			if n.Last() == "ActionEvent" && m.Name == "getSource" {
 				foundGetSource = true
 			}
 		}
@@ -101,9 +99,9 @@ func TestJavaParseFileFields(t *testing.T) {
 	}
 
 	var foundActionEventMask bool
-	for _, e := range results {
-		for _, m := range e.Members {
-			if e.Name == "ActionEvent" && m.Name == "ACTION_EVENT_MASK" {
+	for _, n := range results {
+		for _, m := range n.Members {
+			if n.Last() == "ActionEvent" && m.Name == "ACTION_EVENT_MASK" {
 				foundActionEventMask = true
 			}
 		}
@@ -122,12 +120,11 @@ func TestParseHref(t *testing.T) {
 	path := "/x/y/z"
 
 	href := "../../../../com/sun/source/util/DocTreeScanner.html#DocTreeScanner--"
-	expected := shared.Entry{
-		Namespace: []string{"com", "sun", "source", "util"},
-		Name:      "DocTreeScanner",
-		Members:   []shared.Member{{Name: "DocTreeScanner", Signature: "", Target: "/x/y/DocTreeScanner.html#DocTreeScanner--"}},
+	expected := shared.Namespace{
+		Path:    []string{"com", "sun", "source", "util", "DocTreeScanner"},
+		Members: []shared.Member{{Name: "DocTreeScanner", Target: "/x/y/DocTreeScanner.html#DocTreeScanner--"}},
 	}
-	actual := parseHref(href, path)
+	actual := parseJavaHref(href, path)
 	if !expected.Eq(actual) {
 		t.Errorf("expected to parse\n%v\nto entry\n%v\nbut got\n%v\n", href, expected, actual)
 		return

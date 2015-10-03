@@ -11,15 +11,13 @@ type Pack struct {
 }
 
 type Member struct {
-	Name      string
-	Signature string
-	Target    string
+	Name   string
+	Target string
 }
 
-type Entry struct {
-	Namespace []string
-	Name      string
-	Members   []Member
+type Namespace struct {
+	Path    []string
+	Members []Member
 }
 
 func (m Member) Eq(other Member) bool {
@@ -27,34 +25,28 @@ func (m Member) Eq(other Member) bool {
 }
 
 func (m Member) String() string {
-	return fmt.Sprintf(
-		"Member{Name: %v, Target: %v, Signature: %v}",
-		m.Name,
-		m.Target,
-		m.Signature,
-	)
+	return fmt.Sprintf("Member{Name: %v, Target: %v}", m.Name, m.Target)
 }
 
-func (e Entry) Eq(other Entry) bool {
-	return reflect.DeepEqual(e, other)
+func (n Namespace) Eq(other Namespace) bool {
+	return reflect.DeepEqual(n, other)
 }
 
-func (e Entry) String() string {
-	return fmt.Sprintf(
-		"Entry{Name: %v, Namespace: %v, Members: %v}",
-		e.Name,
-		e.Namespace,
-		e.Members,
-	)
+func (n Namespace) String() string {
+	return fmt.Sprintf("Namespace{Path: %v, Members: %v}", n.Path, n.Members)
 }
 
-func IsSameEntry(a Entry, b Entry) bool {
-	if a.Name != b.Name ||
-		len(a.Namespace) != len(b.Namespace) {
+func (n Namespace) Last() string {
+	return n.Path[len(n.Path)-1] // TODO: runtime out of bounds
+}
+
+func (a Namespace) HasSamePath(b Namespace) bool {
+	if len(a.Path) != len(b.Path) {
 		return false
 	}
-	for i := range a.Namespace {
-		if a.Namespace[i] != b.Namespace[i] {
+
+	for i := range a.Path {
+		if a.Path[i] != b.Path[i] {
 			return false
 		}
 	}
@@ -62,18 +54,19 @@ func IsSameEntry(a Entry, b Entry) bool {
 	return true
 }
 
-func MergeEntries(entries []Entry) []Entry {
-	if len(entries) < 1 {
-		return entries
+func Merge(ns []Namespace) []Namespace {
+	if len(ns) < 1 {
+		return ns
 	}
 
-	unmerged := entries[1:]
-	merged := []Entry{entries[0]}
+	unmerged := ns[1:]
+	merged := []Namespace{ns[0]}
 
 merging:
 	for ui := range unmerged {
 		for mi := range merged {
-			if IsSameEntry(unmerged[ui], merged[mi]) {
+			if unmerged[ui].HasSamePath(merged[mi]) {
+				// TODO: dedupe?
 				merged[mi].Members = append(merged[mi].Members, unmerged[ui].Members...)
 				continue merging
 			}

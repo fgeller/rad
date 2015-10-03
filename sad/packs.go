@@ -28,16 +28,16 @@ func load(path string) error {
 	if err != nil {
 		return err
 	}
-	var entries []shared.Entry
-	err = json.Unmarshal(db, &entries)
+	var namespaces []shared.Namespace
+	err = json.Unmarshal(db, &namespaces)
 	if err != nil {
 		return err
 	}
 
 	// add to global var
-	docs[packName] = entries
+	docs[packName] = namespaces
 
-	log.Printf("Found %v entries for pack %v\n", len(entries), packName)
+	log.Printf("Found %v namespaces for pack %v\n", len(namespaces), packName)
 
 	return nil
 }

@@ -5,7 +5,7 @@ import (
 	"flag"
 )
 
-var docs = map[string][]shared.Entry{}
+var docs = map[string][]shared.Namespace{}
 var packDir string
 
 func main() {

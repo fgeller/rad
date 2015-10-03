@@ -10,12 +10,14 @@ import (
 	"strings"
 )
 
-func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
+func parseJavaDocFile(path string, r io.Reader) []shared.Namespace {
 
 	d := xml.NewDecoder(r)
 	d.Strict = false
 	d.AutoClose = xml.HTMLAutoClose
 	d.Entity = xml.HTMLEntity
+
+	namespaces := []shared.Namespace{}
 
 	var t xml.Token
 	var err error
@@ -23,11 +25,7 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
 	var inMemberSummary bool
 	var inInheritedBlock bool
 	var inheritedBlock string
-	entries := []shared.Entry{}
-	inheritedBlockPattern, err := regexp.Compile("^(methods|fields)\\.inherited.+")
-	if err != nil {
-		log.Fatalf("Can't compile pattern for Java doc parsing: %v\n", err)
-	}
+	inheritedBlockPattern := regexp.MustCompile("^(methods|fields)\\.inherited.+")
 
 	for ; err == nil; t, err = d.Token() {
 
@@ -63,12 +61,12 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
 				// testdata/ActionEvent.html#inheritedBlock
 				tgt := strings.Join(ps, "/") + "#" + inheritedBlock
 
-				e := parseHref(href, path)
-				e.Name = ent
-				for i := range e.Members {
-					e.Members[i].Target = tgt
+				n := parseJavaHref(href, path)
+				n.Path[len(n.Path)-1] = ent
+				for i := range n.Members {
+					n.Members[i].Target = tgt
 				}
-				entries = append(entries, e)
+				namespaces = append(namespaces, n)
 
 			case inMemberSummary && inMemberNameLink && se.Name.Local == "a":
 				// href="../../../javax/xml/parsers/SAXParser.html#getParser--"
@@ -77,8 +75,8 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
 					log.Fatalf("Unexpected error while accessing attr 'href': %v\n", err)
 				}
 
-				e := parseHref(href, path)
-				entries = append(entries, e)
+				n := parseJavaHref(href, path)
+				namespaces = append(namespaces, n)
 			}
 		}
 
@@ -94,11 +92,11 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Entry {
 		}
 	}
 
-	return shared.MergeEntries(entries)
+	return shared.Merge(namespaces)
 
 }
 
-func parseHref(href string, path string) shared.Entry {
+func parseJavaHref(href string, path string) shared.Namespace {
 	// ds=["..", "..", "..", "javax", "xml", "parsers", "SAXParser.html#getParser--"]
 	ds := strings.Split(href, "/")
 	ns := []string{}
@@ -141,14 +139,8 @@ func parseHref(href string, path string) shared.Entry {
 	// "packs/java/docs/api/javax/xml/parsers/SAXParser.html#getParser--"
 	tgt := strings.Join(append(ps[:len(ps)-1], fl), "/")
 
-	return shared.Entry{
-		Namespace: ns,
-		Name:      ent,
-		Members: []shared.Member{
-			shared.Member{
-				Name:   fun,
-				Target: tgt,
-			},
-		},
+	return shared.Namespace{
+		Path:    append(ns, ent),
+		Members: []shared.Member{{Name: fun, Target: tgt}},
 	}
 }

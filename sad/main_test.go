@@ -9,7 +9,7 @@ import (
 )
 
 func setup() string {
-	docs = map[string][]shared.Entry{}
+	docs = map[string][]shared.Namespace{}
 	tmp, err := ioutil.TempDir("", "sad-main-test-pack-dir")
 	if err != nil {
 		log.Fatalf("Failed to create temporary directory: %v", err)

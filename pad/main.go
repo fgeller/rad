@@ -13,8 +13,8 @@ import (
 	"path/filepath"
 )
 
-type indexer func(string) ([]shared.Entry, error)
-type parser func(string, io.Reader) []shared.Entry
+type indexer func(string) ([]shared.Namespace, error)
+type parser func(string, io.Reader) []shared.Namespace
 
 type config struct {
 	indexer indexer
@@ -31,8 +31,8 @@ func isValidConfig(conf config) bool {
 }
 
 func mkIndexer(name string, source string) indexer {
-	mk := func(fn func(string, io.Reader) []shared.Entry) indexer {
-		return func(path string) ([]shared.Entry, error) {
+	mk := func(fn func(string, io.Reader) []shared.Namespace) indexer {
+		return func(path string) ([]shared.Namespace, error) {
 			return scan(path, fn)
 		}
 	}
@@ -143,7 +143,7 @@ func mkPack(conf config) (string, error) {
 	}
 
 	// 3. serialize entries
-	jsonEntries, err := json.Marshal(entries)
+	jsonEntries, err := json.MarshalIndent(entries, "", "  ")
 	if err != nil {
 		return "", err
 	}

@@ -7,33 +7,27 @@ import (
 )
 
 type searchResult struct {
-	Entity    string
 	Namespace []string
 	Member    string
-	Signature string
 	Target    string
-	Source    string
 }
 
 func (s searchResult) eq(o searchResult) bool {
 	return reflect.DeepEqual(s, o)
 }
 
-func NewSearchResult(e shared.Entry, memberIdx int) searchResult {
+func NewSearchResult(n shared.Namespace, memberIdx int) searchResult {
 
-	if len(e.Members) == 0 {
+	if len(n.Members) == 0 { // TODO: do we need this guy?
 		return searchResult{
-			Entity:    e.Name,
-			Namespace: e.Namespace,
+			Namespace: n.Path,
 		}
 	}
 
 	return searchResult{
-		Entity:    e.Name,
-		Namespace: e.Namespace,
-		Member:    e.Members[memberIdx].Name,
-		Signature: e.Members[memberIdx].Signature,
-		Target:    "/pack/" + e.Members[memberIdx].Target,
+		Namespace: n.Path,
+		Member:    n.Members[memberIdx].Name,
+		Target:    "/pack/" + n.Members[memberIdx].Target, // TODO: should we fix that here?
 	}
 }
 
@@ -44,13 +38,13 @@ func iPrefix(s string, pfx string) bool {
 func findEntityMember(pack string, entity string, fun string, limit int) ([]searchResult, error) {
 	results := []searchResult{}
 
-	for packName, es := range docs {
+	for packName, ns := range docs {
 		if iPrefix(packName, pack) {
-			for _, e := range es {
-				if iPrefix(e.Name, entity) {
-					for mi, m := range e.Members {
+			for _, n := range ns {
+				if iPrefix(n.Last(), entity) {
+					for mi, m := range n.Members {
 						if iPrefix(m.Name, fun) {
-							results = append(results, NewSearchResult(e, mi))
+							results = append(results, NewSearchResult(n, mi))
 							if len(results) == limit {
 								return results, nil
 							}

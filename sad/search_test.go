@@ -7,15 +7,15 @@ import (
 )
 
 func TestNewSearchResult(t *testing.T) {
-	e := shared.Entry{
-		Name: "entity",
+	n := shared.Namespace{
+		Path: []string{"entity"},
 	}
 
 	expected := searchResult{
-		Entity: "entity",
+		Namespace: []string{"entity"},
 	}
 
-	actual := NewSearchResult(e, 0)
+	actual := NewSearchResult(n, 0)
 
 	if !reflect.DeepEqual(expected, actual) {
 
@@ -28,10 +28,10 @@ func TestNewSearchResult(t *testing.T) {
 }
 
 func TestFindPackageByPrefix(t *testing.T) {
-	docs = map[string][]shared.Entry{
-		"aa": []shared.Entry{{Name: "entity1", Members: []shared.Member{{Name: "member1"}}}},
-		"ab": []shared.Entry{{Name: "entity1", Members: []shared.Member{{Name: "member1"}}}},
-		"cd": []shared.Entry{{Name: "entity1", Members: []shared.Member{{Name: "member1"}}}},
+	docs = map[string][]shared.Namespace{
+		"aa": []shared.Namespace{{Path: []string{"entity1"}, Members: []shared.Member{{Name: "member1"}}}},
+		"ab": []shared.Namespace{{Path: []string{"entity1"}, Members: []shared.Member{{Name: "member1"}}}},
+		"cd": []shared.Namespace{{Path: []string{"entity1"}, Members: []shared.Member{{Name: "member1"}}}},
 	}
 	res, err := findEntityMember("a", "entity", "member", 10)
 
@@ -45,58 +45,54 @@ func TestFindPackageByPrefix(t *testing.T) {
 }
 
 func TestFindEntry(t *testing.T) {
-	docs = map[string][]shared.Entry{
-		"scala": []shared.Entry{
-			shared.Entry{
-				Namespace: []string{"scala", "sys"},
-				Name:      "SystemProperties",
-				Members:   []shared.Member{{Name: "", Signature: ""}},
+	docs = map[string][]shared.Namespace{
+		"scala": []shared.Namespace{
+			shared.Namespace{
+				Path:    []string{"scala", "sys", "SystemProperties"},
+				Members: []shared.Member{{Name: ""}},
 			},
-			shared.Entry{
-				Namespace: []string{"scala", "collection"},
-				Name:      "SetProxy",
-				Members:   []shared.Member{{Name: "", Signature: ""}},
+			shared.Namespace{
+				Path:    []string{"scala", "collection", "SetProxy"},
+				Members: []shared.Member{{Name: ""}},
 			},
 		},
 	}
-	es, err := findEntityMember("scala", "SetProxy", "", 10)
+	ns, err := findEntityMember("scala", "SetProxy", "", 10)
 
 	if err != nil {
 		t.Errorf("unexpected error [%v]", err)
 		return
 	}
 
-	if len(es) != 1 {
-		t.Errorf("expected to find one entry but got [%v]", es)
+	if len(ns) != 1 {
+		t.Errorf("expected to find one result but got [%v]", ns)
 		return
 	}
 
-	if es[0].Namespace[0] != "scala" ||
-		es[0].Namespace[1] != "collection" ||
-		es[0].Entity != "SetProxy" {
-		t.Errorf("expected to find SetProxy entry but got [%v]", es[0])
+	// TODO: just compare the slices?
+	if ns[0].Namespace[0] != "scala" ||
+		ns[0].Namespace[1] != "collection" ||
+		ns[0].Namespace[len(ns[0].Namespace)-1] != "SetProxy" {
+		t.Errorf("expected to find SetProxy entry but got [%v]", ns[0])
 		return
 	}
 
 }
 
 func TestFindEntityByPrefix(t *testing.T) {
-	docs = map[string][]shared.Entry{
-		"scala": []shared.Entry{
-			shared.Entry{
-				Namespace: []string{"scala", "sys"},
-				Name:      "SystemProperties",
-				Members:   []shared.Member{{Name: "", Signature: ""}},
+	docs = map[string][]shared.Namespace{
+		"scala": []shared.Namespace{
+			shared.Namespace{
+				Path:    []string{"scala", "sys", "SystemProperties"},
+				Members: []shared.Member{{Name: ""}},
 			},
-			shared.Entry{
-				Namespace: []string{"scala", "sys"},
-				Name:      "SystemThings",
-				Members:   []shared.Member{{Name: "", Signature: ""}},
+			shared.Namespace{
+				Path:    []string{"scala", "sys", "SystemThings"},
+				Members: []shared.Member{{Name: ""}},
 			},
-			shared.Entry{
-				Namespace: []string{"scala", "collection"},
-				Name:      "SetProxy",
-				Members:   []shared.Member{{Name: "", Signature: ""}},
+			shared.Namespace{
+				Path:    []string{"scala", "collection", "SetProxy"},
+				Members: []shared.Member{{Name: ""}},
 			},
 		},
 	}
@@ -121,22 +117,19 @@ func TestFindEntityByPrefix(t *testing.T) {
 }
 
 func TestFindIsCaseInsentitive(t *testing.T) {
-	docs = map[string][]shared.Entry{
-		"scala": []shared.Entry{
-			shared.Entry{
-				Namespace: []string{"scala", "sys"},
-				Name:      "SystemProperties",
-				Members:   []shared.Member{{Name: "hans", Signature: ""}},
+	docs = map[string][]shared.Namespace{
+		"scala": []shared.Namespace{
+			shared.Namespace{
+				Path:    []string{"scala", "sys", "SystemProperties"},
+				Members: []shared.Member{{Name: "hans"}},
 			},
-			shared.Entry{
-				Namespace: []string{"scala", "sys"},
-				Name:      "SYSTEMThings",
-				Members:   []shared.Member{{Name: "HANS", Signature: ""}},
+			shared.Namespace{
+				Path:    []string{"scala", "sys", "SYSTEMThings"},
+				Members: []shared.Member{{Name: "HANS"}},
 			},
-			shared.Entry{
-				Namespace: []string{"scala", "sys"},
-				Name:      "systemThings",
-				Members:   []shared.Member{{Name: "hAnS", Signature: ""}},
+			shared.Namespace{
+				Path:    []string{"scala", "sys", "systemThings"},
+				Members: []shared.Member{{Name: "hAnS"}},
 			},
 		},
 	}
@@ -162,12 +155,11 @@ func TestFindIsCaseInsentitive(t *testing.T) {
 }
 
 func TestFindMember(t *testing.T) {
-	docs = map[string][]shared.Entry{
-		"scala": []shared.Entry{
-			shared.Entry{
-				Namespace: []string{"scala", "collection", "mutable"},
-				Name:      "HashMap",
-				Members:   []shared.Member{{Name: "clearTable", Signature: "():Unit"}},
+	docs = map[string][]shared.Namespace{
+		"scala": []shared.Namespace{
+			shared.Namespace{
+				Path:    []string{"scala", "collection", "mutable", "HashMap"},
+				Members: []shared.Member{{Name: "clearTable"}},
 			},
 		},
 	}
@@ -193,12 +185,11 @@ func TestFindMember(t *testing.T) {
 }
 
 func TestFindMemberByPrefix(t *testing.T) {
-	docs = map[string][]shared.Entry{
-		"scala": []shared.Entry{
-			shared.Entry{
-				Namespace: []string{"scala", "collection", "mutable"},
-				Name:      "HashMap",
-				Members:   []shared.Member{{Name: "clearTable", Signature: "():Unit"}},
+	docs = map[string][]shared.Namespace{
+		"scala": []shared.Namespace{
+			shared.Namespace{
+				Path:    []string{"scala", "collection", "mutable", "HashMap"},
+				Members: []shared.Member{{Name: "clearTable"}},
 			},
 		},
 	}

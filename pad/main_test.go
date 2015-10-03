@@ -67,16 +67,16 @@ func TestMkPack(t *testing.T) {
 		t.Errorf("Couldn't read pack data file: %v", err)
 	}
 
-	var entries []shared.Entry
-	err = json.Unmarshal(packDataStr, &entries)
+	var namespaces []shared.Namespace
+	err = json.Unmarshal(packDataStr, &namespaces)
 	if err != nil {
 		t.Errorf("Couldn't unmarshall data file: %v", err)
 	}
 
 }
 
-func testIndexer(path string) ([]shared.Entry, error) {
-	return []shared.Entry{}, nil
+func testIndexer(path string) ([]shared.Namespace, error) {
+	return []shared.Namespace{}, nil
 }
 
 func TestIsValidConfig(t *testing.T) {

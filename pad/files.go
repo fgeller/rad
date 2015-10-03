@@ -12,7 +12,7 @@ import (
 )
 
 type scanResult struct {
-	entries        []shared.Entry
+	namespaces     []shared.Namespace
 	processedFiles int
 }
 
@@ -28,22 +28,22 @@ func mkPath(parts ...string) string {
 	return result
 }
 
-func scan(path string, p parser) ([]shared.Entry, error) {
+func scan(path string, p parser) ([]shared.Namespace, error) {
 	start := time.Now()
-	fc, es, err := scanDir(path, p)
+	fc, ns, err := scanDir(path, p)
 	elapsed := time.Now().Sub(start)
-	log.Printf("Found %v entries (%.1ff/s).\n", len(es), float64(fc)/elapsed.Seconds())
+	log.Printf("Found %v entries (%.1ff/s).\n", len(ns), float64(fc)/elapsed.Seconds())
 
-	return es, err
+	return ns, err
 }
 
 // TODO: use filepath.Walk
-func scanDir(dir string, p parser) (int, []shared.Entry, error) {
+func scanDir(dir string, p parser) (int, []shared.Namespace, error) {
 
 	files, err := findDirsAndMarkupFiles(dir)
 	if err != nil {
 		fmt.Printf("can't read dir %v, err %v\n", dir, err)
-		return 0, []shared.Entry{}, err
+		return 0, []shared.Namespace{}, err
 	}
 
 	rc := make(chan scanResult)
@@ -54,31 +54,31 @@ func scanDir(dir string, p parser) (int, []shared.Entry, error) {
 			path := dir + string(os.PathSeparator) + f.Name()
 			switch {
 			case f.IsDir():
-				fs, es, _ := scanDir(path, p)
-				c <- scanResult{es, fs}
+				fs, ns, _ := scanDir(path, p)
+				c <- scanResult{ns, fs}
 			default:
 				c <- scanResult{scanFile(path, p), 1}
 			}
 		}(dir, fi, rc)
 	}
 
-	results := []shared.Entry{}
+	results := []shared.Namespace{}
 	fc := 0
 	for i := 0; i < len(files); i++ {
 		r := <-rc
 		fc += r.processedFiles
-		results = append(results, r.entries...)
+		results = append(results, r.namespaces...)
 	}
 
 	return fc, results, nil
 }
 
-func scanFile(path string, p parser) []shared.Entry {
+func scanFile(path string, p parser) []shared.Namespace {
 	r, err := os.Open(path)
 	defer r.Close()
 	if err != nil {
 		fmt.Printf("can't open file %v, err %v\n", path, err)
-		return []shared.Entry{}
+		return []shared.Namespace{}
 	}
 
 	return p(path, r)

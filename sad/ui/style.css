@@ -13,16 +13,17 @@ body {
     z-index: -1;
     height: 42pt;
     padding: 5pt;
-    padding-top: 30pt;
+    padding-top: 3pt;
     text-align: right;
+    font-family: Roboto, sans-serif;
+    font-size: 12pt;
+    font-weight: 100;
+    /* color: #c5cae9; */
+    color: #66BB6A;
 }
 
 #header span {
     margin-right: .5em;
-    font-family: Raleway, Roboto, sans-serif;
-    font-size: 16pt;
-    font-weight: 100;
-    color: #c5cae9;
 }
 
 #main-container {
@@ -38,7 +39,7 @@ body {
     vertical-align: top;
     position: relative;
     left: 0;
-    top: 5pt;
+    top: 7pt;
 }
 
 #search-field {
@@ -49,6 +50,13 @@ body {
     padding-right: 3pt;
     font-size: 12pt;
     color: #666;
+    border: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+#search-field:focus {
+    outline: 0;
+    border-bottom: 2px blue;
 }
 
 #search-result-container {
@@ -70,6 +78,8 @@ body {
     color: #666;
     background-color: #E8EAF6;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23);
+
 }
 
 .search-result .member-name {

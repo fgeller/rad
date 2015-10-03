@@ -42,6 +42,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parseJavaDocFile)
 	case "scala":
 		return mk(parseScalaDocFile)
+	case "go":
+		return mk(parseGoDocFile)
 	}
 
 	return nil

@@ -61,7 +61,7 @@ var Search = React.createClass({
     },
     streamSearch: function(text){
         this.setState({query: text, selected: 0, results: []});
-        var qs = text.split(" ").map(encodeURIComponent);
+        var qs = text.split(" ");
         if (qs.length < 2) {
             return
         }

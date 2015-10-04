@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
 
-PFX=godoc
-PKG=http://godoc.org/github.com/gorilla/websocket
+PFX=go-stdlib
+#PKG=http://godoc.org/github.com/gorilla/websocket
+PKG=https://godoc.org/-/go
 
 # --wait: don't spam the host
 # -E: convert extensions, adds .html/.css
 # -k: convert links to relative ones
 # -H: allow spanning hosts
 # -D: include the following list of domains
-# -D: exclude the listed directories
 # -m: mirror the given site
 # -l: limit the recursion level
 # -P: local directory prefix for downloaded files

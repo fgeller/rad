@@ -16,18 +16,6 @@ type scanResult struct {
 	processedFiles int
 }
 
-func mkPath(parts ...string) string {
-	result := ""
-	for i, p := range parts {
-		if i != len(parts)-1 {
-			result += p + string(os.PathSeparator)
-		} else {
-			result += p
-		}
-	}
-	return result
-}
-
 func scan(path string, p parser) ([]shared.Namespace, error) {
 	start := time.Now()
 	fc, ns, err := scanDir(path, p)

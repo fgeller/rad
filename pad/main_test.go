@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -13,7 +14,7 @@ import (
 func TestMkPack(t *testing.T) {
 	indexerName := "java"
 	packName := "jdk"
-	packSource := mkPath("testdata", "jdk")
+	packSource := filepath.Join("testdata", "jdk")
 	packVersion := "1.2.3"
 
 	conf, err := mkConfig(indexerName, packName, packSource, packVersion)
@@ -43,7 +44,7 @@ func TestMkPack(t *testing.T) {
 		return
 	}
 
-	packConfigFile := mkPath(tmpDir, packName, "pack.json")
+	packConfigFile := filepath.Join(tmpDir, packName, "pack.json")
 	if !shared.FileExists(packConfigFile) {
 		t.Errorf("Expected config file %v.", packConfigFile)
 	}
@@ -70,7 +71,7 @@ func TestMkPack(t *testing.T) {
 		t.Errorf("Unexpected pack parameters: %v\n", pack)
 	}
 
-	packDataFile := mkPath(tmpDir, packName, "data.json")
+	packDataFile := filepath.Join(tmpDir, packName, "data.json")
 	if !shared.FileExists(packDataFile) {
 		t.Errorf("Expected data file %v.", packDataFile)
 	}

@@ -174,7 +174,9 @@ var Search = React.createClass({
 });
 
 function socket() {
-    var conn = new WebSocket("ws://localhost:3024/ws");
+    var host = window.location.hostname;
+    var port = window.location.port;
+    var conn = new WebSocket("ws://"+host+":"+port+"/ws");
     conn.onopen = function () { console.log("WebSocket open.") }
     conn.onerror = function (err) { console.log("WebSocket error", err) }
     conn.onmessage = function (msg) { console.log("Got message", msg) }

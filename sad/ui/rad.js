@@ -4,13 +4,16 @@ var SearchField = React.createClass({
         this.props.search(query)
     },
     render: function() {
-        return <input
-                 id="search-field"
-                 type="text"
-                 ref="search"
-                 placeholder="Search here..."
-                 value={this.props.query}
-                 onChange={this.search} />
+        return <div>
+                 <input
+                      id="search-field"
+                      type="text"
+                      ref="search"
+                      placeholder="Search here..."
+                      value={this.props.query}
+                      onChange={this.search} />
+                 <i id="search-icon" className="fa fa-search"></i>
+               </div>
     }
 });
 
@@ -51,6 +54,58 @@ var SearchResult = React.createClass({
                  <div className="member-name">{memName}</div>
                  <div className="namespace">{namespace}</div>
                </div>
+    }
+});
+
+var Pack = React.createClass({
+    render: function() {
+        return <div className="settings-pack">
+                 <div className="settings-pack-row">
+                   <div className="settings-pack-row-label">Name</div><div className="settings-pack-row-value">{this.props.name}</div>
+                 </div>
+                 <div className="settings-pack-row">
+                   <div className="settings-pack-row-label">Type</div><div className="settings-pack-row-value">{this.props.type}</div>
+                 </div>
+                 <div className="settings-pack-row">
+                   <div className="settings-pack-row-label">Version</div><div className="settings-pack-row-value">{this.props.version}</div>
+                 </div>
+                 <div className="settings-pack-row">
+                   <div className="settings-pack-row-label">Created</div><div className="settings-pack-row-value">{this.props.created}</div>
+                 </div>
+               </div>
+    }
+});
+
+var Settings = React.createClass({
+    getInitialState: function() {
+        return { packs: [] };
+    },
+    componentWillMount: function() {
+        var req = $.get(
+            "/status/packs",
+            {},
+            function(data, flag) {
+                var packs = [];
+                _.forEach(data, function(p) { packs.push(p) });
+                this.setState({packs: packs});
+            }.bind(this),
+            "json" // we expect json
+        );
+    },
+    hide: function() {
+        $("#settings-container").css("visibility", "hidden");
+    },
+    render: function() {
+        var packs = []
+        _.forEach(this.state.packs, function(p) {
+            packs.push(
+                <Pack name={p.Name}
+                      type={p.Type}
+                      version={p.Version}
+                      created={p.Created} />
+            );
+        });
+        return <div id="settings-container" onClick={this.hide}><div id="settings-content"><div id="settings-packs"><div className="settings-header">Installed Packs</div>{ packs }</div></div></div>
     }
 });
 
@@ -139,6 +194,9 @@ var Search = React.createClass({
             return false;
         }.bind(this));
     },
+    showSettings: function () {
+        $("#settings-container").css("visibility", "visible");
+    },
     render: function(){
         var entries = [];
         for (var i = 0; i < this.state.results.length && i < 3; i++) {
@@ -159,6 +217,8 @@ var Search = React.createClass({
         }
 
         return (<div id="main-container">
+                  <Settings />
+                  <div id="menu-container"><i className="fa fa-cogs" onClick={this.showSettings}></i></div>
                   <div id="search-field-container">
                     <SearchField query={this.state.query} search={this.search}/>
                   </div>

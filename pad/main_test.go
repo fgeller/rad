@@ -2,19 +2,21 @@ package main
 
 import (
 	"../shared"
+
 	"encoding/json"
-	"io/ioutil"
-	//	"os"
 	"fmt"
+	"io/ioutil"
 	"testing"
+	"time"
 )
 
 func TestMkPack(t *testing.T) {
 	indexerName := "java"
 	packName := "jdk"
 	packSource := mkPath("testdata", "jdk")
+	packVersion := "1.2.3"
 
-	conf, err := mkConfig(indexerName, packName, packSource)
+	conf, err := mkConfig(indexerName, packName, packSource, packVersion)
 	if err != nil {
 		t.Errorf("Unexpected error while creating config: %v", err)
 		return
@@ -57,6 +59,17 @@ func TestMkPack(t *testing.T) {
 		t.Errorf("Couldn't unmarshall pack config file: %v", err)
 	}
 
+	created, err := pack.CreationTime()
+	if err != nil {
+		t.Errorf("Could not parse created timestamp [%v]: err", created, err)
+		return
+	}
+
+	if pack.Version != packVersion ||
+		time.Now().Before(created) {
+		t.Errorf("Unexpected pack parameters: %v\n", pack)
+	}
+
 	packDataFile := mkPath(tmpDir, packName, "data.json")
 	if !shared.FileExists(packDataFile) {
 		t.Errorf("Expected data file %v.", packDataFile)
@@ -77,73 +90,4 @@ func TestMkPack(t *testing.T) {
 
 func testIndexer(path string) ([]shared.Namespace, error) {
 	return []shared.Namespace{}, nil
-}
-
-func TestIsValidConfig(t *testing.T) {
-	validName := "b"
-	validType := "java"
-	validSource := "/tmp"
-	validIndexer := testIndexer
-
-	invalidName := ""
-	invalidType := ""
-	invalidSource := "/xxxxxxxx"
-	invalidIndexer := indexer(nil)
-
-	conf := config{}
-	actual := isValidConfig(conf)
-	if actual {
-		t.Errorf("Expected empty config to be invalid.\n")
-	}
-
-	conf = config{
-		indexer: validIndexer,
-		name:    validName,
-		Type:    validType,
-		source:  validSource,
-	}
-	actual = isValidConfig(conf)
-	if !actual {
-		t.Errorf("Expected proper config to be valid.\n")
-	}
-
-	conf = config{
-		indexer: validIndexer,
-		name:    invalidName,
-		Type:    validType,
-		source:  validSource,
-	}
-	actual = isValidConfig(conf)
-	if actual {
-		t.Errorf("Expected invalid name to be invalid.\n")
-	}
-
-	conf = config{validIndexer, validName, validType, invalidSource}
-	actual = isValidConfig(conf)
-	if actual {
-		t.Errorf("Expected invalid source to be invalid.\n")
-	}
-
-	conf = config{
-		indexer: invalidIndexer,
-		name:    validName,
-		Type:    validType,
-		source:  validSource,
-	}
-	actual = isValidConfig(conf)
-	if actual {
-		t.Errorf("Expected invalid indexer to be invalid.\n")
-	}
-
-	conf = config{
-		indexer: validIndexer,
-		name:    validName,
-		Type:    invalidType,
-		source:  validSource,
-	}
-	actual = isValidConfig(conf)
-	if actual {
-		t.Errorf("Expected invalid type to be invalid.\n")
-	}
-
 }

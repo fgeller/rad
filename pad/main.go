@@ -2,15 +2,16 @@ package main
 
 import (
 	"../shared"
+
 	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
-
 	"os"
 	"path/filepath"
+	"time"
 )
 
 type indexer func(string) ([]shared.Namespace, error)
@@ -20,14 +21,8 @@ type config struct {
 	indexer indexer
 	name    string
 	Type    string
+	version string
 	source  string
-}
-
-func isValidConfig(conf config) bool {
-	return len(conf.name) > 0 &&
-		len(conf.Type) > 0 &&
-		shared.FileExists(conf.source) &&
-		conf.indexer != nil
 }
 
 func mkIndexer(name string, source string) indexer {
@@ -49,21 +44,19 @@ func mkIndexer(name string, source string) indexer {
 	return nil
 }
 
-func mkConfig(indexerName string, packName string, source string) (config, error) {
+func mkConfig(indexerName string, packName string, source string, version string) (config, error) {
+	var conf config
 	source, err := filepath.Abs(source)
 	if err != nil {
-		return config{}, err
+		return conf, err
 	}
 
-	conf := config{
+	conf = config{
 		indexer: mkIndexer(indexerName, source),
 		Type:    indexerName,
 		name:    packName,
 		source:  source,
-	}
-
-	if !isValidConfig(conf) {
-		return conf, fmt.Errorf("Invalid configuration.")
+		version: version,
 	}
 
 	return conf, nil
@@ -115,8 +108,10 @@ func mkPack(conf config) (string, error) {
 	log.Printf("Made targets relative to pack folder.\n")
 
 	pack := shared.Pack{
-		Name: conf.name,
-		Type: conf.Type,
+		Name:    conf.name,
+		Type:    conf.Type,
+		Version: conf.version,
+		Created: time.Now().Format(time.RFC3339),
 	}
 
 	// 2. serialize conf
@@ -196,6 +191,7 @@ func main() {
 		indexerName = flag.String("indexer", "", "Indexer type for this pack (scala, java)")
 		packName    = flag.String("name", "", "Name for this pack")
 		source      = flag.String("source", "", "Source directory for this pack")
+		version     = flag.String("version", "", "Version string for this pack")
 	)
 
 	flag.Parse()
@@ -203,6 +199,7 @@ func main() {
 		*indexerName,
 		*packName,
 		*source,
+		*version,
 	)
 	if err != nil {
 		log.Fatalf("Invalid configuration %v", conf)

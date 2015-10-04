@@ -1,4 +1,8 @@
-SHELL:=/bin/bash -O extglob -c
+export SHELL:=/bin/bash -O extglob -c
+export GO15VENDOREXPERIMENT:=1
 
 build:
-	GO15VENDOREXPERIMENT=1 go build -o sad +([^_]).go
+	go build -o sad +([^_]).go
+
+test:
+	go test *.go

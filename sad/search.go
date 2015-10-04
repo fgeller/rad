@@ -3,9 +3,13 @@ package main
 import (
 	"../shared"
 	"fmt"
+	"log"
 	"reflect"
 	"regexp"
 	"strings"
+	"time"
+
+	"github.com/gorilla/websocket" // TODO push this back into server
 )
 
 type searchResult struct {
@@ -94,4 +98,41 @@ func find(packPattern, pathPattern, memberPattern string, limit int) ([]searchRe
 	}
 
 	return results, nil
+}
+
+func streamFind(sock *websocket.Conn, packPattern, pathPattern, memberPattern string, limit int) {
+	args, err := compileParams(packPattern, pathPattern, memberPattern, limit)
+	if err != nil {
+		log.Printf("Error while compiling params: %v\n", err)
+		return
+	}
+	count := 0
+	start := time.Now()
+
+	for pack, namespaces := range docs {
+		if args.pack.MatchString(pack) {
+			for _, namespace := range namespaces {
+				normalizedPath := strings.Join(namespace.Path, ".")
+				if args.path.MatchString(normalizedPath) {
+					for mi, member := range namespace.Members {
+						if args.member.MatchString(member.Name) {
+							count++
+							err := sock.WriteJSON(NewSearchResult(namespace, mi))
+							if err != nil {
+								log.Printf("Error while writing result: %v\n", err)
+								return
+							}
+							log.Printf("Found result #%v after %v\n", count, time.Since(start))
+
+							if count >= limit {
+								return
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return
 }

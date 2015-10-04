@@ -55,18 +55,42 @@ var SearchResult = React.createClass({
 });
 
 var Search = React.createClass({
-    search: function(text){
-        this.setState({query: text, selected: 0});
+    search: function(text) {
+        this.setState({query: text, selected: 0, results: []});
+        this.throttledStreamSearch(text);
+    },
+    streamSearch: function(text){
+        this.setState({query: text, selected: 0, results: []});
         var qs = text.split(" ").map(encodeURIComponent);
-        if (qs.length > 1) {
-            var q = "/s?limit=3&pk=" + qs[0] + "&ns=" + qs[1]
-            if (qs.length > 2) {
-                q += "&m=" + qs[2]
-            }
-            $.get(q, function(result) {
-                this.setState({results: result});
-            }.bind(this));
+        if (qs.length < 2) {
+            return
         }
+        this.props.sock.close()
+        var pk = qs[0]
+        var pt = qs[1]
+        var m  = qs[2] || ""
+        var req = {
+            "Limit": 3,
+            "Pack": pk,
+            "Path": pt,
+            "Member": m
+        }
+
+        this.props.sock = socket();
+        this.props.sock.onmessage = function(msg) {
+            var entry = JSON.parse(msg.data)
+            this.setState({results: this.state.results.concat([entry])});
+        }.bind(this);
+        this.props.sock.onopen = function() {
+            this.props.sock.send(JSON.stringify(req));
+        }.bind(this);
+        this.props.sock.onclose = function() {
+            console.log("Finished request [" + text + "].");
+        }.bind(this);
+    },
+    componentWillMount: function() {
+        var delay = 80;
+        this.throttledStreamSearch = _.debounce(this.streamSearch, delay);
     },
     getInitialState: function(){
         return{
@@ -149,6 +173,15 @@ var Search = React.createClass({
     }
 });
 
+function socket() {
+    var conn = new WebSocket("ws://localhost:3024/ws");
+    conn.onopen = function () { console.log("WebSocket open.") }
+    conn.onerror = function (err) { console.log("WebSocket error", err) }
+    conn.onmessage = function (msg) { console.log("Got message", msg) }
+    conn.onclose = function () { console.log("Connection closed", arguments); }
+    return conn;
+}
+
 key('/', function(event) {
     $("#search-field").focus();
     event.cancelBubble = true;
@@ -163,4 +196,4 @@ key.filter = function(event){
     return !(tagName == 'INPUT' || tagName == 'SELECT' || tagName == 'TEXTAREA');
 }
 
-React.render(<Search />, document.getElementById("search"));
+React.render(<Search sock={socket()} />, document.getElementById("search"));

@@ -7,7 +7,50 @@ import (
 	"path/filepath"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/websocket"
 )
+
+var upgrader = websocket.Upgrader{}
+
+type searchRequest struct {
+	Clock  int
+	Pack   string
+	Path   string
+	Member string
+	Limit  int
+}
+
+func socket(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/ws" {
+		http.Error(w, "Not found", 404)
+		return
+	}
+	if r.Method != "GET" {
+		http.Error(w, "Method not allowed", 405)
+		return
+	}
+
+	start := time.Now()
+
+	c, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Printf("Error while upgrading request: %v\n", err)
+		return
+	}
+	defer c.Close()
+
+	var req searchRequest
+	err = c.ReadJSON(&req)
+	if err != nil {
+		log.Printf("Failed to read request: %v", err)
+		return
+	}
+	log.Printf("Received search request %v\n", req)
+
+	streamFind(c, req.Pack, req.Path, req.Member, req.Limit)
+	log.Printf("Finished request %v in %v\n", req, time.Since(start))
+}
 
 func queryHandler(w http.ResponseWriter, r *http.Request) {
 	pack := r.FormValue("pk")
@@ -51,6 +94,7 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 func serve(addr string) {
 	http.HandleFunc("/ping", pingHandler)
 	http.HandleFunc("/s", queryHandler)
+	http.HandleFunc("/ws", socket)
 
 	pd, err := filepath.Abs(packDir)
 	if err != nil {

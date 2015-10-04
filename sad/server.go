@@ -14,7 +14,6 @@ import (
 var upgrader = websocket.Upgrader{}
 
 type searchRequest struct {
-	Clock  int
 	Pack   string
 	Path   string
 	Member string

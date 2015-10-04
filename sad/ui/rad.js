@@ -59,7 +59,7 @@ var Search = React.createClass({
         this.setState({query: text, selected: 0});
         var qs = text.split(" ").map(encodeURIComponent);
         if (qs.length > 1) {
-            var q = "/s?pk=" + qs[0] + "&ns=" + qs[1]
+            var q = "/s?limit=3&pk=" + qs[0] + "&ns=" + qs[1]
             if (qs.length > 2) {
                 q += "&m=" + qs[2]
             }

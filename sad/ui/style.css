@@ -5,6 +5,60 @@ body {
     margin: 0px;
 }
 
+#readme-content {
+    margin: 5pt 35pt 35pt 35pt;
+    font-size: 14pt;
+}
+
+#readme-pointer {
+    margin-left: 35pt;
+    font-size: 50pt;
+    position: relative;
+    /* display: inline-block; */
+    color: #e8eaf6;
+}
+
+#readme-pointer + div {
+    margin-left: 15pt;
+    padding-top: 1em;
+    font-size: 20pt;
+    display: inline;
+    top: -.5em;
+    position: relative;
+    color: #666;
+    font-weight: 100;
+}
+
+.readme-sample {
+    margin: .75em;
+    font-family: "Roboto Mono", monospace;
+}
+
+.readme-column {
+    display: inline-block;
+    vertical-align: top;
+    max-width: 300pt;
+    margin: .5em 0 .5em 0;
+    position: relativ;
+}
+
+.readme-keys {
+    font-family: "Roboto Mono", monospace;
+    margin-right: .5em;
+}
+
+#readme-details {
+    position: relative;
+    font-size: 12pt;
+    margin: 1em;
+    padding: .5em;
+    background-color: #e8eaf6;
+    border: 2px solid #eee;
+    border-radius: 5pt;
+    display: inline-block;
+    clear: right;
+}
+
 #main-container {
     position: fixed;
     top: 0;
@@ -32,12 +86,13 @@ body {
 
 #settings-content {
     margin: 1em auto;
-    padding: .5em 1em .5em 1em;
+    padding: .5em 1.5em;
     width: 300pt;
     background-color: #fff;
     overflow-x: hidden;
     overflow-y: auto;
     z-index: 999;
+    border-radius: 1em;
 }
 
 .settings-pack {
@@ -129,7 +184,7 @@ body {
     margin-top: 2pt;
     margin-left: 5pt;
     color: #666;
-    background-color: #E8EAF6;
+    background-color: #e8eaf6;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.16), 0 2px 4px rgba(0,0,0,0.23);
 
@@ -152,13 +207,14 @@ body {
 
 .selected-search-result {
     color: #fff;
-    background-color: #7986CB;
+    background-color: #7986cb;
     font-weight: 400;
 }
 
 #ifrm-container {
-    position: relative;
-    margin-top: .6em;
+    position: fixed;
+    vertical-align: top;
+    margin-top: 45pt;
     left: 0;
     top: 10pt;
     width: 100%;

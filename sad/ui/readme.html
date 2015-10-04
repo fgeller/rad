@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>rad: read api documentation</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="readme-content">
+      <i id="readme-pointer" class="fa fa-hand-o-up"></i>
+      <div>This is where it all begins...</div>
+      <div></div>
+      <div id="readme-details">
+
+        <div class="readme-column">
+          A short sample to get you started:
+
+          <div class="readme-sample">scala Future andThen</div>
+
+          Search queries consist of up to three components:
+          <ol type="1">
+            <li>Pack Name</li>
+            <li>Path</li>
+            <li>Member</li>
+          </ol>
+
+          The first is the only required component and identifies the
+          documention pack that you are interested in. The second part matches
+          on the path and the third one on the entity that your are looking for.
+
+          The above example matches a method in Scala's API, where the full path
+          is:
+          <div class="readme-sample">scala.concurrent.Future</div>
+
+          Give it a try!<br /><br />
+
+          All three parts are regular expressions:
+
+          <div class="readme-sample">sc utu.+ ^andThen$</div>
+
+          This yields at least the same results as the first sample.
+        </div>
+
+        <div class="readme-column">
+          You can use the following keys for navigation:
+
+          <ul>
+            <li><span class="readme-keys">/</span>This moves focus to the search
+            field unless focus is in the documentation iframe.</li>
+            <li><span class="readme-keys">shift + →</span>This selects the next
+            search result to the right, if possible.</li>
+            <li><span class="readme-keys">shift + ←</span>This selects the next
+            search result to the right, if possible.</li>
+            <li><span class="readme-keys">return</span>This opens the currently
+            selected search result in the documentation frame.</li>
+          </ul>
+
+          The documentation frame is the iframe element that is displaying this
+          readme at the moment. This iframe is used to isolate the docs while
+          the navigation and search remains available on top as a header.
+
+        </div>
+
+        <div class="readme-column">
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

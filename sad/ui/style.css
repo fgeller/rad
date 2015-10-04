@@ -7,23 +7,21 @@ body {
 
 #readme-content {
     margin: 5pt 35pt 35pt 35pt;
-    font-size: 14pt;
+    font-size: 12pt;
 }
 
 #readme-pointer {
     margin-left: 35pt;
-    font-size: 50pt;
+    font-size: 30pt;
     position: relative;
-    /* display: inline-block; */
     color: #e8eaf6;
 }
 
 #readme-pointer + div {
     margin-left: 15pt;
-    padding-top: 1em;
-    font-size: 20pt;
+    font-size: 16pt;
     display: inline;
-    top: -.5em;
+    top: -.2em;
     position: relative;
     color: #666;
     font-weight: 100;
@@ -37,7 +35,7 @@ body {
 .readme-column {
     display: inline-block;
     vertical-align: top;
-    max-width: 300pt;
+    max-width: 260pt;
     margin: .5em 0 .5em 0;
     position: relativ;
 }
@@ -49,7 +47,7 @@ body {
 
 #readme-details {
     position: relative;
-    font-size: 12pt;
+    font-size: 10pt;
     margin: 1em;
     padding: .5em;
     background-color: #e8eaf6;
@@ -68,7 +66,7 @@ body {
 }
 .settings-header {
     font-weight: 400;
-    font-size: 14pt;
+    font-size: 12pt;
     margin: 0.5em 0 0.5em 0;
 }
 
@@ -104,6 +102,7 @@ body {
 .settings-pack-row {
     width: 100%;
     display: inline-block;
+    font-size: 10pt;
 }
 .settings-pack-row-label {
     width: 20%;
@@ -116,7 +115,7 @@ body {
 }
 
 #menu-container {
-   font-size: 20pt;
+   font-size: 16pt;
    display: inline-block;
    vertical-align: top;
    position: relative;
@@ -141,18 +140,18 @@ body {
     position: absolute;
     top: 7pt;
     left: 5pt;
-    font-size: 20pt;
+    font-size: 16pt;
     color: #e8eaf6;
     z-index: -1;
 }
 
 #search-field {
     font-family: Roboto, sans-serif;
-    height: 36pt;
+    height: 32pt;
     width: 180pt;
     padding-left: 29pt;
     padding-right: 3pt;
-    font-size: 12pt;
+    font-size: 10pt;
     color: #666;
     border: 0;
     background-color: rgba(255, 255, 255, 0);
@@ -177,8 +176,8 @@ body {
 .search-result {
     width: 110pt;
     display: inline-block;
-    padding-top: 6pt;
-    padding-bottom: 3.5pt;
+    padding-top: 5pt;
+    padding-bottom: 5pt;
     padding-right: 3pt;
     padding-left: 5pt;
     margin-top: 2pt;
@@ -191,13 +190,13 @@ body {
 }
 
 .search-result .member-name {
-    font-size: 12pt;
+    font-size: 10pt;
     display: inline-block;
     overflow-x: overlay;
 }
 
 .search-result .namespace {
-    font-size: 8pt;
+    font-size: 7pt;
     overflow-x: overlay;
 }
 

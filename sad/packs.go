@@ -25,6 +25,17 @@ func loadInstalled() error {
 
 		pack := dir.Name()
 		log.Printf("Loading pack %v\n", pack)
+
+		pf := filepath.Join(packDir, pack, "pack.json")
+		pc, err := ioutil.ReadFile(pf)
+		if err != nil {
+			log.Printf("Skipping: Could not load pack info for %v (err: %v).", pack, err)
+		}
+		var packInfo shared.Pack
+		err = json.Unmarshal(pc, &packInfo)
+		packs[pack] = packInfo
+		log.Printf("Found info %v for %v.", packInfo, pack)
+
 		df := filepath.Join(packDir, pack, "data.json")
 		dc, err := ioutil.ReadFile(df)
 		if err != nil {

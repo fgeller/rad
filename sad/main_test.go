@@ -44,7 +44,7 @@ func TestInstallingLocalPack(t *testing.T) {
 
 }
 
-func populatePackDir() map[string][]shared.Namespace {
+func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
 	p1 := shared.Pack{Name: "p1", Type: "java"}
 	p1Data := []shared.Namespace{
 		{Path: []string{"A"}, Members: []shared.Member{{Name: "M1", Target: "T1"}}},
@@ -55,7 +55,7 @@ func populatePackDir() map[string][]shared.Namespace {
 		{Path: []string{"B"}, Members: []shared.Member{{Name: "M2", Target: "T2"}}},
 	}
 
-	packs := []shared.Pack{p1, p2}
+	packs := map[string]shared.Pack{p1.Name: p1, p2.Name: p2}
 	data := map[string][]shared.Namespace{
 		p1.Name: p1Data,
 		p2.Name: p2Data,
@@ -92,12 +92,12 @@ func populatePackDir() map[string][]shared.Namespace {
 		}
 	}
 
-	return data
+	return data, packs
 }
 
 func TestLoadInstalledPack(t *testing.T) {
 	defer os.RemoveAll(setup())
-	expected := populatePackDir()
+	expectedDocs, expectedPacks := populatePackDir()
 
 	err := loadInstalled()
 	if err != nil {
@@ -105,8 +105,13 @@ func TestLoadInstalledPack(t *testing.T) {
 		return
 	}
 
-	if !reflect.DeepEqual(expected, docs) {
-		t.Errorf("Expected docs:\n%v\nBut got:\n%v\n", expected, docs)
+	if !reflect.DeepEqual(expectedDocs, docs) {
+		t.Errorf("Expected docs:\n%v\nBut got:\n%v\n", expectedDocs, docs)
+		return
+	}
+
+	if !reflect.DeepEqual(expectedPacks, packs) {
+		t.Errorf("Expected packs:\n%v\nBut got:\n%v\n", expectedPacks, packs)
 		return
 	}
 }

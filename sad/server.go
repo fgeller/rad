@@ -20,6 +20,24 @@ type searchRequest struct {
 	Limit  int
 }
 
+func status(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got status request for %v\n", r.URL.Path)
+
+	if r.URL.Path != "/status/packs" {
+		http.Error(w, "Not found", 404)
+		return
+	}
+
+	js, err := json.Marshal(packs)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
+
 func socket(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/ws" {
 		http.Error(w, "Not found", 404)
@@ -87,13 +105,15 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func pingHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got ping for %v\n", r.URL.Path)
 	w.Write([]byte("pong"))
 }
 
 func serve(addr string) {
-	http.HandleFunc("/ping", pingHandler)
+	http.HandleFunc("/ping/", pingHandler)
 	http.HandleFunc("/s", queryHandler)
 	http.HandleFunc("/ws", socket)
+	http.HandleFunc("/status/", status)
 
 	pd, err := filepath.Abs(packDir)
 	if err != nil {

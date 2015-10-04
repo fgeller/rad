@@ -111,7 +111,7 @@ func mkPack(conf config) (string, error) {
 		Name:    conf.name,
 		Type:    conf.Type,
 		Version: conf.version,
-		Created: time.Now().Format(time.RFC3339),
+		Created: time.Now(),
 	}
 
 	// 2. serialize conf

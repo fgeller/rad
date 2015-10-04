@@ -60,14 +60,8 @@ func TestMkPack(t *testing.T) {
 		t.Errorf("Couldn't unmarshall pack config file: %v", err)
 	}
 
-	created, err := pack.CreationTime()
-	if err != nil {
-		t.Errorf("Could not parse created timestamp [%v]: err", created, err)
-		return
-	}
-
 	if pack.Version != packVersion ||
-		time.Now().Before(created) {
+		time.Now().Before(pack.Created) {
 		t.Errorf("Unexpected pack parameters: %v\n", pack)
 	}
 

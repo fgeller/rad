@@ -2,6 +2,7 @@ package main
 
 import (
 	"../shared"
+
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -9,6 +10,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func setup() string {
@@ -45,12 +47,12 @@ func TestInstallingLocalPack(t *testing.T) {
 }
 
 func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
-	p1 := shared.Pack{Name: "p1", Type: "java"}
+	p1 := shared.Pack{Name: "p1", Type: "java", Created: time.Now()}
 	p1Data := []shared.Namespace{
 		{Path: []string{"A"}, Members: []shared.Member{{Name: "M1", Target: "T1"}}},
 	}
 
-	p2 := shared.Pack{Name: "p2", Type: "go"}
+	p2 := shared.Pack{Name: "p2", Type: "go", Created: time.Now()}
 	p2Data := []shared.Namespace{
 		{Path: []string{"B"}, Members: []shared.Member{{Name: "M2", Target: "T2"}}},
 	}

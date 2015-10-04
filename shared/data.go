@@ -10,7 +10,7 @@ type Pack struct {
 	Name    string
 	Type    string
 	Version string
-	Created string
+	Created time.Time
 }
 
 type Member struct {
@@ -21,10 +21,6 @@ type Member struct {
 type Namespace struct {
 	Path    []string
 	Members []Member
-}
-
-func (p Pack) CreationTime() (time.Time, error) {
-	return time.Parse(time.RFC3339, p.Created)
 }
 
 func (m Member) Eq(other Member) bool {

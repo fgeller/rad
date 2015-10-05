@@ -236,7 +236,7 @@ var Search = React.createClass({
 function socket() {
     var host = window.location.hostname;
     var port = window.location.port;
-    var conn = new WebSocket("ws://"+host+":"+port+"/ws");
+    var conn = new WebSocket("ws://"+host+":"+port+"/s");
     conn.onopen = function () { console.log("WebSocket open.") }
     conn.onerror = function (err) { console.log("WebSocket error", err) }
     conn.onmessage = function (msg) { console.log("Got message", msg) }

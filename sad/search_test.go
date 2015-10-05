@@ -2,8 +2,11 @@ package main
 
 import (
 	"../shared"
+
 	"reflect"
+	"regexp"
 	"testing"
+	"time"
 )
 
 func TestNewSearchResult(t *testing.T) {
@@ -40,7 +43,6 @@ func TestFind(t *testing.T) {
 
 	testData := []struct {
 		name     string
-		limit    int
 		packPat  string
 		pathPat  string
 		memPat   string
@@ -48,7 +50,6 @@ func TestFind(t *testing.T) {
 	}{
 		{
 			name:    "exact matching on full path",
-			limit:   10,
 			packPat: "go",
 			pathPat: "io.ioutil",
 			memPat:  "ReadAll",
@@ -63,7 +64,6 @@ func TestFind(t *testing.T) {
 
 		{
 			name:    "regexp matches 1",
-			limit:   10,
 			packPat: "o",
 			pathPat: "ou",
 			memPat:  "ea",
@@ -83,7 +83,6 @@ func TestFind(t *testing.T) {
 
 		{
 			name:    "regexp matches 2",
-			limit:   10,
 			packPat: "g.",
 			pathPat: "i.\\.i.u.i.",
 			memPat:  "^Rea.+$",
@@ -102,23 +101,7 @@ func TestFind(t *testing.T) {
 		},
 
 		{
-			name:    "limit results",
-			limit:   1,
-			packPat: "o",
-			pathPat: "ou",
-			memPat:  "ea",
-			expected: []searchResult{
-				{
-					Namespace: []string{"io", "ioutil"},
-					Member:    "ReadAll",
-					Target:    "/pack/",
-				},
-			},
-		},
-
-		{
 			name:    "case insensitive when all lower case",
-			limit:   10,
 			packPat: "go",
 			pathPat: "io.ioutil",
 			memPat:  "readall",
@@ -133,7 +116,6 @@ func TestFind(t *testing.T) {
 
 		{
 			name:    "empty string matches anything",
-			limit:   10,
 			packPat: "go",
 			pathPat: "io.ioutil",
 			memPat:  "",
@@ -153,7 +135,27 @@ func TestFind(t *testing.T) {
 	}
 
 	for _, data := range testData {
-		actual, err := find(data.packPat, data.pathPat, data.memPat, data.limit)
+		params, err := compileParams(data.packPat, data.pathPat, data.memPat)
+		if err != nil {
+			t.Errorf("Unexpected error compiling params for test [%v]: %v", data.name, err)
+			return
+		}
+
+		results := make(chan searchResult)
+		control := make(chan bool)
+		go find(results, control, params)
+
+		var actual []searchResult
+	readresults:
+		for {
+			select {
+			case <-control:
+				break readresults
+			case r := <-results:
+				actual = append(actual, r)
+			}
+		}
+
 		if err != nil {
 			t.Errorf("Unexpected error for test %v: %v", data.name, err)
 			return
@@ -162,5 +164,44 @@ func TestFind(t *testing.T) {
 			t.Errorf("Test [%v] expected\n%v\nbut got:\n%v\n", data.name, data.expected, actual)
 			return
 		}
+	}
+}
+
+func TestFindObeysControl(t *testing.T) {
+	lots := []shared.Namespace{}
+	for i := 0; i < 1000; i++ {
+		lots = append(
+			lots,
+			shared.Namespace{
+				Path:    []string{"io", "ioutil"},
+				Members: []shared.Member{{Name: "ReadAll" + string(i)}},
+			},
+		)
+	}
+	docs = map[string][]shared.Namespace{"go": lots}
+	params := searchParams{
+		pack:   regexp.MustCompile("."),
+		path:   regexp.MustCompile("."),
+		member: regexp.MustCompile("."),
+	}
+
+	var writtenResults []searchResult
+	results := make(chan searchResult)
+	control := make(chan bool)
+	go func() {
+		control <- true
+	}()
+	go find(results, control, params)
+	go func() {
+		time.Sleep(time.Millisecond)
+		for {
+			writtenResults = append(writtenResults, <-results)
+		}
+	}()
+
+	time.Sleep(100 * time.Millisecond)
+	if len(writtenResults) >= len(lots) {
+		t.Errorf("Expected find to stop searching but found element on channel.\n")
+		return
 	}
 }

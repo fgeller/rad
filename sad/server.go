@@ -1,11 +1,16 @@
 package main
 
 import (
+	"../shared"
+
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"path/filepath"
-	"strconv"
+	"reflect"
+	"regexp"
+	"strings"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -18,6 +23,64 @@ type searchRequest struct {
 	Path   string
 	Member string
 	Limit  int
+}
+
+type searchParams struct {
+	pack   *regexp.Regexp
+	path   *regexp.Regexp
+	member *regexp.Regexp
+}
+
+type searchResult struct {
+	Namespace []string
+	Member    string
+	Target    string
+}
+
+func (s searchResult) eq(o searchResult) bool {
+	return reflect.DeepEqual(s, o)
+}
+
+func NewSearchResult(n shared.Namespace, memberIdx int) searchResult {
+
+	if len(n.Members) == 0 { // TODO: do we need this guy?
+		return searchResult{
+			Namespace: n.Path,
+		}
+	}
+
+	return searchResult{
+		Namespace: n.Path,
+		Member:    n.Members[memberIdx].Name,
+		Target:    "/pack/" + n.Members[memberIdx].Target, // TODO: should we fix that here?
+	}
+}
+
+func maybeInsensitive(pat string) string {
+	if strings.ToLower(pat) == pat {
+		return fmt.Sprintf("(?i)%v", pat)
+	}
+	return pat
+}
+
+func compileParams(pk, pt, m string) (searchParams, error) {
+	var result searchParams
+	var pats [3]*regexp.Regexp
+
+	for i, p := range [3]string{pk, pt, m} {
+		pat := maybeInsensitive(p)
+		cp, err := regexp.Compile(pat)
+		if err != nil {
+			return result, err
+		}
+		pats[i] = cp
+	}
+
+	result.pack = pats[0]
+	result.path = pats[1]
+	result.member = pats[2]
+
+	return result, nil
 }
 
 func status(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +102,7 @@ func status(w http.ResponseWriter, r *http.Request) {
 }
 
 func socket(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/ws" {
+	if r.URL.Path != "/s" {
 		http.Error(w, "Not found", 404)
 		return
 	}
@@ -65,43 +128,37 @@ func socket(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("Received search request %v\n", req)
 
-	streamFind(c, req.Pack, req.Path, req.Member, req.Limit)
-	log.Printf("Finished request %v in %v\n", req, time.Since(start))
-}
-
-func queryHandler(w http.ResponseWriter, r *http.Request) {
-	pack := r.FormValue("pk")
-	ns := r.FormValue("ns")
-	mem := r.FormValue("m")
-	limit, err := strconv.ParseInt(r.FormValue("limit"), 10, 32)
+	params, err := compileParams(req.Pack, req.Path, req.Member)
 	if err != nil {
-		limit = 10
-	}
-
-	start := time.Now()
-	res, err := find(pack, ns, mem, int(limit))
-	if err != nil {
-		http.Error(w, err.Error(), 500)
+		log.Printf("Error while compiling params: %v\n", err)
 		return
 	}
 
-	log.Printf(
-		"Request pk[%v] and ns[%v] and m[%v] found [%v] entries in %v.",
-		pack,
-		ns,
-		mem,
-		len(res),
-		time.Since(start),
-	)
+	count := 0
+	results := make(chan searchResult)
+	control := make(chan bool)
+	go find(results, control, params)
 
-	js, err := json.Marshal(res)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
+	for {
+		select {
+		case res := <-results:
+			count++
+			log.Printf("Found result #%v after %v\n", count, time.Since(start))
+			err := c.WriteJSON(res)
+			if err != nil {
+				log.Printf("Error while writing result: %v\n", err)
+				return
+			}
+			if count >= req.Limit {
+				log.Printf("Finished request %v after hitting limit in %v\n", req, time.Since(start))
+				return
+			}
+
+		case <-control:
+			log.Printf("Finished request %v in %v\n", req, time.Since(start))
+			return
+		}
 	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
 }
 
 func pingHandler(w http.ResponseWriter, r *http.Request) {
@@ -111,8 +168,7 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 
 func serve(addr string) {
 	http.HandleFunc("/ping/", pingHandler)
-	http.HandleFunc("/s", queryHandler)
-	http.HandleFunc("/ws", socket)
+	http.HandleFunc("/s", socket)
 	http.HandleFunc("/status/", status)
 
 	pd, err := filepath.Abs(packDir)

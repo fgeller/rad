@@ -16,10 +16,11 @@ wget --wait=0.5 \
      -E \
      -k \
      -H \
-     -D clojuredocs.org,gravatar.com,avatars.githubusercontent.com \
+     -D clojuredocs.org \
      -m \
      -P$PFX \
      $PKG
 
-# TODO: need to escape entities
+# escape entities: <! to &lt;!
+find . -name ".html" -exec sed -iE 's:<(![^dD]):\&lt;\1:g' {} \;
 # cat x.html | sed -E 's:<(![^dD]):\&lt;\1:g' > '<!!.html'

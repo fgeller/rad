@@ -148,12 +148,11 @@ func TestFind(t *testing.T) {
 		var actual []searchResult
 	readresults:
 		for {
-			select {
-			case <-control:
+			r, ok := <-results
+			if !ok {
 				break readresults
-			case r := <-results:
-				actual = append(actual, r)
 			}
+			actual = append(actual, r)
 		}
 
 		if err != nil {
@@ -187,21 +186,22 @@ func TestFindObeysControl(t *testing.T) {
 
 	var writtenResults []searchResult
 	results := make(chan searchResult)
-	control := make(chan bool)
-	go func() {
-		control <- true
-	}()
+	control := make(chan bool, 1)
+	control <- true
 	go find(results, control, params)
 	go func() {
-		time.Sleep(time.Millisecond)
 		for {
-			writtenResults = append(writtenResults, <-results)
+			res, ok := <-results
+			if !ok {
+				return
+			}
+			writtenResults = append(writtenResults, res)
 		}
 	}()
 
-	time.Sleep(100 * time.Millisecond)
-	if len(writtenResults) >= len(lots) {
-		t.Errorf("Expected find to stop searching but found element on channel.\n")
+	time.Sleep(1 * time.Millisecond)
+	if len(writtenResults) >= 1 {
+		t.Errorf("Expected find to stop searching but found %v element(s) on channel.\n", len(writtenResults))
 		return
 	}
 }

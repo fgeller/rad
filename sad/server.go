@@ -111,8 +111,6 @@ func socket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	start := time.Now()
-
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Printf("Error while upgrading request: %v\n", err)
@@ -134,28 +132,36 @@ func socket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	streamResults(c, params, req.Limit)
+}
+
+func streamResults(sock *websocket.Conn, params searchParams, limit int) {
+	start := time.Now()
 	count := 0
 	results := make(chan searchResult)
-	control := make(chan bool)
+	control := make(chan bool, 1)
+
 	go find(results, control, params)
-
 	for {
-		select {
-		case res := <-results:
-			count++
-			log.Printf("Found result #%v after %v\n", count, time.Since(start))
-			err := c.WriteJSON(res)
-			if err != nil {
-				log.Printf("Error while writing result: %v\n", err)
-				return
-			}
-			if count >= req.Limit {
-				log.Printf("Finished request %v after hitting limit in %v\n", req, time.Since(start))
-				return
-			}
+		res, ok := <-results
+		if !ok {
+			log.Printf("Finished request in %v\n", time.Since(start))
+			return
+		}
 
-		case <-control:
-			log.Printf("Finished request %v in %v\n", req, time.Since(start))
+		count++
+		log.Printf("Found result #%v after %v\n", count, time.Since(start))
+
+		err := sock.WriteJSON(res)
+		if err != nil {
+			log.Printf("Error while writing result: %v\n", err)
+			control <- true
+			return
+		}
+
+		if count >= limit {
+			log.Printf("Finished request after hitting limit in %v\n", time.Since(start))
+			control <- true
 			return
 		}
 	}

@@ -167,10 +167,43 @@ func TestParseScalaEntry(t *testing.T) {
 		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
 	}
 
+	v = "scala.Enumeration$ValueSet@:\\[B](z:B)(op:(A,B)=\u003eB):B"
+	expected = shared.Namespace{
+		Path:    "scala.Enumeration.ValueSet",
+		Members: []shared.Member{{Name: ":\\", Target: "/" + target + v}},
+	}
+
+	actual, _ = parseNamespace(source, target, v)
+	if !expected.Eq(actual) {
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
+	}
+
+	v = "scala.collection.IterableViewLike$Transformed@Self=Repr"
+	expected = shared.Namespace{
+		Path:    "scala.collection.IterableViewLike.Transformed",
+		Members: []shared.Member{{Name: "Self", Target: "/" + target + v}},
+	}
+
+	actual, _ = parseNamespace(source, target, v)
+	if !expected.Eq(actual) {
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
+	}
+
 	v = "scala.collection.MapLike@FilteredKeysextendsAbstractMap[A,B]withDefaultMap[A,B]"
 	expected = shared.Namespace{
 		Path:    "scala.collection.MapLike",
 		Members: []shared.Member{{Name: "FilteredKeys", Target: "/" + target + v}},
+	}
+
+	actual, _ = parseNamespace(source, target, v)
+	if !expected.Eq(actual) {
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
+	}
+
+	v = "scala.collection.parallel.FutureThreadPoolTasks$@==(x$1:Any):Boolean"
+	expected = shared.Namespace{
+		Path:    "scala.collection.parallel.FutureThreadPoolTasks",
+		Members: []shared.Member{{Name: "==", Target: "/" + target + v}},
 	}
 
 	actual, _ = parseNamespace(source, target, v)

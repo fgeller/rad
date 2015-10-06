@@ -86,7 +86,18 @@ func parseNamespace(source string, target string, s string) (shared.Namespace, e
 
 	// name[A](...
 	// name(...
-	sigIdx := strings.IndexAny(meth, ":[(=")
+	sigIdx := -1
+	if len(meth) > 0 {
+		sigIdx = strings.IndexAny(meth[1:], ":[(")
+		if sigIdx >= 0 {
+			sigIdx++
+		}
+	}
+	tpeAlias := regexp.MustCompile("=[[:alpha:]]")
+	tpeAliasIdx := tpeAlias.FindStringIndex(meth)
+	if tpeAliasIdx != nil && (tpeAliasIdx[0] < sigIdx || sigIdx <= 0) {
+		sigIdx = tpeAliasIdx[0]
+	}
 	extendsIdx := strings.Index(meth, "extends")
 
 	// want: smaller one that's larger than 0

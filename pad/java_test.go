@@ -23,7 +23,7 @@ func TestJavaParseFileMethods(t *testing.T) {
 	}
 
 	expectedStart := shared.Namespace{
-		Path: []string{"javax", "xml", "parsers", "SAXParser"},
+		Path: "javax.xml.parsers.SAXParser",
 		Members: []shared.Member{
 			{Name: "SAXParser", Target: "testdata/SAXParser.html#SAXParser--"},
 			{Name: "getParser", Target: "testdata/SAXParser.html#getParser--"},
@@ -40,7 +40,7 @@ func TestJavaParseFileMethods(t *testing.T) {
 
 	var foundClone bool
 	for _, n := range results {
-		if n.Path[len(n.Path)-1] == "SAXParser" {
+		if n.Last() == "SAXParser" {
 			for _, m := range n.Members {
 				if m.Name == "clone" &&
 					m.Target == "testdata/SAXParser.html#methods.inherited.from.class.java.lang.Object" {
@@ -72,7 +72,7 @@ func TestJavaParseFileFields(t *testing.T) {
 	}
 
 	fstExpected := shared.Namespace{
-		Path:    []string{"java", "awt", "event", "ActionEvent"},
+		Path:    "java.awt.event.ActionEvent",
 		Members: []shared.Member{{Name: "ACTION_FIRST", Target: "testdata/ActionEvent.html#ACTION_FIRST"}},
 	}
 
@@ -121,7 +121,7 @@ func TestParseHref(t *testing.T) {
 
 	href := "../../../../com/sun/source/util/DocTreeScanner.html#DocTreeScanner--"
 	expected := shared.Namespace{
-		Path:    []string{"com", "sun", "source", "util", "DocTreeScanner"},
+		Path:    "com.sun.source.util.DocTreeScanner",
 		Members: []shared.Member{{Name: "DocTreeScanner", Target: "/x/y/DocTreeScanner.html#DocTreeScanner--"}},
 	}
 	actual := parseJavaHref(href, path)

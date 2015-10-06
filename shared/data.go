@@ -3,6 +3,7 @@ package shared
 import (
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 )
 
@@ -19,7 +20,7 @@ type Member struct {
 }
 
 type Namespace struct {
-	Path    []string
+	Path    string
 	Members []Member
 }
 
@@ -40,21 +41,8 @@ func (n Namespace) String() string {
 }
 
 func (n Namespace) Last() string {
-	return n.Path[len(n.Path)-1] // TODO: runtime out of bounds
-}
-
-func (a Namespace) HasSamePath(b Namespace) bool {
-	if len(a.Path) != len(b.Path) {
-		return false
-	}
-
-	for i := range a.Path {
-		if a.Path[i] != b.Path[i] {
-			return false
-		}
-	}
-
-	return true
+	parts := strings.Split(n.Path, ".")
+	return parts[len(parts)-1]
 }
 
 func Merge(ns []Namespace) []Namespace {
@@ -68,7 +56,7 @@ func Merge(ns []Namespace) []Namespace {
 merging:
 	for ui := range unmerged {
 		for mi := range merged {
-			if unmerged[ui].HasSamePath(merged[mi]) {
+			if unmerged[ui].Path == merged[mi].Path {
 				// TODO: dedupe?
 				merged[mi].Members = append(merged[mi].Members, unmerged[ui].Members...)
 				continue merging

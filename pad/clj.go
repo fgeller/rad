@@ -6,7 +6,6 @@ import (
 	"encoding/xml"
 	"io"
 	"log"
-	"strings"
 )
 
 func parseClojureDocFile(filePath string, r io.Reader) []shared.Namespace {
@@ -45,7 +44,7 @@ func parseClojureDocFile(filePath string, r io.Reader) []shared.Namespace {
 				inMeta = false
 			case inMetaA && ee.Name.Local == "a":
 				// clojure.core.async
-				path := strings.Split(string(charData), ".")
+				path := string(charData)
 				tgt := filePath
 				n := shared.Namespace{
 					Path:    path,

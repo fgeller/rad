@@ -26,7 +26,7 @@ func parseGoDocFile(filePath string, r io.Reader) []shared.Namespace {
 	var inPkgIndex bool
 	var inPkgOverview bool
 	var charData []byte
-	var path []string
+	var path string
 
 	for ; err == nil; t, err = d.Token() {
 		se, gotStartElement := t.(xml.StartElement)
@@ -45,7 +45,7 @@ func parseGoDocFile(filePath string, r io.Reader) []shared.Namespace {
 				matches := importPat.FindStringSubmatch(ctnt)
 				if len(matches) == 2 {
 					// ["archive", "tar"]
-					path = strings.Split(matches[1], "/")
+					path = strings.Join(strings.Split(matches[1], "/"), ".")
 				}
 			}
 		case gotStartElement:
@@ -75,7 +75,7 @@ func parseGoDocFile(filePath string, r io.Reader) []shared.Namespace {
 	return shared.Merge(ns)
 }
 
-func parseGoHref(filePath string, path []string, href string) (shared.Namespace, error) {
+func parseGoHref(filePath string, path string, href string) (shared.Namespace, error) {
 	n := shared.Namespace{
 		Path:    path,
 		Members: []shared.Member{},
@@ -101,7 +101,7 @@ func parseGoHref(filePath string, path []string, href string) (shared.Namespace,
 	tgt := fmt.Sprintf("%v#%v", filePath, frg)
 	n.Members = []shared.Member{{Name: m, Target: tgt}}
 	if withType {
-		n.Path = append(n.Path, tpe)
+		n.Path = n.Path + "." + tpe
 	}
 
 	return n, nil

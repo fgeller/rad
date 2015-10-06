@@ -39,7 +39,7 @@ func scanDir(dir string, p parser) (int, []shared.Namespace, error) {
 
 	for _, fi := range files {
 		go func(dir string, f os.FileInfo, c chan scanResult) {
-			path := dir + string(os.PathSeparator) + f.Name()
+			path := dir + string(os.PathSeparator) + f.Name() // TODO
 			switch {
 			case f.IsDir():
 				fs, ns, _ := scanDir(path, p)

@@ -23,7 +23,7 @@ func TestGoParseFileMethods(t *testing.T) {
 	}
 
 	expectedStart := shared.Namespace{
-		Path: []string{"archive", "tar"},
+		Path: "archive.tar",
 		Members: []shared.Member{
 			{
 				Name:   "Header",

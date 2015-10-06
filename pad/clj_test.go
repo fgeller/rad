@@ -23,7 +23,7 @@ func TestClojureParseFileMethods(t *testing.T) {
 	}
 
 	expectedStart := shared.Namespace{
-		Path: []string{"clojure", "core", "async"},
+		Path: "clojure.core.async",
 		Members: []shared.Member{
 			{
 				Name:   "<!!",

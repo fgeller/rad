@@ -120,7 +120,7 @@ func parseNamespace(source string, target string, s string) (shared.Namespace, e
 	newSplits = append(newSplits, targetSplits[len(targetSplits)-1]+s)
 	newTarget := strings.Join(newSplits, "/")
 
-	namespace.Path = append(path, entity)
+	namespace.Path = strings.Join(append(path, entity), ".")
 	namespace.Members = []shared.Member{{Name: m, Target: newTarget}}
 
 	return namespace, nil

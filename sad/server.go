@@ -32,7 +32,7 @@ type searchParams struct {
 }
 
 type searchResult struct {
-	Namespace []string
+	Namespace string
 	Member    string
 	Target    string
 }

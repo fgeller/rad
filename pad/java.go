@@ -2,6 +2,7 @@ package main
 
 import (
 	"../shared"
+
 	"encoding/xml"
 	"io"
 	"log"
@@ -62,7 +63,7 @@ func parseJavaDocFile(path string, r io.Reader) []shared.Namespace {
 				tgt := strings.Join(ps, "/") + "#" + inheritedBlock
 
 				n := parseJavaHref(href, path)
-				n.Path[len(n.Path)-1] = ent
+				n.Path = n.Path + "." + ent
 				for i := range n.Members {
 					n.Members[i].Target = tgt
 				}
@@ -140,7 +141,7 @@ func parseJavaHref(href string, path string) shared.Namespace {
 	tgt := strings.Join(append(ps[:len(ps)-1], fl), "/")
 
 	return shared.Namespace{
-		Path:    append(ns, ent),
+		Path:    strings.Join(append(ns, ent), "."),
 		Members: []shared.Member{{Name: fun, Target: tgt}},
 	}
 }

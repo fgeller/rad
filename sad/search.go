@@ -6,7 +6,6 @@ import (
 	"log"
 	"math"
 	"runtime"
-	"strings"
 )
 
 func findNamespace(
@@ -17,8 +16,7 @@ func findNamespace(
 	defer func() { end <- true }()
 
 	for _, namespace := range namespaces {
-		normalizedPath := strings.Join(namespace.Path, ".")
-		if params.path.MatchString(normalizedPath) {
+		if params.path.MatchString(namespace.Path) {
 			for mi, member := range namespace.Members {
 				if params.member.MatchString(member.Name) {
 					select {

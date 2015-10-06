@@ -49,12 +49,12 @@ func TestInstallingLocalPack(t *testing.T) {
 func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
 	p1 := shared.Pack{Name: "p1", Type: "java", Created: time.Now()}
 	p1Data := []shared.Namespace{
-		{Path: []string{"A"}, Members: []shared.Member{{Name: "M1", Target: "T1"}}},
+		{Path: "A", Members: []shared.Member{{Name: "M1", Target: "T1"}}},
 	}
 
 	p2 := shared.Pack{Name: "p2", Type: "go", Created: time.Now()}
 	p2Data := []shared.Namespace{
-		{Path: []string{"B"}, Members: []shared.Member{{Name: "M2", Target: "T2"}}},
+		{Path: "B", Members: []shared.Member{{Name: "M2", Target: "T2"}}},
 	}
 
 	packs := map[string]shared.Pack{p1.Name: p1, p2.Name: p2}

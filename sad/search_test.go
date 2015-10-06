@@ -11,11 +11,11 @@ import (
 
 func TestNewSearchResult(t *testing.T) {
 	n := shared.Namespace{
-		Path: []string{"entity"},
+		Path: "entity",
 	}
 
 	expected := searchResult{
-		Namespace: []string{"entity"},
+		Namespace: "entity",
 	}
 
 	actual := NewSearchResult(n, 0)
@@ -35,7 +35,7 @@ func TestFind(t *testing.T) {
 	docs = map[string][]shared.Namespace{
 		"go": []shared.Namespace{
 			{
-				Path:    []string{"io", "ioutil"},
+				Path:    "io.ioutil",
 				Members: []shared.Member{{Name: "ReadAll"}, {Name: "ReadDir"}},
 			},
 		},
@@ -55,7 +55,7 @@ func TestFind(t *testing.T) {
 			memPat:  "ReadAll",
 			expected: []searchResult{
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadAll",
 					Target:    "/pack/",
 				},
@@ -69,12 +69,12 @@ func TestFind(t *testing.T) {
 			memPat:  "ea",
 			expected: []searchResult{
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadAll",
 					Target:    "/pack/",
 				},
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadDir",
 					Target:    "/pack/",
 				},
@@ -88,12 +88,12 @@ func TestFind(t *testing.T) {
 			memPat:  "^Rea.+$",
 			expected: []searchResult{
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadAll",
 					Target:    "/pack/",
 				},
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadDir",
 					Target:    "/pack/",
 				},
@@ -107,7 +107,7 @@ func TestFind(t *testing.T) {
 			memPat:  "readall",
 			expected: []searchResult{
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadAll",
 					Target:    "/pack/",
 				},
@@ -121,12 +121,12 @@ func TestFind(t *testing.T) {
 			memPat:  "",
 			expected: []searchResult{
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadAll",
 					Target:    "/pack/",
 				},
 				{
-					Namespace: []string{"io", "ioutil"},
+					Namespace: "io.ioutil",
 					Member:    "ReadDir",
 					Target:    "/pack/",
 				},
@@ -173,7 +173,7 @@ func TestFindObeysControl(t *testing.T) {
 		lots = append(
 			lots,
 			shared.Namespace{
-				Path:    []string{"io", "ioutil"},
+				Path:    "io.ioutil",
 				Members: []shared.Member{{Name: "ReadAll" + string(i)}},
 			},
 		)

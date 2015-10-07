@@ -5,6 +5,7 @@ import (
 
 	"archive/zip"
 	"encoding/json"
+	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -85,4 +86,11 @@ func serve(addr string) {
 	http.HandleFunc("/ping", pingHandler)
 	log.Printf("Serving on %v\n", addr)
 	http.ListenAndServe(addr, nil)
+}
+
+func main() {
+	flag.StringVar(&packDir, "packdir", "packs", "Path where to find packs")
+	flag.Parse()
+
+	serve("0.0.0.0:3025")
 }

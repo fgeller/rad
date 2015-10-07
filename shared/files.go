@@ -108,12 +108,8 @@ func ZipDir(out *os.File, in string) error {
 	tld := filepath.Dir(in)
 
 	walker := func(path string, info os.FileInfo, err error) error {
-		if err != nil {
+		if err != nil || info.IsDir() {
 			return err
-		}
-
-		if info.IsDir() {
-			return nil // no need to zip directories
 		}
 
 		rel, err := filepath.Rel(tld, path)
@@ -132,11 +128,7 @@ func ZipDir(out *os.File, in string) error {
 		}
 
 		_, err = f.Write(contents)
-		if err != nil {
-			return err
-		}
-
-		return nil
+		return err
 	}
 
 	err := filepath.Walk(in, walker)

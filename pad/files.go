@@ -2,12 +2,14 @@ package main
 
 import (
 	"../shared"
+
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
-	"runtime"
+	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -18,47 +20,68 @@ type scanResult struct {
 
 func scan(path string, p parser) ([]shared.Namespace, error) {
 	start := time.Now()
-	fc, ns, err := scanDir(path, p)
+	var ns []shared.Namespace
+	ap, err := filepath.Abs(path)
+	if err != nil {
+		return ns, err
+	}
+
+	fc, ns, err := scanDir(ap, p)
 	elapsed := time.Now().Sub(start)
 	log.Printf("Found %v entries (%.1ff/s).\n", len(ns), float64(fc)/elapsed.Seconds())
 
 	return shared.Merge(ns), err
 }
 
-// TODO: use filepath.Walk
+func isMarkupFile(p string) bool {
+	lp := strings.ToLower(p)
+	return strings.HasSuffix(lp, "html") || strings.HasSuffix(lp, "xml")
+}
+
 func scanDir(dir string, p parser) (int, []shared.Namespace, error) {
+	var namespaces []shared.Namespace
+	results := make(chan []shared.Namespace)
+	counts := make(chan int)
+	var wg sync.WaitGroup
 
-	files, err := findDirsAndMarkupFiles(dir)
+	walker := func(path string, info os.FileInfo, err error) error {
+		wg.Add(1)
+		if err != nil || info.IsDir() || !isMarkupFile(info.Name()) {
+			wg.Done()
+			return err
+		}
+
+		go func() {
+			results <- scanFile(path, p)
+			counts <- 1
+			wg.Done()
+		}()
+
+		return err
+	}
+
+	err := filepath.Walk(dir, walker)
 	if err != nil {
-		fmt.Printf("can't read dir %v, err %v\n", dir, err)
-		return 0, []shared.Namespace{}, err
+		return -1, namespaces, err
 	}
 
-	rc := make(chan scanResult)
-	runtime.GOMAXPROCS(runtime.NumCPU())
+	go func() { wg.Wait(); close(results) }()
 
-	for _, fi := range files {
-		go func(dir string, f os.FileInfo, c chan scanResult) {
-			path := dir + string(os.PathSeparator) + f.Name() // TODO
-			switch {
-			case f.IsDir():
-				fs, ns, _ := scanDir(path, p)
-				c <- scanResult{ns, fs}
-			default:
-				c <- scanResult{scanFile(path, p), 1}
+	count := 0
+wait:
+	for {
+		select {
+		case new, ok := <-results:
+			if !ok {
+				break wait // we're done
 			}
-		}(dir, fi, rc)
+			namespaces = append(namespaces, new...)
+		case inc := <-counts:
+			count += inc
+		}
 	}
 
-	results := []shared.Namespace{}
-	fc := 0
-	for i := 0; i < len(files); i++ {
-		r := <-rc
-		fc += r.processedFiles
-		results = append(results, r.namespaces...)
-	}
-
-	return fc, results, nil
+	return -1, namespaces, err
 }
 
 func scanFile(path string, p parser) []shared.Namespace {

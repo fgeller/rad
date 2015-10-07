@@ -22,7 +22,7 @@ func scan(path string, p parser) ([]shared.Namespace, error) {
 	elapsed := time.Now().Sub(start)
 	log.Printf("Found %v entries (%.1ff/s).\n", len(ns), float64(fc)/elapsed.Seconds())
 
-	return ns, err
+	return shared.Merge(ns), err
 }
 
 // TODO: use filepath.Walk

@@ -28,7 +28,7 @@ func setup() string {
 		}
 	}
 
-	packDir = tmp
+	config.PackDir = tmp
 	return tmp
 }
 
@@ -58,7 +58,7 @@ func TestServingPacks(t *testing.T) {
 	}
 	log.Printf("Read response %s\n", data)
 
-	var actual []shared.Pack
+	var actual []packListing
 	err = json.Unmarshal(data, &actual)
 	if err != nil {
 		t.Errorf("Unexpected error while unmarshalling response body: %v\n", err)
@@ -66,9 +66,25 @@ func TestServingPacks(t *testing.T) {
 	}
 
 	creationTime := time.Date(2015, time.October, 4, 0, 0, 0, 0, time.UTC)
-	expected := []shared.Pack{
-		{Name: "go", Type: "go", Version: "2015-10-04", Created: creationTime},
-		{Name: "java", Type: "java", Version: "jdk8", Created: creationTime},
+	expected := []packListing{
+		{
+			Pack: &shared.Pack{
+				Name:    "go",
+				Type:    "go",
+				Version: "2015-10-04",
+				Created: creationTime,
+			},
+			Path: "/pack/go.zip",
+		},
+		{
+			Pack: &shared.Pack{
+				Name:    "java",
+				Type:    "java",
+				Version: "jdk8",
+				Created: creationTime,
+			},
+			Path: "/pack/java.zip",
+		},
 	}
 
 	if !reflect.DeepEqual(expected, actual) {

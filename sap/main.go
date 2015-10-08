@@ -13,7 +13,14 @@ import (
 	"strings"
 )
 
-var packDir string
+var config struct {
+	PackDir string
+}
+
+type packListing struct {
+	Path string
+	*shared.Pack
+}
 
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got ping request.")
@@ -22,20 +29,20 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 func packsHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got packs request.")
 
-	fs, err := ioutil.ReadDir(packDir)
+	fs, err := ioutil.ReadDir(config.PackDir)
 	if err != nil {
 		log.Printf("Could not read packs directory: %v\n", err)
 		http.Error(w, "Internal server error", 500)
 		return
 	}
 
-	var packs []shared.Pack
+	var packs []packListing
 	for _, fi := range fs {
 		if strings.HasSuffix(fi.Name(), ".zip") {
 			log.Printf("Found zip file: %v", fi.Name())
 		}
 
-		r, err := zip.OpenReader(filepath.Join(packDir, fi.Name()))
+		r, err := zip.OpenReader(filepath.Join(config.PackDir, fi.Name()))
 		if err != nil {
 			log.Printf("Error opening archive %v: %v", fi.Name(), err)
 			continue
@@ -64,7 +71,7 @@ func packsHandler(w http.ResponseWriter, r *http.Request) {
 					continue
 				}
 
-				packs = append(packs, pack)
+				packs = append(packs, packListing{Pack: &pack, Path: "/pack/" + fi.Name()})
 			}
 		}
 	}
@@ -88,7 +95,7 @@ func serve(addr string) {
 }
 
 func main() {
-	flag.StringVar(&packDir, "packdir", "packs", "Path where to find packs")
+	flag.StringVar(&config.PackDir, "packdir", "packs", "Path where to find packs")
 	flag.Parse()
 
 	serve("0.0.0.0:3025")

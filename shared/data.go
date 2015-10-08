@@ -57,9 +57,9 @@ merging:
 	for ui := range unmerged {
 		for mi := range merged {
 			if unmerged[ui].Path == merged[mi].Path {
-				deduped := []Member{}
+				deduped := merged[mi].Members
 			iter:
-				for _, m := range append(merged[mi].Members, unmerged[ui].Members...) {
+				for _, m := range unmerged[ui].Members {
 					for _, d := range deduped {
 						if d.Eq(m) {
 							continue iter

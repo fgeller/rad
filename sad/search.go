@@ -11,7 +11,7 @@ import (
 
 func findNamespace(
 	results chan searchResult,
-	end chan bool,
+	end chan struct{},
 	namespaces []shared.Namespace,
 	params searchParams) {
 
@@ -33,7 +33,7 @@ func findNamespace(
 
 // expects end to be buffered
 // will close results channel when done.
-func find(results chan searchResult, end chan bool, params searchParams) {
+func find(results chan searchResult, end chan struct{}, params searchParams) {
 
 iteratingpacks:
 	for pack, namespaces := range global.docs {

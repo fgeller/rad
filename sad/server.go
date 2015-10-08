@@ -166,7 +166,7 @@ func streamResults(sock *websocket.Conn, params searchParams, limit int) {
 	start := time.Now()
 	count := 0
 	results := make(chan searchResult)
-	control := make(chan bool, 1)
+	control := make(chan struct{}, 1)
 
 	go find(results, control, params)
 	for {
@@ -182,13 +182,13 @@ func streamResults(sock *websocket.Conn, params searchParams, limit int) {
 		err := sock.WriteJSON(res)
 		if err != nil {
 			log.Printf("Error while writing result: %v\n", err)
-			control <- true
+			control <- struct{}{}
 			return
 		}
 
 		if count >= limit {
 			log.Printf("Finished request after hitting limit in %v\n", time.Since(start))
-			control <- true
+			control <- struct{}{}
 			return
 		}
 	}

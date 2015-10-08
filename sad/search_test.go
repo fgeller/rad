@@ -142,7 +142,7 @@ func TestFind(t *testing.T) {
 		}
 
 		results := make(chan searchResult)
-		control := make(chan bool)
+		control := make(chan struct{})
 		go find(results, control, params)
 
 		var actual []searchResult
@@ -186,8 +186,8 @@ func TestFindObeysControl(t *testing.T) {
 
 	var writtenResults []searchResult
 	results := make(chan searchResult)
-	control := make(chan bool, 1)
-	control <- true
+	control := make(chan struct{}, 1)
+	control <- struct{}{}
 	go find(results, control, params)
 	go func() {
 		for {

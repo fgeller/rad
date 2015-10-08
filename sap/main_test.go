@@ -15,6 +15,8 @@ import (
 	"time"
 )
 
+var serving bool
+
 func setup() string {
 	tmp, err := ioutil.TempDir("", "sap-pack-dir")
 	if err != nil {
@@ -32,11 +34,63 @@ func setup() string {
 	return tmp
 }
 
+func ensureServe(addr string) {
+	if !serving {
+		serving = true
+		go serve(addr)
+	}
+}
+
+func TestServePack(t *testing.T) {
+	defer os.RemoveAll(setup())
+
+	addr := "localhost:6050"
+	ensureServe(addr)
+
+	err := awaitPing(addr)
+	if err != nil {
+		t.Errorf("Unexpected error while waiting for ping: %v\n", err)
+		return
+	}
+
+	res, err := http.Get("http://" + addr + "/pack/go.zip")
+	if err != nil {
+		t.Errorf("Unexpected error when asking for go.zip: %v\n", err)
+		return
+	}
+
+	if res.Header["Content-Type"][0] != "application/zip" {
+		t.Errorf("Expected application/zip but got: %v\n", res.Header["Content-Type"])
+		return
+	}
+
+	if res.Header["Content-Length"][0] != "386" {
+		t.Errorf("Expected application/zip but got: %v\n", res.Header["Content-Type"])
+		return
+	}
+
+	res, err = http.Get("http://" + addr + "/pack/java.zip")
+	if err != nil {
+		t.Errorf("Unexpected error when asking for java.zip: %v\n", err)
+		return
+	}
+
+	if res.Header["Content-Type"][0] != "application/zip" {
+		t.Errorf("Expected application/zip but got: %v\n", res.Header["Content-Type"])
+		return
+	}
+
+	if res.Header["Content-Length"][0] != "391" {
+		t.Errorf("Expected application/zip but got: %v\n", res.Header["Content-Type"])
+		return
+	}
+}
+
 func TestServingPacks(t *testing.T) {
 	defer os.RemoveAll(setup())
 
-	addr := "localhost:6048"
-	go serve(addr)
+	addr := "localhost:6050"
+	ensureServe(addr)
 
 	err := awaitPing(addr)
 	if err != nil {
@@ -56,7 +110,6 @@ func TestServingPacks(t *testing.T) {
 		t.Errorf("Unexpected error while reading response body: %v\n", err)
 		return
 	}
-	log.Printf("Read response %s\n", data)
 
 	var actual []packListing
 	err = json.Unmarshal(data, &actual)

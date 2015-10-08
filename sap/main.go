@@ -26,6 +26,11 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got ping request.")
 }
 
+func packHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got pack request for %v", r.URL.Path)
+	http.ServeFile(w, r, filepath.Join(config.PackDir, r.URL.Path[6:]))
+}
+
 func packsHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got packs request.")
 
@@ -89,6 +94,7 @@ func packsHandler(w http.ResponseWriter, r *http.Request) {
 
 func serve(addr string) {
 	http.HandleFunc("/packs", packsHandler)
+	http.HandleFunc("/pack/", packHandler)
 	http.HandleFunc("/ping", pingHandler)
 	log.Printf("Serving on %v\n", addr)
 	http.ListenAndServe(addr, nil)

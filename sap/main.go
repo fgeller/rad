@@ -44,8 +44,7 @@ func packsHandler(w http.ResponseWriter, r *http.Request) {
 		defer r.Close() // TODO
 
 		for _, f := range r.File {
-			if f.Name == "pack.json" {
-				log.Printf("Found file in zip: %v\n", f.Name)
+			if filepath.Base(f.Name) == "pack.json" {
 				fh, err := f.Open()
 				if err != nil {
 					log.Printf("Error opening %v: %v", f.Name, err)

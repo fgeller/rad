@@ -5,6 +5,7 @@ import (
 
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -86,19 +87,45 @@ func compileParams(pk, pt, m string) (searchParams, error) {
 func status(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got status request for %v\n", r.URL.Path)
 
-	if r.URL.Path != "/status/packs" {
-		http.Error(w, "Not found", 404)
+	if r.URL.Path == "/status/packs/installed" {
+		js, err := json.Marshal(packs)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(js)
 		return
 	}
 
-	js, err := json.Marshal(packs)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
+	if r.URL.Path == "/status/packs/available" {
+		res, err := http.Get("http://" + sapAddr + "/packs")
+		if err != nil {
+			log.Printf("Error while requesting available packs: %v\n", err)
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		if res.StatusCode != 200 {
+			log.Printf("Expected 200 but got status code: %v\n", res.StatusCode)
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		data, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			log.Printf("Error reading data from response: %v\n", err)
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(data)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
+	http.Error(w, "Not found", 404)
 }
 
 func socket(w http.ResponseWriter, r *http.Request) {

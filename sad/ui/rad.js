@@ -78,16 +78,29 @@ var Pack = React.createClass({
 
 var Settings = React.createClass({
     getInitialState: function() {
-        return { packs: [] };
+        return {
+	    installedPacks: [],
+	    availablePacks: []
+	};
     },
     componentWillMount: function() {
-        var req = $.get(
-            "/status/packs",
+        $.get(
+            "/status/packs/installed",
             {},
             function(data, flag) {
-                var packs = [];
-                _.forEach(data, function(p) { packs.push(p) });
-                this.setState({packs: packs});
+                var installedPacks = [];
+                _.forEach(data, function(p) { installedPacks.push(p) });
+                this.setState({installedPacks: installedPacks});
+            }.bind(this),
+            "json" // we expect json
+        );
+        $.get(
+            "/status/packs/available",
+            {},
+            function(data, flag) {
+                var availablePacks = [];
+                _.forEach(data, function(p) { availablePacks.push(p) });
+                this.setState({availablePacks: availablePacks});
             }.bind(this),
             "json" // we expect json
         );
@@ -96,16 +109,24 @@ var Settings = React.createClass({
         $("#settings-container").css("visibility", "hidden");
     },
     render: function() {
-        var packs = []
-        _.forEach(this.state.packs, function(p) {
-            packs.push(
-                <Pack name={p.Name}
-                      type={p.Type}
-                      version={p.Version}
-                      created={p.Created} />
-            );
+        var availablePacks = this.state.availablePacks.map(function(p) {
+	    return <Pack name={p.Name}
+                         type={p.Type}
+                         version={p.Version}
+                         created={p.Created} />
         });
-        return <div id="settings-container" onClick={this.hide}><div id="settings-content"><div id="settings-packs"><div className="settings-header">Installed Packs</div>{ packs }</div></div></div>
+        var installedPacks = this.state.installedPacks.map(function(p) {
+	    return <Pack name={p.Name}
+                         type={p.Type}
+                         version={p.Version}
+                         created={p.Created} />
+        });
+        return <div id="settings-container" onClick={this.hide}>
+	         <div id="settings-content">
+	           <div id="settings-installed-packs"><div className="settings-header">Installed Packs</div>{ installedPacks }</div>
+	           <div id="settings-available-packs"><div className="settings-header">Available Packs</div>{ availablePacks }</div>
+	         </div>
+  	       </div>;
     }
 });
 

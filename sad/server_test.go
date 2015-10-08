@@ -40,11 +40,11 @@ func ensureSap(addr string) {
 
 func TestServeInstalledPackInfo(t *testing.T) {
 
-	docs = map[string][]shared.Namespace{
+	global.docs = map[string][]shared.Namespace{
 		"x": []shared.Namespace{{Members: []shared.Member{{Name: "m1"}}}},
 		"y": []shared.Namespace{{Members: []shared.Member{{Name: "m2"}}}},
 	}
-	packs = map[string]shared.Pack{
+	global.packs = map[string]shared.Pack{
 		"x": shared.Pack{Name: "x", Created: time.Now()},
 		"y": shared.Pack{Name: "y", Created: time.Now()},
 	}
@@ -87,10 +87,10 @@ func TestServeInstalledPackInfo(t *testing.T) {
 		return
 	}
 
-	if !reflect.DeepEqual(packs, actual) {
+	if !reflect.DeepEqual(global.packs, actual) {
 		t.Errorf(
 			"Retrieved pack info was not the same. Expected:\n%v\nbut got:\n%v\n",
-			packs,
+			global.packs,
 			actual,
 		)
 		return
@@ -100,13 +100,13 @@ func TestServeInstalledPackInfo(t *testing.T) {
 
 func TestServeAvailablePacksInfo(t *testing.T) {
 
-	docs = map[string][]shared.Namespace{}
-	packs = map[string]shared.Pack{}
+	global.docs = map[string][]shared.Namespace{}
+	global.packs = map[string]shared.Pack{}
 	addr := "localhost:6048"
-	sapAddr = "localhost:6050"
+	config.sapAddr = "localhost:6050"
 
 	ensureServe(addr)
-	ensureSap(sapAddr)
+	ensureSap(config.sapAddr)
 
 	err := awaitPing(addr)
 	if err != nil {

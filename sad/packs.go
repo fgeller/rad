@@ -10,11 +10,11 @@ import (
 )
 
 func loadInstalled() error {
-	log.Printf("Loading installed packs from %v\n", packDir)
+	log.Printf("Loading installed packs from %v\n", config.packDir)
 
-	dirs, err := ioutil.ReadDir(packDir)
+	dirs, err := ioutil.ReadDir(config.packDir)
 	if err != nil {
-		log.Printf("Failed to read contents of packDir %v: %v\n", packDir, err)
+		log.Printf("Failed to read contents of packDir %v: %v\n", config.packDir, err)
 		return err
 	}
 
@@ -26,24 +26,24 @@ func loadInstalled() error {
 		pack := dir.Name()
 		log.Printf("Loading pack %v\n", pack)
 
-		pf := filepath.Join(packDir, pack, "pack.json")
+		pf := filepath.Join(config.packDir, pack, "pack.json")
 		pc, err := ioutil.ReadFile(pf)
 		if err != nil {
 			log.Printf("Skipping: Could not load pack info for %v (err: %v).", pack, err)
 		}
 		var packInfo shared.Pack
 		err = json.Unmarshal(pc, &packInfo)
-		packs[pack] = packInfo
+		global.packs[pack] = packInfo
 		log.Printf("Found info %v for %v.", packInfo, pack)
 
-		df := filepath.Join(packDir, pack, "data.json")
+		df := filepath.Join(config.packDir, pack, "data.json")
 		dc, err := ioutil.ReadFile(df)
 		if err != nil {
 			log.Printf("Skipping: Could not load data for %v (err: %v).", pack, err)
 		}
 		var data []shared.Namespace
 		err = json.Unmarshal(dc, &data)
-		docs[pack] = data
+		global.docs[pack] = data
 		log.Printf("Found %v entries for %v.", len(data), pack)
 	}
 
@@ -55,7 +55,7 @@ func install(path string) error {
 	log.Printf("Installing %v\n", path)
 
 	// unzip it
-	err := shared.Unzip(path, packDir)
+	err := shared.Unzip(path, config.packDir)
 	if err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func install(path string) error {
 	packName := fn[:strings.Index(fn, ".zip")] // jdk
 
 	// load data
-	dp := filepath.Join(packDir, packName, "data.json")
+	dp := filepath.Join(config.packDir, packName, "data.json")
 	log.Printf("Reading data from %v\n", dp)
 	db, err := ioutil.ReadFile(dp)
 	if err != nil {
@@ -78,7 +78,7 @@ func install(path string) error {
 	}
 
 	// add to global var
-	docs[packName] = namespaces
+	global.docs[packName] = namespaces
 	log.Printf("Found %v entries for pack %v\n", len(namespaces), packName)
 
 	return nil

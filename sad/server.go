@@ -88,7 +88,7 @@ func status(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got status request for %v\n", r.URL.Path)
 
 	if r.URL.Path == "/status/packs/installed" {
-		js, err := json.Marshal(packs)
+		js, err := json.Marshal(global.packs)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
@@ -100,7 +100,7 @@ func status(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.URL.Path == "/status/packs/available" {
-		res, err := http.Get("http://" + sapAddr + "/packs")
+		res, err := http.Get("http://" + config.sapAddr + "/packs")
 		if err != nil {
 			log.Printf("Error while requesting available packs: %v\n", err)
 			http.Error(w, err.Error(), 500)
@@ -204,13 +204,13 @@ func serve(addr string) {
 	http.HandleFunc("/s", socket)
 	http.HandleFunc("/status/", status)
 
-	pd, err := filepath.Abs(packDir)
+	pd, err := filepath.Abs(config.packDir)
 	if err != nil {
-		log.Fatalf("Can't find absolute path to packDir %v: %v\n", packDir, err)
+		log.Fatalf("Can't find absolute path to packDir %v: %v\n", config.packDir, err)
 	}
 
-	packs := http.FileServer(http.Dir(pd))
-	http.Handle("/pack/", http.StripPrefix("/pack/", packs))
+	ps := http.FileServer(http.Dir(pd))
+	http.Handle("/pack/", http.StripPrefix("/pack/", ps))
 
 	ui := http.FileServer(http.Dir("./ui"))
 	http.Handle("/ui/", http.StripPrefix("/ui/", ui))

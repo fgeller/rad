@@ -36,7 +36,7 @@ func findNamespace(
 func find(results chan searchResult, end chan bool, params searchParams) {
 
 iteratingpacks:
-	for pack, namespaces := range docs {
+	for pack, namespaces := range global.docs {
 		if params.pack.MatchString(pack) {
 			cpus := runtime.NumCPU()
 			if len(namespaces) < cpus {

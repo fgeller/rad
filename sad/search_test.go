@@ -32,7 +32,7 @@ func TestNewSearchResult(t *testing.T) {
 
 func TestFind(t *testing.T) {
 
-	docs = map[string][]shared.Namespace{
+	global.docs = map[string][]shared.Namespace{
 		"go": []shared.Namespace{
 			{
 				Path:    "io.ioutil",
@@ -177,7 +177,7 @@ func TestFindObeysControl(t *testing.T) {
 			},
 		)
 	}
-	docs = map[string][]shared.Namespace{"go": lots}
+	global.docs = map[string][]shared.Namespace{"go": lots}
 	params := searchParams{
 		pack:   regexp.MustCompile("."),
 		path:   regexp.MustCompile("."),

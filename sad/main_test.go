@@ -14,12 +14,13 @@ import (
 )
 
 func setup() string {
-	docs = map[string][]shared.Namespace{}
+	global.packs = map[string]shared.Pack{}
+	global.docs = map[string][]shared.Namespace{}
 	tmp, err := ioutil.TempDir("", "sad-main-test-pack-dir")
 	if err != nil {
 		log.Fatalf("Failed to create temporary directory: %v", err)
 	}
-	packDir = tmp
+	config.packDir = tmp
 	return tmp
 }
 
@@ -34,14 +35,14 @@ func TestInstallingLocalPack(t *testing.T) {
 		return
 	}
 
-	entries, ok := docs["jdk"]
+	entries, ok := global.docs["jdk"]
 	if !ok {
-		t.Errorf("Could not access entries in docs map %v", docs)
+		t.Errorf("Could not access entries in docs map %v", global.docs)
 		return
 	}
 
 	if len(entries) < 1 {
-		t.Errorf("Found no entries in docs map %v", docs)
+		t.Errorf("Found no entries in docs map %v", global.docs)
 	}
 
 }
@@ -57,16 +58,16 @@ func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
 		{Path: "B", Members: []shared.Member{{Name: "M2", Target: "T2"}}},
 	}
 
-	packs := map[string]shared.Pack{p1.Name: p1, p2.Name: p2}
+	ps := map[string]shared.Pack{p1.Name: p1, p2.Name: p2}
 	data := map[string][]shared.Namespace{
 		p1.Name: p1Data,
 		p2.Name: p2Data,
 	}
 
-	for _, p := range packs {
+	for _, p := range ps {
 
 		// make dir
-		err := os.MkdirAll(filepath.Join(packDir, p.Name), 0755)
+		err := os.MkdirAll(filepath.Join(config.packDir, p.Name), 0755)
 		if err != nil {
 			log.Fatalf("Failed to create pack %v dir: %v", p.Name, err)
 		}
@@ -76,7 +77,7 @@ func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
 		if err != nil {
 			log.Fatalf("Failed to marshal conf for pack %v: %v", p.Name, err)
 		}
-		cp := filepath.Join(packDir, p.Name, "pack.json")
+		cp := filepath.Join(config.packDir, p.Name, "pack.json")
 		err = ioutil.WriteFile(cp, cd, 0600)
 		if err != nil {
 			log.Fatalf("Failed to write conf file for pack %v: %v", p.Name, err)
@@ -87,14 +88,14 @@ func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
 		if err != nil {
 			log.Fatalf("Failed to marshal data for pack %v: %v", p.Name, err)
 		}
-		dp := filepath.Join(packDir, p.Name, "data.json")
+		dp := filepath.Join(config.packDir, p.Name, "data.json")
 		err = ioutil.WriteFile(dp, dd, 0600)
 		if err != nil {
 			log.Fatalf("Failed to write data file for pack %v: %v", p.Name, err)
 		}
 	}
 
-	return data, packs
+	return data, ps
 }
 
 func TestLoadInstalledPack(t *testing.T) {
@@ -103,17 +104,17 @@ func TestLoadInstalledPack(t *testing.T) {
 
 	err := loadInstalled()
 	if err != nil {
-		t.Errorf("Expected successful loading of installed pack %v, got err: %v", packDir, err)
+		t.Errorf("Expected successful loading of installed pack %v, got err: %v", config.packDir, err)
 		return
 	}
 
-	if !reflect.DeepEqual(expectedDocs, docs) {
-		t.Errorf("Expected docs:\n%v\nBut got:\n%v\n", expectedDocs, docs)
+	if !reflect.DeepEqual(expectedDocs, global.docs) {
+		t.Errorf("Expected docs:\n%v\nBut got:\n%v\n", expectedDocs, global.docs)
 		return
 	}
 
-	if !reflect.DeepEqual(expectedPacks, packs) {
-		t.Errorf("Expected packs:\n%v\nBut got:\n%v\n", expectedPacks, packs)
+	if !reflect.DeepEqual(expectedPacks, global.packs) {
+		t.Errorf("Expected packs:\n%v\nBut got:\n%v\n", expectedPacks, global.packs)
 		return
 	}
 }

@@ -81,7 +81,7 @@ wait:
 		}
 	}
 
-	return -1, namespaces, err
+	return count, namespaces, err
 }
 
 func scanFile(path string, p parser) []shared.Namespace {

@@ -140,7 +140,6 @@ func ZipDir(out *os.File, in string) error {
 	return err
 }
 
-// TODO: CopyDir?
 func CopyDir(source string, dest string) (int, error) {
 
 	// TODO: ensure src/dst are directories

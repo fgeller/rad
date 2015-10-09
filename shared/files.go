@@ -3,6 +3,7 @@ package shared
 import (
 	"archive/zip"
 
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -72,7 +73,7 @@ func FileExists(path string) bool {
 	return !os.IsNotExist(err)
 }
 
-func Download(d downloader, remote string) (string, error) {
+func Download(remote string) (string, error) {
 	local := remote[strings.LastIndex(remote, "/")+1:]
 	if FileExists(local) {
 		log.Printf("Already downloaded [%v].", local)
@@ -85,21 +86,37 @@ func Download(d downloader, remote string) (string, error) {
 	}
 	defer out.Close()
 
-	resp, err := http.Get(remote)
+	return local, DownloadToLocal(remote, out)
+}
+
+func DownloadToTemp(remote string) (string, error) {
+	f, err := ioutil.TempFile("", "temp-download")
 	if err != nil {
 		return "", err
+	}
+
+	log.Printf("Downloading %v to temp: %v\n", remote, f.Name())
+
+	return f.Name(), DownloadToLocal(remote, f)
+}
+
+func DownloadToLocal(remote string, local *os.File) error {
+	resp, err := http.Get(remote)
+	if err != nil {
+		return err
 	}
 	defer resp.Body.Close()
 
-	log.Printf("Downloading [%v] to local [%v].\n", remote, local)
-
-	n, err := io.Copy(out, resp.Body)
-	if err != nil {
-		return "", err
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("Failed to download, got status code: %v", resp.StatusCode)
 	}
+
+	log.Printf("Downloading [%v] to local [%v].\n", remote, local.Name())
+
+	n, err := io.Copy(local, resp.Body)
 	log.Printf("Downloaded %v bytes.\n", n)
 
-	return local, nil
+	return err
 }
 
 func ZipDir(out *os.File, in string) error {

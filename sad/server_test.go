@@ -6,7 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 	"reflect"
 	"testing"
 	"time"
@@ -15,27 +17,64 @@ import (
 var serving bool
 var sapServing bool
 
-func ensureServe(addr string) {
+func awaitPing(addr string) error {
+	limit := 10
+	attempts := 0
+
+	for {
+		resp, err := http.Get("http://" + addr + "/ping")
+		if err == nil && resp.StatusCode == 200 {
+			return nil
+		}
+		attempts++
+		if attempts > limit {
+			return fmt.Errorf("Got no ping on %v.", addr)
+		}
+		time.Sleep(100 * time.Millisecond)
+	}
+}
+
+func ensureServe() string {
+	addr := "localhost:6048"
 	if !serving {
 		serving = true
 		go serve(addr)
 	}
+	return addr
 }
 
-func ensureSap(addr string) {
+func ensureSap() {
 	if !sapServing {
 		sapServing = true
-		packHandler := func(w http.ResponseWriter, r *http.Request) {
+		config.sapAddr = "localhost:6050"
+		packsHandler := func(w http.ResponseWriter, r *http.Request) {
 			data := `[{"Path":"/pack/go.zip","Name":"go","Type":"go","Version":"2015-10-08","Created":"2015-10-08T00:00:0.0+00:00"}]`
 			w.Header().Set("Content-Type", "application/json")
 			w.Write([]byte(data))
 		}
+		packHandler := func(w http.ResponseWriter, r *http.Request) {
+			log.Printf("test sap: Serving testdata/scala.zip\n")
+			http.ServeFile(w, r, "testdata/scala.zip")
+		}
+
 		testSap := func() {
-			http.HandleFunc("/packs", packHandler)
-			http.ListenAndServe(addr, nil)
+			http.HandleFunc("/pack/scala.zip", packHandler)
+			http.HandleFunc("/packs", packsHandler)
+			http.ListenAndServe(config.sapAddr, nil)
 		}
 		go testSap()
 	}
+}
+
+func setup() string {
+	global.packs = map[string]shared.Pack{}
+	global.docs = map[string][]shared.Namespace{}
+	tmp, err := ioutil.TempDir("", "sad-main-test-pack-dir")
+	if err != nil {
+		log.Fatalf("Failed to create temporary directory: %v", err)
+	}
+	config.packDir = tmp
+	return tmp
 }
 
 func TestServeInstalledPackInfo(t *testing.T) {
@@ -49,9 +88,7 @@ func TestServeInstalledPackInfo(t *testing.T) {
 		"y": shared.Pack{Name: "y", Created: time.Now()},
 	}
 
-	addr := "localhost:6048"
-
-	ensureServe(addr)
+	addr := ensureServe()
 	err := awaitPing(addr)
 	if err != nil {
 		t.Errorf("Error waiting for server to be up: %v", err)
@@ -102,11 +139,8 @@ func TestServeAvailablePacksInfo(t *testing.T) {
 
 	global.docs = map[string][]shared.Namespace{}
 	global.packs = map[string]shared.Pack{}
-	addr := "localhost:6048"
-	config.sapAddr = "localhost:6050"
-
-	ensureServe(addr)
-	ensureSap(config.sapAddr)
+	addr := ensureServe()
+	ensureSap()
 
 	err := awaitPing(addr)
 	if err != nil {
@@ -122,7 +156,7 @@ func TestServeAvailablePacksInfo(t *testing.T) {
 		return
 	}
 	if resp.StatusCode != 200 {
-		t.Errorf("Error while querying for packs got status code: %v", resp.StatusCode)
+		t.Errorf("Error while querying for packs got status code: %v\n%v\n", resp.StatusCode, resp)
 		return
 	}
 	data, err := ioutil.ReadAll(resp.Body)
@@ -148,19 +182,31 @@ func TestServeAvailablePacksInfo(t *testing.T) {
 
 }
 
-func awaitPing(addr string) error {
-	limit := 10
-	attempts := 0
+func TestInstallAvailablePack(t *testing.T) {
+	os.RemoveAll(setup())
 
-	for {
-		resp, err := http.Get("http://" + addr + "/ping")
-		if err == nil && resp.StatusCode == 200 {
-			return nil
-		}
-		attempts++
-		if attempts > limit {
-			return fmt.Errorf("Got no ping on %v.", addr)
-		}
-		time.Sleep(100 * time.Millisecond)
+	addr := ensureServe()
+	err := awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	ensureSap()
+	err = awaitPing(config.sapAddr)
+	if err != nil {
+		t.Errorf("Error while waiting for sap to come up: %v", err)
+		return
+	}
+
+	_, err = http.Get("http://" + addr + "/install/scala.zip")
+	if err != nil {
+		t.Errorf("Unexpected error while trying to install pack: %v", err)
+		return
+	}
+
+	if len(global.docs) == 0 || len(global.docs["scala"]) == 0 {
+		t.Errorf("Expected to find installed scala docs, but got: %v", global.docs)
+		return
 	}
 }

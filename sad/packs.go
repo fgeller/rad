@@ -2,11 +2,12 @@ package main
 
 import (
 	"../shared"
+
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"path/filepath"
-	"strings"
 )
 
 func loadInstalled() error {
@@ -54,32 +55,38 @@ func install(path string) error {
 
 	log.Printf("Installing %v\n", path)
 
-	// unzip it
-	err := shared.Unzip(path, config.packDir)
+	tmp, err := ioutil.TempDir("", "unzipped")
 	if err != nil {
 		return err
 	}
 
-	fn := filepath.Base(path)                  // jdk.zip
-	packName := fn[:strings.Index(fn, ".zip")] // jdk
-
-	// load data
-	dp := filepath.Join(config.packDir, packName, "data.json")
-	log.Printf("Reading data from %v\n", dp)
-	db, err := ioutil.ReadFile(dp)
-	if err != nil {
-		return err
-	}
-	log.Printf("Unmarshalling data.\n")
-	var namespaces []shared.Namespace
-	err = json.Unmarshal(db, &namespaces)
-	if err != nil {
+	if err = shared.Unzip(path, tmp); err != nil {
+		log.Printf("Failed to unzip %v: %v\n", path, err)
 		return err
 	}
 
-	// add to global var
-	global.docs[packName] = namespaces
-	log.Printf("Found %v entries for pack %v\n", len(namespaces), packName)
+	fs, err := ioutil.ReadDir(tmp)
+	if err != nil {
+		log.Printf("Failed to read directory contents: %v\n", err)
+		return err
+	}
 
-	return nil
+	if len(fs) != 1 {
+		return fmt.Errorf("Expected one file in pack directory, got: %v", len(fs))
+	}
+
+	packName := fs[0].Name()
+
+	log.Printf("Copying contents for [%v] into pack dir.\n", packName)
+	_, err = shared.CopyDir(
+		filepath.Join(tmp, packName),
+		filepath.Join(config.packDir),
+	)
+
+	if err != nil {
+		log.Printf("Failed to copy directory into packdir: %v\n", err)
+		return err
+	}
+
+	return loadInstalled() // TODO overkill?
 }

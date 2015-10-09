@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -194,6 +195,25 @@ func streamResults(sock *websocket.Conn, params searchParams, limit int) {
 	}
 }
 
+func installHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got install request %v\n", r.URL.Path)
+	fn := r.URL.Path[len("/install/"):]
+	path, err := shared.DownloadToTemp("http://" + config.sapAddr + "/pack/" + fn)
+	if err != nil {
+		log.Printf("Error downloading pack: %v\n", err)
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	defer os.RemoveAll(path)
+
+	err = install(path)
+	if err != nil {
+		log.Printf("Error installing pack: %v\n", err)
+		http.Error(w, err.Error(), 500)
+		return
+	}
+}
+
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got ping for %v\n", r.URL.Path)
 	w.Write([]byte("pong"))
@@ -203,6 +223,7 @@ func serve(addr string) {
 	http.HandleFunc("/ping/", pingHandler)
 	http.HandleFunc("/s", socket)
 	http.HandleFunc("/status/", status)
+	http.HandleFunc("/install/", installHandler)
 
 	pd, err := filepath.Abs(config.packDir)
 	if err != nil {

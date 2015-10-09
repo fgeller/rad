@@ -13,17 +13,6 @@ import (
 	"time"
 )
 
-func setup() string {
-	global.packs = map[string]shared.Pack{}
-	global.docs = map[string][]shared.Namespace{}
-	tmp, err := ioutil.TempDir("", "sad-main-test-pack-dir")
-	if err != nil {
-		log.Fatalf("Failed to create temporary directory: %v", err)
-	}
-	config.packDir = tmp
-	return tmp
-}
-
 func TestInstallingLocalPack(t *testing.T) {
 	defer os.RemoveAll(setup())
 

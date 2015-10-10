@@ -127,7 +127,7 @@ func TestServingPacks(t *testing.T) {
 				Version: "2015-10-04",
 				Created: creationTime,
 			},
-			Path: "/pack/go.zip",
+			File: "go.zip",
 		},
 		{
 			Pack: &shared.Pack{
@@ -136,7 +136,7 @@ func TestServingPacks(t *testing.T) {
 				Version: "jdk8",
 				Created: creationTime,
 			},
-			Path: "/pack/java.zip",
+			File: "java.zip",
 		},
 	}
 

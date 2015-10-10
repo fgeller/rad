@@ -182,10 +182,13 @@ func CopyDir(source string, dest string) (int, error) {
 		if err != nil {
 			return err
 		}
+		defer out.Close()
+
 		in, err := os.Open(path)
 		if err != nil {
 			return err
 		}
+		defer in.Close()
 
 		_, err = io.Copy(out, in)
 		c++

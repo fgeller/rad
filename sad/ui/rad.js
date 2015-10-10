@@ -198,7 +198,7 @@ var Settings = React.createClass({
 			{},
 			function(data, flag) {
 				var installedPacks = [];
-				_.forEach(data, function(p) { installedPacks.push(p) });
+				Object.keys(data).forEach(function(k) { installedPacks.push(data[k]) });
 				this.setState({installedPacks: installedPacks});
 			}.bind(this),
 			"json" // we expect json
@@ -208,7 +208,7 @@ var Settings = React.createClass({
 			{},
 			function(data, flag) {
 				var availablePacks = [];
-				_.forEach(data, function(p) { availablePacks.push(p) });
+				Object.keys(data).forEach(function(k) { availablePacks.push(data[k]) });
 				this.setState({availablePacks: availablePacks});
 			}.bind(this),
 			"json" // we expect json

@@ -1,3 +1,15 @@
+var Loading = React.createClass({
+    render: function() {
+	return <div id={this.props.id} className="loading-screen"><div className="loading-spinner"><i className="fa fa-spinner fa-pulse"></i></div><div className="loading-message">{ this.props.message }</div></div>
+    }
+});
+
+var InstallButton = React.createClass({
+    render: function() {
+	return <div id={this.props.id} className="install-button" onClick={this.props.install}><i className="fa fa-cloud-download"></i></div>
+    }
+});
+
 var SearchField = React.createClass({
     search: function() {
         var query = this.refs.search.getDOMNode().value;
@@ -58,6 +70,21 @@ var SearchResult = React.createClass({
 });
 
 var Pack = React.createClass({
+    install: function(e) {
+	var btn = $("#install-button-"+this.props.id+".install-button");
+	var load = $("#loading-screen-"+this.props.id+".loading-screen");
+	btn.css('display', 'none');
+	load.css('display', 'block');
+
+        $.get(
+            "/install/"+this.props.file,
+            {},
+            function(data, flag) {
+		this.props.loadPacks();
+            }.bind(this)
+        );
+	return e.stopPropagation();
+    },
     render: function() {
         return <div className="settings-pack">
                  <div className="settings-pack-row">
@@ -72,6 +99,10 @@ var Pack = React.createClass({
                  <div className="settings-pack-row">
                    <div className="settings-pack-row-label">Created</div><div className="settings-pack-row-value">{this.props.created}</div>
                  </div>
+                 <div className="settings-pack-install" style={{display: this.props.installed ? "none" : "block"}}>
+                   <InstallButton id={"install-button-"+this.props.id} install={this.install} />
+                   <Loading id={"loading-screen-"+this.props.id} message="" />
+                 </div>
                </div>
     }
 });
@@ -83,7 +114,7 @@ var Settings = React.createClass({
 	    availablePacks: []
 	};
     },
-    componentWillMount: function() {
+    loadPacks: function() {
         $.get(
             "/status/packs/installed",
             {},
@@ -105,28 +136,48 @@ var Settings = React.createClass({
             "json" // we expect json
         );
     },
+    componentWillMount: function() {
+	this.loadPacks();
+    },
     hide: function() {
         $("#settings-container").css("visibility", "hidden");
     },
     render: function() {
-        var availablePacks = this.state.availablePacks.map(function(p) {
-	    return <Pack name={p.Name}
-                         type={p.Type}
-                         version={p.Version}
-                         created={p.Created} />
-        });
-        var installedPacks = this.state.installedPacks.map(function(p) {
-	    return <Pack name={p.Name}
-                         type={p.Type}
-                         version={p.Version}
-                         created={p.Created} />
-        });
+        var installedPacks = this.state.installedPacks.map(function(p, idx) {
+        return <Pack name={p.Name}
+                     id={idx}
+                     type={p.Type}
+                     version={p.Version}
+                     created={p.Created}
+                     loadPacks={this.loadPacks}
+                     installed={true} />
+        }.bind(this));
+        var installables = this.state.availablePacks
+            .filter(function(p) {
+                var installed = false;
+                this.state.installedPacks.forEach(function(ip) {
+                    if (p.Name == ip.Name && p.Version == ip.Version && p.Created == ip.Created) {
+                    installed = true;
+                    }
+                });
+                return !installed;
+            }.bind(this))
+            .map(function(p, idx) {
+                return <Pack name={p.Name}
+                             id={idx}
+                             type={p.Type}
+                             version={p.Version}
+                             created={p.Created}
+                             file={p.File}
+                             loadPacks={this.loadPacks}
+                             installed={false}/>
+            }.bind(this));
         return <div id="settings-container" onClick={this.hide}>
-	         <div id="settings-content">
-	           <div id="settings-installed-packs"><div className="settings-header">Installed Packs</div>{ installedPacks }</div>
-	           <div id="settings-available-packs"><div className="settings-header">Available Packs</div>{ availablePacks }</div>
-	         </div>
-  	       </div>;
+             <div id="settings-content">
+               <div id="settings-installed-packs"><div className="settings-header">Installed Packs</div>{ installedPacks }</div>
+               <div id="settings-available-packs"><div className="settings-header">Available Packs</div>{ installables }</div>
+             </div>
+             </div>;
     }
 });
 

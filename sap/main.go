@@ -18,7 +18,7 @@ var config struct {
 }
 
 type packListing struct {
-	Path string
+	File string
 	*shared.Pack
 }
 
@@ -76,7 +76,7 @@ func packsHandler(w http.ResponseWriter, r *http.Request) {
 					continue
 				}
 
-				packs = append(packs, packListing{Pack: &pack, Path: "/pack/" + fi.Name()})
+				packs = append(packs, packListing{Pack: &pack, File: fi.Name()})
 			}
 		}
 	}

@@ -7,8 +7,9 @@ import (
 )
 
 var global struct {
-	packs map[string]shared.Pack
-	docs  map[string][]shared.Namespace
+	packs  map[string]shared.Pack
+	docs   map[string][]shared.Namespace
+	assets map[string]asset
 }
 var config struct {
 	packDir string
@@ -27,6 +28,8 @@ func main() {
 
 	global.packs = map[string]shared.Pack{}
 	global.docs = map[string][]shared.Namespace{}
+	global.assets = map[string]asset{}
+
 	loadInstalled()
 	serve("0.0.0.0:3024")
 }

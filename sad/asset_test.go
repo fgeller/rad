@@ -9,7 +9,7 @@ import (
 
 func TestLoadAssets(t *testing.T) {
 	global.assets = map[string]asset{}
-	dir, err := filepath.Abs("ui")
+	dir, err := filepath.Abs("testdata/assets")
 	if err != nil {
 		t.Errorf("Unexpected error while turning into absolute path: %v", err)
 		return

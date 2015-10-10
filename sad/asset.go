@@ -76,3 +76,34 @@ func loadAssets(dir string) error {
 
 	return filepath.Walk(dir, walker)
 }
+
+// TODO: expect out
+func writeAssets() (string, error) {
+	tmp, err := ioutil.TempFile("", "assets")
+	if err != nil {
+		return "", err
+	}
+	defer tmp.Close()
+	log.Printf("Generating assets in %v\n", tmp.Name())
+
+	tmpl := `package main
+
+func registerAssets() {
+`
+	for rel, a := range global.assets {
+		tmpl += `
+	global.assets["` + rel + `"] = asset{
+		contentType: "` + a.contentType + `",
+		content:     `
+		tmpl += fmt.Sprintf("%#v", a.content)
+		tmpl += `,
+	}
+`
+	}
+
+	tmpl += `
+}
+`
+	_, err = io.WriteString(tmp, tmpl)
+	return tmp.Name(), err
+}

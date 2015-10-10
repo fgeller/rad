@@ -3,9 +3,37 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os/exec"
 	"path/filepath"
 	"testing"
 )
+
+func resetAssets(dir string) error {
+	global.assets = map[string]asset{}
+	return loadAssets(dir)
+}
+
+func TestGenerateAssetsSourceFile(t *testing.T) {
+	dir := "testdata/assets"
+	err := resetAssets(dir)
+	if err != nil {
+		t.Errorf("Error while loading assets: %v", err)
+		return
+	}
+
+	actual, err := writeAssets()
+	if err != nil {
+		t.Errorf("Error while generating assets source: %v", err)
+		return
+	}
+
+	cmd := exec.Command("gofmt", "-e", "-l", actual)
+	out, err := cmd.CombinedOutput()
+	if err != nil || len(out) != 0 {
+		t.Errorf("Expected generated file to be well-formed, err %v, out:\n%s", err, out)
+		return
+	}
+}
 
 func TestLoadAssets(t *testing.T) {
 	global.assets = map[string]asset{}

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 )
 
@@ -49,6 +50,10 @@ func loadInstalled() error {
 	}
 
 	return nil
+}
+
+func remove(pack string) error {
+	return os.RemoveAll(filepath.Join(config.packDir, pack))
 }
 
 func install(path string) error {

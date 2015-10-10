@@ -210,3 +210,42 @@ func TestInstallAvailablePack(t *testing.T) {
 		return
 	}
 }
+
+func TestRemoveInstalledPack(t *testing.T) {
+	os.RemoveAll(setup())
+
+	err := install("testdata/scala.zip")
+	if err != nil {
+		t.Errorf("Unexpected error when installing scala.zip: %v", err)
+		return
+	}
+
+	if len(global.docs) == 0 {
+		t.Errorf("Expected to find scala docs installed, but got: %v", global.docs)
+		return
+	}
+
+	addr := ensureServe()
+	err = awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	_, err = http.Get("http://" + addr + "/remove/scala")
+	if err != nil {
+		t.Errorf("Unexpected error while trying to remove pack: %v", err)
+		return
+	}
+
+	ps, err := ioutil.ReadDir(config.packDir)
+	if err != nil {
+		t.Errorf("Unexpected error while trying to read contents of pack dir: %v", err)
+		return
+	}
+
+	if len(ps) != 0 {
+		t.Errorf("Expected pd to be empty, but got: %s", global.docs)
+		return
+	}
+}

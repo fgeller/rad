@@ -214,6 +214,26 @@ func installHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func removeHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got remove request %v\n", r.URL.Path)
+	pn := r.URL.Path[len("/remove/"):]
+
+	err := remove(pn)
+	if err != nil {
+		log.Printf("Error removing pack %v: %v\n", pn, err)
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	resetGlobal()
+	err = loadInstalled()
+	if err != nil {
+		log.Printf("Error loading installed packs: %v\n", err)
+		http.Error(w, err.Error(), 500)
+		return
+	}
+}
+
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got ping for %v\n", r.URL.Path)
 	w.Write([]byte("pong"))
@@ -224,6 +244,7 @@ func serve(addr string) {
 	http.HandleFunc("/s", socket)
 	http.HandleFunc("/status/", status)
 	http.HandleFunc("/install/", installHandler)
+	http.HandleFunc("/remove/", removeHandler)
 
 	pd, err := filepath.Abs(config.packDir)
 	if err != nil {

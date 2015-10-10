@@ -15,6 +15,11 @@ var config struct {
 	sapAddr string
 }
 
+func resetGlobal() {
+	global.packs = map[string]shared.Pack{}
+	global.docs = map[string][]shared.Namespace{}
+}
+
 func main() {
 	flag.StringVar(&config.packDir, "packdir", "packs", "Path where packages will be installed")
 	flag.StringVar(&config.sapAddr, "sapaddr", "localhost:3025", "Addr where sap is running")

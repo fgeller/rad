@@ -5,15 +5,9 @@ body {
     margin: 0px;
 }
 
-
-.install-button {
-    text-align: center;
-}
-
 .loading-screen {
     display: none;
     font-size: 12pt;
-    text-align: center;
 }
 
 .loading-spinner {
@@ -124,14 +118,21 @@ body {
     font-size: 9pt;
 }
 .settings-pack-row-label {
-    width: 20%;
+    width: 23%;
     font-weight: 400;
     height: 1.6em;
     display: inline-block;
 }
 .settings-pack-row-value {
     vertical-align: bottom;
-    width: 20%;
+    width: 23%;
+    height: 1.6em;
+    overflow-x: hidden;
+    display: inline-block;
+}
+.settings-pack-row-value.settings-pack-button {
+    vertical-align: bottom;
+    width: 8%;
     height: 1.6em;
     overflow-x: hidden;
     display: inline-block;

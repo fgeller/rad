@@ -1,12 +1,18 @@
 var Loading = React.createClass({
     render: function() {
-	return <div id={this.props.id} className="loading-screen"><div className="loading-spinner"><i className="fa fa-spinner fa-pulse"></i></div><div className="loading-message">{ this.props.message }</div></div>
+	return <div id={this.props.id} className="loading-screen" style={{display:"none"}}><div id={this.props.id+"spinner"} className="loading-spinner"><i id={this.props.id+"ispinner"} className="fa fa-spinner fa-pulse"></i></div></div>
     }
 });
 
 var InstallButton = React.createClass({
     render: function() {
 	return <div id={this.props.id} className="install-button" onClick={this.props.install}><i className="fa fa-cloud-download"></i></div>
+    }
+});
+
+var RemoveButton = React.createClass({
+    render: function() {
+	return <div id={this.props.id} className="remove-button" onClick={this.props.remove}><i className="fa fa-times"></i></div>
     }
 });
 
@@ -70,11 +76,27 @@ var SearchResult = React.createClass({
 });
 
 var Pack = React.createClass({
-    install: function(e) {
-	var btn = $("#install-button-"+this.props.id+".install-button");
-	var load = $("#loading-screen-"+this.props.id+".loading-screen");
+    remove: function(e) {
+	e.stopPropagation();
+	var btn = $("#remove-button-"+this.props.uid+".remove-button");
+	var load = $("#remove-loading-screen-"+this.props.uid+".loading-screen");
 	btn.css('display', 'none');
-	load.css('display', 'block');
+	load.css('display', 'inline-block');
+
+        $.get(
+            "/remove/"+this.props.name,
+            {},
+            function(data, flag) {
+		this.props.loadPacks();
+            }.bind(this)
+        );
+    },
+    install: function(e) {
+	e.stopPropagation();
+	var btn = $("#install-button-"+this.props.uid+".install-button");
+	var load = $("#install-loading-screen-"+this.props.uid+".loading-screen");
+	btn.css('display', 'none');
+	load.css('display', 'inline-block');
 
         $.get(
             "/install/"+this.props.file,
@@ -83,7 +105,6 @@ var Pack = React.createClass({
 		this.props.loadPacks();
             }.bind(this)
         );
-	return e.stopPropagation();
     },
     render: function() {
 	var created = (new Date(this.props.created)).toISOString().substring(0, 10);
@@ -93,10 +114,13 @@ var Pack = React.createClass({
                      </div><div className="settings-pack-row-value">{this.props.type}
                      </div><div className="settings-pack-row-value">{this.props.version}
                      </div><div className="settings-pack-row-value">{created}
-                     </div><div className="settings-pack-row-value" style={{display: this.props.installed ? "none" : "inline-block"}}>
-                     <InstallButton id={"install-button-"+this.props.id} install={this.install} />
-                     <Loading id={"loading-screen-"+this.props.id} message="" />
-                   </div>
+                     </div><div className="settings-pack-row-value settings-pack-button" style={{display: this.props.installed ? "none" : "inline-block"}}>
+                     <InstallButton id={"install-button-"+this.props.uid} install={this.install} />
+                     <Loading id={"install-loading-screen-"+this.props.uid} message="" />
+    	             </div><div className="settings-pack-row-value settings-pack-button" style={{display: this.props.installed ? "inline-block" : "none"}}>
+                     <RemoveButton id={"remove-button-"+this.props.uid} remove={this.remove} />
+                     <Loading id={"remove-loading-screen-"+this.props.uid} message="" />
+                     </div>
                  </div>
                </div>
     }
@@ -137,16 +161,21 @@ var Settings = React.createClass({
     hide: function() {
         $("#settings-container").css("visibility", "hidden");
     },
+    genUID: function() {
+	return ''+Math.round(Math.random()*10000000000)
+    },
     render: function() {
         var installedPacks = this.state.installedPacks.map(function(p, idx) {
-        return <Pack name={p.Name}
-                     id={idx}
-                     type={p.Type}
-                     version={p.Version}
-                     created={p.Created}
-                     loadPacks={this.loadPacks}
-                     installed={true} />
-        }.bind(this));
+                                        return <Pack name={p.Name}
+                                                     uid={this.genUID()}
+                                                     key={this.genUID()}
+                                                     loadPacks={this.loadPacks}
+                                                     type={p.Type}
+                                                     version={p.Version}
+                                                     created={p.Created}
+                                                     installed={true} />
+                                        }.bind(this));
+
         var installables = this.state.availablePacks
             .filter(function(p) {
                 var installed = false;
@@ -159,7 +188,8 @@ var Settings = React.createClass({
             }.bind(this))
             .map(function(p, idx) {
                 return <Pack name={p.Name}
-                             id={idx}
+                             uid={this.genUID()}
+                             key={this.genUID()}
                              type={p.Type}
                              version={p.Version}
                              created={p.Created}

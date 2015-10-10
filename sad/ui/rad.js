@@ -20,7 +20,7 @@ var Loading = React.createClass({
 			<div
 				id={this.props.id}
 				className="loading-screen"
-				style={{display:"none"}}>
+				style={{ display: this.props.display }} >
 				<div className="loading-spinner">
 					<i className="fa fa-spinner fa-pulse"></i>
 				</div>
@@ -35,7 +35,8 @@ var InstallButton = React.createClass({
 			<div
 				id={this.props.id}
 				className="install-button"
-				onClick={this.props.install}>
+				style={{ display: this.props.display }}
+				onClick={this.props.install} >
 				<i className="fa fa-cloud-download"></i>
 			</div>
 		);
@@ -48,7 +49,8 @@ var RemoveButton = React.createClass({
 			<div
 				id={this.props.id}
 				className="remove-button"
-				onClick={this.props.remove}>
+				style={{ display: this.props.display }}
+				onClick={ this.props.remove } >
 				<i className="fa fa-times"></i>
 			</div>
 		);
@@ -119,32 +121,32 @@ var SearchResult = React.createClass({
 });
 
 var Pack = React.createClass({
+	getInitialState: function() {
+		return {
+			installing: false,
+			removing: false
+		};
+	},
 	remove: function(e) {
 		e.stopPropagation();
-		var btn = $("#remove-button-"+this.props.uid+".remove-button");
-		var load = $("#remove-loading-screen-"+this.props.uid+".loading-screen");
-		btn.css('display', 'none');
-		load.css('display', 'inline-block');
-
+		this.setState({ removing: true });
 		$.get(
 			"/remove/"+this.props.name,
 			{},
 			function(data, flag) {
+				this.setState({removing: false});
 				this.props.loadPacks();
 			}.bind(this)
 		);
 	},
 	install: function(e) {
 		e.stopPropagation();
-		var btn = $("#install-button-"+this.props.uid+".install-button");
-		var load = $("#install-loading-screen-"+this.props.uid+".loading-screen");
-		btn.css('display', 'none');
-		load.css('display', 'inline-block');
-
+		this.setState({ installing: true });
 		$.get(
 			"/install/"+this.props.file,
 			{},
 			function(data, flag) {
+				this.setState({ installing: false });
 				this.props.loadPacks();
 			}.bind(this)
 		);
@@ -164,18 +166,18 @@ var Pack = React.createClass({
 									className="settings-pack-row-value settings-pack-button"
 									style={{display: displayInstall}} >
 						<InstallButton
-							id={"install-button-"+this.props.uid}
-							install={this.install} />
+							install={ this.install }
+							display={ this.state.installing ? "none" : "inline-block" } />
 						<Loading
-							id={"install-loading-screen-"+this.props.uid} />
+							display={ this.state.installing ? "inline-block" : "none" } />
 					</div><div
 									className="settings-pack-row-value settings-pack-button"
 									style={{display: displayRemove}}>
 						<RemoveButton
-							id={"remove-button-"+this.props.uid}
-							remove={this.remove} />
+							remove={ this.remove }
+							display={ this.state.removing ? "none" : "inline-block" } />
 						<Loading
-							id={"remove-loading-screen-"+this.props.uid} />
+							display={ this.state.removing ? "inline-block" : "none" } />
 					</div>
 				</div>
 			</div>

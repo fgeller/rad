@@ -116,21 +116,24 @@ body {
 .settings-pack {
     width: 100%;
     display: inline-block;
-    margin-bottom: 1em;
 }
 
 .settings-pack-row {
     width: 100%;
     display: inline-block;
-    font-size: 10pt;
+    font-size: 9pt;
 }
 .settings-pack-row-label {
     width: 20%;
     font-weight: 400;
+    height: 1.6em;
     display: inline-block;
 }
 .settings-pack-row-value {
-    width: 80%;
+    vertical-align: bottom;
+    width: 20%;
+    height: 1.6em;
+    overflow-x: hidden;
     display: inline-block;
 }
 

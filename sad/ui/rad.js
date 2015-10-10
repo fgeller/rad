@@ -86,22 +86,17 @@ var Pack = React.createClass({
 	return e.stopPropagation();
     },
     render: function() {
+	var created = (new Date(this.props.created)).toISOString().substring(0, 10);
         return <div className="settings-pack">
                  <div className="settings-pack-row">
-                   <div className="settings-pack-row-label">Name</div><div className="settings-pack-row-value">{this.props.name}</div>
-                 </div>
-                 <div className="settings-pack-row">
-                   <div className="settings-pack-row-label">Type</div><div className="settings-pack-row-value">{this.props.type}</div>
-                 </div>
-                 <div className="settings-pack-row">
-                   <div className="settings-pack-row-label">Version</div><div className="settings-pack-row-value">{this.props.version}</div>
-                 </div>
-                 <div className="settings-pack-row">
-                   <div className="settings-pack-row-label">Created</div><div className="settings-pack-row-value">{this.props.created}</div>
-                 </div>
-                 <div className="settings-pack-install" style={{display: this.props.installed ? "none" : "block"}}>
-                   <InstallButton id={"install-button-"+this.props.id} install={this.install} />
-                   <Loading id={"loading-screen-"+this.props.id} message="" />
+                     <div className="settings-pack-row-value">{this.props.name}
+                     </div><div className="settings-pack-row-value">{this.props.type}
+                     </div><div className="settings-pack-row-value">{this.props.version}
+                     </div><div className="settings-pack-row-value">{created}
+                     </div><div className="settings-pack-row-value" style={{display: this.props.installed ? "none" : "inline-block"}}>
+                     <InstallButton id={"install-button-"+this.props.id} install={this.install} />
+                     <Loading id={"loading-screen-"+this.props.id} message="" />
+                   </div>
                  </div>
                </div>
     }
@@ -174,8 +169,25 @@ var Settings = React.createClass({
             }.bind(this));
         return <div id="settings-container" onClick={this.hide}>
              <div id="settings-content">
-               <div id="settings-installed-packs"><div className="settings-header">Installed Packs</div>{ installedPacks }</div>
-               <div id="settings-available-packs"><div className="settings-header">Available Packs</div>{ installables }</div>
+            <div id="settings-installed-packs">
+	    <div className="settings-header">Installed Packs</div>
+	    <div className="settings-pack-row">
+              <div className="settings-pack-row-label">Name</div>
+	      <div className="settings-pack-row-label">Type</div>
+	      <div className="settings-pack-row-label">Version</div>
+	      <div className="settings-pack-row-label">Created</div>
+            </div>
+	    { installedPacks }
+	    </div>
+            <div id="settings-available-packs">
+	    <div className="settings-header">Available Packs</div>
+	    <div className="settings-pack-row">
+              <div className="settings-pack-row-label">Name</div>
+	      <div className="settings-pack-row-label">Type</div>
+	      <div className="settings-pack-row-label">Version</div>
+	      <div className="settings-pack-row-label">Created</div>
+            </div>
+	    { installables }</div>
              </div>
              </div>;
     }

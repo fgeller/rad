@@ -249,3 +249,62 @@ func TestRemoveInstalledPack(t *testing.T) {
 		return
 	}
 }
+
+func TestServeAsset(t *testing.T) {
+	os.RemoveAll(setup())
+
+	dir := "testdata/assets"
+	err := loadAssets(dir)
+	if err != nil {
+		t.Errorf("Error while loading assets from %v: %v", dir, err)
+		return
+	}
+
+	addr := ensureServe()
+	err = awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	as, err := ioutil.ReadDir(dir)
+	if err != nil {
+		t.Errorf("Error while finding asset files from %v: %v", dir, err)
+		return
+	}
+
+	for _, a := range as {
+		res, err := http.Get("http://" + addr + "/a/" + a.Name())
+		if err != nil {
+			t.Errorf("Unexpected error while trying to requesting asset %v: %v", a.Name(), err)
+			return
+		}
+		if res.StatusCode != 200 {
+			t.Errorf("Expected 200 when accessing asset %v, got %+v", a.Name(), res)
+			return
+		}
+	}
+}
+
+func TestServeAsset404(t *testing.T) {
+	os.RemoveAll(setup())
+
+	global.assets = map[string]asset{}
+
+	addr := ensureServe()
+	err := awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	res, err := http.Get("http://" + addr + "/a/anything")
+	if err != nil {
+		t.Errorf("Unexpected error while trying to requesting missing asset: %v", err)
+		return
+	}
+	if res.StatusCode != 404 {
+		t.Errorf("Expected 404 when accessing missing asset got %+v", res)
+		return
+	}
+}

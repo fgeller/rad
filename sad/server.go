@@ -234,6 +234,20 @@ func removeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func assetHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got asset request %v\n", r.URL.Path)
+	an := r.URL.Path[len("/a/"):]
+
+	a, ok := global.assets[an]
+	if !ok {
+		http.Error(w, "Not found", 404)
+		return
+	}
+
+	w.Header().Set("Content-Type", a.contentType)
+	w.Write(a.content)
+}
+
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got ping for %v\n", r.URL.Path)
 	w.Write([]byte("pong"))
@@ -245,6 +259,7 @@ func serve(addr string) {
 	http.HandleFunc("/status/", status)
 	http.HandleFunc("/install/", installHandler)
 	http.HandleFunc("/remove/", removeHandler)
+	http.HandleFunc("/a/", assetHandler)
 
 	pd, err := filepath.Abs(config.packDir)
 	if err != nil {

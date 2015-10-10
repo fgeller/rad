@@ -292,9 +292,16 @@ var Settings = React.createClass({
 });
 
 var Search = React.createClass({
+	getInitialState: function(){
+		return {
+			selected: 0,
+			query:'',
+			results: []
+		};
+	},
 	search: function(text) {
 		this.setState({query: text, selected: 0, results: []});
-		this.throttledStreamSearch(text);
+		this.streamSearch(text);
 	},
 	streamSearch: function(text){
 		this.setState({query: text, selected: 0, results: []});
@@ -324,17 +331,6 @@ var Search = React.createClass({
 		this.props.sock.onclose = function() {
 			console.log("Finished request [" + text + "].");
 		}.bind(this);
-	},
-	componentWillMount: function() {
-		var delay = 80;
-		this.throttledStreamSearch = _.debounce(this.streamSearch, delay);
-	},
-	getInitialState: function(){
-		return {
-			selected: 0,
-			query:'',
-			results: []
-		};
 	},
 	selectResult: function(idx) {
 		if (idx >= 0 && idx <= 3 && idx < this.state.results.length) {

@@ -5,9 +5,9 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type asset struct {
@@ -23,22 +23,20 @@ func (a asset) String() string {
 	)
 }
 
-func detectContentType(p string) (string, error) {
-	content, err := os.Open(p)
-	if err != nil {
-		return "", err
+func detectContentType(p string) string {
+	if strings.HasSuffix(p, ".css") {
+		return "text/css; charset=utf-8"
 	}
-	defer content.Close()
 
-	var buf [512]byte
-	n, _ := io.ReadFull(content, buf[:])
-	ctype := http.DetectContentType(buf[:n])
-
-	// rewind to output whole file
-	if _, err := content.Seek(0, os.SEEK_SET); err != nil {
-		return ctype, err
+	if strings.HasSuffix(p, ".js") {
+		return "application/javascript"
 	}
-	return ctype, nil
+
+	if strings.HasSuffix(p, ".html") {
+		return "text/html; charset=utf-8"
+	}
+
+	return "application/octet-stream"
 }
 
 func loadAssets(dir string) error {
@@ -59,16 +57,18 @@ func loadAssets(dir string) error {
 			return err
 		}
 
-		ctype, err := detectContentType(p)
+		ctype := detectContentType(p)
 		ctnt, err := ioutil.ReadFile(p)
 		if err != nil {
 			return err
 		}
 
-		global.assets[rel] = asset{
+		a := asset{
 			content:     ctnt,
 			contentType: ctype,
 		}
+		global.assets[rel] = a
+		log.Printf("Loading asset [%v] as %v.", rel, a)
 
 		return nil
 	}

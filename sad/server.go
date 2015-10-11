@@ -235,7 +235,16 @@ func removeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func assetHandler(w http.ResponseWriter, r *http.Request) {
-	an := r.URL.Path[len("/a/"):]
+	an := r.URL.Path
+	switch {
+	case an == "/":
+		an = "index.html"
+	case strings.HasPrefix(an, "/a/"):
+		an = an[len("/a/"):]
+	case strings.HasPrefix(an, "/"):
+		an = an[1:]
+	}
+
 	a, ok := global.assets[an]
 	if !ok {
 		log.Printf("Got asset request %v but not available.\n", r.URL.Path)
@@ -243,20 +252,7 @@ func assetHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Serving asset request %v.\n", r.URL.Path)
-	w.Header().Set("Content-Type", a.contentType)
-	w.Write(a.content)
-}
-
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	a, ok := global.assets["index.html"]
-	if !ok {
-		log.Printf("Can't serve / as there is no index.html asset.\n")
-		http.Error(w, "404 page not found", 404)
-		return
-	}
-
-	log.Printf("Serving / with asset.\n")
+	log.Printf("Serving asset request %v with %v.\n", r.URL.Path, a)
 	w.Header().Set("Content-Type", a.contentType)
 	w.Write(a.content)
 }
@@ -273,7 +269,7 @@ func serve(addr string) {
 	http.HandleFunc("/install/", installHandler)
 	http.HandleFunc("/remove/", removeHandler)
 	http.HandleFunc("/a/", assetHandler)
-	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/", assetHandler)
 
 	pd, err := filepath.Abs(config.packDir)
 	if err != nil {
@@ -282,9 +278,6 @@ func serve(addr string) {
 
 	ps := http.FileServer(http.Dir(pd))
 	http.Handle("/pack/", http.StripPrefix("/pack/", ps))
-
-	ui := http.FileServer(http.Dir("./ui"))
-	http.Handle("/ui/", http.StripPrefix("/ui/", ui))
 
 	log.Printf("Serving on addr %v\n", addr)
 	log.Fatal(http.ListenAndServe(addr, nil))

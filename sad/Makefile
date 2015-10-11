@@ -2,7 +2,7 @@ export SHELL:=/bin/bash -O extglob -c
 export GO15VENDOREXPERIMENT:=1
 
 build:
-	go run asset.go global.go build.go -v
+	go run asset.go global.go build.go -v -assets ui
 
 test:
 	go test !(build*).go

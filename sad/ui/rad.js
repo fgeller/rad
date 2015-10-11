@@ -391,7 +391,7 @@ var Search = React.createClass({
 		var params = window.location.search.substring(1);
 		var arrParam = params.split("=");
 
-		var doc = "/ui/readme.html";
+		var doc = "/readme.html";
 		if (arrParam.length == 2 && arrParam[0] == "doc") {
 			doc = arrParam[1] + decodeURIComponent(window.location.hash).replace(/&gt;/g, ">").replace(/&lt;/g, "<");
 		}

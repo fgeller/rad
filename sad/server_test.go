@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"reflect"
 	"testing"
 	"time"
@@ -254,7 +255,7 @@ func TestServeAsset(t *testing.T) {
 	os.RemoveAll(setup())
 
 	dir := "testdata/assets"
-	err := loadAssets(dir)
+	err := resetAssets(dir)
 	if err != nil {
 		t.Errorf("Error while loading assets from %v: %v", dir, err)
 		return
@@ -267,22 +268,33 @@ func TestServeAsset(t *testing.T) {
 		return
 	}
 
-	as, err := ioutil.ReadDir(dir)
-	if err != nil {
-		t.Errorf("Error while finding asset files from %v: %v", dir, err)
-		return
+	walker := func(p string, fi os.FileInfo, err error) error {
+		if err != nil || fi.IsDir() {
+			return err
+		}
+
+		rel, err := filepath.Rel(dir, p)
+		if err != nil {
+			return err
+		}
+
+		res, err := http.Get("http://" + addr + "/a/" + rel)
+		if err != nil {
+			t.Errorf("Unexpected error while trying to requesting asset %v: %v", rel, err)
+			return err
+		}
+
+		if res.StatusCode != 200 {
+			t.Errorf("Expected 200 when accessing asset %v, got %+v", rel, res)
+			return fmt.Errorf("Expected 200 when accessing asset %v, got %+v", rel, res)
+		}
+
+		return nil
 	}
 
-	for _, a := range as {
-		res, err := http.Get("http://" + addr + "/a/" + a.Name())
-		if err != nil {
-			t.Errorf("Unexpected error while trying to requesting asset %v: %v", a.Name(), err)
-			return
-		}
-		if res.StatusCode != 200 {
-			t.Errorf("Expected 200 when accessing asset %v, got %+v", a.Name(), res)
-			return
-		}
+	err = filepath.Walk(dir, walker)
+	if err != nil {
+		t.Errorf("Error walking %v: %v", dir, err)
 	}
 }
 

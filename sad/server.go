@@ -225,7 +225,7 @@ func removeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resetGlobal()
+	resetGlobals()
 	err = loadInstalled()
 	if err != nil {
 		log.Printf("Error loading installed packs: %v\n", err)
@@ -235,15 +235,15 @@ func removeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func assetHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Got asset request %v\n", r.URL.Path)
 	an := r.URL.Path[len("/a/"):]
-
 	a, ok := global.assets[an]
 	if !ok {
-		http.Error(w, "Not found", 404)
+		log.Printf("Got asset request %v but not available.\n", r.URL.Path)
+		http.Error(w, "404 page not found", 404)
 		return
 	}
 
+	log.Printf("Serving asset request %v.\n", r.URL.Path)
 	w.Header().Set("Content-Type", a.contentType)
 	w.Write(a.content)
 }

@@ -1,35 +1,24 @@
 package main
 
 import (
-	"../shared"
-
 	"flag"
 )
 
-var global struct {
-	packs  map[string]shared.Pack
-	docs   map[string][]shared.Namespace
-	assets map[string]asset
-}
 var config struct {
 	packDir string
 	sapAddr string
-}
-
-func resetGlobal() {
-	global.packs = map[string]shared.Pack{}
-	global.docs = map[string][]shared.Namespace{}
+	addr    string
 }
 
 func main() {
 	flag.StringVar(&config.packDir, "packdir", "packs", "Path where packages will be installed")
-	flag.StringVar(&config.sapAddr, "sapaddr", "localhost:3025", "Addr where sap is running")
+	flag.StringVar(&config.sapAddr, "sapaddr", "localhost:3025", "Addr where sap serves")
+	flag.StringVar(&config.addr, "addr", "0.0.0.0:3024", "Addr where sad should serve")
 	flag.Parse()
 
-	global.packs = map[string]shared.Pack{}
-	global.docs = map[string][]shared.Namespace{}
-	global.assets = map[string]asset{}
+	resetGlobals()
 
 	loadInstalled()
-	serve("0.0.0.0:3024")
+	registerAssets()
+	serve(config.addr)
 }

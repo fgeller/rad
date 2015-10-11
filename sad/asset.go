@@ -65,7 +65,6 @@ func loadAssets(dir string) error {
 			return err
 		}
 
-		log.Printf("Compiled %v with content type [%v]\n", rel, ctype)
 		global.assets[rel] = asset{
 			content:     ctnt,
 			contentType: ctype,
@@ -106,4 +105,15 @@ func registerAssets() {
 `
 	_, err = io.WriteString(tmp, tmpl)
 	return tmp.Name(), err
+}
+
+func resetGeneratedAssets() {
+	err := ioutil.WriteFile(
+		"generated_assets.go",
+		[]byte(`package main
+func registerAssets() {}
+`),
+		0755,
+	)
+	log.Printf("Reset generated assets file (err: %v).", err)
 }

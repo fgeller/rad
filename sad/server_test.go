@@ -320,3 +320,32 @@ func TestServeAsset404(t *testing.T) {
 		return
 	}
 }
+
+func TestServeRootFromAsset(t *testing.T) {
+	os.RemoveAll(setup())
+
+	dir := "testdata/assets"
+	err := resetAssets(dir)
+	if err != nil {
+		t.Errorf("Error while loading assets from %v: %v", dir, err)
+		return
+	}
+
+	addr := ensureServe()
+	err = awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	res, err := http.Get("http://" + addr + "/")
+	if err != nil {
+		t.Errorf("Error requesting root: %v", err)
+		return
+	}
+
+	if res.StatusCode != 200 {
+		t.Errorf("Expected 200 when accessing root got %+v", res)
+		return
+	}
+}

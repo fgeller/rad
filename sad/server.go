@@ -248,6 +248,19 @@ func assetHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(a.content)
 }
 
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	a, ok := global.assets["index.html"]
+	if !ok {
+		log.Printf("Can't serve / as there is no index.html asset.\n")
+		http.Error(w, "404 page not found", 404)
+		return
+	}
+
+	log.Printf("Serving / with asset.\n")
+	w.Header().Set("Content-Type", a.contentType)
+	w.Write(a.content)
+}
+
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got ping for %v\n", r.URL.Path)
 	w.Write([]byte("pong"))
@@ -260,6 +273,7 @@ func serve(addr string) {
 	http.HandleFunc("/install/", installHandler)
 	http.HandleFunc("/remove/", removeHandler)
 	http.HandleFunc("/a/", assetHandler)
+	http.HandleFunc("/", rootHandler)
 
 	pd, err := filepath.Abs(config.packDir)
 	if err != nil {

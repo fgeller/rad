@@ -98,8 +98,8 @@ var SearchResult = React.createClass({
 			}.bind(this));
 		}
 
-		// \00a0 = &nbsp;
-		var namespace = this.props.entry["Namespace"] || "\00a0";
+		// \u00a0 = &nbsp;
+		var namespace = this.props.entry["Namespace"] || "\u00a0";
 		var memName = this.props.entry["Member"] || "\u00a0";
 		if (memName.length > 20) {
 			memName = memName.substring(0, 20) + "...";

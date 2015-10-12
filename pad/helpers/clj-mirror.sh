@@ -2,8 +2,10 @@
 set -e
 
 PFX=clojure-stdlib
-PKG=https://clojuredocs.org/core-library/vars
+#PKG=https://clojuredocs.org/core-library/vars
+PKG=http://bert:5000/core-library/vars
 
+# --random-wait
 # --wait: don't spam the host
 # -E: convert extensions, adds .html/.css
 # -k: convert links to relative ones
@@ -12,15 +14,12 @@ PKG=https://clojuredocs.org/core-library/vars
 # -m: mirror the given site
 # -l: limit the recursion level
 # -P: local directory prefix for downloaded files
-wget --wait=0.5 \
+wget --wait=0 \
      -E \
+     -e robots=off \
      -k \
      -H \
-     -D clojuredocs.org \
+     -D bert,192.168.1.10,gravatar.com,avatars.githubusercontent.com \
      -m \
      -P$PFX \
      $PKG
-
-# escape entities: <! to &lt;!
-find . -name ".html" -exec sed -iE 's:<(![^dD]):\&lt;\1:g' {} \;
-# cat x.html | sed -E 's:<(![^dD]):\&lt;\1:g' > '<!!.html'

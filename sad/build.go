@@ -1,7 +1,10 @@
 package main
 
 import (
+	"../shared"
+
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -9,6 +12,45 @@ import (
 	"strings"
 	"time"
 )
+
+func writeAssets(assets map[string]shared.Asset) error {
+	log.Printf("Generating assets in %v\n", config.assetsOut)
+
+	tmpl := `package main
+
+import (
+	"../shared"
+)
+
+func registerAssets() {
+`
+	for rel, a := range assets {
+		tmpl += `
+	global.assets["` + rel + `"] = shared.Asset{
+		ContentType: "` + a.ContentType + `",
+		Content:     `
+		tmpl += fmt.Sprintf("%#v", a.Content)
+		tmpl += `,
+	}
+`
+	}
+
+	tmpl += `
+}
+`
+	return ioutil.WriteFile(config.assetsOut, []byte(tmpl), 0755)
+}
+
+func resetGeneratedAssets() {
+	err := ioutil.WriteFile(
+		config.assetsOut,
+		[]byte(`package main
+func registerAssets() {}
+`),
+		0755,
+	)
+	log.Printf("Reset generated assets file (err: %v).", err)
+}
 
 func findSources() ([]string, error) {
 	var sources []string
@@ -30,31 +72,21 @@ func findSources() ([]string, error) {
 	return sources, nil
 }
 
-func build(out string, assets string) error {
+func build(out string, assetsDir string) error {
 	start := time.Now()
+	resetGeneratedAssets()
 
-	err := loadAssets(assets)
+	assets, err := shared.LoadAssets(assetsDir)
 	if err != nil {
 		return err
 	}
 	log.Printf("Assets loaded in %v\n", time.Since(start))
 
 	last := time.Now()
-	asset, err := writeAssets()
-	if err != nil {
+	if err = writeAssets(assets); err != nil {
 		return err
 	}
 	log.Printf("Wrote assets out in %v\n", time.Since(last))
-
-	err = os.RemoveAll("generated_assets.go")
-	if err != nil {
-		return err
-	}
-
-	err = os.Link(asset, "generated_assets.go")
-	if err != nil {
-		return err
-	}
 
 	sources, err := findSources()
 	if err != nil {
@@ -67,7 +99,7 @@ func build(out string, assets string) error {
 	env = append(env, "GO15VENDOREXPERIMENT=1")
 	cmd.Env = env
 
-	if buildConfig.verbose {
+	if config.verbose {
 		log.Printf("Building [%v] from %v.", out, sources)
 		log.Printf("Build command:\n%v", cmd.Args)
 		log.Printf("Build env:\n%v", cmd.Env)
@@ -77,7 +109,7 @@ func build(out string, assets string) error {
 	last = time.Now()
 	output, err := cmd.CombinedOutput()
 	log.Printf("Finished compiling after %v", time.Since(last))
-	if buildConfig.verbose {
+	if config.verbose {
 		log.Printf("Build combined output:\n%s", output)
 	}
 	if err != nil {
@@ -89,22 +121,22 @@ func build(out string, assets string) error {
 	return nil
 }
 
-var buildConfig struct {
-	out     string
-	assets  string
-	verbose bool
+var config struct {
+	out       string
+	assets    string
+	assetsOut string
+	verbose   bool
 }
 
 func main() {
-	flag.StringVar(&buildConfig.out, "out", "sad", "Name of generated binary")
-	flag.StringVar(&buildConfig.assets, "assets", "assets", "Location of assets")
-	flag.BoolVar(&buildConfig.verbose, "v", false, "Verbose output")
+	flag.StringVar(&config.out, "out", "sad", "Name of generated binary")
+	flag.StringVar(&config.assets, "assets", "assets", "Location of assets")
+	flag.StringVar(&config.assetsOut, "assetsOut", "generated_assets.go", "File where assets are compiled.")
+	flag.BoolVar(&config.verbose, "v", false, "Verbose output")
 	flag.Parse()
 
-	resetGlobals()
-
-	log.Printf("Read config: %+v\n", buildConfig)
-	err := build(buildConfig.out, buildConfig.assets)
+	log.Printf("Read config: %+v\n", config)
+	err := build(config.out, config.assets)
 	if err != nil {
 		log.Fatalf("Error during build: %v", err)
 	}

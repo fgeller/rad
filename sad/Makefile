@@ -6,7 +6,12 @@ build:
 	mkdir -p assets
 	cp -r ui/!(rad.js) assets/
 	babel --out-file assets/rad.js ui/rad.js
-	go run asset.go global.go build.go
+	go run build.go -v
 
-test:
+test: buildtest apptest
+
+apptest:
 	go test !(build*).go
+
+buildtest:
+	go test build*.go

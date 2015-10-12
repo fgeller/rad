@@ -1,6 +1,8 @@
 package main
 
 import (
+	"../shared"
+
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -8,7 +10,49 @@ import (
 	"os/exec"
 	"path/filepath"
 	"testing"
+	"time"
 )
+
+func awaitPing(addr string) error {
+	limit := 10
+	attempts := 0
+
+	for {
+		resp, err := http.Get("http://" + addr + "/ping")
+		if err == nil && resp.StatusCode == 200 {
+			return nil
+		}
+		attempts++
+		if attempts > limit {
+			return fmt.Errorf("Got no ping on %v.", addr)
+		}
+		time.Sleep(100 * time.Millisecond)
+	}
+}
+
+func TestGenerateAssetsSourceFile(t *testing.T) {
+	defer resetGeneratedAssets()
+	dir := "testdata/assets"
+	config.assetsOut = "generated_assets.go"
+
+	assets, err := shared.LoadAssets(dir)
+	if err != nil {
+		t.Errorf("Error while loading assets: %v", err)
+		return
+	}
+
+	if err = writeAssets(assets); err != nil {
+		t.Errorf("Error while generating assets source: %v", err)
+		return
+	}
+
+	cmd := exec.Command("gofmt", "-e", "-l", config.assetsOut)
+	out, err := cmd.CombinedOutput()
+	if err != nil || len(out) != 0 {
+		t.Errorf("Expected generated file to be well-formed, err %v, out:\n%s", err, out)
+		return
+	}
+}
 
 func TestBuildBinaryWithAssets(t *testing.T) {
 	defer resetGeneratedAssets()

@@ -255,8 +255,8 @@ func assetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf("Serving asset request %v with %v.\n", r.URL.Path, a)
-	w.Header().Set("Content-Type", a.contentType)
-	w.Write(a.content)
+	w.Header().Set("Content-Type", a.ContentType)
+	w.Write(a.Content)
 }
 
 func pingHandler(w http.ResponseWriter, r *http.Request) {

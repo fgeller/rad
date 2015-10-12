@@ -255,11 +255,12 @@ func TestServeAsset(t *testing.T) {
 	os.RemoveAll(setup())
 
 	dir := "testdata/assets"
-	err := resetAssets(dir)
+	assets, err := shared.LoadAssets(dir)
 	if err != nil {
 		t.Errorf("Error while loading assets from %v: %v", dir, err)
 		return
 	}
+	global.assets = assets
 
 	addr := ensureServe()
 	err = awaitPing(addr)
@@ -301,9 +302,10 @@ func TestServeAsset(t *testing.T) {
 func TestServeAsset404(t *testing.T) {
 	os.RemoveAll(setup())
 
-	global.assets = map[string]asset{}
+	global.assets = map[string]shared.Asset{}
 
 	addr := ensureServe()
+
 	err := awaitPing(addr)
 	if err != nil {
 		t.Errorf("Error while waiting for server to come up: %v", err)
@@ -325,11 +327,12 @@ func TestServeRootFromAsset(t *testing.T) {
 	os.RemoveAll(setup())
 
 	dir := "testdata/assets"
-	err := resetAssets(dir)
+	assets, err := shared.LoadAssets(dir)
 	if err != nil {
 		t.Errorf("Error while loading assets from %v: %v", dir, err)
 		return
 	}
+	global.assets = assets
 
 	addr := ensureServe()
 	err = awaitPing(addr)

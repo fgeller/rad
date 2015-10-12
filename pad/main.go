@@ -164,7 +164,9 @@ func mkPack(conf config) (string, error) {
 	log.Printf("Serialized pack and data files.\n")
 
 	// 4. zip it all up
-	outFile := filepath.Join(tmpDir, conf.name+".zip")
+	dt := pack.Created.Format(time.RFC3339)[:len("9999-99-99")]
+	fn := fmt.Sprintf("%v-%v-%v.zip", pack.Name, pack.Version, dt)
+	outFile := filepath.Join(tmpDir, fn)
 	out, err := os.Create(outFile)
 	if err != nil {
 		return "", err

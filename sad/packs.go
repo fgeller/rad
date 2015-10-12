@@ -14,6 +14,11 @@ import (
 func loadInstalled() error {
 	log.Printf("Loading installed packs from %v\n", config.packDir)
 
+	err := os.MkdirAll(config.packDir, 0755)
+	if err != nil {
+		return err
+	}
+
 	dirs, err := ioutil.ReadDir(config.packDir)
 	if err != nil {
 		log.Printf("Failed to read contents of packDir %v: %v\n", config.packDir, err)

@@ -279,6 +279,6 @@ func serve(addr string) {
 	ps := http.FileServer(http.Dir(pd))
 	http.Handle("/pack/", http.StripPrefix("/pack/", ps))
 
-	log.Printf("Serving on addr %v\n", addr)
+	log.Printf("Serving on addr http://%v\n", addr)
 	log.Fatal(http.ListenAndServe(addr, nil))
 }

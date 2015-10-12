@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"testing"
 	"time"
@@ -29,14 +30,14 @@ func TestMkPack(t *testing.T) {
 		return
 	}
 	fmt.Printf("created sample: %v\n", actual)
-	// defer os.RemoveAll(actual) // TODO: woa?
+	defer os.RemoveAll(actual)
 
 	tmpDir, err := ioutil.TempDir("", "pad-test-pack")
 	if err != nil {
 		t.Errorf("Unexpected error while creating temporary directory: %v", err)
 		return
 	}
-	// defer os.RemoveAll(tmpDir)
+	defer os.RemoveAll(tmpDir)
 
 	err = shared.Unzip(actual, tmpDir)
 	if err != nil {

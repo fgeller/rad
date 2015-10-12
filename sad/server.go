@@ -225,7 +225,9 @@ func removeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resetGlobals()
+	global.docs = map[string][]shared.Namespace{}
+	global.packs = map[string]shared.Pack{}
+
 	err = loadInstalled()
 	if err != nil {
 		log.Printf("Error loading installed packs: %v\n", err)

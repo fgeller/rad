@@ -14,6 +14,23 @@ function guid() {
 	);
 }
 
+function get(path, success) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.responseType = "json";
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			if (xhttp.status == 200) {
+				return success(xhttp.response);
+			}
+
+			console.log("Failed to react to non-200 xhttp:", xhttp);
+		}
+
+	};
+	xhttp.open("GET", path, true);
+	xhttp.send();
+}
+
 var Loading = React.createClass({
 	render: function() {
 		return (
@@ -130,10 +147,9 @@ var Pack = React.createClass({
 	remove: function(e) {
 		e.stopPropagation();
 		this.setState({ removing: true });
-		$.get(
+		get(
 			"/remove/"+this.props.name,
-			{},
-			function(data, flag) {
+			function(xhttp) {
 				this.setState({removing: false});
 				this.props.loadPacks();
 			}.bind(this)
@@ -142,11 +158,10 @@ var Pack = React.createClass({
 	install: function(e) {
 		e.stopPropagation();
 		this.setState({ installing: true });
-		$.get(
+		get(
 			"/install/"+this.props.file,
-			{},
-			function(data, flag) {
-				this.setState({ installing: false });
+			function(xhttp) {
+				this.setState({installing: false});
 				this.props.loadPacks();
 			}.bind(this)
 		);
@@ -193,32 +208,28 @@ var Settings = React.createClass({
 		};
 	},
 	loadPacks: function() {
-		$.get(
+		get(
 			"/status/packs/installed",
-			{},
-			function(data, flag) {
+			function(data) {
 				var installedPacks = [];
 				Object.keys(data).forEach(function(k) { installedPacks.push(data[k]) });
 				this.setState({installedPacks: installedPacks});
-			}.bind(this),
-			"json" // we expect json
+			}.bind(this)
 		);
-		$.get(
+		get(
 			"/status/packs/available",
-			{},
-			function(data, flag) {
+			function(data) {
 				var availablePacks = [];
 				Object.keys(data).forEach(function(k) { availablePacks.push(data[k]) });
 				this.setState({availablePacks: availablePacks});
-			}.bind(this),
-			"json" // we expect json
+			}.bind(this)
 		);
 	},
 	componentWillMount: function() {
 		this.loadPacks();
 	},
 	hide: function() {
-		$("#settings-container").css("visibility", "hidden");
+		document.getElementById("settings-container").style.visibility = "hidden";
 	},
 	genUID: function() {
 		return ''+Math.round(Math.random()*10000000000)
@@ -227,7 +238,8 @@ var Settings = React.createClass({
 		var installedPacks = this.state.installedPacks.map(function(p, idx) {
 			var id = guid();
 			return (
-				<Pack name={p.Name}
+				<Pack
+					name={p.Name}
 					uid={id}
 					key={id}
 					loadPacks={this.loadPacks}
@@ -373,7 +385,7 @@ var Search = React.createClass({
 		}.bind(this));
 	},
 	showSettings: function () {
-		$("#settings-container").css("visibility", "visible");
+		document.getElementById("settings-container").style.visibility = "visible";
 	},
 	render: function(){
 		var entries = [];
@@ -428,7 +440,7 @@ function socket() {
 }
 
 key('/', function(event) {
-	$("#search-field").focus();
+	document.getElementById("search-field").focus();
 	event.cancelBubble = true;
 	return false;
 });

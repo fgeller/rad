@@ -104,5 +104,8 @@ func main() {
 	resetGlobals()
 
 	log.Printf("Read config: %+v\n", buildConfig)
-	build(buildConfig.out, buildConfig.assets)
+	err := build(buildConfig.out, buildConfig.assets)
+	if err != nil {
+		log.Fatalf("Error during build: %v", err)
+	}
 }

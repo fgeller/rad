@@ -230,7 +230,7 @@ var Settings = React.createClass({
 		return ''+Math.round(Math.random()*10000000000)
 	},
 	render: function() {
-		var installedPacks = this.state.installedPacks.map(function(p, idx) {
+		var installed = this.state.installedPacks.map(function(p, idx) {
 			var id = guid();
 			return (
 				<Pack
@@ -245,7 +245,7 @@ var Settings = React.createClass({
 			);
 		}.bind(this));
 
-		var installables = this.state.availablePacks.filter(
+		var available = this.state.availablePacks.filter(
 			function(p) {
 				var installed = false;
 				this.state.installedPacks.forEach(function(ip) {
@@ -254,8 +254,8 @@ var Settings = React.createClass({
 					}
 				});
 				return !installed;
-			}.bind(this))
-			.map(function(p, idx) {
+			}.bind(this)
+		).map(function(p, idx) {
 				var id = guid();
 				return (
 					<Pack name={p.Name}
@@ -268,7 +268,23 @@ var Settings = React.createClass({
 						loadPacks={this.loadPacks}
 						installed={false} />
 				);
-			}.bind(this));
+			}.bind(this)
+		);
+
+		var availableDom = <div />; // might want to add more here
+		if (available.length > 0) {
+			availableDom = <div id="settings-available-packs">
+						<div className="settings-header">Available Packs</div>
+						<div className="settings-pack-row">
+							<div className="settings-pack-row-label">Name</div>
+							<div className="settings-pack-row-label">Type</div>
+							<div className="settings-pack-row-label">Version</div>
+							<div className="settings-pack-row-label">Created</div>
+						</div>
+						{ available }
+			</div>;
+		}
+
 		return (
 			<div id="settings-container" onClick={this.hide}>
 				<div id="settings-content">
@@ -280,18 +296,9 @@ var Settings = React.createClass({
 							<div className="settings-pack-row-label">Version</div>
 							<div className="settings-pack-row-label">Created</div>
 						</div>
-						{ installedPacks }
+						{ installed }
 					</div>
-					<div id="settings-available-packs">
-						<div className="settings-header">Available Packs</div>
-						<div className="settings-pack-row">
-							<div className="settings-pack-row-label">Name</div>
-							<div className="settings-pack-row-label">Type</div>
-							<div className="settings-pack-row-label">Version</div>
-							<div className="settings-pack-row-label">Created</div>
-						</div>
-						{ installables }
-					</div>
+					{ availableDom }
 				</div>
 			</div>
 		);

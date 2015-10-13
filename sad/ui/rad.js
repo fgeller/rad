@@ -271,24 +271,9 @@ var Settings = React.createClass({
 			}.bind(this)
 		);
 
-		var availableDom = <div />; // might want to add more here
-		if (available.length > 0) {
-			availableDom = <div id="settings-available-packs">
-						<div className="settings-header">Available Packs</div>
-						<div className="settings-pack-row">
-							<div className="settings-pack-row-label">Name</div>
-							<div className="settings-pack-row-label">Type</div>
-							<div className="settings-pack-row-label">Version</div>
-							<div className="settings-pack-row-label">Created</div>
-						</div>
-						{ available }
-			</div>;
-		}
-
-		return (
-			<div id="settings-container" onClick={this.hide}>
-				<div id="settings-content">
-					<div id="settings-installed-packs">
+		var installedDom = <div />;
+		if (installed.length > 0) {
+			installedDom = <div id="settings-installed-packs">
 						<div className="settings-header">Installed Packs</div>
 						<div className="settings-pack-row">
 							<div className="settings-pack-row-label">Name</div>
@@ -297,7 +282,27 @@ var Settings = React.createClass({
 							<div className="settings-pack-row-label">Created</div>
 						</div>
 						{ installed }
-					</div>
+			</div>;
+		}
+
+		var availableDom = <div />;
+		if (available.length > 0) {
+			availableDom = <div id="settings-available-packs">
+				<div className="settings-header">Available Packs</div>
+				<div className="settings-pack-row">
+					<div className="settings-pack-row-label">Name</div>
+					<div className="settings-pack-row-label">Type</div>
+					<div className="settings-pack-row-label">Version</div>
+					<div className="settings-pack-row-label">Created</div>
+				</div>
+				{ available }
+			</div>;
+		}
+
+		return (
+			<div id="settings-container" onClick={this.hide}>
+				<div id="settings-content">
+					{ installedDom }
 					{ availableDom }
 				</div>
 			</div>

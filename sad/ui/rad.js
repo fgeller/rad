@@ -319,7 +319,6 @@ var Search = React.createClass({
 		};
 	},
 	search: function(text) {
-		this.setState({query: text, selected: 0, results: []});
 		this.streamSearch(text);
 	},
 	streamSearch: function(text){

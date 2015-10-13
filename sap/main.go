@@ -14,7 +14,8 @@ import (
 )
 
 var config struct {
-	PackDir string
+	packDir string
+	addr    string
 }
 
 type packListing struct {
@@ -28,18 +29,20 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 
 func packHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got pack request for %v", r.URL.Path)
-	http.ServeFile(w, r, filepath.Join(config.PackDir, r.URL.Path[6:]))
+	http.ServeFile(w, r, filepath.Join(config.packDir, r.URL.Path[6:]))
 }
 
 func packsHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got packs request.")
 
-	fs, err := ioutil.ReadDir(config.PackDir)
+	fs, err := ioutil.ReadDir(config.packDir)
 	if err != nil {
 		log.Printf("Could not read packs directory: %v\n", err)
 		http.Error(w, "Internal server error", 500)
 		return
 	}
+
+	log.Printf("Found %v files in %v\n", len(fs), config.packDir)
 
 	var packs []packListing
 	for _, fi := range fs {
@@ -47,7 +50,7 @@ func packsHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Found zip file: %v", fi.Name())
 		}
 
-		r, err := zip.OpenReader(filepath.Join(config.PackDir, fi.Name()))
+		r, err := zip.OpenReader(filepath.Join(config.packDir, fi.Name()))
 		if err != nil {
 			log.Printf("Error opening archive %v: %v", fi.Name(), err)
 			continue
@@ -92,17 +95,18 @@ func packsHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-func serve(addr string) {
+func serve(addr string) error {
 	http.HandleFunc("/packs", packsHandler)
 	http.HandleFunc("/pack/", packHandler)
 	http.HandleFunc("/ping", pingHandler)
 	log.Printf("Serving on %v\n", addr)
-	http.ListenAndServe(addr, nil)
+	return http.ListenAndServe(addr, nil)
 }
 
 func main() {
-	flag.StringVar(&config.PackDir, "packdir", "packs", "Path where to find packs")
+	flag.StringVar(&config.packDir, "packdir", "packs", "Path where to find packs")
+	flag.StringVar(&config.addr, "addr", "0.0.0.0:3025", "Where to listen.")
 	flag.Parse()
 
-	serve("0.0.0.0:3025")
+	log.Printf("Stopped, err: %v\n", serve(config.addr))
 }

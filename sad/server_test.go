@@ -49,7 +49,7 @@ func ensureSap() {
 		sapServing = true
 		config.sapAddr = "localhost:6050"
 		packsHandler := func(w http.ResponseWriter, r *http.Request) {
-			data := `[{"Path":"/pack/go.zip","Name":"go","Type":"go","Version":"2015-10-08","Created":"2015-10-08T00:00:0.0+00:00"}]`
+			data := `[{"File":"go.zip","Name":"go","Type":"go","Version":"2015-10-08","Created":"2015-10-08T00:00:00.0+00:00"}]`
 			w.Header().Set("Content-Type", "application/json")
 			w.Write([]byte(data))
 		}
@@ -96,7 +96,7 @@ func TestServeInstalledPackInfo(t *testing.T) {
 		return
 	}
 
-	url := "http://" + addr + "/status/packs/installed"
+	url := "http://" + addr + "/status"
 	fmt.Printf("asking for url %v\n", url)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -109,7 +109,7 @@ func TestServeInstalledPackInfo(t *testing.T) {
 	}
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		t.Errorf("Error while reading response body: %v", err)
+		t.Errorf("Error while reading response body: %s", err)
 		return
 	}
 	err = resp.Body.Close()
@@ -118,17 +118,30 @@ func TestServeInstalledPackInfo(t *testing.T) {
 		return
 	}
 
-	var actual map[string]shared.Pack
+	var actual StatusInfo
 	err = json.Unmarshal(data, &actual)
 	if err != nil {
 		t.Errorf("Error while unmarshalling pack info [%s]: %v", data, err)
 		return
 	}
 
-	if !reflect.DeepEqual(global.packs, actual) {
+	available := []shared.Pack{}
+	installed := []shared.Pack{}
+	for _, v := range global.packs {
+		installed = append(installed, v)
+	}
+
+	expected := StatusInfo{
+		Packs: PackInfo{
+			Installed: installed,
+			Available: available,
+		},
+	}
+
+	if !reflect.DeepEqual(expected, actual) {
 		t.Errorf(
-			"Retrieved pack info was not the same. Expected:\n%v\nbut got:\n%v\n",
-			global.packs,
+			"Retrieved pack info was not the same. Expected:\n%+v\nbut got:\n%+v\n",
+			expected,
 			actual,
 		)
 		return
@@ -149,7 +162,7 @@ func TestServeAvailablePacksInfo(t *testing.T) {
 		return
 	}
 
-	url := "http://" + addr + "/status/packs/available"
+	url := "http://" + addr + "/status"
 	fmt.Printf("asking for url %v\n", url)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -162,22 +175,51 @@ func TestServeAvailablePacksInfo(t *testing.T) {
 	}
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		t.Errorf("Error while reading response body: %v", err)
+		t.Errorf("Error reading response body: %v", err)
 		return
 	}
 	err = resp.Body.Close()
 	if err != nil {
-		t.Errorf("Error while closing response body: %v", err)
+		t.Errorf("Error closing response body: %v", err)
 		return
 	}
 
-	expected := `[{"Path":"/pack/go.zip","Name":"go","Type":"go","Version":"2015-10-08","Created":"2015-10-08T00:00:0.0+00:00"}]`
+	var actual StatusInfo
+	err = json.Unmarshal(data, &actual)
+	if err != nil {
+		t.Errorf("Error unmarshaling response: %v", err)
+		return
+	}
 
-	if expected != string(data) {
+	// expected := `[{"Path":"/pack/go.zip","Name":"go","Type":"go","Version":"2015-10-08","Created":"2015-10-08T00:00:0.0+00:00"}]`
+	installed := []shared.Pack{}
+	if err != nil {
+		t.Errorf("Failed to parse date: %v", err)
+		return
+	}
+	// "2015-10-08T00:00:0.0+00:00"
+	available := []shared.Pack{
+		{
+			File:    "go.zip",
+			Name:    "go",
+			Type:    "go",
+			Version: "2015-10-08",
+			Created: time.Date(2015, time.October, 8, 0, 0, 0, 0, time.UTC),
+		},
+	}
+
+	expected := StatusInfo{
+		Packs: PackInfo{
+			Installed: installed,
+			Available: available,
+		},
+	}
+
+	if !reflect.DeepEqual(expected, actual) {
 		t.Errorf(
-			"Retrieved available pack info was not the same. Expected:\n%v\nbut got:\n%v\n",
+			"Retrieved available pack info was not the same. Expected:\n%+v\nbut got:\n%+v\n",
 			expected,
-			string(data),
+			actual,
 		)
 	}
 

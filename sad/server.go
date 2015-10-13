@@ -85,48 +85,63 @@ func compileParams(pk, pt, m string) (searchParams, error) {
 	return result, nil
 }
 
-func status(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Got status request for %v\n", r.URL.Path)
+type PackInfo struct {
+	Installed []shared.Pack
+	Available []shared.Pack
+}
 
-	if r.URL.Path == "/status/packs/installed" {
-		js, err := json.Marshal(global.packs)
-		if err != nil {
-			http.Error(w, err.Error(), 500)
-			return
-		}
+type StatusInfo struct {
+	Packs PackInfo
+}
 
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(js)
-		return
+func availablePacks() []shared.Pack {
+	availablePacks := []shared.Pack{}
+	res, err := http.Get("http://" + config.sapAddr + "/packs")
+	if err != nil {
+		log.Printf("Error requesting available packs: %v\n", err)
 	}
 
-	if r.URL.Path == "/status/packs/available" {
-		res, err := http.Get("http://" + config.sapAddr + "/packs")
-		if err != nil {
-			log.Printf("Error while requesting available packs: %v\n", err)
-			http.Error(w, err.Error(), 500)
-			return
-		}
-
-		if res.StatusCode != 200 {
-			log.Printf("Expected 200 but got status code: %v\n", res.StatusCode)
-			http.Error(w, err.Error(), 500)
-			return
-		}
-
+	if err == nil && res.StatusCode == 200 {
 		data, err := ioutil.ReadAll(res.Body)
 		if err != nil {
 			log.Printf("Error reading data from response: %v\n", err)
-			http.Error(w, err.Error(), 500)
-			return
+		} else {
+			json.Unmarshal(data, &availablePacks)
 		}
+	}
 
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(data)
+	return availablePacks
+}
+
+func installedPacks() []shared.Pack {
+	installedPacks := []shared.Pack{}
+	for _, p := range global.packs {
+		installedPacks = append(installedPacks, p)
+	}
+
+	return installedPacks
+}
+
+func status(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got status request for %v\n", r.URL.Path)
+
+	info := StatusInfo{
+		Packs: PackInfo{
+			Installed: installedPacks(),
+			Available: availablePacks(),
+		},
+	}
+
+	js, err := json.Marshal(info)
+	if err != nil {
+		log.Printf("Failed to marshal err: %v\n", err)
+		http.Error(w, err.Error(), 500)
 		return
 	}
 
-	http.Error(w, "Not found", 404)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+	return
 }
 
 func socket(w http.ResponseWriter, r *http.Request) {
@@ -267,7 +282,7 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 func serve(addr string) {
 	http.HandleFunc("/ping/", pingHandler)
 	http.HandleFunc("/s", socket)
-	http.HandleFunc("/status/", status)
+	http.HandleFunc("/status", status)
 	http.HandleFunc("/install/", installHandler)
 	http.HandleFunc("/remove/", removeHandler)
 	http.HandleFunc("/a/", assetHandler)

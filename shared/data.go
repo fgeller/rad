@@ -8,6 +8,7 @@ import (
 )
 
 type Pack struct {
+	File    string
 	Name    string
 	Type    string
 	Version string

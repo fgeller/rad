@@ -211,19 +211,12 @@ var Settings = React.createClass({
 	},
 	loadPacks: function() {
 		get(
-			"/status/packs/installed",
+			"/status",
 			function(data) {
-				var installedPacks = [];
-				Object.keys(data).forEach(function(k) { installedPacks.push(data[k]) });
-				this.setState({installedPacks: installedPacks});
-			}.bind(this)
-		);
-		get(
-			"/status/packs/available",
-			function(data) {
-				var availablePacks = [];
-				Object.keys(data).forEach(function(k) { availablePacks.push(data[k]) });
-				this.setState({availablePacks: availablePacks});
+				this.setState({
+					installedPacks: data.Packs.Installed,
+					availablePacks: data.Packs.Available,
+				});
 			}.bind(this)
 		);
 	},

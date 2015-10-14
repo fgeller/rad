@@ -111,29 +111,10 @@ func loadInstalled() error {
 		pack := dir.Name()
 		log.Printf("Loading pack %v\n", pack)
 
-		pf := filepath.Join(config.packDir, pack, "pack.json")
-		pc, err := ioutil.ReadFile(pf)
-		if err != nil {
-			log.Printf("Skipping: Could not load pack info for %v (err: %v).", pack, err)
+		if err := loadPack(pack); err != nil {
+			log.Printf("Failed to install pack %v: %v", pack, err)
+			return err
 		}
-		var packInfo shared.Pack
-		err = json.Unmarshal(pc, &packInfo)
-		log.Printf("Found info %v for %v.", packInfo, pack)
-
-		df := filepath.Join(config.packDir, pack, "data.json")
-		dc, err := ioutil.ReadFile(df)
-		if err != nil {
-			log.Printf("Skipping: Could not load data for %v (err: %v).", pack, err)
-		}
-		var data []shared.Namespace
-		err = json.Unmarshal(dc, &data)
-		log.Printf("Found %v entries for %v.", len(data), pack)
-
-		res := make(chan packResp)
-		req := packReq{Install, packInfo, data, res}
-		global.packs <- req
-		_, ok := <-res
-		log.Printf("Successfully installed pack %+v (ok: %v)\n", packInfo, ok)
 	}
 
 	return nil
@@ -146,6 +127,35 @@ func remove(pn string) {
 	global.packs <- req
 	_, ok := <-res
 	log.Printf("Removed pack %+v (ok: %v)\n", pck, ok)
+}
+
+func loadPack(name string) error {
+
+	pf := filepath.Join(config.packDir, name, "pack.json")
+	pc, err := ioutil.ReadFile(pf)
+	if err != nil {
+		log.Printf("Skipping: Could not load pack info for %v (err: %v).", name, err)
+	}
+	var pck shared.Pack
+	err = json.Unmarshal(pc, &pck)
+	log.Printf("Found info %v for %v.", pck, name)
+
+	df := filepath.Join(config.packDir, name, "data.json")
+	dc, err := ioutil.ReadFile(df)
+	if err != nil {
+		log.Printf("Skipping: Could not load data for %v (err: %v).", name, err)
+	}
+	var nss []shared.Namespace
+	err = json.Unmarshal(dc, &nss)
+	log.Printf("Found %v entries for %v.", len(nss), name)
+
+	res := make(chan packResp)
+	req := packReq{Install, pck, nss, res}
+	global.packs <- req
+	_, ok := <-res
+	log.Printf("Successfully installed pack %+v (ok: %v)\n", pck, ok)
+
+	return nil
 }
 
 func install(path string) error {
@@ -185,33 +195,7 @@ func install(path string) error {
 		return err
 	}
 
-	// TODO reuse with loadInstalled
-
-	pf := filepath.Join(config.packDir, pn, "pack.json")
-	pc, err := ioutil.ReadFile(pf)
-	if err != nil {
-		log.Printf("Skipping: Could not load pack info for %v (err: %v).", pn, err)
-	}
-	var pck shared.Pack
-	err = json.Unmarshal(pc, &pck)
-	log.Printf("Found info %v for %v.", pck, pn)
-
-	df := filepath.Join(config.packDir, pn, "data.json")
-	dc, err := ioutil.ReadFile(df)
-	if err != nil {
-		log.Printf("Skipping: Could not load data for %v (err: %v).", pn, err)
-	}
-	var nss []shared.Namespace
-	err = json.Unmarshal(dc, &nss)
-	log.Printf("Found %v entries for %v.", len(nss), pn)
-
-	res := make(chan packResp)
-	req := packReq{Install, pck, nss, res}
-	global.packs <- req
-	_, ok := <-res
-	log.Printf("Successfully installed pack %+v (ok: %v)\n", pck, ok)
-
-	return nil
+	return loadPack(pn)
 }
 
 func installedPacks() []shared.Pack {

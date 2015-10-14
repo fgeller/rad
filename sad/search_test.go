@@ -3,7 +3,6 @@ package main
 import (
 	"../shared"
 
-	"log"
 	"reflect"
 	"regexp"
 	"testing"

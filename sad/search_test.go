@@ -3,6 +3,7 @@ package main
 import (
 	"../shared"
 
+	"log"
 	"reflect"
 	"regexp"
 	"testing"
@@ -31,15 +32,16 @@ func TestNewSearchResult(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
+	resetGlobals()
 
-	global.docs = map[string][]shared.Namespace{
-		"go": []shared.Namespace{
-			{
-				Path:    "io.ioutil",
-				Members: []shared.Member{{Name: "ReadAll"}, {Name: "ReadDir"}},
-			},
+	pck := shared.Pack{Name: "go"}
+	nss := []shared.Namespace{
+		{
+			Path:    "io.ioutil",
+			Members: []shared.Member{{Name: "ReadAll"}, {Name: "ReadDir"}},
 		},
 	}
+	installPack(pck, nss)
 
 	testData := []struct {
 		name     string
@@ -177,7 +179,10 @@ func TestFindObeysControl(t *testing.T) {
 			},
 		)
 	}
-	global.docs = map[string][]shared.Namespace{"go": lots}
+
+	pck := shared.Pack{Name: "go"}
+	installPack(pck, lots)
+
 	params := searchParams{
 		pack:   regexp.MustCompile("."),
 		path:   regexp.MustCompile("."),

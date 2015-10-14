@@ -24,19 +24,19 @@ func TestInstallingLocalPack(t *testing.T) {
 		return
 	}
 
-	entries, ok := global.docs["jdk"]
-	if !ok {
-		t.Errorf("Could not access entries in docs map %v", global.docs)
+	pcks := installedPacks()
+	if len(pcks) != 1 {
+		t.Errorf("Expected one installed pack, got %v\n", pcks)
 		return
 	}
-
-	if len(entries) < 1 {
-		t.Errorf("Found no entries in docs map %v", global.docs)
+	if pcks[0].Name != "jdk" {
+		t.Errorf("Expected jdk pack to be installed, got %v\n", pcks)
+		return
 	}
-
 }
 
-func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
+func populatePackDir() (map[string][]shared.Namespace, []shared.Pack) {
+
 	p1 := shared.Pack{Name: "p1", Type: "java", Created: time.Now()}
 	p1Data := []shared.Namespace{
 		{Path: "A", Members: []shared.Member{{Name: "M1", Target: "T1"}}},
@@ -84,7 +84,7 @@ func populatePackDir() (map[string][]shared.Namespace, map[string]shared.Pack) {
 		}
 	}
 
-	return data, ps
+	return data, []shared.Pack{p2, p1}
 }
 
 func TestLoadInstalledPack(t *testing.T) {
@@ -97,13 +97,22 @@ func TestLoadInstalledPack(t *testing.T) {
 		return
 	}
 
-	if !reflect.DeepEqual(expectedDocs, global.docs) {
-		t.Errorf("Expected docs:\n%v\nBut got:\n%v\n", expectedDocs, global.docs)
+	pcks := installedPacks()
+	docs := installedDocs()
+
+	if !reflect.DeepEqual(expectedDocs, docs) {
+		t.Errorf("Expected docs:\n%v\nBut got:\n%v\n", expectedDocs, docs)
 		return
 	}
 
-	if !reflect.DeepEqual(expectedPacks, global.packs) {
-		t.Errorf("Expected packs:\n%v\nBut got:\n%v\n", expectedPacks, global.packs)
+comparing:
+	for _, p := range expectedPacks {
+		for _, ap := range pcks {
+			if reflect.DeepEqual(ap, p) {
+				continue comparing
+			}
+		}
+		t.Errorf("Expected %v to be installed, got %v.", p, pcks)
 		return
 	}
 }

@@ -68,8 +68,7 @@ func ensureSap() {
 }
 
 func setup() string {
-	global.packs = map[string]shared.Pack{}
-	global.docs = map[string][]shared.Namespace{}
+	resetGlobals()
 	tmp, err := ioutil.TempDir("", "sad-main-test-pack-dir")
 	if err != nil {
 		log.Fatalf("Failed to create temporary directory: %v", err)
@@ -79,15 +78,17 @@ func setup() string {
 }
 
 func TestServeInstalledPackInfo(t *testing.T) {
+	resetGlobals()
 
-	global.docs = map[string][]shared.Namespace{
-		"x": []shared.Namespace{{Members: []shared.Member{{Name: "m1"}}}},
-		"y": []shared.Namespace{{Members: []shared.Member{{Name: "m2"}}}},
-	}
-	global.packs = map[string]shared.Pack{
-		"x": shared.Pack{Name: "x", Created: time.Now()},
-		"y": shared.Pack{Name: "y", Created: time.Now()},
-	}
+	installPack(
+		shared.Pack{Name: "x", Created: time.Now()},
+		[]shared.Namespace{{Members: []shared.Member{{Name: "m1"}}}},
+	)
+
+	installPack(
+		shared.Pack{Name: "y", Created: time.Now()},
+		[]shared.Namespace{{Members: []shared.Member{{Name: "m2"}}}},
+	)
 
 	addr := ensureServe()
 	err := awaitPing(addr)
@@ -125,34 +126,22 @@ func TestServeInstalledPackInfo(t *testing.T) {
 		return
 	}
 
-	available := []shared.Pack{}
-	installed := []shared.Pack{}
-	for _, v := range global.packs {
-		installed = append(installed, v)
-	}
+	installed := installedPacks()
 
-	expected := StatusInfo{
-		Packs: PackInfo{
-			Installed: installed,
-			Available: available,
-		},
-	}
-
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf(
-			"Retrieved pack info was not the same. Expected:\n%+v\nbut got:\n%+v\n",
-			expected,
-			actual,
-		)
+comparing:
+	for _, p := range installed {
+		for _, ip := range actual.Packs.Installed {
+			if reflect.DeepEqual(ip, p) {
+				continue comparing
+			}
+		}
+		t.Errorf("Expected %v to be installed, got %v.", p, actual.Packs.Installed)
 		return
 	}
-
 }
 
 func TestServeAvailablePacksInfo(t *testing.T) {
-
-	global.docs = map[string][]shared.Namespace{}
-	global.packs = map[string]shared.Pack{}
+	resetGlobals()
 	addr := ensureServe()
 	ensureSap()
 
@@ -248,8 +237,9 @@ func TestInstallAvailablePack(t *testing.T) {
 		return
 	}
 
-	if len(global.docs) == 0 || len(global.docs["scala"]) == 0 {
-		t.Errorf("Expected to find installed scala docs, but got: %v", global.docs)
+	docs := installedDocs()
+	if len(docs) == 0 || len(docs["scala"]) == 0 {
+		t.Errorf("Expected to find installed scala docs, but got: %v", docs)
 		return
 	}
 }
@@ -263,8 +253,9 @@ func TestRemoveInstalledPack(t *testing.T) {
 		return
 	}
 
-	if len(global.docs) == 0 {
-		t.Errorf("Expected to find scala docs installed, but got: %v", global.docs)
+	docs := installedDocs()
+	if len(docs) == 0 {
+		t.Errorf("Expected to find scala docs installed, but got: %v", docs)
 		return
 	}
 
@@ -288,7 +279,7 @@ func TestRemoveInstalledPack(t *testing.T) {
 	}
 
 	if len(ps) != 0 {
-		t.Errorf("Expected pd to be empty, but got: %s", global.docs)
+		t.Errorf("Expected pd to be empty, but got: %s", ps)
 		return
 	}
 }

@@ -35,31 +35,44 @@ func findNamespace(
 // will close results channel when done.
 func find(results chan searchResult, end chan struct{}, params searchParams) {
 
-iteratingpacks:
-	for pack, namespaces := range global.docs {
-		if params.pack.MatchString(pack) {
-			cpus := runtime.NumCPU()
-			if len(namespaces) < cpus {
-				findNamespace(results, end, namespaces, params)
-				continue iteratingpacks
+	res := make(chan packResp)
+	req := packReq{tpe: Read, res: res}
+	global.packs <- req
+
+	for {
+		select {
+		case resp, ok := <-res:
+			if !ok {
+				close(results)
+				return
 			}
 
-			// example for cpus = 4; len(namespaces) = 11
-			// partitionSize = ceil(11 / 4) = 3
-			// 0:4  - 0 1 2 3
-			// 4:8  - 4 5 6 7
-			// 8:12 - 8 9 10
-			ps := int64(math.Ceil(float64(len(namespaces)) / float64(cpus)))
-			var wg sync.WaitGroup
-			wg.Add(cpus)
-			for i := int64(0); i < int64(cpus); i++ {
-				ns := namespaces[i*ps : (i+1)*ps]
-				go func() {
-					findNamespace(results, end, ns, params)
-					wg.Done()
-				}()
+			namespaces := resp.nss
+			if params.pack.MatchString(resp.pck.Name) {
+				cpus := runtime.NumCPU()
+				if len(namespaces) < cpus {
+					findNamespace(results, end, namespaces, params)
+					continue
+				}
+
+				// example for cpus = 4; len(namespaces) = 11
+				// partitionSize = ceil(11 / 4) = 3
+				// 0:4  - 0 1 2 3
+				// 4:8  - 4 5 6 7
+				// 8:12 - 8 9 10
+				ps := int64(math.Ceil(float64(len(namespaces)) / float64(cpus)))
+				var wg sync.WaitGroup
+				wg.Add(cpus)
+				for i := int64(0); i < int64(cpus); i++ {
+					ns := namespaces[i*ps : (i+1)*ps]
+					go func() {
+						findNamespace(results, end, ns, params)
+						wg.Done()
+					}()
+				}
+				wg.Wait()
 			}
-			wg.Wait()
+
 		}
 	}
 

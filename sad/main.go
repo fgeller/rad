@@ -24,7 +24,7 @@ func main() {
 	}
 	config.packDir = pd
 
-	resetGlobals()
+	setupGlobals()
 
 	loadInstalled()
 	registerAssets()

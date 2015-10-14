@@ -113,15 +113,6 @@ func availablePacks() []shared.Pack {
 	return availablePacks
 }
 
-func installedPacks() []shared.Pack {
-	installedPacks := []shared.Pack{}
-	for _, p := range global.packs {
-		installedPacks = append(installedPacks, p)
-	}
-
-	return installedPacks
-}
-
 func status(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got status request for %v\n", r.URL.Path)
 
@@ -232,23 +223,7 @@ func installHandler(w http.ResponseWriter, r *http.Request) {
 func removeHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got remove request %v\n", r.URL.Path)
 	pn := r.URL.Path[len("/remove/"):]
-
-	err := remove(pn)
-	if err != nil {
-		log.Printf("Error removing pack %v: %v\n", pn, err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	global.docs = map[string][]shared.Namespace{}
-	global.packs = map[string]shared.Pack{}
-
-	err = loadInstalled()
-	if err != nil {
-		log.Printf("Error loading installed packs: %v\n", err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
+	remove(pn)
 }
 
 func assetHandler(w http.ResponseWriter, r *http.Request) {

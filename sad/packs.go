@@ -40,7 +40,6 @@ func loadInstalled() error {
 		}
 		var packInfo shared.Pack
 		err = json.Unmarshal(pc, &packInfo)
-		global.packs[pack] = packInfo
 		log.Printf("Found info %v for %v.", packInfo, pack)
 
 		df := filepath.Join(config.packDir, pack, "data.json")
@@ -50,15 +49,25 @@ func loadInstalled() error {
 		}
 		var data []shared.Namespace
 		err = json.Unmarshal(dc, &data)
-		global.docs[pack] = data
 		log.Printf("Found %v entries for %v.", len(data), pack)
+
+		res := make(chan packResp)
+		req := packReq{Install, packInfo, data, res}
+		global.packs <- req
+		_, ok := <-res
+		log.Printf("Successfully installed pack %+v (ok: %v)\n", packInfo, ok)
 	}
 
 	return nil
 }
 
-func remove(pack string) error {
-	return os.RemoveAll(filepath.Join(config.packDir, pack))
+func remove(pn string) {
+	res := make(chan packResp)
+	pck := shared.Pack{Name: pn}
+	req := packReq{tpe: Remove, pck: pck, res: res}
+	global.packs <- req
+	_, ok := <-res
+	log.Printf("Removed pack %+v (ok: %v)\n", pck, ok)
 }
 
 func install(path string) error {
@@ -85,11 +94,11 @@ func install(path string) error {
 		return fmt.Errorf("Expected one file in pack directory, got: %v", len(fs))
 	}
 
-	packName := fs[0].Name()
+	pn := fs[0].Name()
 
-	log.Printf("Copying contents for [%v] into pack dir.\n", packName)
+	log.Printf("Copying contents for [%v] into pack dir.\n", pn)
 	_, err = shared.CopyDir(
-		filepath.Join(tmp, packName),
+		filepath.Join(tmp, pn),
 		filepath.Join(config.packDir),
 	)
 
@@ -98,5 +107,71 @@ func install(path string) error {
 		return err
 	}
 
-	return loadInstalled() // TODO overkill?
+	// TODO reuse with loadInstalled
+
+	pf := filepath.Join(config.packDir, pn, "pack.json")
+	pc, err := ioutil.ReadFile(pf)
+	if err != nil {
+		log.Printf("Skipping: Could not load pack info for %v (err: %v).", pn, err)
+	}
+	var pck shared.Pack
+	err = json.Unmarshal(pc, &pck)
+	log.Printf("Found info %v for %v.", pck, pn)
+
+	df := filepath.Join(config.packDir, pn, "data.json")
+	dc, err := ioutil.ReadFile(df)
+	if err != nil {
+		log.Printf("Skipping: Could not load data for %v (err: %v).", pn, err)
+	}
+	var nss []shared.Namespace
+	err = json.Unmarshal(dc, &nss)
+	log.Printf("Found %v entries for %v.", len(nss), pn)
+
+	res := make(chan packResp)
+	req := packReq{Install, pck, nss, res}
+	global.packs <- req
+	_, ok := <-res
+	log.Printf("Successfully installed pack %+v (ok: %v)\n", pck, ok)
+
+	return nil
+}
+
+func installedPacks() []shared.Pack {
+	res := make(chan packResp)
+	req := packReq{tpe: Read, res: res}
+	global.packs <- req
+	pcks := []shared.Pack{}
+	for {
+		select {
+		case resp, ok := <-res:
+			if !ok {
+				return pcks
+			}
+			pcks = append(pcks, resp.pck)
+		}
+	}
+}
+
+func installedDocs() map[string][]shared.Namespace {
+	res := make(chan packResp)
+	req := packReq{tpe: Read, res: res}
+	global.packs <- req
+	docs := map[string][]shared.Namespace{}
+	for {
+		select {
+		case resp, ok := <-res:
+			if !ok {
+				return docs
+			}
+			docs[resp.pck.Name] = resp.nss
+		}
+	}
+}
+
+func installPack(pck shared.Pack, nss []shared.Namespace) {
+	res := make(chan packResp)
+	req := packReq{Install, pck, nss, res}
+	log.Printf("Installing pack: %v\n", req.pck.Name)
+	global.packs <- req
+	<-res
 }

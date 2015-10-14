@@ -30,7 +30,7 @@ func setup() string {
 		}
 	}
 
-	config.PackDir = tmp
+	config.packDir = tmp
 	return tmp
 }
 

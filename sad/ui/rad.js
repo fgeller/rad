@@ -59,6 +59,7 @@ var InstallButton = React.createClass({
 				<i className="fa fa-cloud-download"></i>
 			</div>
 		);
+
 	}
 });
 
@@ -319,10 +320,11 @@ var Search = React.createClass({
 		};
 	},
 	search: function(text) {
-		this.streamSearch(text);
+		this.setState({query: text, selected: 0, results: []});
+		this.throttledSearch(text);
 	},
 	streamSearch: function(text){
-		this.setState({query: text, selected: 0, results: []});
+		window.history.replaceState(null, "", "/?q="+encodeURIComponent(text));
 		var qs = text.split(" ");
 		if (qs.length < 2) {
 			return;
@@ -391,6 +393,15 @@ var Search = React.createClass({
 		}.bind(this));
 
 		document.getElementById("search-field").focus();
+
+		var throttledSearch = _.debounce(
+			function (txt) {
+				this.streamSearch(txt);
+			},
+			150,
+			{ leading: false, trailing: true }
+		);
+		this.throttledSearch = throttledSearch;
 
 		var params = window.location.search.substring(1);
 		var arrParam = params.split("=");

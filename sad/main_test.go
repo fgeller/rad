@@ -13,28 +13,6 @@ import (
 	"time"
 )
 
-func TestInstallingLocalPack(t *testing.T) {
-	defer os.RemoveAll(setup())
-
-	pp := "testdata/jdk.zip"
-
-	err := install(pp)
-	if err != nil {
-		t.Errorf("Expected successful installing of local pack %v, got err: %v", pp, err)
-		return
-	}
-
-	pcks := installedPacks()
-	if len(pcks) != 1 {
-		t.Errorf("Expected one installed pack, got %v\n", pcks)
-		return
-	}
-	if pcks[0].Name != "jdk" {
-		t.Errorf("Expected jdk pack to be installed, got %v\n", pcks)
-		return
-	}
-}
-
 func populatePackDir() (map[string][]shared.Namespace, []shared.Pack) {
 
 	p1 := shared.Pack{Name: "p1", Type: "java", Created: time.Now()}

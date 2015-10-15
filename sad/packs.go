@@ -240,46 +240,6 @@ func loadFromPackDir(name string) error {
 	return nil
 }
 
-func install(path string) error {
-
-	log.Printf("Installing %v\n", path)
-
-	tmp, err := ioutil.TempDir("", "unzipped")
-	if err != nil {
-		return err
-	}
-
-	if err = shared.Unzip(path, tmp); err != nil {
-		log.Printf("Failed to unzip %v: %v\n", path, err)
-		return err
-	}
-
-	fs, err := ioutil.ReadDir(tmp)
-	if err != nil {
-		log.Printf("Failed to read directory contents: %v\n", err)
-		return err
-	}
-
-	if len(fs) != 1 {
-		return fmt.Errorf("Expected one file in pack directory, got: %v", len(fs))
-	}
-
-	pn := fs[0].Name()
-
-	log.Printf("Copying contents for [%v] into pack dir.\n", pn)
-	_, err = shared.CopyDir(
-		filepath.Join(tmp, pn),
-		filepath.Join(config.packDir),
-	)
-
-	if err != nil {
-		log.Printf("Failed to copy directory into packdir: %v\n", err)
-		return err
-	}
-
-	return loadFromPackDir(pn)
-}
-
 func installedPacks() []shared.Pack {
 	res := make(chan packResp)
 	req := packReq{tpe: Read, res: res}

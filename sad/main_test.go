@@ -54,7 +54,6 @@ func populatePackDir() (map[string][]shared.Namespace, []shared.Pack) {
 	}
 
 	for _, p := range ps {
-
 		// make dir
 		err := os.MkdirAll(filepath.Join(config.packDir, p.Name), 0755)
 		if err != nil {

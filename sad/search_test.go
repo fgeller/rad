@@ -40,7 +40,7 @@ func TestFind(t *testing.T) {
 			Members: []shared.Member{{Name: "ReadAll"}, {Name: "ReadDir"}},
 		},
 	}
-	installPack(pck, nss)
+	loadPack(pck, nss)
 
 	testData := []struct {
 		name     string
@@ -180,7 +180,7 @@ func TestFindObeysControl(t *testing.T) {
 	}
 
 	pck := shared.Pack{Name: "go"}
-	installPack(pck, lots)
+	loadPack(pck, lots)
 
 	params := searchParams{
 		pack:   regexp.MustCompile("."),

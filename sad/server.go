@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -204,19 +203,15 @@ func streamResults(sock *websocket.Conn, params searchParams, limit int) {
 func installHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got install request %v\n", r.URL.Path)
 	fn := r.URL.Path[len("/install/"):]
-	path, err := shared.DownloadToTemp("http://" + config.sapAddr + "/pack/" + fn)
-	if err != nil {
-		log.Printf("Error downloading pack: %v\n", err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	defer os.RemoveAll(path)
 
-	err = install(path)
-	if err != nil {
-		log.Printf("Error installing pack: %v\n", err)
-		http.Error(w, err.Error(), 500)
-		return
+	resp := make(chan packResp)
+	req := packReq{tpe: Install, pck: shared.Pack{File: fn}, res: resp}
+
+	global.packs <- req
+	msg, ok := <-resp
+	if ok && msg.err != nil {
+		log.Printf("Error installing %v: %v\n", fn, msg.err)
+		http.Error(w, "Internal server error", 500)
 	}
 }
 

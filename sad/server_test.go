@@ -80,12 +80,12 @@ func setup() string {
 func TestServeInstalledPackInfo(t *testing.T) {
 	resetGlobals()
 
-	installPack(
+	loadPack(
 		shared.Pack{Name: "x", Created: time.Now()},
 		[]shared.Namespace{{Members: []shared.Member{{Name: "m1"}}}},
 	)
 
-	installPack(
+	loadPack(
 		shared.Pack{Name: "y", Created: time.Now()},
 		[]shared.Namespace{{Members: []shared.Member{{Name: "m2"}}}},
 	)
@@ -247,8 +247,21 @@ func TestInstallAvailablePack(t *testing.T) {
 func TestRemoveInstalledPack(t *testing.T) {
 	os.RemoveAll(setup())
 
-	err := install("testdata/scala.zip")
+	addr := ensureServe()
+	err := awaitPing(addr)
 	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	ensureSap()
+	err = awaitPing(config.sapAddr)
+	if err != nil {
+		t.Errorf("Error while waiting for sap to come up: %v", err)
+		return
+	}
+
+	if _, err = http.Get("http://" + addr + "/install/scala.zip"); err != nil {
 		t.Errorf("Unexpected error when installing scala.zip: %v", err)
 		return
 	}
@@ -256,13 +269,6 @@ func TestRemoveInstalledPack(t *testing.T) {
 	docs := installedDocs()
 	if len(docs) == 0 {
 		t.Errorf("Expected to find scala docs installed, but got: %v", docs)
-		return
-	}
-
-	addr := ensureServe()
-	err = awaitPing(addr)
-	if err != nil {
-		t.Errorf("Error while waiting for server to come up: %v", err)
 		return
 	}
 

@@ -389,6 +389,8 @@ var Search = React.createClass({
 			event.cancelBubble = true;
 			return false;
 		}.bind(this));
+
+		document.getElementById("search-field").focus();
 	},
 	showSettings: function () {
 		document.getElementById("settings-container").style.visibility = "visible";

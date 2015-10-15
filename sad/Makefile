@@ -15,3 +15,6 @@ apptest:
 
 buildtest:
 	go test build*.go
+
+release: build
+	tar Jcf sad-`date -I`-`git rev-parse HEAD | cut -c-7`-`uname -s -m | tr ' ' '-'`.xz sad

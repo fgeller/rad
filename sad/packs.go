@@ -14,12 +14,29 @@ import (
 type reqType int
 
 const (
-	Install reqType = iota
+	Install reqType = iota + 1
 	Load
 	Remove
 	Read
 	Reset
 )
+
+func (t reqType) String() string {
+	switch {
+	case t == Install:
+		return "Install"
+	case t == Load:
+		return "Load"
+	case t == Remove:
+		return "Remove"
+	case t == Read:
+		return "Read"
+	case t == Reset:
+		return "Reset"
+	}
+
+	return fmt.Sprintf("Unknown type: %v", t)
+}
 
 type packReq struct {
 	tpe reqType

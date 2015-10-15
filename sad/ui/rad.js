@@ -391,6 +391,17 @@ var Search = React.createClass({
 		}.bind(this));
 
 		document.getElementById("search-field").focus();
+
+		var params = window.location.search.substring(1);
+		var arrParam = params.split("=");
+
+		if (this.state.query == "" &&
+			arrParam.length == 2 &&
+			arrParam[0] == "q" &&
+			arrParam[1].length) {
+				var q = decodeURIComponent(arrParam[1].replace(/\+/g,'%20'));
+				this.search(q);
+		}
 	},
 	showSettings: function () {
 		document.getElementById("settings-container").style.visibility = "visible";

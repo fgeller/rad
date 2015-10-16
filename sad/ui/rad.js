@@ -109,15 +109,6 @@ var SearchResult = React.createClass({
 		document.getElementById("ifrm").src = href;
 	},
 	render: function() {
-		if (this.props.selected) {
-			key.unbind('return');
-			key('return', function(event) {
-				this.open();
-				event.cancelBubble = true;
-				return false;
-			}.bind(this));
-		}
-
 		// \u00a0 = &nbsp;
 		var namespace = this.props.entry["Namespace"] || "\u00a0";
 		var memName = this.props.entry["Member"] || "\u00a0";

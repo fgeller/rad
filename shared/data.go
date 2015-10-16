@@ -8,11 +8,12 @@ import (
 )
 
 type Pack struct {
-	File    string
-	Name    string
-	Type    string
-	Version string
-	Created time.Time
+	File       string
+	Name       string
+	Type       string
+	Version    string
+	Installing bool
+	Created    time.Time
 }
 
 type Member struct {

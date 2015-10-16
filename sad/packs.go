@@ -119,28 +119,47 @@ func packMaster() {
 
 	docs := map[string][]shared.Namespace{}
 	packs := map[string]shared.Pack{}
+	installing := []shared.Pack{}
 
-	sendPacks := func(req packReq) {
-		for n, p := range packs {
-			req.res <- packResp{
-				pck: p,
-				nss: docs[n],
+	clearInstalling := func(pck shared.Pack) {
+		ni := []shared.Pack{}
+		for _, p := range installing {
+			if p.File != pck.File {
+				ni = append(ni, p)
 			}
 		}
+		installing = ni
 	}
 
 	installPack := func(req packReq) {
-		pck, nss, err := loadRemotePack(req.pck.File)
-		if err != nil {
-			req.res <- packResp{err: err}
-			return
-		}
+		lr := make(chan error)
+		req.pck.Installing = true
+		installing = append(installing, req.pck)
 
-		packs[pck.Name] = pck
-		docs[pck.Name] = nss
+		go func(lr chan error, req packReq) {
+			defer close(req.res)
+			pck, nss, err := loadRemotePack(req.pck.File)
+			if err != nil {
+				req.res <- packResp{err: err}
+				return
+			}
+			pck.File = req.pck.File
+			loadPack(pck, nss)
+		}(lr, req)
+
+	}
+
+	sendPacks := func(req packReq) {
+		for n, p := range packs {
+			req.res <- packResp{pck: p, nss: docs[n]}
+		}
+		for _, p := range installing {
+			req.res <- packResp{pck: p}
+		}
 	}
 
 	loadPack := func(req packReq) {
+		clearInstalling(req.pck)
 		packs[req.pck.Name] = req.pck
 		docs[req.pck.Name] = req.nss
 	}
@@ -165,7 +184,6 @@ func packMaster() {
 			switch {
 			case req.tpe == Install:
 				installPack(req)
-				close(req.res)
 			case req.tpe == Load:
 				loadPack(req)
 				close(req.res)

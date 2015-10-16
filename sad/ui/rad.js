@@ -136,31 +136,25 @@ var SearchResult = React.createClass({
 var Pack = React.createClass({
 	getInitialState: function() {
 		return {
-			installing: false,
+			installing: this.props.installing || false,
 			removing: false
 		};
 	},
 	remove: function(e) {
 		e.stopPropagation();
-		this.setState({ removing: true });
 		get(
 			"/remove/"+this.props.name,
-			function(xhttp) {
-				this.setState({removing: false});
-				this.props.loadPacks();
-			}.bind(this)
+			function(xhttp) { this.props.loadPacks(); }.bind(this)
 		);
+		this.props.loadPacks();
 	},
 	install: function(e) {
 		e.stopPropagation();
-		this.setState({ installing: true });
 		get(
 			"/install/"+this.props.file,
-			function(xhttp) {
-				this.setState({installing: false});
-				this.props.loadPacks();
-			}.bind(this)
+			function(xhttp) { this.props.loadPacks(); }.bind(this)
 		);
+		this.props.loadPacks();
 	},
 	render: function() {
 		var created = (new Date(this.props.created)).toISOString().substring(0, 10);
@@ -217,6 +211,11 @@ var Settings = React.createClass({
 	componentWillMount: function() {
 		this.loadPacks();
 	},
+	componentWillUpdate: function() {
+		if (_.some(this.state.availablePacks, function (p) { return p.Installing })) {
+			setTimeout(function() { this.loadPacks(); }.bind(this), 5000);
+		}
+	},
 	hide: function() {
 		document.getElementById("settings-container").style.visibility = "hidden";
 	},
@@ -227,7 +226,7 @@ var Settings = React.createClass({
 		return ''+Math.round(Math.random()*10000000000)
 	},
 	render: function() {
-		var installed = this.state.installedPacks.map(function(p, idx) {
+		var installed = _.sortBy(this.state.installedPacks, function(p) { return p.Name; }).map(function(p, idx) {
 			var id = guid();
 			return (
 				<Pack
@@ -263,6 +262,7 @@ var Settings = React.createClass({
 					created={p.Created}
 					file={p.File}
 					loadPacks={this.loadPacks}
+					installing={p.Installing}
 					installed={false} />
 			);
 		}.bind(this)

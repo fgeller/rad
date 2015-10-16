@@ -115,10 +115,25 @@ func availablePacks() []shared.Pack {
 func status(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got status request for %v\n", r.URL.Path)
 
+	installed := installedPacks()
+	filteredInstalled := []shared.Pack{}
+	available := availablePacks()
+
+loopinstalled:
+	for _, ip := range installed {
+		for ai, ap := range available {
+			if ip.Installing && ip.File == ap.File {
+				available[ai].Installing = true
+				continue loopinstalled
+			}
+		}
+		filteredInstalled = append(filteredInstalled, ip)
+	}
+
 	info := StatusInfo{
 		Packs: PackInfo{
-			Installed: installedPacks(),
-			Available: availablePacks(),
+			Installed: filteredInstalled,
+			Available: available,
 		},
 	}
 

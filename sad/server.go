@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"path/filepath"
 	"reflect"
 	"regexp"
 	"strings"
@@ -273,12 +272,7 @@ func serve(addr string) {
 	http.HandleFunc("/a/", assetHandler)
 	http.HandleFunc("/", assetHandler)
 
-	pd, err := filepath.Abs(config.packDir)
-	if err != nil {
-		log.Fatalf("Can't find absolute path to packDir %v: %v\n", config.packDir, err)
-	}
-
-	ps := http.FileServer(http.Dir(pd))
+	ps := http.FileServer(http.Dir(config.packDir))
 	http.Handle("/pack/", http.StripPrefix("/pack/", ps))
 
 	log.Printf("Serving on addr http://%v\n", addr)

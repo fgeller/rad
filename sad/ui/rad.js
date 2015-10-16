@@ -262,32 +262,32 @@ var Settings = React.createClass({
 				return !installed;
 			}.bind(this)
 		).map(function(p, idx) {
-				var id = guid();
-				return (
-					<Pack name={p.Name}
-						uid={id}
-						key={id}
-						type={p.Type}
-						version={p.Version}
-						created={p.Created}
-						file={p.File}
-						loadPacks={this.loadPacks}
-						installed={false} />
-				);
-			}.bind(this)
+			var id = guid();
+			return (
+				<Pack name={p.Name}
+					uid={id}
+					key={id}
+					type={p.Type}
+					version={p.Version}
+					created={p.Created}
+					file={p.File}
+					loadPacks={this.loadPacks}
+					installed={false} />
+			);
+		}.bind(this)
 		);
 
 		var installedDom = <div />;
 		if (installed.length > 0) {
 			installedDom = <div id="settings-installed-packs">
-						<div className="settings-header">Installed Packs</div>
-						<div className="settings-pack-row">
-							<div className="settings-pack-row-label">Name</div>
-							<div className="settings-pack-row-label">Type</div>
-							<div className="settings-pack-row-label">Version</div>
-							<div className="settings-pack-row-label">Created</div>
-						</div>
-						{ installed }
+					<div className="settings-header">Installed Packs</div>
+					<div className="settings-pack-row">
+						<div className="settings-pack-row-label">Name</div>
+						<div className="settings-pack-row-label">Type</div>
+						<div className="settings-pack-row-label">Version</div>
+						<div className="settings-pack-row-label">Created</div>
+					</div>
+					{ installed }
 			</div>;
 		}
 

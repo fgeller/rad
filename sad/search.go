@@ -24,7 +24,13 @@ func findNamespace(
 				}
 
 				if params.member.MatchString(member.Name) {
-					results <- NewSearchResult(namespace, mi)
+					select {
+					case results <- NewSearchResult(namespace, mi):
+					case <-end:
+						end <- struct{}{}
+						log.Printf("Got poison pill in findNamespace, stopping search.\n")
+						return
+					}
 				}
 			}
 		}

@@ -227,6 +227,9 @@ var Settings = React.createClass({
 	hide: function() {
 		document.getElementById("settings-container").style.visibility = "hidden";
 	},
+	stopEvent: function(e) {
+		e.stopPropagation();
+	},
 	genUID: function() {
 		return ''+Math.round(Math.random()*10000000000)
 	},
@@ -302,7 +305,7 @@ var Settings = React.createClass({
 
 		return (
 			<div id="settings-container" onClick={this.hide}>
-				<div id="settings-content">
+				<div id="settings-content" onClick={this.stopEvent}>
 					{ installedDom }
 					{ availableDom }
 				</div>

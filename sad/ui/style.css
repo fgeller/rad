@@ -43,14 +43,23 @@ body {
 
 .readme-sample {
     margin: .75em;
+    font-size: 9pt;
     font-family: "Roboto Mono", monospace;
+}
+
+.readme-inline-sample {
+    font-family: "Roboto Mono", monospace;
+}
+
+.readme-column i {
+        margin: 0.2em;
 }
 
 .readme-column {
     display: inline-block;
     vertical-align: top;
     max-width: 260pt;
-    margin: .5em 0 .5em 0;
+    margin: .5em 1em .5em 1em;
     position: relativ;
 }
 
@@ -61,7 +70,7 @@ body {
 
 #readme-details {
     position: relative;
-    font-size: 10pt;
+    font-size: 9pt;
     margin: 1em;
     padding: .5em;
     background-color: #e8eaf6;

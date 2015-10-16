@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 	"path/filepath"
 )
 
@@ -13,7 +14,9 @@ var config struct {
 }
 
 func main() {
-	flag.StringVar(&config.packDir, "packdir", "packs", "Path where packages will be installed")
+	pd := filepath.Join(os.Getenv("HOME"), ".rad", "sad-packs")
+
+	flag.StringVar(&config.packDir, "packdir", pd, "Path where packages will be installed")
 	flag.StringVar(&config.sapAddr, "sapaddr", "geller.io:3025", "Addr where sap serves")
 	flag.StringVar(&config.addr, "addr", "0.0.0.0:3024", "Addr where sad should serve")
 	flag.Parse()

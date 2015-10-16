@@ -13,10 +13,26 @@
       <div></div>
       <div id="readme-details">
         <div class="readme-column">
-          To start, click the <i class="fa fa-cogs"></i> and download API packs
-          that you're interested in.
 
-          A short sample for the scala pack to get you started:
+          To start, click the <i class="fa fa-cogs"></i> and download API packs
+          that you're interested in. By default packs are installed into your
+          home directory under:
+
+					<div class="readme-sample">.rad/sad-packs</div>
+
+					For example in my case, the packs are installed under
+
+					<div class="readme-sample">/home/fgeller/.rad/sad-packs</div>
+
+					You can customize this location by passing the packdir parameter to
+					sad, e.g.:
+
+					<div class="readme-sample">./sad -packdir /your/favorite/location</div>
+
+					The following assumes that you've instaled a pack name
+					<span class="readme-inline-sample">scala</span>.
+					The example apply to any other documentation pack as well, just the
+					name of the pack differs. A short sample to get you started:
 
           <div class="readme-sample">scala Future andThen</div>
 
@@ -36,41 +52,42 @@
           <div class="readme-sample">scala.concurrent.Future</div>
 
           Give it a try!<br /><br />
+				</div>
 
-          All three parts are regular expressions:
+				<div class="readme-column">
+
+          All three parts of the search query are regular expressions:
 
           <div class="readme-sample">sc utu.+ ^andThen$</div>
 
           This yields at least the same results as the first sample.
 
-	  A pattern is automatically case insensitive if it contains no upper
-	  case letter. For example the following matches at least the same as
-	  the previous sample:
+					A pattern is automatically case insensitive if it contains no upper
+					case letter. For example the following matches at least the same as
+					the previous sample:
 
           <div class="readme-sample">sc utu.+ ^andthen$</div>
 
-	</div>
 
-  <div class="readme-column">
-    You can use the following keys for navigation:
+					You can use the following keys for navigation:
 
-    <ul>
-      <li><span class="readme-keys">/</span>This moves focus to the search
-	field unless focus is in the documentation iframe.</li>
-      <li><span class="readme-keys">shift + →</span>This selects the next
-	search result to the right, if possible.</li>
-      <li><span class="readme-keys">shift + ←</span>This selects the next
-	search result to the right, if possible.</li>
-    </ul>
+					<ul>
+						<li><span class="readme-keys">/</span>This moves focus to the search
+							field unless focus is in the documentation iframe.</li>
+						<li><span class="readme-keys">shift + →</span>This selects the next
+							search result to the right, if possible.</li>
+						<li><span class="readme-keys">shift + ←</span>This selects the next
+							search result to the right, if possible.</li>
+					</ul>
 
-    The documentation frame is the iframe element that is displaying this
-    readme at the moment. This iframe is used to isolate the docs while
-    the navigation and search remains available on top as a header.
+					The documentation frame is the iframe element that is displaying this
+					readme at the moment. This iframe is used to isolate the docs while
+					the navigation and search remains available on top as a header.
 
-  </div>
+				</div>
 
-  <div class="readme-column">
-  </div>
+				<div class="readme-column">
+				</div>
 
       </div>
     </div>

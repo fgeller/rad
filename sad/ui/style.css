@@ -138,6 +138,10 @@ body {
     display: inline-block;
 }
 
+.settings-pack-button i {
+    cursor: pointer;
+}
+
 #menu-container {
    font-size: 16pt;
    display: inline-block;
@@ -146,6 +150,10 @@ body {
    top: 7pt;
    margin: 7pt;
    color: #e8eaf6;
+}
+
+#menu-container i {
+    cursor: pointer;
 }
 
 #menu-container:hover {

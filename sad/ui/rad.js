@@ -127,10 +127,12 @@ var SearchResult = React.createClass({
 		var clsName = "search-result"
 		if (this.props.selected) {
 			clsName += " selected-search-result";
+			this.open();
 		}
 		if (this.props.index == 0) {
 			clsName += " first-search-result";
 		}
+
 		return (
 			<div className={clsName} onClick={this.open}>
 				<div className="member-name">{memName}</div>

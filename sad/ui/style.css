@@ -203,6 +203,23 @@ body {
     z-index: -1;
 }
 
+
+#search-help {
+    position: absolute;
+    right: 0pt;
+    padding-right: 7pt;
+    top: 7pt;
+    font-size: 18pt;
+    color: #e8eaf6;
+    z-index: 800;
+    cursor: pointer;
+    background-color: white;
+}
+
+#search-help:hover {
+    color: #7986cb;
+}
+
 #search-field {
     font-family: Roboto, sans-serif;
     height: 32pt;

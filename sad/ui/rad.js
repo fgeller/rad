@@ -88,6 +88,9 @@ var SearchField = React.createClass({
 		var query = this.refs.search.getDOMNode().value;
 		this.props.search(query)
 	},
+	loadHelp: function () {
+		document.getElementById("ifrm").src = "/readme.html"
+	},
 	render: function() {
 		return (
 			<div>
@@ -98,7 +101,15 @@ var SearchField = React.createClass({
 					placeholder="Search here..."
 					value={this.props.query}
 					onChange={this.search} />
-				<i id="search-icon" className="fa fa-search"></i>
+				<i
+					id="search-icon"
+					className="fa fa-search"
+				></i>
+				<i
+					id="search-help"
+					className="fa fa-question"
+					onClick={this.loadHelp}
+				></i>
 			</div>
 		);
 	}

@@ -41,6 +41,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parseGoDocFile)
 	case "clojure":
 		return mk(parseClojureDocFile)
+	case "py27":
+		return mk(parsePy27DocFile)
 	}
 
 	return nil
@@ -192,7 +194,7 @@ func mkPack(conf config) (string, error) {
 
 func main() {
 	var (
-		indexerName = flag.String("indexer", "", "Indexer type for this pack (scala, java)")
+		indexerName = flag.String("indexer", "", "Indexer type for this pack (scala, java, go, clojure, py27)")
 		packName    = flag.String("name", "", "Name for this pack")
 		source      = flag.String("source", "", "Source directory for this pack")
 		version     = flag.String("version", "", "Version string for this pack")

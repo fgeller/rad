@@ -11,9 +11,9 @@
       <div id="readme-details">
         <div class="readme-column">
 
-          To start, click the <i class="fa fa-cogs"></i> and download API packs
-          that you're interested in. By default packs are installed into your
-          home directory under:
+          To start, click the <i class="fa fa-cogs"></i> icon and download API
+          packs that you're interested in. By default packs are installed into
+          your home directory under:
 
 					<div class="readme-sample">.rad/sad-packs</div>
 
@@ -26,29 +26,30 @@
 
 					<div class="readme-sample">./sad -packdir /your/favorite/location</div>
 
-					The following assumes that you've instaled a pack name
-					<span class="readme-inline-sample">scala</span>.
-					The example apply to any other documentation pack as well, just the
-					name of the pack differs. A short sample to get you started:
+					The following assumes that you've installed a pack named
+					<span class="readme-inline-sample">scala</span>. The examples apply to
+					any other documentation pack as well, just that you have to adapt the
+					names to your documentation pack. A short sample to get you started:
 
           <div class="readme-sample">scala Future andThen</div>
 
           Search queries consist of up to three components separated by spaces:
           <ol type="1">
-            <li>Pack Name</li>
-            <li>Path</li>
-            <li>Member</li>
+            <li>Pack Name, e.g. <span class="readme-inline-sample">scala</span></li>
+            <li>Path, e.g. <span class="readme-inline-sample">Future</span></li>
+            <li>Member, e.g. <span class="readme-inline-sample">andThen</span></li>
           </ol>
 
           The first is the only required component and identifies the
           documention pack that you are interested in. The second part matches
-          on the path and the third one on the entity that your are looking for.
+          on the path or namespace and the third one on the entity that your are
+          looking for.
 
-          The above example matches a method in Scala's API, where the full path
-          is:
+          The above example matches a method in Scala's standard library, where
+          the full path is:
           <div class="readme-sample">scala.concurrent.Future</div>
 
-          Give it a try!<br /><br />
+          Give it a try! <i class="fa fa-smile-o"></i><br /><br />
 				</div>
 
 				<div class="readme-column">
@@ -64,7 +65,6 @@
 					the previous sample:
 
           <div class="readme-sample">sc utu.+ ^andthen$</div>
-
 
 					You can use the following keys for navigation:
 
@@ -82,10 +82,6 @@
 					The documentation frame is the iframe element that is displaying this
 					readme at the moment. This iframe is used to isolate the docs while
 					the navigation and search remains available on top as a header.
-
-				</div>
-
-				<div class="readme-column">
 				</div>
 
       </div>

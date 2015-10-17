@@ -231,9 +231,22 @@ body {
     left: 0;
 }
 
-.search-result {
-    width: 110pt;
+.search-result.visible-search-result {
     display: inline-block;
+}
+
+.search-result-label {
+    font-size: 7pt;
+    position: absolute;
+    margin: 2pt;
+    right: 0px;
+    top: 0px;
+}
+
+.search-result {
+    position: relative;
+    width: 110pt;
+    display: none;
     padding-top: 5pt;
     padding-bottom: 5pt;
     padding-right: 3pt;
@@ -256,10 +269,6 @@ body {
 .search-result .namespace {
     font-size: 7pt;
     overflow-x: overlay;
-}
-
-.first-search-result {
-    border-left: 0px;
 }
 
 .selected-search-result {

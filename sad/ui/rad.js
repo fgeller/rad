@@ -1,5 +1,11 @@
 'use strict';
 
+var SettingsDefaults = {
+	resultLimit: 50,
+	requestThrottle: 150,
+	autoLoad: false
+};
+
 // http://stackoverflow.com/a/105074
 function guid() {
 	function s4() {
@@ -131,12 +137,14 @@ var SearchResult = React.createClass({
 				this.open();
 			}
 		}
-		if (this.props.index == 0) {
-			clsName += " first-search-result";
+
+		if (this.props.visible) {
+			clsName += " visible-search-result";
 		}
 
 		return (
 			<div className={clsName} onClick={this.open}>
+				<div className="search-result-label">{this.props.label}</div>
 				<div className="member-name">{memName}</div>
 				<div className="namespace">{namespace}</div>
 			</div>
@@ -212,11 +220,11 @@ var RequestSettings = React.createClass({
 	update: function () {
 		var newResultLimit = document.getElementById("settings-result-limit").value;
 		if (!newResultLimit || isNaN(newResultLimit)) {
-			newResultLimit = 3;
+			newResultLimit = SettingsDefaults.resultLimit;
 		}
 		var newRequestThrottle = document.getElementById("settings-request-throttle").value;
 		if (!newRequestThrottle || isNaN(newRequestThrottle)) {
-			newRequestThrottle = 150;
+			newRequestThrottle = SettingsDefaults.requestThrottle;
 		}
 		var newAutoLoad = document.getElementById("settings-auto-load").checked;
 		localStorage.clear();
@@ -414,8 +422,8 @@ var Search = React.createClass({
 	},
 	readSettings: function() {
 		var result = {
-			requestThrottle: Number(localStorage["SettingsRequestThrottle"] || 150),
-			resultLimit: Number(localStorage["SettingsResultLimit"] || 3),
+			requestThrottle: Number(localStorage["SettingsRequestThrottle"] || SettingsDefaults.requestThrottle),
+			resultLimit: Number(localStorage["SettingsResultLimit"] || SettingsDefaults.resultLimit),
 			autoLoad: localStorage["SettingsAutoLoad"] === "true"
 		};
 		return result;
@@ -446,26 +454,26 @@ var Search = React.createClass({
 			this.props.sock.send(JSON.stringify(req));
 		}.bind(this);
 		this.props.sock.onclose = function() {
-			console.log("Finished request [" + text + "].");
+			console.log("Finished request [" + text + "] found " + this.state.results.length + " results.");
 		}.bind(this);
 	},
 	selectResult: function(idx) {
-		if (idx >= 0 && idx <= 3 && idx < this.state.results.length) {
+		if (idx >= 0 && idx < this.state.results.length) {
 			this.setState({selected: idx});
 		}
 	},
 	shiftSelection: function(left, right) {
 		// if left: try -1
 		var sub1 = this.state.selected - 1
-		if (left && sub1 >= 0) {
-			this.setState({selected: sub1});
-			return;
+		if (left) {
+			if (sub1 >= 0) { this.setState({selected: sub1}) }
+			return
 		}
 		// if right: try +1
 		var add1 = this.state.selected + 1
-		if (right && add1 < 3 && add1 < this.state.results.length) { // TODO magic number
-			this.setState({selected: add1});
-			return;
+		if (right) {
+			if (add1 < this.state.results.length) { this.setState({selected: add1}) }
+			return
 		}
 		// if none: 0
 		if (!left && !right) {
@@ -509,12 +517,22 @@ var Search = React.createClass({
 	},
 	render: function(){
 		var entries = [];
-		for (var i = 0; i < this.state.results.length && i < 3; i++) {
+		for (var i = 0; i < this.state.results.length; i++) {
 			var entry = this.state.results[i];
+			var isVisible = (
+				(this.state.selected >= this.state.results.length-2 &&
+					i >= this.state.results.length-3) ||
+					(i >= this.state.selected-1 &&
+						((this.state.selected > 0 && i <= this.state.selected+1) ||
+							(this.state.selected == 0 && i <= 2)))
+			);
+			var label = ""+(i+1)+"/"+this.state.results.length;
 			entries.push(
 				<SearchResult
 					entry={entry}
 					index={i}
+					label={label}
+					visible={isVisible}
 					autoLoad={this.state.settings.autoLoad}
 					selected={i == this.state.selected}
 					selectResult={this.selectResult} />

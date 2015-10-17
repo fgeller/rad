@@ -18,23 +18,6 @@ import (
 var serving bool
 var sapServing bool
 
-func awaitPing(addr string) error {
-	limit := 10
-	attempts := 0
-
-	for {
-		resp, err := http.Get("http://" + addr + "/ping")
-		if err == nil && resp.StatusCode == 200 {
-			return nil
-		}
-		attempts++
-		if attempts > limit {
-			return fmt.Errorf("Got no ping on %v.", addr)
-		}
-		time.Sleep(100 * time.Millisecond)
-	}
-}
-
 func ensureServe() string {
 	addr := "localhost:6048"
 	if !serving {

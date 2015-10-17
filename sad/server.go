@@ -263,6 +263,23 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("pong"))
 }
 
+func awaitPing(addr string) error {
+	limit := 50
+	attempts := 0
+
+	for {
+		resp, err := http.Get("http://" + addr + "/ping")
+		if err == nil && resp.StatusCode == 200 {
+			return nil
+		}
+		attempts++
+		if attempts > limit {
+			return fmt.Errorf("Got no ping on %v.", addr)
+		}
+		time.Sleep(200 * time.Millisecond)
+	}
+}
+
 func serve(addr string) {
 	http.HandleFunc("/ping/", pingHandler)
 	http.HandleFunc("/s", socket)

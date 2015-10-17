@@ -4,13 +4,33 @@ import (
 	"flag"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"runtime"
 )
 
 var config struct {
 	packDir string
 	sapAddr string
 	addr    string
+}
+
+func openURL(url string) {
+	switch runtime.GOOS {
+	case "darwin":
+		exec.Command("open", url).Run()
+	case "linux":
+		exec.Command("xdg-open", url).Run()
+	}
+}
+
+func waitAndOpenUrl(url string) {
+	if err := awaitPing(config.addr); err == nil {
+		openURL("http://" + config.addr)
+		return
+	}
+
+	log.Printf("Couldn't get ping, slow startup?\n")
 }
 
 func main() {
@@ -28,8 +48,8 @@ func main() {
 	config.packDir = pd
 
 	setupGlobals()
-
 	loadInstalled()
 	registerAssets()
+	go waitAndOpenUrl("http://" + config.addr)
 	serve(config.addr)
 }

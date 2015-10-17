@@ -118,7 +118,9 @@ var SearchResult = React.createClass({
 		var clsName = "search-result"
 		if (this.props.selected) {
 			clsName += " selected-search-result";
-			this.open();
+			if (this.props.autoLoad) {
+				this.open();
+			}
 		}
 		if (this.props.index == 0) {
 			clsName += " first-search-result";
@@ -183,6 +185,72 @@ var Pack = React.createClass({
 							display={ this.state.removing ? "none" : "inline-block" } />
 						<Loading
 							display={ this.state.removing ? "inline-block" : "none" } />
+					</div>
+				</div>
+			</div>
+		);
+	}
+});
+
+var RequestSettings = React.createClass({
+	getInitialState: function () {
+		return {
+			resultLimit: this.props.resultLimit || 3,
+			requestThrottle: this.props.requestThrottle || 100,
+			autoLoad: this.props.autoLoad || false,
+		}
+	},
+	update: function () {
+		var newResultLimit = document.getElementById("settings-result-limit").value;
+		if (!newResultLimit || isNaN(newResultLimit)) {
+			newResultLimit = 3;
+		}
+		var newRequestThrottle = document.getElementById("settings-request-throttle").value;
+		if (!newRequestThrottle || isNaN(newRequestThrottle)) {
+			newRequestThrottle = 150;
+		}
+		var newAutoLoad = document.getElementById("settings-auto-load").checked;
+		localStorage.clear();
+		localStorage.setItem("SettingsResultLimit", newResultLimit);
+		localStorage.setItem("SettingsRequestThrottle", newRequestThrottle);
+		localStorage.setItem("SettingsAutoLoad", newAutoLoad);
+		console.log("Updated settings in local storage: ", localStorage);
+		this.props.updateSettings();
+	},
+	render: function () {
+		return (
+			<div id="settings-general">
+				<div className="settings-header">Settings</div>
+				<div className="settings-label-value">
+					<div className="settings-label">Result limit</div>
+					<div className="settings-value">
+						<input
+							id="settings-result-limit"
+							type="text"
+							value={this.props.resultLimit}
+							onChange={this.update}
+						/>
+					</div>
+				</div>
+				<div className="settings-label-value">
+					<div className="settings-label">Request throttle</div>
+					<div className="settings-value">
+						<input
+							id="settings-request-throttle"
+							type="text"
+							value={this.props.requestThrottle}
+							onChange={this.update}
+						/>
+					</div>
+				</div><div className="settings-label-value">
+					<div className="settings-label">Load immediately</div>
+					<div className="settings-value">
+						<input
+							id="settings-auto-load"
+							type="checkbox"
+							checked={this.props.autoLoad}
+							onChange={this.update}
+						/>
 					</div>
 				</div>
 			</div>
@@ -301,6 +369,12 @@ var Settings = React.createClass({
 				<div id="settings-content" onClick={this.stopEvent}>
 					{ installedDom }
 					{ availableDom }
+					<RequestSettings
+						resultLimit={this.props.resultLimit}
+						requestThrottle={this.props.requestThrottle}
+						autoLoad={this.props.autoLoad}
+						updateSettings={this.props.updateSettings}
+					/>
 				</div>
 			</div>
 		);
@@ -312,8 +386,30 @@ var Search = React.createClass({
 		return {
 			selected: 0,
 			query:'',
-			results: []
+			results: [],
+			settings: this.readSettings()
 		};
+	},
+	installThrottledSearch: function (throttle) {
+		var throttledSearch = _.debounce(
+			function (txt) { this.streamSearch(txt); },
+			throttle,
+			{ leading: false, trailing: true }
+		);
+		this.throttledSearch = throttledSearch;
+	},
+	updateSettings: function () {
+		var newSettings = this.readSettings();
+		this.installThrottledSearch(newSettings.requestThrottle);
+		this.setState({settings: newSettings});
+	},
+	readSettings: function() {
+		var result = {
+			requestThrottle: Number(localStorage["SettingsRequestThrottle"] || 150),
+			resultLimit: Number(localStorage["SettingsResultLimit"] || 3),
+			autoLoad: localStorage["SettingsAutoLoad"] === "true"
+		};
+		return result;
 	},
 	search: function(text) {
 		this.setState({query: text, selected: 0, results: []});
@@ -329,12 +425,8 @@ var Search = React.createClass({
 		var pk = qs[0]
 		var pt = qs[1]
 		var m	= qs[2] || ""
-		var req = {
-			"Limit": 3,
-			"Pack": pk,
-			"Path": pt,
-			"Member": m
-		};
+		var lim = this.state.settings.resultLimit
+		var req = {"Limit": lim, "Pack": pk, "Path": pt, "Member": m};
 
 		this.props.sock = socket();
 		this.props.sock.onmessage = function(msg) {
@@ -390,14 +482,7 @@ var Search = React.createClass({
 
 		document.getElementById("search-field").focus();
 
-		var throttledSearch = _.debounce(
-			function (txt) {
-				this.streamSearch(txt);
-			},
-			150,
-			{ leading: false, trailing: true }
-		);
-		this.throttledSearch = throttledSearch;
+		this.installThrottledSearch(this.state.settings.requestThrottle);
 
 		var params = window.location.search.substring(1);
 		var arrParam = params.split("=");
@@ -421,6 +506,7 @@ var Search = React.createClass({
 				<SearchResult
 					entry={entry}
 					index={i}
+					autoLoad={this.state.settings.autoLoad}
 					selected={i == this.state.selected}
 					selectResult={this.selectResult} />
 			);
@@ -436,7 +522,12 @@ var Search = React.createClass({
 
 		return (
 			<div id="main-container">
-				<Settings />
+				<Settings
+					resultLimit={this.state.settings.resultLimit}
+					requestThrottle={this.state.settings.requestThrottle}
+					autoLoad={this.state.settings.autoLoad}
+					updateSettings={this.updateSettings}
+				/>
 				<div id="menu-container">
 					<i className="fa fa-cogs" onClick={this.showSettings}></i>
 				</div>

@@ -4,7 +4,6 @@ import (
 	"../shared"
 
 	"io"
-	"log"
 	"reflect"
 	"testing"
 )
@@ -37,7 +36,6 @@ func TestMergingNamespaces(t *testing.T) {
 		},
 	}
 	testParser := func(p string, i io.Reader) []shared.Namespace {
-		log.Printf("testparser for p %v\n", p)
 		return namespaces
 	}
 

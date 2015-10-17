@@ -111,6 +111,13 @@ body {
     width: 4em;
     margin-bottom: 1em;
 }
+
+.input-invalid {
+    outline: none;
+    border: 2px solid #f44336;
+    box-shadow: 0 0 3pt #f44336;
+}
+
 .settings-label {
     display: inline-block;
     font-size: 9pt;

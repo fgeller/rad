@@ -226,15 +226,17 @@ var RequestSettings = React.createClass({
 			resultLimit: this.props.resultLimit || 3,
 			requestThrottle: this.props.requestThrottle || 100,
 			autoLoad: this.props.autoLoad || false,
+			resultLimitInvalid: false,
+			requestThrottleInvalid: false
 		}
 	},
 	update: function () {
 		var newResultLimit = document.getElementById("settings-result-limit").value;
-		if (!newResultLimit || isNaN(newResultLimit)) {
+		if (!newResultLimit || isNaN(Number(newResultLimit)) || Number(newResultLimit) <= 0 || Number(newResultLimit) >= 500) {
 			newResultLimit = SettingsDefaults.resultLimit;
 		}
 		var newRequestThrottle = document.getElementById("settings-request-throttle").value;
-		if (!newRequestThrottle || isNaN(newRequestThrottle)) {
+		if (!newRequestThrottle || isNaN(Number(newRequestThrottle)) || Number(newRequestThrottle) <= 0) {
 			newRequestThrottle = SettingsDefaults.requestThrottle;
 		}
 		var newAutoLoad = document.getElementById("settings-auto-load").checked;
@@ -245,7 +247,20 @@ var RequestSettings = React.createClass({
 		console.log("Updated settings in local storage: ", localStorage);
 		this.props.updateSettings();
 	},
+	componentWillReceiveProps: function(nextProps) {
+		var rl = document.getElementById("settings-result-limit").value;
+		var rt = document.getElementById("settings-request-throttle").value;
+		this.setState({
+			resultLimitInvalid: (rl != nextProps.resultLimit),
+			resultLimitInvalidValue: rl,
+			requestThrottleInvalid: (rt != nextProps.requestThrottle),
+			requestThrottleInvalidValue: rt
+		});
+	},
 	render: function () {
+
+		var rlValue = this.state.resultLimitInvalid ? this.state.resultLimitInvalidValue : this.props.resultLimit
+		var rtValue = this.state.requestThrottleInvalid ? this.state.requestThrottleInvalidValue : this.props.requestThrottle;
 		return (
 			<div id="settings-general">
 				<div className="settings-header">Settings</div>
@@ -255,7 +270,8 @@ var RequestSettings = React.createClass({
 						<input
 							id="settings-result-limit"
 							type="text"
-							value={this.props.resultLimit}
+							value={rlValue}
+							className={this.state.resultLimitInvalid ? "input-invalid" : ""}
 							onChange={this.update}
 						/>
 					</div>
@@ -267,7 +283,8 @@ var RequestSettings = React.createClass({
 						<input
 							id="settings-request-throttle"
 							type="text"
-							value={this.props.requestThrottle}
+							value={rtValue}
+							className={this.state.requestThrottleInvalid ? "input-invalid" : ""}
 							onChange={this.update}
 						/>
 					</div>

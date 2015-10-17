@@ -548,6 +548,9 @@ var Search = React.createClass({
 							(this.state.selected == 0 && i <= 2)))
 			);
 			var label = ""+(i+1)+"/"+this.state.results.length;
+			if (this.state.results.length == this.state.settings.resultLimit) {
+				label += "+";
+			}
 			entries.push(
 				<SearchResult
 					entry={entry}

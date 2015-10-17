@@ -1,8 +1,8 @@
 'use strict';
 
 var SettingsDefaults = {
-	resultLimit: 50,
-	requestThrottle: 150,
+	resultLimit: 10,
+	requestThrottle: 100,
 	autoLoad: false
 };
 

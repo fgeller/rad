@@ -301,6 +301,7 @@ var Settings = React.createClass({
 					installedPacks: data.Packs.Installed,
 					availablePacks: data.Packs.Available,
 				});
+				this.props.updatePacks(data.Packs.Installed)
 			}.bind(this)
 		);
 	},
@@ -425,6 +426,12 @@ var Search = React.createClass({
 			{ leading: false, trailing: true }
 		);
 		this.throttledSearch = throttledSearch;
+	},
+	updatePacks: function (installed) {
+		console.log("got installed", installed);
+		if (installed.length == 1 && this.state.query.length == 0) {
+			this.setState({query: installed[0].Name + ' '});
+		}
 	},
 	updateSettings: function () {
 		var newSettings = this.readSettings();
@@ -565,6 +572,7 @@ var Search = React.createClass({
 					requestThrottle={this.state.settings.requestThrottle}
 					autoLoad={this.state.settings.autoLoad}
 					updateSettings={this.updateSettings}
+					updatePacks={this.updatePacks}
 				/>
 				<div id="menu-container">
 					<i className="fa fa-cogs" onClick={this.showSettings}></i>

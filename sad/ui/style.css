@@ -19,6 +19,16 @@ body {
     display: inline-block;
 }
 
+#zero-container {
+    margin-left: 4em;
+}
+
+#zero-container i {
+    font-size: 26pt;
+    margin-left: 2pt;
+    color: #e8eaf6;
+}
+
 #readme-content {
     margin: 5pt 35pt 35pt 35pt;
     font-size: 12pt;

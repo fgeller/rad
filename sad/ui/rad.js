@@ -431,7 +431,6 @@ var Search = React.createClass({
 		this.throttledSearch = throttledSearch;
 	},
 	updatePacks: function (installed) {
-		console.log("got installed", installed);
 		if (installed.length == 1 && this.state.query.length == 0) {
 			this.setState({query: installed[0].Name + ' '});
 		}

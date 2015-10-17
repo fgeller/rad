@@ -457,10 +457,10 @@ var Search = React.createClass({
 			return;
 		}
 		this.props.sock.close();
-		var pk = qs[0]
-		var pt = qs[1]
-		var m	= qs[2] || ""
-		var lim = this.state.settings.resultLimit
+		var pk = qs[0];
+		var pt = qs[1];
+		var m	= qs[2] || "";
+		var lim = this.state.settings.resultLimit;
 		var req = {"Limit": lim, "Pack": pk, "Path": pt, "Member": m};
 
 		this.props.sock = socket();

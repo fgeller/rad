@@ -259,6 +259,7 @@ var RequestSettings = React.createClass({
 							onChange={this.update}
 						/>
 					</div>
+					<div className="settings-explanation">Limit the number of results that are requested.</div>
 				</div>
 				<div className="settings-label-value">
 					<div className="settings-label">Request throttle</div>
@@ -270,6 +271,7 @@ var RequestSettings = React.createClass({
 							onChange={this.update}
 						/>
 					</div>
+					<div className="settings-explanation">Send search queries at most every x milliseconds.</div>
 				</div><div className="settings-label-value">
 					<div className="settings-label">Load immediately</div>
 					<div className="settings-value">
@@ -280,6 +282,7 @@ var RequestSettings = React.createClass({
 							onChange={this.update}
 						/>
 					</div>
+					<div className="settings-explanation">Automatically load current selection in document frame.</div>
 				</div>
 			</div>
 		);

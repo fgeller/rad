@@ -492,6 +492,9 @@ var Search = React.createClass({
 		}.bind(this);
 		this.props.sock.onclose = function() {
 			console.log("Finished request [" + text + "] found " + this.state.results.length + " results.");
+			if (this.state.results.length == 0) {
+				key.unbind('return');
+			}
 			if (this.state.results.length == 0 && this.state.settings.autoLoad) {
 				document.getElementById("ifrm").src = "/zero.html";
 			}

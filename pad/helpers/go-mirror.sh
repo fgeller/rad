@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-
 # PFX=go-stdlib
 # PKG=https://godoc.org/-/go
 PFX=gorilla-websocket
@@ -27,7 +25,7 @@ wget --random-wait \
      $PKG
 
 echo "Disabling Google analytics"
-find . -name "*.html" -exec sed -i -E 's:type="text/javascript":type="text/disabled":g' {} \;
+find $PFX -name "*.html" -exec sed -i -E 's:type="text/javascript":type="text/disabled":g' {} \;
 
 echo "Hiding header and footer"
 echo ".navbar-default, #x-footer { display: none; }" >> `find $PFX -name "site.css*"`

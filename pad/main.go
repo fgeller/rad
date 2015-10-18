@@ -43,6 +43,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parseClojureDocFile)
 	case "py27":
 		return mk(parsePy27DocFile)
+	default:
+		log.Fatalf("Unsupported indexer name: %v\n", name)
 	}
 
 	return nil

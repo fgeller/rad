@@ -20,14 +20,28 @@ func parsePy27DocFile(filePath string, r io.Reader) []shared.Namespace {
 
 	var t xml.Token
 	var err error
+	var inDt bool
+	var inH1 bool
 
 	for ; err == nil; t, err = d.Token() {
 		se, gotStartElement := t.(xml.StartElement)
+		ee, gotEndElement := t.(xml.EndElement)
 
 		switch {
+		case gotEndElement:
+			switch {
+			case ee.Name.Local == "dt":
+				inDt = false
+			case ee.Name.Local == "h1":
+				inH1 = false
+			}
 		case gotStartElement:
 			switch {
-			case se.Name.Local == "a" && hasAttr(se, "class", "headerlink"):
+			case se.Name.Local == "dt":
+				inDt = true
+			case se.Name.Local == "h1":
+				inH1 = true
+			case (inDt || inH1) && se.Name.Local == "a" && hasAttr(se, "class", "headerlink"):
 				href, _ := attr(se, "href") // TODO: err
 				tgt := filePath + href
 				ns := parseHref(href, tgt)

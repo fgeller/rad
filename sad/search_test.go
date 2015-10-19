@@ -3,8 +3,10 @@ package main
 import (
 	"../shared"
 
+	"log"
 	"reflect"
 	"regexp"
+	"runtime"
 	"testing"
 	"time"
 )
@@ -206,6 +208,52 @@ func TestFindObeysControl(t *testing.T) {
 	time.Sleep(1 * time.Millisecond)
 	if len(writtenResults) >= 1 {
 		t.Errorf("Expected find to stop searching but found %v element(s) on channel.\n", len(writtenResults))
+		return
+	}
+}
+
+func TestFindKnowsItsBoundaries(t *testing.T) {
+	resetGlobals()
+
+	lots := []shared.Namespace{
+		{Path: "hans1", Members: []shared.Member{{Name: "n1"}}},
+		{Path: "hans2", Members: []shared.Member{{Name: "n2"}}},
+		{Path: "hans3", Members: []shared.Member{{Name: "n3"}}},
+		{Path: "hans4", Members: []shared.Member{{Name: "n4"}}},
+		{Path: "hans5", Members: []shared.Member{{Name: "n5"}}},
+	}
+
+	pck := shared.Pack{Name: "go"}
+	loadPack(pck, lots)
+
+	params := searchParams{
+		pack:   regexp.MustCompile("."),
+		path:   regexp.MustCompile("."),
+		member: regexp.MustCompile("."),
+	}
+
+	var writtenResults []searchResult
+	results := make(chan searchResult)
+	control := make(chan struct{}, 1)
+	go find(results, control, params)
+	time.Sleep(500 * time.Millisecond)
+
+reading:
+	for {
+		select {
+		case <-time.After(2 * time.Second):
+			log.Println("stop reading")
+			break reading
+		case res, ok := <-results:
+			if !ok {
+				return
+			}
+			writtenResults = append(writtenResults, res)
+		}
+	}
+
+	if len(writtenResults) != runtime.NumCPU() {
+		t.Errorf("Expected find to know it's boundaries, got results: %v\n", writtenResults)
 		return
 	}
 }

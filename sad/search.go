@@ -56,7 +56,7 @@ func find(results chan searchResult, end chan struct{}, params searchParams) {
 			namespaces := resp.nss
 			if params.pack.MatchString(resp.pck.Name) {
 				cpus := runtime.NumCPU()
-				if len(namespaces) < cpus {
+				if len(namespaces) < (2 * cpus) {
 					findNamespace(results, end, namespaces, params)
 					continue
 				}

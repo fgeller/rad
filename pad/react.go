@@ -78,20 +78,3 @@ func parseReactDocFile(filePath string, r io.Reader) []shared.Namespace {
 	rs := shared.Merge(nss)
 	return rs
 }
-
-func parseReactHref(href string, path string) shared.Namespace {
-
-	var ns shared.Namespace
-	// href="component-specs.html#unmounting-componentwillunmount"
-	// href="component-specs.html#render"
-
-	// pth = "component-specs"
-	pth := href[:strings.Index(href, ".html")]
-	ns.Path = pth
-
-	// frag="render"
-	frag := href[strings.Index(href, "#")+1:]
-	m := shared.Member{Name: frag, Target: path + "#" + frag}
-	ns.Members = []shared.Member{m}
-	return ns
-}

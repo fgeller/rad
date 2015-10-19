@@ -45,6 +45,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parsePy27DocFile)
 	case "react":
 		return mk(parseReactDocFile)
+	case "jquery":
+		return mk(parseJQueryDocFile)
 	default:
 		log.Fatalf("Unsupported indexer name: %v\n", name)
 	}

@@ -11,7 +11,7 @@ PKG=http://api.jquery.com/
 # -m: mirror the given site
 # -l: limit the recursion level
 # -P: local directory prefix for downloaded files
-wget --wait=0.5 \
+wget --random-wait \
      -E \
      -e robots=off \
      -k \
@@ -28,3 +28,6 @@ pushd $PFX/api.jquery.com/jquery-wp-content/themes/jquery/css/fonts && wget http
 pushd $PFX/api.jquery.com/jquery-wp-content/themes/jquery/css/fonts && wget http://api.jquery.com/jquery-wp-content/themes/jquery/css/fonts/fontawesome-webfont.woff && popd
 
 find $PFX/api.jquery.com/jquery-wp-content/themes/jquery/css -name 'base.css*' -exec sed -iE 's$http://api.jquery.com$../../../../../api.jquery.com$g' {} \;
+
+find $PFX -name '*.html*' -exec sed -iE 's:<script>window.jQuery:<script><![CDATA[window.jQuery:g' {} \;
+find $PFX -name '*.html*' -exec sed -iE 's:)</script>:)]]></script>:g' {} \;

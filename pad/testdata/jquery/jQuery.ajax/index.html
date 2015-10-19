@@ -1,0 +1,1313 @@
+<!doctype html>
+<!--[if IE 7 ]>		 <html class="no-js ie ie7 lte7 lte8 lte9" lang="en-US"> <![endif]-->
+<!--[if IE 8 ]>		 <html class="no-js ie ie8 lte8 lte9" lang="en-US"> <![endif]-->
+<!--[if IE 9 ]>		 <html class="no-js ie ie9 lte9>" lang="en-US"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head data-live-domain="api.jquery.com">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>jQuery.ajax() | jQuery API Documentation</title>
+
+	<meta name="author" content="jQuery Foundation - jquery.org">
+	<meta name="description" content="jQuery: The Write Less, Do More, JavaScript Library">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="shortcut icon" href="../jquery-wp-content/themes/api.jquery.com/i/favicon.ico">
+
+	<link rel="stylesheet" href="../jquery-wp-content/themes/jquery/css/base.css%3Fv=1.css">
+	<link rel="stylesheet" href="../jquery-wp-content/themes/api.jquery.com/style.css">
+
+	<script src="../jquery-wp-content/themes/jquery/js/modernizr.custom.2.8.3.min.js"></script>
+
+	<script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script><![CDATA[window.jQuery || document.write('<script src="../jquery-wp-content/themes/jquery/js/jquery-1.11.2.min.js"><\/script>')]]></script>
+
+	<script src="../jquery-wp-content/themes/jquery/js/plugins.js"></script>
+	<script src="../jquery-wp-content/themes/jquery/js/main.js"></script>
+
+	<script src="../../use.typekit.net/wde1aof.js"></script>
+	<script>try{Typekit.load();}catch(e){}</script>
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/api.jquery.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.1"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f;c.supports={simple:d("simple"),flag:d("flag")},c.supports.simple&&c.supports.flag||(f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<meta name="generator" content="WordPress 4.2.1" />
+
+</head>
+<body class="api jquery single single-post postid-291 single-format-standard single-author singular">
+
+<header>
+	<section id="global-nav">
+		<nav>
+			<div class="constrain">
+				<ul class="projects">
+					<li class="project jquery"><a href="http://jquery.com/" title="jQuery">jQuery</a></li>
+					<li class="project jquery-ui"><a href="http://jqueryui.com/" title="jQuery UI">jQuery UI</a></li>
+					<li class="project jquery-mobile"><a href="http://jquerymobile.com/" title="jQuery Mobile">jQuery Mobile</a></li>
+					<li class="project sizzlejs"><a href="http://sizzlejs.com/" title="Sizzle">Sizzle</a></li>
+					<li class="project qunitjs"><a href="http://qunitjs.com/" title="QUnit">QUnit</a></li>
+				</ul>
+				<ul class="links">
+					<li><a href="http://plugins.jquery.com/">Plugins</a></li>
+					<li class="dropdown"><a href="http://contribute.jquery.org/">Contribute</a>
+						<ul>
+							<li><a href="http://contribute.jquery.org/CLA/">CLA</a></li>
+							<li><a href="http://contribute.jquery.org/style-guide/">Style Guides</a></li>
+							<li><a href="http://contribute.jquery.org/triage/">Bug Triage</a></li>
+							<li><a href="http://contribute.jquery.org/code/">Code</a></li>
+							<li><a href="http://contribute.jquery.org/documentation/">Documentation</a></li>
+							<li><a href="http://contribute.jquery.org/web-sites/">Web Sites</a></li>
+						</ul>
+					</li>
+					<li class="dropdown"><a href="http://events.jquery.org/">Events</a>
+						<ul class="wide">
+																		</ul>
+					</li>
+					<li class="dropdown"><a href="https://jquery.org/support/">Support</a>
+						<ul>
+							<li><a href="http://learn.jquery.com/">Learning Center</a></li>
+							<li><a href="http://try.jquery.com/">Try jQuery</a></li>
+							<li><a href="http://irc.jquery.org/">IRC/Chat</a></li>
+							<li><a href="http://forum.jquery.com/">Forums</a></li>
+							<li><a href="http://stackoverflow.com/tags/jquery/info">Stack Overflow</a></li>
+							<li><a href="https://jquery.org/support/">Commercial Support</a></li>
+						</ul>
+					</li>
+					<li class="dropdown"><a href="https://jquery.org/">jQuery Foundation</a>
+						<ul>
+							<li><a href="https://jquery.org/join/">Join</a></li>
+							<li><a href="https://jquery.org/members/">Members</a></li>
+							<li><a href="https://jquery.org/team/">Team</a></li>
+							<li><a href="https://jquery.org/conduct/">Conduct</a></li>
+							<li><a href="http://brand.jquery.org/">Brand Guide</a></li>
+							<li><a href="https://jquery.org/donate/">Donate</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</section>
+</header>
+
+<div id="container">
+	<div id="logo-events" class="constrain clearfix">
+		<h2 class="logo"><a href="http://jquery.com/" title="jQuery API Documentation">jQuery API Documentation</a></h2>
+
+		<aside><div id="broadcast"></div></aside>
+	</div>
+
+	<nav id="main" class="constrain clearfix">
+		<div class="menu-top-container">
+	<ul id="menu-top" class="menu">
+<li class="menu-item"><a href="http://jquery.com/download/">Download</a></li>
+<li class="menu-item current"><a href="../index.html">API Documentation</a></li>
+<li class="menu-item"><a href="http://blog.jquery.com/">Blog</a></li>
+<li class="menu-item"><a href="http://plugins.jquery.com/">Plugins</a></li>
+<li class="menu-item"><a href="http://jquery.com/browser-support/">Browser Support</a></li>
+	</ul>
+</div>
+
+		<form method="get" class="searchform" action="../index.html">
+	<button type="submit" class="icon-search"><span class="visuallyhidden">search</span></button>
+	<label>
+		<span class="visuallyhidden">Search jQuery API Documentation</span>
+		<input type="text" name="s" value=""
+			placeholder="Search">
+	</label>
+</form>
+	</nav>
+
+	<div id="content-wrapper" class="clearfix row">
+
+<div class="content-right twelve columns">
+	<div id="content">
+					
+<article id="post-291" class="post-291 post type-post status-publish format-standard hentry category-low-level-interface category-65 category-80 category-81">
+	<header class="entry-header">
+		<h1 class="entry-title">jQuery.ajax()</h1>
+		<hr>
+				<div class="entry-meta">
+			Categories: <span class="category"><a href="../category/ajax/index.html">Ajax</a> &gt; <a href="../category/ajax/low-level-interface/index.html">Low-Level Interface</a></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<article id="jQuery-ajax1" class="entry method"><h2 class="section-title">
+<span class="name">jQuery.ajax( url [, settings ] )</span><span class="returns">Returns: <a href="http://api.jquery.com/Types/#jqXHR">jqXHR</a></span>
+</h2>
+<div class="entry-wrapper">
+<p class="desc"><strong>Description: </strong>Perform an asynchronous HTTP (Ajax) request.</p>
+<ul class="signatures">
+<li class="signature">
+<h4 class="name">
+<span class="version-details">version added: <a href="../category/version/1.5/index.html">1.5</a></span><a id="jQuery-ajax-url-settings" href="index.html#jQuery-ajax-url-settings"><span class="icon-link"></span>jQuery.ajax( url [, settings ] )</a>
+</h4>
+<ul>
+<li>
+<div><strong>url</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>A string containing the URL to which the request is sent.</div>
+</li>
+<li>
+<div><strong>settings</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>A set of key/value pairs that configure the Ajax request. All settings are optional. A default can be set for any option with <a href="../jQuery.ajaxSetup/index.html">$.ajaxSetup()</a>. See <a href="index.html#jQuery-ajax-settings">jQuery.ajax( settings )</a> below for a complete list of all settings.</div>
+</li>
+</ul>
+</li>
+<li class="signature">
+<h4 class="name">
+<span class="version-details">version added: <a href="../category/version/1.0/index.html">1.0</a></span><a id="jQuery-ajax-settings" href="index.html#jQuery-ajax-settings"><span class="icon-link"></span>jQuery.ajax(  [settings ] )</a>
+</h4>
+<ul><li>
+<div><strong>settings</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>A set of key/value pairs that configure the Ajax request. All settings are optional. A default can be set for any option with <a href="../jQuery.ajaxSetup/index.html">$.ajaxSetup()</a>.</div>
+<ul>
+<li>
+<div>
+<strong>accepts</strong> (default: <code>depends on DataType</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>The content type sent in the request header that tells the server what kind of response it will accept in return.</div>
+</li>
+<li>
+<div>
+<strong>async</strong> (default: <code>true</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>By default, all requests are sent asynchronously (i.e. this is set to <code>true</code> by default). If you need synchronous requests, set this option to <code>false</code>. Cross-domain requests and <code>dataType: &quot;jsonp&quot;</code> requests do not support synchronous operation. Note that synchronous requests may temporarily lock the browser, disabling any actions while the request is active. <strong>As of jQuery 1.8, the use of <code>async: false</code> with jqXHR (<code>$.Deferred</code>) is deprecated; you must use the success/error/complete callback options instead of the corresponding methods of the jqXHR object such as <code>jqXHR.done()</code> or the deprecated <code>jqXHR.success()</code>.</strong>
+</div>
+</li>
+<li>
+<div><strong>beforeSend</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#Function">Function</a>( <a href="http://api.jquery.com/Types/#jqXHR">jqXHR</a> jqXHR, <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a> settings )</div>
+<div>A pre-request callback function that can be used to modify the jqXHR (in jQuery 1.4.x, XMLHTTPRequest) object before it is sent. Use this to set custom headers, etc. The jqXHR and settings objects are passed as arguments. This is an <a href="http://api.jquery.com/Ajax_Events/">Ajax Event</a>. Returning <code>false</code> in the <code>beforeSend</code> function will cancel the request. <strong>As of jQuery 1.5</strong>, the <code>beforeSend</code> option will be called regardless of the type of request.</div>
+</li>
+<li>
+<div>
+<strong>cache</strong> (default: <code>true, false for dataType &apos;script&apos; and &apos;jsonp&apos;</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>If set to <code>false</code>, it will force requested pages not to be cached by the browser. <strong>Note:</strong> Setting <code>cache</code> to false will only work correctly with HEAD and GET requests. It works by appending &quot;_={timestamp}&quot; to the GET parameters. The parameter is not needed for other types of requests, except in IE8 when a POST is made to a URL that has already been requested by a GET.</div>
+</li>
+<li>
+<div><strong>complete</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#Function">Function</a>( <a href="http://api.jquery.com/Types/#jqXHR">jqXHR</a> jqXHR, <a href="http://api.jquery.com/Types/#String">String</a> textStatus )</div>
+<div>A function to be called when the request finishes (after <code>success</code> and <code>error</code> callbacks are executed). The function gets passed two arguments: The jqXHR (in jQuery 1.4.x, XMLHTTPRequest) object and a string categorizing the status of the request (<code>&quot;success&quot;</code>, <code>&quot;notmodified&quot;</code>, <code>&quot;nocontent&quot;</code>, <code>&quot;error&quot;</code>, <code>&quot;timeout&quot;</code>, <code>&quot;abort&quot;</code>, or <code>&quot;parsererror&quot;</code>). <strong>As of jQuery 1.5</strong>, the <code>complete</code> setting can accept an array of functions. Each function will be called in turn. This is an <a href="http://api.jquery.com/Ajax_Events/">Ajax Event</a>.</div>
+</li>
+<li>
+<div><strong>contents</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>An object of string/regular-expression pairs that determine how jQuery will parse the response, given its content type.<span class="version-details"> (version added: <a href="../category/version/1.5/index.html">1.5</a>)</span>
+</div>
+</li>
+<li>
+<div>
+<strong>contentType</strong> (default: <code>&apos;application/x-www-form-urlencoded; charset=UTF-8&apos;</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a> or <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>When sending data to the server, use this content type. Default is &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;, which is fine for most cases.  If you explicitly pass in a content-type to <code>$.ajax()</code>, then it is always sent to the server (even if no data is sent).  As of jQuery 1.6 you can pass <code>false</code> to tell jQuery to not set any content type header.  <strong>Note:</strong> The W3C XMLHttpRequest specification dictates that the charset is always UTF-8; specifying another charset will not force the browser to change the encoding. <strong>Note:</strong> For cross-domain requests, setting the content type to anything other than <code>application/x-www-form-urlencoded</code>, <code>multipart/form-data</code>, or <code>text/plain</code> will trigger the browser to send a preflight OPTIONS request to the server.</div>
+</li>
+<li>
+<div><strong>context</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>This object will be the context of all Ajax-related callbacks. By default, the context is an object that represents the Ajax settings used in the call (<code>$.ajaxSettings</code> merged with the settings passed to <code>$.ajax</code>). For example,  specifying a DOM element as the context will make that the context for the <code>complete</code> callback of a request, like so:
+          <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax({</code></div></div><div class="container"><div class="line"><code>  url: <span class="string">&quot;test.html&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  context: document.body</code></div></div><div class="container"><div class="line"><code>}).done(<span class="keyword">function</span>() {</code></div></div><div class="container"><div class="line"><code>  $( <span class="keyword">this</span> ).addClass( <span class="string">&quot;done&quot;</span> );</code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+        </div>
+</li>
+<li>
+<div>
+<strong>converters</strong> (default: <code>{&quot;* text&quot;: window.String, &quot;text html&quot;: true, &quot;text json&quot;: jQuery.parseJSON, &quot;text xml&quot;: jQuery.parseXML}</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>An object containing dataType-to-dataType converters. Each converter&apos;s value is a function that returns the transformed value of the response.<span class="version-details"> (version added: <a href="../category/version/1.5/index.html">1.5</a>)</span>
+</div>
+</li>
+<li>
+<div>
+<strong>crossDomain</strong> (default: <code>false for same-domain requests, true for cross-domain requests</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>If you wish to force a crossDomain request (such as JSONP) on the same domain, set the value of crossDomain to <code>true</code>. This allows, for example, server-side redirection to another domain.<span class="version-details"> (version added: <a href="../category/version/1.5/index.html">1.5</a>)</span>
+</div>
+</li>
+<li>
+<div><strong>data</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a> or <a href="http://api.jquery.com/Types/#String">String</a> or <a href="http://api.jquery.com/Types/#Array">Array</a>
+</div>
+<div>Data to be sent to the server. It is converted to a query string, if not already a string. It&apos;s appended to the url for GET-requests. See <code>processData</code> option to prevent this automatic processing. Object must be Key/Value pairs. If value is an Array, jQuery serializes multiple values with same key based on the value of the <code>traditional</code> setting (described below).</div>
+</li>
+<li>
+<div><strong>dataFilter</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#Function">Function</a>( <a href="http://api.jquery.com/Types/#String">String</a> data, <a href="http://api.jquery.com/Types/#String">String</a> type )
+			=&gt;
+			<a href="http://api.jquery.com/Types/#Anything">Anything</a>
+</div>
+<div>A function to be used to handle the raw response data of XMLHttpRequest. This is a pre-filtering function to sanitize the response. You should return the sanitized data. The function accepts two arguments: The raw data returned from the server and the &apos;dataType&apos; parameter.</div>
+</li>
+<li>
+<div>
+<strong>dataType</strong> (default: <code>Intelligent Guess (xml, json, script, or html)</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>The type of data that you&apos;re expecting back from the server. If none is specified, jQuery will try to infer it based on the MIME type of the response (an XML MIME type will yield XML, in 1.4 JSON will yield a JavaScript object, in 1.4 script will execute the script, and anything else will be returned as a string). The available types (and the result passed as the first argument to your success callback) are:
+          <ul>
+            <li>
+<code>&quot;xml&quot;</code>: Returns a XML document that can be processed via jQuery.</li>
+            <li>
+<code>&quot;html&quot;</code>: Returns HTML as plain text; included script tags are evaluated when inserted in the DOM.</li>
+            <li>
+<code>&quot;script&quot;</code>: Evaluates the response as JavaScript and returns it as plain text. Disables caching by appending a query string parameter, <code>_=[TIMESTAMP]</code>, to the URL unless the <code>cache</code> option is set to <code>true</code>. <strong>Note:</strong> This will turn POSTs into GETs for remote-domain requests.</li>
+            <li>
+<code>&quot;json&quot;</code>: Evaluates the response as JSON and returns a JavaScript object. Cross-domain <code>&quot;json&quot;</code> requests are converted to <code>&quot;jsonp&quot;</code> unless the request includes <code>jsonp: false</code> in its request options. The JSON data is parsed in a strict manner; any malformed JSON is rejected and a parse error is thrown. As of jQuery 1.9, an empty response is also rejected; the server should return a response of <code>null</code> or <code>{}</code> instead. (See <a href="http://json.org/">json.org</a> for more information on proper JSON formatting.)</li>
+            <li>
+<code>&quot;jsonp&quot;</code>: Loads in a JSON block using <a href="http://bob.ippoli.to/archives/2005/12/05/remote-json-jsonp/">JSONP</a>. Adds an extra <code>&quot;?callback=?&quot;</code> to the end of your URL to specify the callback. Disables caching by appending a query string parameter, <code>&quot;_=[TIMESTAMP]&quot;</code>, to the URL unless the <code>cache</code> option is set to <code>true</code>.</li>
+            <li>
+<code>&quot;text&quot;</code>: A plain text string.</li>
+            <li>multiple, space-separated values: <strong>As of jQuery 1.5</strong>, jQuery can convert a dataType from what it received in the Content-Type header to what you require. For example, if you want a text response to be treated as XML, use <code>&quot;text xml&quot;</code> for the dataType. You can also make a JSONP request, have it received as text, and interpreted by jQuery as XML: <code>&quot;jsonp text xml&quot;</code>. Similarly, a shorthand string such as <code>&quot;jsonp xml&quot;</code> will first attempt to convert from jsonp to xml, and, failing that, convert from jsonp to text, and then from text to xml.</li>
+          </ul>
+        </div>
+</li>
+<li>
+<div><strong>error</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#Function">Function</a>( <a href="http://api.jquery.com/Types/#jqXHR">jqXHR</a> jqXHR, <a href="http://api.jquery.com/Types/#String">String</a> textStatus, <a href="http://api.jquery.com/Types/#String">String</a> errorThrown )</div>
+<div>A function to be called if the request fails. The function receives three arguments: The jqXHR (in jQuery 1.4.x, XMLHttpRequest) object, a string describing the type of error that occurred and an optional exception object, if one occurred. Possible values for the second argument (besides <code>null</code>) are <code>&quot;timeout&quot;</code>, <code>&quot;error&quot;</code>, <code>&quot;abort&quot;</code>, and <code>&quot;parsererror&quot;</code>. When an HTTP error occurs, <code>errorThrown</code> receives the textual portion of the HTTP status, such as &quot;Not Found&quot; or &quot;Internal Server Error.&quot;  <strong>As of jQuery 1.5</strong>, the <code>error</code> setting can accept an array of functions. Each function will be called in turn.  <strong>Note:</strong> <em>This handler is not called for cross-domain script and cross-domain JSONP requests.</em> This is an <a href="http://api.jquery.com/Ajax_Events/">Ajax Event</a>.</div>
+</li>
+<li>
+<div>
+<strong>global</strong> (default: <code>true</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>Whether to trigger global Ajax event handlers for this request. The default is <code>true</code>. Set to <code>false</code> to prevent the global handlers like <code>ajaxStart</code> or <code>ajaxStop</code> from being triggered. This can be used to control various <a href="http://api.jquery.com/Ajax_Events/">Ajax Events</a>.</div>
+</li>
+<li>
+<div>
+<strong>headers</strong> (default: <code>{}</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>An object of additional header key/value pairs to send along with requests using the XMLHttpRequest transport. The header <code>X-Requested-With: XMLHttpRequest</code> is always added, but its default <code>XMLHttpRequest</code> value can be changed here.  Values in the <code>headers</code> setting can also be overwritten from within the <code>beforeSend</code> function.<span class="version-details"> (version added: <a href="../category/version/1.5/index.html">1.5</a>)</span>
+</div>
+</li>
+<li>
+<div>
+<strong>ifModified</strong> (default: <code>false</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>Allow the request to be successful only if the response has changed since the last request. This is done by checking the Last-Modified header. Default value is <code>false</code>, ignoring the header. In jQuery 1.4 this technique also checks the &apos;etag&apos; specified by the server to catch unmodified data.</div>
+</li>
+<li>
+<div>
+<strong>isLocal</strong> (default: <code>depends on current location protocol</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>Allow the current environment to be recognized as &quot;local,&quot; (e.g. the filesystem), even if jQuery does not recognize it as such by default. The following protocols are currently recognized as local: <code>file</code>, <code>*-extension</code>, and <code>widget</code>. If the <code>isLocal</code> setting needs modification, it is recommended to do so once in the <code>$.ajaxSetup()</code> method.<span class="version-details"> (version added: <a href="../category/version/1.5.1/index.html">1.5.1</a>)</span>
+</div>
+</li>
+<li>
+<div><strong>jsonp</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>Override the callback function name in a JSONP request.  This value will be used instead of &apos;callback&apos; in the &apos;callback=?&apos; part of the query string in the url.  So <code>{jsonp:&apos;onJSONPLoad&apos;}</code> would result in <code>&apos;onJSONPLoad=?&apos;</code> passed to the server. <strong>As of jQuery 1.5</strong>, setting the <code>jsonp</code> option to <code>false</code> prevents jQuery from adding the &quot;?callback&quot; string to the URL or attempting to use &quot;=?&quot; for transformation. In this case, you should also explicitly set the <code>jsonpCallback</code> setting. For example, <code>{ jsonp: false, jsonpCallback: &quot;callbackName&quot; }</code>
+</div>
+</li>
+<li>
+<div><strong>jsonpCallback</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a> or <a href="http://api.jquery.com/Types/#Function">Function</a>()</div>
+<div>Specify the callback function name for a JSONP request.  This value will be used instead of the random name automatically generated by jQuery. It is preferable to let jQuery generate a unique name as it&apos;ll make it easier to manage the requests and provide callbacks and error handling. You may want to specify the callback when you want to enable better browser caching of GET requests. <strong>As of jQuery 1.5</strong>, you can also use a function for this setting, in which case the value of <code>jsonpCallback</code> is set to the return value of that function.</div>
+</li>
+<li>
+<div>
+<strong>method</strong> (default: <code>&apos;GET&apos;</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>The HTTP method to use for the request (e.g. <code>&quot;POST&quot;</code>, <code>&quot;GET&quot;</code>, <code>&quot;PUT&quot;</code>).<span class="version-details"> (version added: <a href="http://api.jquery.com/category/version/1.9.0/">1.9.0</a>)</span>
+</div>
+</li>
+<li>
+<div><strong>mimeType</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>A mime type to override the <abbr title="XMLHttpRequest">XHR</abbr> mime type.<span class="version-details"> (version added: <a href="../category/version/1.5.1/index.html">1.5.1</a>)</span>
+</div>
+</li>
+<li>
+<div><strong>password</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>A password to be used with XMLHttpRequest in response to an HTTP access authentication request.</div>
+</li>
+<li>
+<div>
+<strong>processData</strong> (default: <code>true</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>By default, data passed in to the <code>data</code> option as an object (technically, anything other than a string) will be processed and transformed into a query string, fitting to the default content-type &quot;application/x-www-form-urlencoded&quot;. If you want to send a DOMDocument, or other non-processed data, set this option to <code>false</code>.</div>
+</li>
+<li>
+<div><strong>scriptCharset</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>Only applies when the &quot;script&quot; transport is used (e.g., cross-domain requests with &quot;jsonp&quot; or &quot;script&quot; dataType and &quot;GET&quot; type). Sets the <code>charset</code> attribute on the script tag used in the request. Used when the character set on the local page is not the same as the one on the remote script.</div>
+</li>
+<li>
+<div>
+<strong>statusCode</strong> (default: <code>{}</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>
+          <p>An object of numeric HTTP codes and functions to be called when the response has the corresponding code. For example, the following will alert when the response status is a 404:</p>
+          <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax({</code></div></div><div class="container"><div class="line"><code>  statusCode: {</code></div></div><div class="container"><div class="line"><code>    <span class="number">404</span>: <span class="keyword">function</span>() {</code></div></div><div class="container"><div class="line"><code>      alert( <span class="string">&quot;page not found&quot;</span> );</code></div></div><div class="container"><div class="line"><code>    }</code></div></div><div class="container"><div class="line"><code>  }</code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+          <p>If the request is successful, the status code functions take the same parameters as the success callback; if it results in an error (including 3xx redirect), they take the same parameters as the <code>error</code> callback.</p>
+        <span class="version-details"> (version added: <a href="../category/version/1.5/index.html">1.5</a>)</span>
+</div>
+</li>
+<li>
+<div><strong>success</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#Function">Function</a>( <a href="http://api.jquery.com/Types/#Anything">Anything</a> data, <a href="http://api.jquery.com/Types/#String">String</a> textStatus, <a href="http://api.jquery.com/Types/#jqXHR">jqXHR</a> jqXHR )</div>
+<div>A function to be called if the request succeeds. The function gets passed three arguments: The data returned from the server, formatted according to the <code>dataType</code> parameter or the <code>dataFilter</code> callback function, if specified; a string describing the status; and the <code>jqXHR</code> (in jQuery 1.4.x, XMLHttpRequest) object. <strong>As of jQuery 1.5</strong>, <em>the success setting can accept an array of functions. Each function will be called in turn.</em> This is an <a href="http://api.jquery.com/Ajax_Events/">Ajax Event</a>.</div>
+</li>
+<li>
+<div><strong>timeout</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#Number">Number</a>
+</div>
+<div>Set a timeout (in milliseconds) for the request. This will override any global timeout set with <a href="../jQuery.ajaxSetup/index.html">$.ajaxSetup()</a>. The timeout period starts at the point the <code>$.ajax</code> call is made; if several other requests are in progress and the browser has no connections available, it is possible for a request to time out before it can be sent. <strong>In jQuery 1.4.x and below,</strong> the XMLHttpRequest object will be in an invalid state if the request times out; accessing any object members may throw an exception. <strong>In Firefox 3.0+ only,</strong> script and JSONP requests cannot be cancelled by a timeout; the script will run even if it arrives after the timeout period.</div>
+</li>
+<li>
+<div><strong>traditional</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#Boolean">Boolean</a>
+</div>
+<div>Set this to <code>true</code> if you wish to use the traditional style of <a href="../jQuery.param/index.html">param serialization</a>.</div>
+</li>
+<li>
+<div>
+<strong>type</strong> (default: <code>&apos;GET&apos;</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>An alias for <code>method</code>. You should use <code>type</code> if you&apos;re using versions of jQuery prior to 1.9.0.</div>
+</li>
+<li>
+<div>
+<strong>url</strong> (default: <code>The current page</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div> A string containing the URL to which the request is sent.</div>
+</li>
+<li>
+<div><strong>username</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#String">String</a>
+</div>
+<div>A username to be used with XMLHttpRequest in response to an HTTP access authentication request.</div>
+</li>
+<li>
+<div>
+<strong>xhr</strong> (default: <code>ActiveXObject when available (IE), the XMLHttpRequest otherwise</code>)</div>
+<div>Type: <a href="http://api.jquery.com/Types/#Function">Function</a>()</div>
+<div>Callback for creating the XMLHttpRequest object. Defaults to the ActiveXObject when available (IE), the XMLHttpRequest otherwise. Override to provide your own implementation for XMLHttpRequest or enhancements to the factory.</div>
+</li>
+<li>
+<div><strong>xhrFields</strong></div>
+<div>Type: <a href="http://api.jquery.com/Types/#PlainObject">PlainObject</a>
+</div>
+<div>
+          <p>An object of fieldName-fieldValue pairs to set on the native <code><abbr title="XMLHttpRequest">XHR</abbr></code> object. For example, you can use it to set <code>withCredentials</code> to <code>true</code> for cross-domain requests if needed.</p>
+          <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax({</code></div></div><div class="container"><div class="line"><code>   url: a_cross_domain_url,</code></div></div><div class="container"><div class="line"><code>   xhrFields: {</code></div></div><div class="container"><div class="line"><code>      withCredentials: <span class="literal">true</span></code></div></div><div class="container"><div class="line"><code>   }</code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+          <p><strong>In jQuery 1.5</strong>, the <code>withCredentials</code> property was not propagated to the native <code>XHR</code> and thus CORS requests requiring it would ignore this flag. For this reason, we recommend using jQuery 1.5.1+ should you require the use of it.</p>
+        <span class="version-details"> (version added: <a href="../category/version/1.5.1/index.html">1.5.1</a>)</span>
+</div>
+</li>
+</ul>
+</li></ul>
+</li>
+</ul>
+<div class="longdesc" id="entry-longdesc">
+    <p>The <code>$.ajax()</code> function underlies all Ajax requests sent by jQuery.  It is often unnecessary to directly call this function, as several higher-level alternatives like <code><a href="../jQuery.get/index.html">$.get()</a></code> and <code><a href="../load/index.html">.load()</a></code> are available and are easier to use. If less common options are required, though, <code>$.ajax()</code> can be used more flexibly.</p>
+    <p>At its simplest, the <code>$.ajax()</code> function can be called with no arguments:</p>
+    <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax();</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+    <p><strong>Note:</strong> Default settings can be set globally by using the <code><a href="../jQuery.ajaxSetup/index.html">$.ajaxSetup()</a></code> function.</p>
+    <p>This example, using no options, loads the contents of the current page, but does nothing with the result. To use the result, you can implement one of the callback functions.</p>
+    <h4 id="jqXHR">The jqXHR Object</h4>
+    <p>The jQuery XMLHttpRequest (jqXHR) object returned by <code>$.ajax()</code> <strong>as of jQuery 1.5</strong> is a superset of the browser&apos;s native XMLHttpRequest object. For example, it contains <code>responseText</code> and <code>responseXML</code> properties, as well as a <code>getResponseHeader()</code> method. When the transport mechanism is something other than XMLHttpRequest (for example, a script tag for a JSONP request) the <code>jqXHR</code> object simulates native XHR functionality where possible. </p>
+    <p><strong>As of jQuery 1.5.1</strong>, the <code>jqXHR</code> object also contains the <code>overrideMimeType()</code> method (it was available in jQuery 1.4.x, as well, but was temporarily removed in jQuery 1.5). The <code>.overrideMimeType()</code> method may be used in the <code>beforeSend()</code> callback function, for example, to modify the response content-type header:</p>
+    <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+						<div class="line n8">8</div>
+					
+						<div class="line n9">9</div>
+					
+						<div class="line n10">10</div>
+					
+						<div class="line n11">11</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax({</code></div></div><div class="container"><div class="line"><code>  url: <span class="string">&quot;http://fiddle.jshell.net/favicon.png&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  beforeSend: <span class="keyword">function</span>( xhr ) {</code></div></div><div class="container"><div class="line"><code>    xhr.overrideMimeType( <span class="string">&quot;text/plain; charset=x-user-defined&quot;</span> );</code></div></div><div class="container"><div class="line"><code>  }</code></div></div><div class="container"><div class="line"><code>})</code></div></div><div class="container"><div class="line"><code>  .done(<span class="keyword">function</span>( data ) {</code></div></div><div class="container"><div class="line"><code>    <span class="keyword">if</span> ( console &amp;&amp; console.log ) {</code></div></div><div class="container"><div class="line"><code>      console.log( <span class="string">&quot;Sample of data:&quot;</span>, data.slice( <span class="number">0</span>, <span class="number">100</span> ) );</code></div></div><div class="container"><div class="line"><code>    }</code></div></div><div class="container"><div class="line"><code>  });</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+    <p>The jqXHR objects returned by <code>$.ajax()</code> as of jQuery 1.5 implement the Promise interface, giving them all the properties, methods, and behavior of a Promise (see <a href="../category/deferred-object/index.html">Deferred object</a> for more information). These methods take one or more function arguments that are called when the <code>$.ajax()</code> request terminates. This allows you to assign multiple callbacks on a single request, and even to assign callbacks after the request may have completed. (If the request is already complete, the callback is fired immediately.) Available Promise methods of the jqXHR object include: </p>
+    <ul>
+      <li>
+        <strong>jqXHR.done(function( data, textStatus, jqXHR ) {});</strong>
+        <p>An alternative construct to the success callback option, the <code>.done()</code> method replaces the deprecated <code>jqXHR.success()</code> method. Refer to <code><a href="../deferred.done/index.html">deferred.done()</a></code> for implementation details.</p>
+      </li>
+      <li>
+        <strong>jqXHR.fail(function( jqXHR, textStatus, errorThrown ) {});</strong>
+        <p>An alternative construct to the error callback option, the <code>.fail()</code> method replaces the deprecated <code>.error()</code> method. Refer to <code><a href="../deferred.fail/index.html">deferred.fail()</a></code> for implementation details.
+        </p>
+      </li>
+      <li>
+        <strong>jqXHR.always(function( data|jqXHR, textStatus, jqXHR|errorThrown ) { });</strong>
+        <p>An alternative construct to the complete callback option, the <code>.always()</code> method replaces the deprecated <code>.complete()</code> method.</p>
+        <p>In response to a successful request, the function&apos;s arguments are the same as those of <code>.done()</code>: data, textStatus, and the jqXHR object. For failed requests the arguments are the same as those of <code>.fail()</code>: the jqXHR object, textStatus, and errorThrown. Refer to <code><a href="../deferred.always/index.html">deferred.always()</a></code> for implementation details.</p>
+      </li>
+      <li>
+        <strong>jqXHR.then(function( data, textStatus, jqXHR ) {}, function( jqXHR, textStatus, errorThrown ) {});</strong>
+        <p>Incorporates the functionality of the <code>.done()</code> and <code>.fail()</code> methods, allowing (as of jQuery 1.8) the underlying Promise to be manipulated. Refer to <a href="../deferred.then/index.html"><code>deferred.then()</code></a> for implementation details.
+        </p>
+      </li>
+    </ul>
+    <div class="warning">
+      <p><strong>Deprecation Notice:</strong> The <code>jqXHR.success()</code>, <code>jqXHR.error()</code>, and <code>jqXHR.complete()</code> callbacks are deprecated as of jQuery 1.8. To prepare your code for their eventual removal, use <code>jqXHR.done()</code>, <code>jqXHR.fail()</code>, and <code>jqXHR.always()</code> instead.</p>
+    </div>
+    <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+						<div class="line n8">8</div>
+					
+						<div class="line n9">9</div>
+					
+						<div class="line n10">10</div>
+					
+						<div class="line n11">11</div>
+					
+						<div class="line n12">12</div>
+					
+						<div class="line n13">13</div>
+					
+						<div class="line n14">14</div>
+					
+						<div class="line n15">15</div>
+					
+						<div class="line n16">16</div>
+					
+						<div class="line n17">17</div>
+					
+						<div class="line n18">18</div>
+					
+						<div class="line n19">19</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code><span class="comment">// Assign handlers immediately after making the request,</span></code></div></div><div class="container"><div class="line"><code><span class="comment">// and remember the jqXHR object for this request</span></code></div></div><div class="container"><div class="line"><code><span class="keyword">var</span> jqxhr = $.ajax( <span class="string">&quot;example.php&quot;</span> )</code></div></div><div class="container"><div class="line"><code>  .done(<span class="keyword">function</span>() {</code></div></div><div class="container"><div class="line"><code>    alert( <span class="string">&quot;success&quot;</span> );</code></div></div><div class="container"><div class="line"><code>  })</code></div></div><div class="container"><div class="line"><code>  .fail(<span class="keyword">function</span>() {</code></div></div><div class="container"><div class="line"><code>    alert( <span class="string">&quot;error&quot;</span> );</code></div></div><div class="container"><div class="line"><code>  })</code></div></div><div class="container"><div class="line"><code>  .always(<span class="keyword">function</span>() {</code></div></div><div class="container"><div class="line"><code>    alert( <span class="string">&quot;complete&quot;</span> );</code></div></div><div class="container"><div class="line"><code>  });</code></div></div><div class="container"><div class="line"><code> </code></div></div><div class="container"><div class="line"><code><span class="comment">// Perform other work here ...</span></code></div></div><div class="container"><div class="line"><code> </code></div></div><div class="container"><div class="line"><code><span class="comment">// Set another completion function for the request above</span></code></div></div><div class="container"><div class="line"><code>jqxhr.always(<span class="keyword">function</span>() {</code></div></div><div class="container"><div class="line"><code>  alert( <span class="string">&quot;second complete&quot;</span> );</code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+    <p>The <code>this</code> reference within all callbacks is the object in the <code>context</code> option passed to <code>$.ajax</code> in the settings; if <code>context</code> is not specified, <code>this</code> is a reference to the Ajax settings themselves.</p>
+    <p>For backward compatibility with <code>XMLHttpRequest</code>, a <code>jqXHR</code> object will expose the following properties and methods:</p>
+    <ul>
+      <li>
+        <code>readyState</code>
+      </li>
+      <li>
+        <code>status</code>
+      </li>
+      <li>
+        <code>statusText</code>
+      </li>
+      <li>
+<code>responseXML</code> and/or <code>responseText</code> when the underlying request responded with xml and/or text, respectively</li>
+      <li>
+<code>setRequestHeader(name, value)</code> which departs from the standard by replacing the old value with the new one rather than concatenating the new value to the old one</li>
+      <li>
+        <code>getAllResponseHeaders()</code>
+      </li>
+      <li>
+        <code>getResponseHeader()</code>
+      </li>
+      <li>
+        <code>statusCode()</code>
+      </li>
+      <li>
+        <code>abort()</code>
+      </li>
+    </ul>
+    <p>No <code>onreadystatechange</code> mechanism is provided, however, since <code>done</code>, <code>fail</code>, <code>always</code>, and <code>statusCode</code> cover all conceivable requirements.</p>
+    <h4 id="callback-functions">Callback Function Queues</h4>
+    <p>The <code>beforeSend</code>, <code>error</code>, <code>dataFilter</code>, <code>success</code> and <code>complete</code> options all accept callback functions that are invoked at the appropriate times.</p>
+    <p><strong>As of jQuery 1.5</strong>, the <code>fail</code> and <code>done</code>, and, as of jQuery 1.6, <code>always</code> callback hooks are first-in, first-out managed queues, allowing for more than one callback for each hook. See <a href="../category/deferred-object/index.html">Deferred object methods</a>, which are implemented internally for these <code>$.ajax()</code> callback hooks.</p>
+    <p>The callback hooks provided by <code>$.ajax()</code> are as follows:</p>
+    <ol>
+      <li>
+<code>beforeSend</code> callback option is invoked; it receives the <code>jqXHR</code> object and the <code>settings</code> object as parameters.</li>
+      <li>
+<code>error</code> callback option is invoked, if the request fails. It receives the <code>jqXHR</code>, a string indicating the error type, and an exception object if applicable. Some built-in errors will provide a string as the exception object: &quot;abort&quot;, &quot;timeout&quot;, &quot;No Transport&quot;.</li>
+      <li>
+<code>dataFilter</code> callback option is invoked immediately upon successful receipt of response data. It receives the returned data and the value of <code>dataType</code>, and must return the (possibly altered) data to pass on to <code>success</code>.</li>
+      <li>
+<code>success</code> callback option is invoked, if the request succeeds. It receives the returned data, a string containing the success code, and the <code>jqXHR</code> object.</li>
+      <li>
+<strong>Promise callbacks</strong> &#x2014; <code>.done()</code>, <code>.fail()</code>, <code>.always()</code>, and <code>.then()</code> &#x2014; are invoked, in the order they are registered. </li>
+      <li>
+<code>complete</code> callback option fires, when the request finishes, whether in failure or success. It receives the <code>jqXHR</code> object, as well as a string containing the success or error code.</li>
+    </ol>
+
+    <h4 id="data-types">Data Types</h4>
+    <p>Different types of response to <code>$.ajax()</code> call are subjected to different kinds of pre-processing before being passed to the success handler. The type of pre-processing depends by default upon the Content-Type of the response, but can be set explicitly using the <code>dataType</code> option. If the <code>dataType</code> option is provided, the Content-Type header of the response will be disregarded.</p>
+    <p>The available data types are <code>text</code>, <code>html</code>, <code>xml</code>, <code>json</code>, <code>jsonp</code>, and <code>script</code>.</p>
+    <p>If <code>text</code> or <code>html</code> is specified, no pre-processing occurs. The data is simply passed on to the success handler, and made available through the <code>responseText</code> property of the <code>jqXHR</code> object.</p>
+    <p>If <code>xml</code> is specified, the response is parsed using <a href="../jQuery.parseXML/index.html"><code>jQuery.parseXML</code></a> before being passed, as an <a href="http://api.jquery.com/Types/#XMLDocument"><code>XMLDocument</code></a>, to the success handler. The XML document is made available through the <code>responseXML</code> property of the <code>jqXHR</code> object.</p>
+    <p>If <code>json</code> is specified, the response is parsed using <a href="../jQuery.parseJSON/index.html"><code>jQuery.parseJSON</code></a> before being passed, as an object, to the success handler. The parsed JSON object is made available through the <code>responseJSON</code> property of the <code>jqXHR</code> object.</p>
+    <p>If <code>script</code> is specified, <code>$.ajax()</code> will execute the JavaScript that is received from the server before passing it on to the success handler as a string.</p>
+    <p>If <code>jsonp</code> is specified, <code>$.ajax()</code> will automatically append a query string parameter of (by default) <code>callback=?</code> to the URL. The <code>jsonp</code> and <code>jsonpCallback</code> properties of the settings passed to <code>$.ajax()</code> can be used to specify, respectively, the name of the query string parameter and the name of the JSONP callback function. The server should return valid JavaScript that passes the JSON response into the callback function. <code>$.ajax()</code> will execute the returned JavaScript, calling the JSONP callback function, before passing the JSON object contained in the response to the <code>$.ajax()</code> success handler.</p>
+    <p>For more information on JSONP, see the <a href="http://bob.pythonmac.org/archives/2005/12/05/remote-json-jsonp/">original post detailing its use</a>.</p>
+    <h4 id="sending-data-to-server">Sending Data to the Server</h4>
+    <p>By default, Ajax requests are sent using the GET HTTP method. If the POST method is required, the method can be specified by setting a value for the <code>type</code> option. This option affects how the contents of the <code>data</code> option are sent to the server. POST data will always be transmitted to the server using UTF-8 charset, per the W3C XMLHTTPRequest standard.</p>
+    <p>The <code>data</code> option can contain either a query string of the form <code>key1=value1&amp;key2=value2</code>, or an object of the form <code>{key1: &apos;value1&apos;, key2: &apos;value2&apos;}</code>. If the latter form is used, the data is converted into a query string using <code><a href="../jQuery.param/index.html">jQuery.param()</a></code> before it is sent. This processing can be circumvented by setting <code>processData</code> to <code>false</code>.  The processing might be undesirable if you wish to send an XML object to the server; in this case, change the <code>contentType</code> option from <code>application/x-www-form-urlencoded</code> to a more appropriate MIME type.</p>
+    <h4 id="advanced-options">Advanced Options</h4>
+    <p>The <code>global</code> option prevents handlers registered using <code><a href="../ajaxSend/index.html">.ajaxSend()</a></code>, <code><a href="../ajaxError/index.html">.ajaxError()</a></code>, and similar methods from firing when this request would trigger them. This can be useful to, for example, suppress a loading indicator that was implemented with <code><a href="../ajaxSend/index.html">.ajaxSend()</a></code> if the requests are frequent and brief. With cross-domain script and JSONP requests, the global option is automatically set to <code>false</code>. See the descriptions of these methods below for more details.</p>
+    <p>If the server performs HTTP authentication before providing a response, the user name and password pair can be sent via the <code>username</code> and <code>password</code> options.</p>
+    <p>Ajax requests are time-limited, so errors can be caught and handled to provide a better user experience. Request timeouts are usually either left at their default or set as a global default using <code><a href="../jQuery.ajaxSetup/index.html">$.ajaxSetup()</a></code> rather than being overridden for specific requests with the <code>timeout</code> option.</p>
+    <p>By default, requests are always issued, but the browser may serve results out of its cache. To disallow use of the cached results, set <code>cache</code> to <code>false</code>. To cause the request to report failure if the asset has not been modified since the last request, set <code>ifModified</code> to <code>true</code>.</p>
+    <p>The <code>scriptCharset</code> allows the character set to be explicitly specified for requests that use a <code>&lt;script&gt;</code> tag (that is, a type of <code>script</code> or <code>jsonp</code>). This is useful if the script and host page have differing character sets.</p>
+    <p>The first letter in Ajax stands for &quot;asynchronous,&quot; meaning that the operation occurs in parallel and the order of completion is not guaranteed. The <code>async</code> option to <code>$.ajax()</code> defaults to <code>true</code>, indicating that code execution can continue after the request is made. Setting this option to <code>false</code> (and thus making the call no longer asynchronous) is strongly discouraged, as it can cause the browser to become unresponsive.</p>
+    <p>The <code>$.ajax()</code> function returns the <code>XMLHttpRequest</code> object that it creates. Normally jQuery handles the creation of this object internally, but a custom function for manufacturing one can be specified using the <code>xhr</code> option. The returned object can generally be discarded, but does provide a lower-level interface for observing and manipulating the request. In particular, calling <code>.abort()</code> on the object will halt the request before it completes.</p>
+
+    <h4 id="extending-ajax">Extending Ajax</h4>
+    <p><strong>As of jQuery 1.5</strong>, jQuery&apos;s Ajax implementation includes <a href="../jQuery.ajaxPrefilter/index.html">prefilters</a>, <a href="../jQuery.ajaxTransport/index.html">transports</a>, and converters that allow you to extend Ajax with a great deal of flexibility.</p>
+
+    <h4 id="using-converters">Using Converters</h4>
+    <p><code>$.ajax()</code> converters support mapping data types to other data types. If, however, you want to map a custom data type to a known type (e.g <code>json</code>), you must add a correspondance between the response Content-Type and the actual data type using the <code>contents</code> option:</p>
+    <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+						<div class="line n8">8</div>
+					
+						<div class="line n9">9</div>
+					
+						<div class="line n10">10</div>
+					
+						<div class="line n11">11</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajaxSetup({</code></div></div><div class="container"><div class="line"><code>  contents: {</code></div></div><div class="container"><div class="line"><code>    mycustomtype: <span class="regexp">/mycustomtype/</span></code></div></div><div class="container"><div class="line"><code>  },</code></div></div><div class="container"><div class="line"><code>  converters: {</code></div></div><div class="container"><div class="line"><code>    <span class="string">&quot;mycustomtype json&quot;</span>: <span class="keyword">function</span>( result ) {</code></div></div><div class="container"><div class="line"><code>      <span class="comment">// Do stuff</span></code></div></div><div class="container"><div class="line"><code>      <span class="keyword">return</span> newresult;</code></div></div><div class="container"><div class="line"><code>    }</code></div></div><div class="container"><div class="line"><code>  }</code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+    <p>This extra object is necessary because the response Content-Types and data types never have a strict one-to-one correspondance (hence the regular expression).</p>
+    <p>To convert from a supported type (e.g <code>text</code>, <code>json</code>) to a custom data type and back again, use another pass-through converter:</p>
+    <div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+						<div class="line n8">8</div>
+					
+						<div class="line n9">9</div>
+					
+						<div class="line n10">10</div>
+					
+						<div class="line n11">11</div>
+					
+						<div class="line n12">12</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajaxSetup({</code></div></div><div class="container"><div class="line"><code>  contents: {</code></div></div><div class="container"><div class="line"><code>    mycustomtype: <span class="regexp">/mycustomtype/</span></code></div></div><div class="container"><div class="line"><code>  },</code></div></div><div class="container"><div class="line"><code>  converters: {</code></div></div><div class="container"><div class="line"><code>    <span class="string">&quot;text mycustomtype&quot;</span>: <span class="literal">true</span>,</code></div></div><div class="container"><div class="line"><code>    <span class="string">&quot;mycustomtype json&quot;</span>: <span class="keyword">function</span>( result ) {</code></div></div><div class="container"><div class="line"><code>      <span class="comment">// Do stuff</span></code></div></div><div class="container"><div class="line"><code>      <span class="keyword">return</span> newresult;</code></div></div><div class="container"><div class="line"><code>    }</code></div></div><div class="container"><div class="line"><code>  }</code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+    <p>The above now allows passing from <code>text</code> to <code>mycustomtype</code> and then <code>mycustomtype</code> to <code>json</code>.</p>
+  </div>
+<h3>Additional Notes:</h3>
+<div class="longdesc"><ul>
+<li>
+			Due to browser security restrictions, most &quot;Ajax&quot; requests are subject to the <a title="Same Origin Policy on Wikipedia" href="http://en.wikipedia.org/wiki/Same_origin_policy">same origin policy</a>; the request can not successfully retrieve data from a different domain, subdomain, port, or protocol.
+		</li>
+<li>
+			Script and JSONP requests are not subject to the same origin policy restrictions.
+		</li>
+</ul></div>
+<section class="entry-examples" id="entry-examples"><header><h2>Examples:</h2></header><div class="entry-example" id="example-0">
+<p>Save some data to the server and notify the user once it&apos;s complete.</p>
+<div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+						<div class="line n8">8</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax({</code></div></div><div class="container"><div class="line"><code>  method: <span class="string">&quot;POST&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  url: <span class="string">&quot;some.php&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  data: { name: <span class="string">&quot;John&quot;</span>, location: <span class="string">&quot;Boston&quot;</span> }</code></div></div><div class="container"><div class="line"><code>})</code></div></div><div class="container"><div class="line"><code>  .done(<span class="keyword">function</span>( msg ) {</code></div></div><div class="container"><div class="line"><code>    alert( <span class="string">&quot;Data Saved: &quot;</span> + msg );</code></div></div><div class="container"><div class="line"><code>  });</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</div>
+<div class="entry-example" id="example-1">
+<p>Retrieve the latest version of an HTML page.</p>
+<div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax({</code></div></div><div class="container"><div class="line"><code>  url: <span class="string">&quot;test.html&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  cache: <span class="literal">false</span></code></div></div><div class="container"><div class="line"><code>})</code></div></div><div class="container"><div class="line"><code>  .done(<span class="keyword">function</span>( html ) {</code></div></div><div class="container"><div class="line"><code>    $( <span class="string">&quot;#results&quot;</span> ).append( html );</code></div></div><div class="container"><div class="line"><code>  });</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</div>
+<div class="entry-example" id="example-2">
+<p>Send an xml document as data to the server. By setting the processData
+    option to <code>false</code>, the automatic conversion of data to strings is prevented.</p>
+<div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+						<div class="line n8">8</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code><span class="keyword">var</span> xmlDocument = [create xml document];</code></div></div><div class="container"><div class="line"><code><span class="keyword">var</span> xmlRequest = $.ajax({</code></div></div><div class="container"><div class="line"><code>  url: <span class="string">&quot;page.php&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  processData: <span class="literal">false</span>,</code></div></div><div class="container"><div class="line"><code>  data: xmlDocument</code></div></div><div class="container"><div class="line"><code>});</code></div></div><div class="container"><div class="line"><code> </code></div></div><div class="container"><div class="line"><code>xmlRequest.done( handleResponse );</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</div>
+<div class="entry-example" id="example-3">
+<p>Send an id as data to the server, save some data to the server, and notify the user once it&apos;s complete. If the request fails, alert the user.</p>
+<div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+						<div class="line n6">6</div>
+					
+						<div class="line n7">7</div>
+					
+						<div class="line n8">8</div>
+					
+						<div class="line n9">9</div>
+					
+						<div class="line n10">10</div>
+					
+						<div class="line n11">11</div>
+					
+						<div class="line n12">12</div>
+					
+						<div class="line n13">13</div>
+					
+						<div class="line n14">14</div>
+					
+						<div class="line n15">15</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code><span class="keyword">var</span> menuId = $( <span class="string">&quot;ul.nav&quot;</span> ).first().attr( <span class="string">&quot;id&quot;</span> );</code></div></div><div class="container"><div class="line"><code><span class="keyword">var</span> request = $.ajax({</code></div></div><div class="container"><div class="line"><code>  url: <span class="string">&quot;script.php&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  method: <span class="string">&quot;POST&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  data: { id : menuId },</code></div></div><div class="container"><div class="line"><code>  dataType: <span class="string">&quot;html&quot;</span></code></div></div><div class="container"><div class="line"><code>});</code></div></div><div class="container"><div class="line"><code> </code></div></div><div class="container"><div class="line"><code>request.done(<span class="keyword">function</span>( msg ) {</code></div></div><div class="container"><div class="line"><code>  $( <span class="string">&quot;#log&quot;</span> ).html( msg );</code></div></div><div class="container"><div class="line"><code>});</code></div></div><div class="container"><div class="line"><code> </code></div></div><div class="container"><div class="line"><code>request.fail(<span class="keyword">function</span>( jqXHR, textStatus ) {</code></div></div><div class="container"><div class="line"><code>  alert( <span class="string">&quot;Request failed: &quot;</span> + textStatus );</code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</div>
+<div class="entry-example" id="example-4">
+<p>Load and execute a JavaScript file.</p>
+<div class="syntaxhighlighter javascript">
+	<table>
+		<tbody>
+			<tr>
+				
+				<td class="gutter">
+					
+						<div class="line n1">1</div>
+					
+						<div class="line n2">2</div>
+					
+						<div class="line n3">3</div>
+					
+						<div class="line n4">4</div>
+					
+						<div class="line n5">5</div>
+					
+				</td>
+				
+				<td class="code">
+					<pre><div class="container"><div class="line"><code>$.ajax({</code></div></div><div class="container"><div class="line"><code>  method: <span class="string">&quot;GET&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  url: <span class="string">&quot;test.js&quot;</span>,</code></div></div><div class="container"><div class="line"><code>  dataType: <span class="string">&quot;script&quot;</span></code></div></div><div class="container"><div class="line"><code>});</code></div></div></pre>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</div></section>
+</div></article>	</div><!-- .entry-content -->
+
+</article><!-- #post-291 -->
+			</div>
+
+	<div id="sidebar" class="widget-area" role="complementary">
+	<aside id="categories" class="widget">
+		<ul>
+				<li class="cat-item cat-item-1 current-cat-parent"><a href="../category/ajax/index.html" >Ajax</a>
+<ul class='children'>
+	<li class="cat-item cat-item-2"><a href="../category/ajax/global-ajax-event-handlers/index.html" >Global Ajax Event Handlers</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="../category/ajax/helper-functions/index.html" >Helper Functions</a>
+</li>
+	<li class="cat-item cat-item-4 current-cat"><a href="../category/ajax/low-level-interface/index.html" >Low-Level Interface</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="../category/ajax/shorthand-methods/index.html" >Shorthand Methods</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-6"><a href="../category/attributes/index.html" >Attributes</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="../category/callbacks-object/index.html" >Callbacks Object</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="../category/core/index.html" >Core</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="../category/css/index.html" >CSS</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="../category/data/index.html" >Data</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="../category/deferred-object/index.html" >Deferred Object</a>
+</li>
+	<li class="cat-item cat-item-87"><a href="../category/deprecated/index.html" >Deprecated</a>
+<ul class='children'>
+	<li class="cat-item cat-item-90"><a href="../category/deprecated/deprecated-1.3/index.html" >Deprecated 1.3</a>
+</li>
+	<li class="cat-item cat-item-88"><a href="../category/deprecated/deprecated-1.7/index.html" >Deprecated 1.7</a>
+</li>
+	<li class="cat-item cat-item-89"><a href="../category/deprecated/deprecated-1.8/index.html" >Deprecated 1.8</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="../category/deprecated/deprecated-1.9/index.html" >Deprecated 1.9</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="../category/deprecated/deprecated-1.10/index.html" >Deprecated 1.10</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-12"><a href="../category/dimensions/index.html" >Dimensions</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="../category/effects/index.html" >Effects</a>
+<ul class='children'>
+	<li class="cat-item cat-item-14"><a href="../category/effects/basics/index.html" >Basics</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="../category/effects/custom-effects/index.html" >Custom</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="../category/effects/fading/index.html" >Fading</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="../category/effects/sliding/index.html" >Sliding</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-18"><a href="../category/events/index.html" >Events</a>
+<ul class='children'>
+	<li class="cat-item cat-item-19"><a href="../category/events/browser-events/index.html" >Browser Events</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="../category/events/document-loading/index.html" >Document Loading</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="../category/events/event-handler-attachment/index.html" >Event Handler Attachment</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="../category/events/event-object/index.html" >Event Object</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="../category/events/form-events/index.html" >Form Events</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="../category/events/keyboard-events/index.html" >Keyboard Events</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="../category/events/mouse-events/index.html" >Mouse Events</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-26"><a href="../category/forms/index.html" >Forms</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="../category/internals/index.html" >Internals</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="../category/manipulation/index.html" >Manipulation</a>
+<ul class='children'>
+	<li class="cat-item cat-item-29"><a href="../category/manipulation/class-attribute/index.html" >Class Attribute</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="../category/manipulation/copying/index.html" >Copying</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="../category/manipulation/dom-insertion-around/index.html" >DOM Insertion, Around</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="../category/manipulation/dom-insertion-inside/index.html" >DOM Insertion, Inside</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="../category/manipulation/dom-insertion-outside/index.html" >DOM Insertion, Outside</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="../category/manipulation/dom-removal/index.html" >DOM Removal</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="../category/manipulation/dom-replacement/index.html" >DOM Replacement</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="../category/manipulation/general-attributes/index.html" >General Attributes</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="../category/manipulation/style-properties/index.html" >Style Properties</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-39"><a href="../category/miscellaneous/index.html" >Miscellaneous</a>
+<ul class='children'>
+	<li class="cat-item cat-item-40"><a href="../category/miscellaneous/collection-manipulation/index.html" >Collection Manipulation</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="../category/miscellaneous/data-storage/index.html" >Data Storage</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="../category/miscellaneous/dom-element-methods/index.html" >DOM Element Methods</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="../category/miscellaneous/setup-methods/index.html" >Setup Methods</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-44"><a href="../category/offset/index.html" >Offset</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="../category/properties/index.html" >Properties</a>
+<ul class='children'>
+	<li class="cat-item cat-item-46"><a href="../category/properties/jquery-object-instance-properties/index.html" >Properties of jQuery Object Instances</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="../category/properties/global-jquery-object-properties/index.html" >Properties of the Global jQuery Object</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-92"><a href="../category/removed/index.html" >Removed</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="../category/selectors/index.html" >Selectors</a>
+<ul class='children'>
+	<li class="cat-item cat-item-49"><a href="../category/selectors/attribute-selectors/index.html" >Attribute</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="../category/selectors/basic-css-selectors/index.html" >Basic</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="../category/selectors/basic-filter-selectors/index.html" >Basic Filter</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="../category/selectors/child-filter-selectors/index.html" >Child Filter</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="../category/selectors/content-filter-selector/index.html" >Content Filter</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="../category/selectors/form-selectors/index.html" >Form</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="../category/selectors/hierarchy-selectors/index.html" >Hierarchy</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="../category/selectors/jquery-selector-extensions/index.html" >jQuery Extensions</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="../category/selectors/visibility-filter-selectors/index.html" >Visibility Filter</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-58"><a href="../category/traversing/index.html" >Traversing</a>
+<ul class='children'>
+	<li class="cat-item cat-item-59"><a href="../category/traversing/filtering/index.html" >Filtering</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="../category/traversing/miscellaneous-traversal/index.html" >Miscellaneous Traversing</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="../category/traversing/tree-traversal/index.html" >Tree Traversal</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-63"><a href="../category/utilities/index.html" >Utilities</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="../category/version/index.html" >Version</a>
+<ul class='children'>
+	<li class="cat-item cat-item-65"><a href="../category/version/1.0/index.html" >Version 1.0</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="../category/version/1.0.4/index.html" >Version 1.0.4</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="../category/version/1.1/index.html" >Version 1.1</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="../category/version/1.1.2/index.html" >Version 1.1.2</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="../category/version/1.1.3/index.html" >Version 1.1.3</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="../category/version/1.1.4/index.html" >Version 1.1.4</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="../category/version/1.2/index.html" >Version 1.2</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="../category/version/1.2.3/index.html" >Version 1.2.3</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="../category/version/1.2.6/index.html" >Version 1.2.6</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="../category/version/1.3/index.html" >Version 1.3</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="../category/version/1.4/index.html" >Version 1.4</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="../category/version/1.4.1/index.html" >Version 1.4.1</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="../category/version/1.4.2/index.html" >Version 1.4.2</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="../category/version/1.4.3/index.html" >Version 1.4.3</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="../category/version/1.4.4/index.html" >Version 1.4.4</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="../category/version/1.5/index.html" >Version 1.5</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="../category/version/1.5.1/index.html" >Version 1.5.1</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="../category/version/1.6/index.html" >Version 1.6</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="../category/version/1.7/index.html" >Version 1.7</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="../category/version/1.8/index.html" >Version 1.8</a>
+</li>
+	<li class="cat-item cat-item-86"><a href="../category/version/1.9/index.html" >Version 1.9</a>
+</li>
+</ul>
+</li>
+		</ul>
+	</aside>
+</div>
+</div>
+	</div>
+</div>
+
+<footer class="clearfix simple">
+	<div class="constrain">
+		<div class="row">
+			<div class="six columns offset-by-three">
+				<h3><span>Books</span></h3>
+				<ul class="books">
+					<li>
+						<a href="https://www.packtpub.com/web-development/learning-jquery-fourth-edition">
+							<img src="../jquery-wp-content/themes/jquery/content/books/learning-jquery-4th-ed.jpg" alt="Learning jQuery 4th Edition by Karl Swedberg and Jonathan Chaffer" width="92" height="114">
+							Learning jQuery Fourth Edition
+							<cite>Karl Swedberg and Jonathan Chaffer</cite>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.manning.com/books/jquery-in-action-third-edition?a_bid=bdd5b7ad&amp;a_aid=141d9491">
+							<img src="../jquery-wp-content/themes/jquery/content/books/jquery-in-action.jpg" alt="jQuery in Action by Bear Bibeault, Yehuda Katz, and Aurelio De Rosa" width="92" height="114">
+							jQuery in Action
+							<cite>Bear Bibeault, Yehuda Katz, and Aurelio De Rosa</cite>
+						</a>
+					</li>
+					<li>
+						<a href="http://www.syncfusion.com/resources/techportal/ebooks/jquery?utm_medium=BizDev-jQuery.org0513">
+							<img src="../jquery-wp-content/themes/jquery/content/books/jquery-succinctly.jpg" alt="jQuery Succinctly by Cody Lindley" width="92" height="114">
+							jQuery Succinctly
+							<cite>Cody Lindley</cite>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		
+<div id="legal">
+	<ul class="footer-site-links">
+			<li><a class="icon-pencil" href="http://learn.jquery.com/">Learning Center</a></li>
+			<li><a class="icon-group" href="http://forum.jquery.com/">Forum</a></li>
+			<li><a class="icon-wrench" href="../index.html">API</a></li>
+			<li><a class="icon-twitter" href="https://twitter.com/jquery">Twitter</a></li>
+			<li><a class="icon-comments" href="http://irc.jquery.org/">IRC</a></li>
+			<li><a class="icon-github" href="https://github.com/jquery">GitHub</a></li>
+	</ul>
+	<p class="copyright">
+		Copyright 2015 <a href="https://jquery.org/team/">The jQuery Foundation</a>.
+		<a href="https://jquery.org/license/">jQuery License</a>
+		<span class="sponsor-line"><a href="http://mediatemple.net" rel="nofollow" class="mt-link">Web hosting by Media Temple</a> | <a href="http://www.maxcdn.com" rel="nofollow" class="mc-link">CDN by MaxCDN</a> | <a href="http://wordpress.org/" class="wp-link">Powered by WordPress</a> | Thanks: <a href="https://jquery.org/members/">Members</a>, <a href="https://jquery.org/sponsors/">Sponsors</a></span>
+	</p>
+</div>
+
+	</div>
+</footer>
+
+<script>
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1076265-1']);
+    _gaq.push(['_setDomainName', 'api.jquery.com']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+<script type='text/javascript' src='http://api.jquery.com/wp-includes/js/comment-reply.min.js?ver=4.2.1'></script>
+
+</body>
+</html>

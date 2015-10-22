@@ -114,6 +114,11 @@ func parseNamespace(source string, target string, s string) (shared.Namespace, e
 		m = meth[:sigIdx]
 		// signature = meth[sigIdx:]
 	}
+	if len(m) == 0 {
+		m = entity
+	} else {
+		path = append(path, entity)
+	}
 
 	// find target link
 	targetSplits := strings.Split(target, "/")
@@ -131,7 +136,7 @@ func parseNamespace(source string, target string, s string) (shared.Namespace, e
 	newSplits = append(newSplits, targetSplits[len(targetSplits)-1]+s)
 	newTarget := strings.Join(newSplits, "/")
 
-	namespace.Path = strings.Join(append(path, entity), ".")
+	namespace.Path = strings.Join(path, ".")
 	namespace.Members = []shared.Member{{Name: m, Target: newTarget}}
 
 	return namespace, nil

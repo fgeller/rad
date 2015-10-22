@@ -114,8 +114,8 @@ func TestParseScalaEntry(t *testing.T) {
 
 	v = "scala.tools.ant.FastScalac"
 	expected = shared.Namespace{
-		Path:    "scala.tools.ant.FastScalac",
-		Members: []shared.Member{{Name: "", Target: "/" + target + v}},
+		Path:    "scala.tools.ant",
+		Members: []shared.Member{{Name: "FastScalac", Target: "/" + target + v}},
 	}
 
 	actual, _ = parseNamespace(source, target, v)
@@ -147,8 +147,8 @@ func TestParseScalaEntry(t *testing.T) {
 
 	v = "package"
 	expected = shared.Namespace{
-		Path:    "package",
-		Members: []shared.Member{{Target: "/" + target + v}},
+		Path:    "",
+		Members: []shared.Member{{Name: "package", Target: "/" + target + v}},
 	}
 
 	actual, _ = parseNamespace(source, target, v)
@@ -209,5 +209,18 @@ func TestParseScalaEntry(t *testing.T) {
 	actual, _ = parseNamespace(source, target, v)
 	if !expected.Eq(actual) {
 		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
+
+	}
+
+	v = "scala.collection.parallel.FutureThreadPoolTasks$"
+	expected = shared.Namespace{
+		Path:    "scala.collection.parallel",
+		Members: []shared.Member{{Name: "FutureThreadPoolTasks", Target: "/" + target + v}},
+	}
+
+	actual, _ = parseNamespace(source, target, v)
+	if !expected.Eq(actual) {
+		t.Errorf("parsing scala entry failed. got\n%v\nexpected\n%v.", actual, expected)
+
 	}
 }

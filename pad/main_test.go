@@ -17,8 +17,9 @@ func TestMkPack(t *testing.T) {
 	packName := "jdk"
 	packSource := filepath.Join("testdata", "jdk")
 	packVersion := "1.2.3"
+	desc := "This<br />Is<br />Usually<br />HTML"
 
-	conf, err := mkConfig(indexerName, packName, packSource, packVersion)
+	conf, err := mkConfig(indexerName, packName, packSource, packVersion, desc)
 	if err != nil {
 		t.Errorf("Unexpected error while creating config: %v", err)
 		return
@@ -64,6 +65,10 @@ func TestMkPack(t *testing.T) {
 	if pack.Version != packVersion ||
 		time.Now().Before(pack.Created) {
 		t.Errorf("Unexpected pack parameters: %v\n", pack)
+	}
+
+	if pack.Description != desc {
+		t.Errorf("Expected pack description: %v\ngot:\n%v", desc, pack.Description)
 	}
 
 	packDataFile := filepath.Join(tmpDir, packName, "data.json")

@@ -18,11 +18,12 @@ type indexer func(string) ([]shared.Namespace, error)
 type parser func(string, io.Reader) []shared.Namespace
 
 type config struct {
-	indexer indexer
-	name    string
-	Type    string
-	version string
-	source  string
+	indexer     indexer
+	name        string
+	Type        string
+	version     string
+	source      string
+	description string
 }
 
 func mkIndexer(name string, source string) indexer {
@@ -54,7 +55,13 @@ func mkIndexer(name string, source string) indexer {
 	return nil
 }
 
-func mkConfig(indexerName string, packName string, source string, version string) (config, error) {
+func mkConfig(
+	indexerName string,
+	packName string,
+	source string,
+	version string,
+	description string,
+) (config, error) {
 	var conf config
 	source, err := filepath.Abs(source)
 	if err != nil {
@@ -62,11 +69,12 @@ func mkConfig(indexerName string, packName string, source string, version string
 	}
 
 	conf = config{
-		indexer: mkIndexer(indexerName, source),
-		Type:    indexerName,
-		name:    packName,
-		source:  source,
-		version: version,
+		indexer:     mkIndexer(indexerName, source),
+		Type:        indexerName,
+		name:        packName,
+		source:      source,
+		version:     version,
+		description: description,
 	}
 
 	return conf, nil
@@ -118,10 +126,11 @@ func mkPack(conf config) (string, error) {
 	log.Printf("Made targets relative to pack folder.\n")
 
 	pack := shared.Pack{
-		Name:    conf.name,
-		Type:    conf.Type,
-		Version: conf.version,
-		Created: time.Now(),
+		Name:        conf.name,
+		Type:        conf.Type,
+		Version:     conf.version,
+		Created:     time.Now(),
+		Description: conf.description,
 	}
 
 	// 2. serialize conf
@@ -204,6 +213,7 @@ func main() {
 		packName    = flag.String("name", "", "Name for this pack")
 		source      = flag.String("source", "", "Source directory for this pack")
 		version     = flag.String("version", "", "Version string for this pack")
+		description = flag.String("desc", "", "Description string for this pack")
 	)
 
 	flag.Parse()
@@ -212,6 +222,7 @@ func main() {
 		*packName,
 		*source,
 		*version,
+		*description,
 	)
 	if err != nil {
 		log.Fatalf("Invalid configuration %v", conf)

@@ -4,6 +4,9 @@ export GO15VENDOREXPERIMENT:=1
 build:
 	go build -o sap +([^_]).go
 
+build-linux:
+	GOOS=linux GOARCH=amd64 go build -o sap +([^_]).go
+
 test:
 	go test *.go
 

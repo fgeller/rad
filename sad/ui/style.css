@@ -213,6 +213,11 @@ a:hover {
 
 .settings-pack-button i {
     cursor: pointer;
+    color: #7986cb;
+}
+
+.settings-pack-button i:hover {
+    color: #1a237e;
 }
 
 #menu-container {

@@ -24,6 +24,7 @@ type config struct {
 	version     string
 	source      string
 	description string
+	destination string
 }
 
 func mkIndexer(name string, source string) indexer {
@@ -61,11 +62,27 @@ func mkConfig(
 	source string,
 	version string,
 	description string,
+	dest string,
 ) (config, error) {
 	var conf config
 	source, err := filepath.Abs(source)
 	if err != nil {
-		return conf, err
+		log.Fatalf("Error finding absolute path: %v\n", err)
+	}
+
+	if dest != "" && shared.FileExists(dest) {
+		fi, err := os.Stat(dest)
+		if err != nil {
+			log.Fatalf("Failed to stat destination %v: %v", dest, err)
+		}
+		if !fi.IsDir() {
+			log.Fatalf("Destination should be a directory: %v", dest)
+		}
+	}
+
+	if dest != "" && !shared.FileExists(dest) {
+		os.MkdirAll(dest, 0755)
+		log.Printf("Created destination %v\n", dest)
 	}
 
 	conf = config{
@@ -75,6 +92,7 @@ func mkConfig(
 		source:      source,
 		version:     version,
 		description: description,
+		destination: dest,
 	}
 
 	return conf, nil
@@ -204,7 +222,18 @@ func mkPack(conf config) (string, error) {
 
 	log.Printf("Zipped files into %v.\n", out.Name())
 
-	return out.Name(), nil
+	if conf.destination == "" {
+		return out.Name(), nil
+	}
+
+	dest := filepath.Join(conf.destination, filepath.Base(out.Name()))
+	err = os.Link(out.Name(), dest)
+	if err != nil {
+		return "", err
+	}
+
+	log.Printf("Linked %v to %v.", out.Name(), dest)
+	return dest, nil
 }
 
 func main() {
@@ -214,6 +243,7 @@ func main() {
 		source      = flag.String("source", "", "Source directory for this pack")
 		version     = flag.String("version", "", "Version string for this pack")
 		description = flag.String("desc", "", "Description string for this pack")
+		destination = flag.String("dest", "", "Destination folder (pack remains in tmp location when omitted).")
 	)
 
 	flag.Parse()
@@ -223,6 +253,7 @@ func main() {
 		*source,
 		*version,
 		*description,
+		*destination,
 	)
 	if err != nil {
 		log.Fatalf("Invalid configuration %v", conf)

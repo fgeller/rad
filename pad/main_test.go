@@ -18,8 +18,13 @@ func TestMkPack(t *testing.T) {
 	packSource := filepath.Join("testdata", "jdk")
 	packVersion := "1.2.3"
 	desc := "This<br />Is<br />Usually<br />HTML"
+	dest, err := filepath.Abs(".")
+	if err != nil {
+		t.Errorf("Error finding absolute path: %v", err)
+		return
+	}
 
-	conf, err := mkConfig(indexerName, packName, packSource, packVersion, desc)
+	conf, err := mkConfig(indexerName, packName, packSource, packVersion, desc, dest)
 	if err != nil {
 		t.Errorf("Unexpected error while creating config: %v", err)
 		return
@@ -30,8 +35,14 @@ func TestMkPack(t *testing.T) {
 		t.Errorf("Expected pack archive to be created, err: %v.", err)
 		return
 	}
+
 	fmt.Printf("created sample: %v\n", actual)
 	defer os.RemoveAll(actual)
+
+	if filepath.Dir(actual) != dest {
+		t.Errorf("Expected pack to be created in\n%v\nbut got\n%v", dest, filepath.Dir(actual))
+		return
+	}
 
 	tmpDir, err := ioutil.TempDir("", "pad-test-pack")
 	if err != nil {
@@ -87,8 +98,4 @@ func TestMkPack(t *testing.T) {
 		t.Errorf("Couldn't unmarshall data file: %v", err)
 	}
 
-}
-
-func testIndexer(path string) ([]shared.Namespace, error) {
-	return []shared.Namespace{}, nil
 }

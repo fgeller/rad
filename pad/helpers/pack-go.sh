@@ -49,4 +49,4 @@ Pack created on `date`.<br />
 <br />
 EOM
 
-../pad -indexer go -name $PACK_NAME -desc "$PACK_DESC" -version `date --iso` -source $DOWNLOAD_DIR
+../pad -indexer go -name $PACK_NAME -desc "$PACK_DESC" -version `date --iso` -source $DOWNLOAD_DIR -dest /tmp/packs

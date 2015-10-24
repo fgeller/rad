@@ -12,5 +12,5 @@ EOM
 for PACK_NAME in scala-library scala-compiler scala-reflect
 do
     DOWNLOAD_DIR=d/scala-docs-2.11.7/api/$PACK_NAME
-    ../pad -indexer scala -name $PACK_NAME -desc "$PACK_DESC" -version 2.11.7 -source $DOWNLOAD_DIR
+    ../pad -indexer scala -name $PACK_NAME -desc "$PACK_DESC" -version 2.11.7 -source $DOWNLOAD_DIR -dest /tmp/packs
 done

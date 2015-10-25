@@ -65,12 +65,19 @@ func find(results chan searchResult, end chan struct{}, params searchParams) {
 				// partitionSize = ceil(11 / 4) = 3
 				// 0:4  - 0 1 2 3
 				// 4:8  - 4 5 6 7
-				// 8:12 - 8 9 10
+				// 8: - 8 9 10
+
 				ps := int64(math.Ceil(float64(len(namespaces)) / float64(cpus)))
 				var wg sync.WaitGroup
 				wg.Add(cpus)
 				for i := int64(0); i < int64(cpus); i++ {
-					ns := namespaces[i*ps : (i+1)*ps]
+					var ns []shared.Namespace
+					if i < int64(cpus)-1 {
+						ns = namespaces[i*ps : (i+1)*ps]
+					} else {
+						ns = namespaces[i*ps:]
+					}
+
 					go func() {
 						findNamespace(results, end, ns, params)
 						wg.Done()

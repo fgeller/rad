@@ -2,6 +2,8 @@
 
 Open source app to read API docs offline.
 
+Releases available [here](http://geller.io/rad/).
+
 Start screen:
 
 ![Blank](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/blank.png)

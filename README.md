@@ -1,14 +1,27 @@
 # rad api docs
 
-[[https://raw.githubusercontent.com/fgeller/rad/master/screenshots/blank.png][file:https://raw.githubusercontent.com/fgeller/rad/master/screenshots/blank.png]]
-[[https://raw.githubusercontent.com/fgeller/rad/master/screenshots/go.png][file:https://raw.githubusercontent.com/fgeller/rad/master/screenshots/go.png]]
-[[https://raw.githubusercontent.com/fgeller/rad/master/screenshots/scala.png][file:https://raw.githubusercontent.com/fgeller/rad/master/screenshots/scala.png]]
-[[https://raw.githubusercontent.com/fgeller/rad/master/screenshots/packs.png][file:https://raw.githubusercontent.com/fgeller/rad/master/screenshots/packs.png]]
+Start screen:
+
+![Blank](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/blank.png)
+
+Searching Go's stdlib:
+
+![Go](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/go.png)
+
+Searching Scala's stdlib:
+
+![Scala](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/scala.png)
+
+Displaying installed and available packs:
+
+![Packs](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/packs.png)
 
 ## What?
 
 ## Why?
 
 ## How?
+
+## Integrations
 
 ## Contributions

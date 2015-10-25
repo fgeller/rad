@@ -45,6 +45,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parseClojureDocFile)
 	case "py27":
 		return mk(parsePy27DocFile)
+	case "django":
+		return mk(parseDjangoDocFile)
 	case "react":
 		return mk(parseReactDocFile)
 	case "jquery":

@@ -2,8 +2,6 @@
 
 PACK_NAME=go-stdlib
 SOURCE=https://godoc.org/-/go
-# PACK_NAME=gorilla-websocket
-# SOURCE=http://godoc.org/github.com/gorilla/websocket
 DOWNLOAD_DIR=d/$PACK_NAME
 
 rm -vrf $DOWNLOAD_DIR

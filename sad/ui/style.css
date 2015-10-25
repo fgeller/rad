@@ -171,6 +171,8 @@ a:hover {
 .settings-pack {
     width: 100%;
     display: inline-block;
+    padding-right: .25em;
+    padding-left: .25em;
 }
 
 .settings-pack-even {

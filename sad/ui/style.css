@@ -7,7 +7,7 @@ body {
 
 a {
     text-decoration: none;
-    color: #7986cb;
+    color: #3949ab;
 }
 
 a:hover {
@@ -173,20 +173,33 @@ a:hover {
     display: inline-block;
 }
 
+.settings-pack-even {
+    background-color: #e8eaf6;
+}
+
+.settings-pack:hover {
+    color: #fff;
+    background-color: #9fa8da;
+}
+
+.settings-pack:hover .settings-pack-button i {
+    color: white;
+}
+
 .settings-pack-row {
     width: 100%;
     display: inline-block;
     font-size: 9pt;
+    margin: .1em 0em .1em 0em;
+    padding: .2em 0 0 .5em;
 }
 
 .settings-pack-row.settings-pack-desc {
     width: 100%;
-    height: 5em;
     display: inline-block;
     font-size: 8pt;
     margin-bottom: .5em;
     padding: .5em;
-    overflow-x: scroll;
     overflow-y: scroll;
 }
 

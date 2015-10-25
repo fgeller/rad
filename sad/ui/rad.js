@@ -212,9 +212,15 @@ var Pack = React.createClass({
 		var desc = this.props.description;
 		var hasDesc = desc && desc.length > 0;
 		var infoRowStyle = { display: this.state.showDescription ? 'inline-block' : 'none' };
+		var rowClass = "settings-pack-row";
+		var packClass= "settings-pack"
+		if (this.props.idx % 2 == 0) {
+			packClass += " settings-pack-even";
+		}
+
 		return (
-			<div className="settings-pack">
-				<div className="settings-pack-row">
+			<div className={packClass} onClick={this.toggleInfo}>
+				<div className={rowClass}>
 					<div className="settings-pack-row-value">{this.props.name}
 					</div><div className="settings-pack-row-value">{this.props.type}
 					</div><div className="settings-pack-row-value">{this.props.version}
@@ -243,7 +249,7 @@ var Pack = React.createClass({
 							display={ this.state.removing ? "inline-block" : "none" } />
 					</div>
 				</div>
-				<div className="settings-pack-row settings-pack-desc" style={infoRowStyle} dangerouslySetInnerHTML={{__html: desc}}>
+				<div className={rowClass + " settings-pack-desc"} style={infoRowStyle} dangerouslySetInnerHTML={{__html: desc}}>
 				</div>
 			</div>
 		);
@@ -378,7 +384,7 @@ var Pack = React.createClass({
 				return (
 					<Pack
 						name={p.Name}
-						uid={id}
+						idx={idx}
 						key={id}
 						loadPacks={this.loadPacks}
 						type={p.Type}
@@ -403,7 +409,7 @@ var Pack = React.createClass({
 				var id = guid();
 				return (
 					<Pack name={p.Name}
-						uid={id}
+						idx={idx}
 						key={id}
 						type={p.Type}
 						version={p.Version}

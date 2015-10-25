@@ -23,4 +23,4 @@ release: build
 	tar Jcf sad-`git describe --abbrev=0 --tags`-`uname -s -m | tr ' ' '-'`.xz sad
 
 run:
-	./sad
+	./sad -sapaddr 0.0.0.0:3025

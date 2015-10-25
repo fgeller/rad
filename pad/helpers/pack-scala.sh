@@ -9,6 +9,8 @@ Pack created on `date`.<br />
 <br />
 EOM
 
+find d/scala-docs-2.11.7 -name "*.htmlE*" -exec rm -fv {} \;
+
 for PACK_NAME in scala-library scala-compiler scala-reflect
 do
     DOWNLOAD_DIR=d/scala-docs-2.11.7/api/$PACK_NAME

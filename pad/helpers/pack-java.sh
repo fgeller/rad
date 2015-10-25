@@ -10,5 +10,5 @@ Pack created on `date`.<br />
 EOM
 
 PACK_NAME=java
-DOWNLOAD_DIR=d/jdk-8u60-docs/api
-../pad -indexer java -name $PACK_NAME -desc "$PACK_DESC" -version 8u60 -source $DOWNLOAD_DIR -dest /tmp/packs
+DOWNLOAD_DIR=d/jdk-8u65-docs/docs/api
+../pad -indexer java -name $PACK_NAME -desc "$PACK_DESC" -version 8u65 -source $DOWNLOAD_DIR -dest /tmp/packs

@@ -353,7 +353,7 @@ a:hover {
     position: relative;
     width: 110pt;
     display: none;
-    padding-top: 5pt;
+    padding-top: 3pt;
     padding-bottom: 5pt;
     padding-right: 3pt;
     padding-left: 5pt;
@@ -370,11 +370,14 @@ a:hover {
     font-size: 10pt;
     display: inline-block;
     overflow-x: hidden;
+    margin-bottom: 5pt;
+    white-space: nowrap;
 }
 
 .search-result .namespace {
     font-size: 7pt;
     overflow-x: hidden;
+    white-space: nowrap;
 }
 
 .selected-search-result {

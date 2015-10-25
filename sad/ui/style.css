@@ -28,6 +28,28 @@ a:hover {
     display: inline-block;
 }
 
+#hello-content {
+    font-size: 48pt;
+    font-weight: 100;
+    color: #e8eaf6;
+    position: fixed;
+    bottom: 48pt;
+    left: 10pt;
+}
+
+#hello-logo {
+    font-size: 160pt;
+    font-weight: 100;
+    color: #e8eaf6;
+    position: fixed;
+    bottom: 25pt;
+    right: 10pt;
+}
+
+.hello-title-char {
+    font-size: 86pt;
+}
+
 #zero-container {
     margin-left: 4em;
 }
@@ -109,7 +131,7 @@ a:hover {
 .settings-header {
     font-weight: 400;
     font-size: 12pt;
-    margin: 0.5em 0 0.5em 0;
+    margin: 1em 0 0.5em 0;
 }
 
 .settings-label-value {

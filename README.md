@@ -1,5 +1,7 @@
 # rad api docs
 
+Open source app to read API docs offline.
+
 Start screen:
 
 ![Blank](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/blank.png)
@@ -15,8 +17,6 @@ Searching Scala's stdlib:
 Displaying installed and available packs:
 
 ![Packs](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/packs.png)
-
-## What?
 
 ## Why?
 

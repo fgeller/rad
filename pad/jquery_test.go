@@ -22,27 +22,12 @@ func TestReactParseJQueryAjax(t *testing.T) {
 		return
 	}
 
-	var foundAjaxSettings bool
-
-	for _, ns := range results {
-		for _, m := range ns.Members {
-			if m.Name == "ajax(settings)" {
-				foundAjaxSettings = true
-			}
-		}
-	}
-
-	if !foundAjaxSettings {
-		t.Errorf("Expected to find ajax(settings)")
-		return
-	}
-
 	expectedStart := shared.Namespace{
 		Path: "jQuery",
 		Members: []shared.Member{
 			{
-				Name:   "ajax(url,settings)",
-				Target: "testdata/jquery/jQuery.ajax/index.html#jQuery-ajax-url-settings",
+				Name:   "ajax(settings)",
+				Target: "testdata/jquery/jQuery.ajax/index.html#jQuery-ajax-settings",
 			},
 		},
 	}
@@ -54,6 +39,22 @@ func TestReactParseJQueryAjax(t *testing.T) {
 		t.Errorf("expected first result to be\n%v\nbut got\n%v", expectedStart, actualStart)
 		return
 	}
+
+	var foundAjaxUrlSettings bool
+
+	for _, ns := range results {
+		for _, m := range ns.Members {
+			if m.Name == "ajax(url,settings)" {
+				foundAjaxUrlSettings = true
+			}
+		}
+	}
+
+	if !foundAjaxUrlSettings {
+		t.Errorf("Expected to find ajax(url,settings)")
+		return
+	}
+
 }
 
 func TestReactParseJQueryGetJSON(t *testing.T) {

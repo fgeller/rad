@@ -35,8 +35,8 @@ func TestPy27ParseFileMethods(t *testing.T) {
 		Path: "datetime",
 		Members: []shared.Member{
 			{
-				Name:   "MINYEAR",
-				Target: "testdata/py27/datetime.html#datetime.MINYEAR",
+				Name:   "MAXYEAR",
+				Target: "testdata/py27/datetime.html#datetime.MAXYEAR",
 			},
 		},
 	}

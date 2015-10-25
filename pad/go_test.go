@@ -26,15 +26,14 @@ func TestGoParseFileMethods(t *testing.T) {
 		Path: "archive.tar",
 		Members: []shared.Member{
 			{
-				Name:   "Header",
-				Target: "testdata/go/godoc.org/archive/tar.html#Header",
+				Name:   "FileInfoHeader",
+				Target: "testdata/go/godoc.org/archive/tar.html#FileInfoHeader",
 			},
 		},
 	}
 
-	actualStart := results[0] // TODO: add more test cases
-
-	actualStart.Members = actualStart.Members[:1] // TODO: fail gracefully
+	actualStart := results[0]
+	actualStart.Members = actualStart.Members[:1]
 
 	if !expectedStart.Eq(actualStart) {
 		t.Errorf("expected first results to be\n%v\nbut got\n%v", expectedStart, actualStart)

@@ -3,6 +3,7 @@ package shared
 import (
 	"fmt"
 	"reflect"
+	"sort"
 	"strings"
 	"time"
 )
@@ -26,6 +27,18 @@ type Namespace struct {
 	Path    string
 	Members []Member
 }
+
+type ByPath []Namespace
+
+func (a ByPath) Len() int           { return len(a) }
+func (a ByPath) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByPath) Less(i, j int) bool { return a[i].Path < a[j].Path }
+
+type ByName []Member
+
+func (a ByName) Len() int           { return len(a) }
+func (a ByName) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByName) Less(i, j int) bool { return a[i].Name < a[j].Name }
 
 func (m Member) Eq(other Member) bool {
 	return reflect.DeepEqual(m, other)
@@ -75,6 +88,11 @@ merging:
 			}
 		}
 		merged = append(merged, unmerged[ui])
+	}
+
+	sort.Sort(ByPath(merged))
+	for i := range merged {
+		sort.Sort(ByName(merged[i].Members))
 	}
 
 	return merged

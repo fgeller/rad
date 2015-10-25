@@ -51,8 +51,8 @@ func TestReactParseFileMethods(t *testing.T) {
 		Path: "component-specs",
 		Members: []shared.Member{
 			{
-				Name:   "render",
-				Target: "testdata/react/component-specs.html#render",
+				Name:   "displayName",
+				Target: "testdata/react/component-specs.html#displayname",
 			},
 		},
 	}
@@ -109,8 +109,8 @@ func TestReactParseComponentApi(t *testing.T) {
 		Path: "component-api",
 		Members: []shared.Member{
 			{
-				Name:   "setState",
-				Target: "testdata/react/component-api.html#setstate",
+				Name:   "forceUpdate",
+				Target: "testdata/react/component-api.html#forceupdate",
 			},
 		},
 	}
@@ -169,8 +169,8 @@ func TestReactParseTopLevelApi(t *testing.T) {
 		Path: "top-level-api.React",
 		Members: []shared.Member{
 			{
-				Name:   "Component",
-				Target: "testdata/react/top-level-api.html#react.component",
+				Name:   "Children",
+				Target: "testdata/react/top-level-api.html#react.children",
 			},
 		},
 	}

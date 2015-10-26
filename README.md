@@ -4,11 +4,26 @@ Open source app to read API docs offline.
 
 ## Quick start:
 
-Download a release and then:
+Download a release from the [release section](https://github.com/fgeller/rad/releases), unpack it and start it. Or as a one-liner (for linux replace `darwin` with `linux`):
 
-    tar Jxf sad-RELEASE-INFO.xz && ./sad
+    curl http://geller.io/rad/sad-1.0.0-darwin-amd64.xz | tar Jx > sad && ./sad
 
-Snapshot releases are available [here](http://geller.io/rad/).
+Then move the binary to a location that's on your `PATH` and make it executable. For example, to add it to `~/bin`:
+
+    mv sad ~/bin/ && chmod +x ~/bin/sad
+
+Just make sure you download packs before you go offline :)
+
+All releases including snapshots are available [here](http://geller.io/rad/).
+
+Contents:
+
+* [Pictures!](https://github.com/fgeller/rad#pictures)
+* [Why?](https://github.com/fgeller/rad#why)
+* [How?](https://github.com/fgeller/rad#how)
+* [Integrations](https://github.com/fgeller/rad#integrations)
+* [More packs and contributions](https://github.com/fgeller/rad#more-packs-and-contributions)
+* [Others](https://github.com/fgeller/rad#others)
 
 ## Pictures!
 
@@ -136,7 +151,9 @@ adapter:
 You start a query with the keyword `rad` and the results are links to a running
 `sad` instance.
 
-## Missing packs and contributions
+## More packs and contributions
+
+![Moar!](http://memeorama.com/wp-content/uploads/2012/01/MOAR.jpg)
 
 The currently included packs are driven by my use and what friends are
 interested in -- if you'd like to see another pack included please create an

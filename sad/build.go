@@ -97,6 +97,8 @@ func build(out string, assetsDir string) error {
 	cmd := exec.Command("go", args...)
 	env := os.Environ()
 	env = append(env, "GO15VENDOREXPERIMENT=1")
+	env = append(env, "GOOS="+config.os)
+	env = append(env, "GOARCH="+config.arch)
 	cmd.Env = env
 
 	if config.verbose {
@@ -126,14 +128,26 @@ var config struct {
 	assets    string
 	assetsOut string
 	verbose   bool
+	os        string
+	arch      string
 }
 
 func main() {
 	flag.StringVar(&config.out, "out", "sad", "Name of generated binary")
 	flag.StringVar(&config.assets, "assets", "assets", "Location of assets")
 	flag.StringVar(&config.assetsOut, "assetsOut", "generated_assets.go", "File where assets are compiled.")
+	flag.StringVar(&config.os, "os", "darwin", "GOOS to compile binary for.")
+	flag.StringVar(&config.arch, "arch", "amd64", "GOARCH to compile binary for.")
 	flag.BoolVar(&config.verbose, "v", false, "Verbose output")
 	flag.Parse()
+
+	if config.os == "" {
+		config.os = "darwin"
+	}
+
+	if config.arch == "" {
+		config.arch = "amd64"
+	}
 
 	log.Printf("Read config: %+v\n", config)
 	err := build(config.out, config.assets)

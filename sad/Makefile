@@ -2,11 +2,12 @@ export SHELL:=/bin/bash -O extglob -c
 export GO15VENDOREXPERIMENT:=1
 
 build:
+	rm -vf sad
 	rm -rf assets
 	mkdir -p assets
 	cp -r ui/!(rad.js) assets/
 	babel --out-file assets/rad.js ui/rad.js
-	go run build.go
+	go run build.go -v -os ${BUILD_OS} -arch ${BUILD_ARCH}
 
 test: buildtest apptest
 
@@ -19,8 +20,15 @@ buildtest:
 snapshot: build
 	tar Jcf sad-`date -I`-`git rev-parse HEAD | cut -c-7`-`uname -s -m | tr ' ' '-'`.xz sad
 
-release: build
-	tar Jcf sad-`git describe --abbrev=0 --tags`-`uname -s -m | tr ' ' '-'`.xz sad
+release-linux:
+	BUILD_OS=linux BUILD_ARCH=amd64 $(MAKE) build
+	tar Jcf sad-`git describe --abbrev=0 --tags`-linux-amd64.xz sad
+
+release-darwin:
+	BUILD_OS=darwin BUILD_ARCH=amd64 $(MAKE) build
+	tar Jcf sad-`git describe --abbrev=0 --tags`-darwin-amd64.xz sad
+
+release: release-linux release-darwin
 
 run:
 	./sad -sapaddr 0.0.0.0:3025

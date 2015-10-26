@@ -51,6 +51,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parseReactDocFile)
 	case "jquery":
 		return mk(parseJQueryDocFile)
+	case "lodash":
+		return mk(parseLodashDocFile)
 	default:
 		log.Fatalf("Unsupported indexer name: %v\n", name)
 	}

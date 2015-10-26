@@ -88,6 +88,4 @@ func find(results chan searchResult, end chan struct{}, params searchParams) {
 
 		}
 	}
-
-	close(results)
 }

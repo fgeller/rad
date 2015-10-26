@@ -35,7 +35,7 @@ func (t reqType) String() string {
 		return "Reset"
 	}
 
-	return fmt.Sprintf("Unknown type: %v", t)
+	return fmt.Sprintf("Unknown type: %v", string(t))
 }
 
 type packReq struct {
@@ -197,8 +197,8 @@ func packMaster() {
 				reset(req)
 				close(req.res)
 			default:
-				log.Printf("Unsupported req.tpe %+v in packMaster\n")
-				req.res <- packResp{err: fmt.Errorf("Unsupported req.tpe %+vMaster\n")}
+				log.Printf("Unsupported req.tpe %+v in packMaster\n", req.tpe)
+				req.res <- packResp{err: fmt.Errorf("Unsupported req.tpe %+vMaster\n", req.tpe)}
 				close(req.res)
 			}
 		}

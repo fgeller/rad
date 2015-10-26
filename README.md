@@ -19,6 +19,7 @@ All releases including snapshots are available [here](http://geller.io/rad/).
 Contents:
 
 * [Pictures!](https://github.com/fgeller/rad#pictures)
+* [Available packs](https://github.com/fgeller/rad#available-packs)
 * [Why?](https://github.com/fgeller/rad#why)
 * [How?](https://github.com/fgeller/rad#how)
 * [Integrations](https://github.com/fgeller/rad#integrations)
@@ -42,6 +43,25 @@ Searching Scala's stdlib using regular expressions:
 Displaying installed and available packs:
 
 ![Packs](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/packs.png)
+
+## Available packs
+
+* [Clojure](https://clojuredocs.org)
+* [Django](https://clojuredocs.org)
+* [Go](https://golang.org)
+  * Standard library
+  * [Gorilla Websocket](https://github.com/gorilla/websocket)
+  * [go-uuid](https://code.google.com/p/go-uuid/)
+* [Java](https://code.google.com/p/go-uuid/)
+* [jQuery](http://jquery.com)
+* [lodash](http://lodash.com)
+* [Python](https://www.python.org)
+* [react.js](https://facebook.github.io/react/)
+* [Scala](http://www.scala-lang.org)
+  * Standard library (split into compiler, library and reflect)
+  * [akka](http://www.scala-lang.org)
+  * [Kafka](http://kafka.apache.org)
+  * [Spray](http://spray.io)
 
 ## Why?
 

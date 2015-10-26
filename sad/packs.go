@@ -99,7 +99,7 @@ func loadRemotePack(fn string) (shared.Pack, []shared.Namespace, error) {
 	}
 
 	err = json.Unmarshal(pc, &pck)
-	log.Printf("Found info %v for %v.", pck, pn)
+	log.Printf("Found pack info for %v.", pn)
 
 	df := filepath.Join(config.packDir, pn, "data.json")
 	dc, err := ioutil.ReadFile(df)
@@ -255,7 +255,7 @@ func loadFromPackDir(name string) error {
 	}
 	var pck shared.Pack
 	err = json.Unmarshal(pc, &pck)
-	log.Printf("Found info %v for %v.", pck, name)
+	log.Printf("Found pack info for %v.", name)
 
 	df := filepath.Join(config.packDir, name, "data.json")
 	dc, err := ioutil.ReadFile(df)
@@ -270,7 +270,7 @@ func loadFromPackDir(name string) error {
 	req := packReq{Load, pck, nss, res}
 	global.packs <- req
 	_, ok := <-res
-	log.Printf("Successfully installed pack %+v (ok: %v)\n", pck, ok)
+	log.Printf("Successfully installed pack %v (ok: %v)\n", pck.Name, ok)
 
 	return nil
 }

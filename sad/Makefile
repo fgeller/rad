@@ -1,13 +1,16 @@
 export SHELL:=/bin/bash -O extglob -c
 export GO15VENDOREXPERIMENT:=1
 
+build: BUILD_OS ?= darwin
+build: BUILD_ARCH ?= amd64
+build: BUILD_PROF ?= false
 build:
 	rm -vf sad
 	rm -rf assets
 	mkdir -p assets
 	cp -r ui/!(rad.js) assets/
 	babel --out-file assets/rad.js ui/rad.js
-	go run build.go -v -os ${BUILD_OS} -arch ${BUILD_ARCH}
+	go run build.go -v -prof=${BUILD_PROF} -os ${BUILD_OS} -arch ${BUILD_ARCH}
 
 test: buildtest apptest
 
@@ -17,7 +20,8 @@ apptest:
 buildtest:
 	go test build*.go
 
-snapshot: build
+snapshot:
+	BUILD_PROF=true $(MAKE) build
 	tar Jcf sad-`date -I`-`git rev-parse HEAD | cut -c-7`-`uname -s -m | tr ' ' '-'`.xz sad
 
 release-linux:

@@ -64,6 +64,7 @@ func findSources() ([]string, error) {
 		n := f.Name()
 		if strings.HasSuffix(n, ".go") &&
 			strings.Index(n, "_test") < 0 &&
+			(n != "prof.go" || config.prof) &&
 			n != "build.go" {
 			sources = append(sources, f.Name())
 		}
@@ -127,9 +128,10 @@ var config struct {
 	out       string
 	assets    string
 	assetsOut string
-	verbose   bool
 	os        string
 	arch      string
+	verbose   bool
+	prof      bool
 }
 
 func main() {
@@ -138,6 +140,7 @@ func main() {
 	flag.StringVar(&config.assetsOut, "assetsOut", "generated_assets.go", "File where assets are compiled.")
 	flag.StringVar(&config.os, "os", "darwin", "GOOS to compile binary for.")
 	flag.StringVar(&config.arch, "arch", "amd64", "GOARCH to compile binary for.")
+	flag.BoolVar(&config.prof, "prof", false, "Enable prof output at /debug/pprof")
 	flag.BoolVar(&config.verbose, "v", false, "Verbose output")
 	flag.Parse()
 

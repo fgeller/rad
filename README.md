@@ -121,7 +121,7 @@ following example:
 ## Integrations
 
 While `sad` includes a UI, it might be faster or more convenient to query
-through one of the following intergations:
+through one of the following integrations:
 
 ### Browser
 

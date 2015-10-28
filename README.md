@@ -60,7 +60,9 @@ Displaying installed and available packs:
 * [Scala](http://www.scala-lang.org)
   * Standard library (split into compiler, library and reflect)
   * [akka](http://www.scala-lang.org)
+  * [Gremlin-Scala](https://github.com/mpollmeier/gremlin-scala)
   * [Kafka](http://kafka.apache.org)
+  * [Shapeless](https://github.com/milessabin/shapeless)
   * [Spray](http://spray.io)
 
 ## Why?

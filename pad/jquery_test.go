@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestReactParseJQueryAjax(t *testing.T) {
+func TestParseJQueryAjax(t *testing.T) {
 	path := "testdata/jquery/jQuery.ajax/index.html"
 
 	fh, err := os.Open(path)
@@ -57,7 +57,7 @@ func TestReactParseJQueryAjax(t *testing.T) {
 
 }
 
-func TestReactParseJQueryGetJSON(t *testing.T) {
+func TestParseJQueryGetJSON(t *testing.T) {
 	path := "testdata/jquery/jQuery.getJSON/index.html"
 
 	fh, err := os.Open(path)

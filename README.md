@@ -61,6 +61,7 @@ Displaying installed and available packs:
 * [Java](https://code.google.com/p/go-uuid/)
 * [jQuery](http://jquery.com)
 * [lodash](http://lodash.com)
+* [node.js](http://nodejs.org)
 * [Python](https://www.python.org)
 * [react.js](https://facebook.github.io/react/)
 * [Scala](http://www.scala-lang.org)

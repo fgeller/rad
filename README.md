@@ -16,6 +16,12 @@ Just make sure you download packs before you go offline :)
 
 All releases including snapshots are available [here](http://geller.io/rad/).
 
+Alternatively, if you just want to give it a try there is a sample instance
+running [here](http://geller.io:3024). Keep in mind though that the latency to
+that instance probably slows down the app's responsiveness. For example in my
+case, I have a latency of about 500ms to the sample instance while most requests
+render successfully in 40-100ms for an instance running on my tiny laptop.
+
 Contents:
 
 * [Pictures!](https://github.com/fgeller/rad#pictures)

@@ -480,8 +480,7 @@ var Pack = React.createClass({
 		installThrottledSearch: function (throttle) {
 			var throttledSearch = _.debounce(
 				function (txt) { this.streamSearch(txt); },
-				throttle,
-				{ leading: false, trailing: true }
+				throttle
 			);
 			this.throttledSearch = throttledSearch;
 		},
@@ -504,10 +503,11 @@ var Pack = React.createClass({
 			return result;
 		},
 		search: function(text) {
-			this.setState({query: text, selected: 0, results: []});
+			this.setState({query: text});
 			this.throttledSearch(text);
 		},
 		streamSearch: function(text){
+			this.setState({query: text, selected: 0, results: []});
 			window.history.replaceState(null, "", "/?q="+encodeURIComponent(text));
 			var qs = text.split(" ");
 			if (qs.length < 2) {

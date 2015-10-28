@@ -273,6 +273,95 @@ func TestRemoveInstalledPack(t *testing.T) {
 	}
 }
 
+func TestDontRemoveInstalledPackWhenReadOnly(t *testing.T) {
+	os.RemoveAll(setup())
+
+	config.readOnly = true
+	addr := ensureServe()
+	err := awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	ensureSap()
+	err = awaitPing(config.sapAddr)
+	if err != nil {
+		t.Errorf("Error while waiting for sap to come up: %v", err)
+		return
+	}
+
+	p := shared.Pack{Name: "scala"}
+	nss := []shared.Namespace{
+		shared.Namespace{
+			Path:    "a",
+			Members: []shared.Member{{Name: "b"}},
+		},
+	}
+	loadPack(p, nss)
+
+	docs := installedDocs()
+	if len(docs) != 1 {
+		t.Errorf("Expected to find one pack installed, but got: %v", docs)
+		return
+	}
+
+	resp, err := http.Get("http://" + addr + "/remove/scala")
+	if err != nil {
+		t.Errorf("Unexpected error while trying to remove pack: %v", err)
+		return
+	}
+	if resp.StatusCode != 403 {
+		t.Errorf("Expected forbidden status code (403), got: %v", resp.StatusCode)
+		return
+	}
+
+	if len(docs) != 1 {
+		t.Errorf("Expected to find one pack installed, but got: %v", docs)
+		return
+	}
+}
+
+func TestDontInstallPackWhenReadOnly(t *testing.T) {
+	os.RemoveAll(setup())
+
+	config.readOnly = true
+	addr := ensureServe()
+	err := awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error while waiting for server to come up: %v", err)
+		return
+	}
+
+	ensureSap()
+	err = awaitPing(config.sapAddr)
+	if err != nil {
+		t.Errorf("Error while waiting for sap to come up: %v", err)
+		return
+	}
+
+	docs := installedDocs()
+	if len(docs) != 0 {
+		t.Errorf("Expected to find no pack installed, but got: %v", docs)
+		return
+	}
+
+	resp, err := http.Get("http://" + addr + "/install/scala.zip")
+	if err != nil {
+		t.Errorf("Unexpected error while trying to remove pack: %v", err)
+		return
+	}
+	if resp.StatusCode != 403 {
+		t.Errorf("Expected forbidden status code (403), got: %v", resp.StatusCode)
+		return
+	}
+
+	if len(docs) != 0 {
+		t.Errorf("Expected to find no pack installed, but got: %v", docs)
+		return
+	}
+}
+
 func TestServeAsset(t *testing.T) {
 	os.RemoveAll(setup())
 

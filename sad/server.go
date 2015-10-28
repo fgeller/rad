@@ -216,6 +216,12 @@ func streamResults(sock *websocket.Conn, params searchParams, limit int) {
 
 func installHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got install request %v\n", r.URL.Path)
+	if config.readOnly {
+		log.Printf("Failing install request, read only mode.\n")
+		http.Error(w, "Forbidden", 403)
+		return
+	}
+
 	fn := r.URL.Path[len("/install/"):]
 
 	resp := make(chan packResp)
@@ -231,6 +237,12 @@ func installHandler(w http.ResponseWriter, r *http.Request) {
 
 func removeHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got remove request %v\n", r.URL.Path)
+	if config.readOnly {
+		log.Printf("Failing remove request, read only mode.\n")
+		http.Error(w, "Forbidden", 403)
+		return
+	}
+
 	pn := r.URL.Path[len("/remove/"):]
 	remove(pn)
 }

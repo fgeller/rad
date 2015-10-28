@@ -10,9 +10,10 @@ import (
 )
 
 var config struct {
-	packDir string
-	sapAddr string
-	addr    string
+	packDir  string
+	sapAddr  string
+	addr     string
+	readOnly bool
 }
 
 func openURL(url string) {
@@ -39,6 +40,7 @@ func main() {
 	flag.StringVar(&config.packDir, "packdir", pd, "Path where packages will be installed")
 	flag.StringVar(&config.sapAddr, "sapaddr", "geller.io:3025", "Addr where sap serves")
 	flag.StringVar(&config.addr, "addr", "0.0.0.0:3024", "Addr where sad should serve")
+	flag.BoolVar(&config.readOnly, "readonly", false, "Whether to allow modifications of installed packs.")
 	flag.Parse()
 
 	pd, err := filepath.Abs(config.packDir)

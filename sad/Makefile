@@ -24,6 +24,10 @@ snapshot:
 	BUILD_PROF=true $(MAKE) build
 	tar Jcf sad-`date -I`-`git rev-parse HEAD | cut -c-7`-`uname -s -m | tr ' ' '-'`.xz sad
 
+release-win:
+	BUILD_OS=windows BUILD_ARCH=amd64 $(MAKE) build
+	tar Jcf sad-`git describe --abbrev=0 --tags`-win-amd64.xz sad.exe
+
 release-linux:
 	BUILD_OS=linux BUILD_ARCH=amd64 $(MAKE) build
 	tar Jcf sad-`git describe --abbrev=0 --tags`-linux-amd64.xz sad

@@ -152,6 +152,10 @@ func main() {
 		config.arch = "amd64"
 	}
 
+	if config.os == "windows" && !strings.HasSuffix(config.out, ".exe") {
+		config.out += ".exe"
+	}
+
 	log.Printf("Read config: %+v\n", config)
 	err := build(config.out, config.assets)
 	if err != nil {

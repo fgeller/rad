@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"log"
-	"os"
 	"os/exec"
+	"os/user"
 	"path/filepath"
 	"runtime"
 )
@@ -35,7 +35,11 @@ func waitAndOpenUrl(url string) {
 }
 
 func main() {
-	pd := filepath.Join(os.Getenv("HOME"), ".rad", "sad-packs")
+	u, err := user.Current()
+	if err != nil {
+		log.Fatalf("Coudln't access user: %v", err)
+	}
+	pd := filepath.Join(u.HomeDir, ".rad", "sad-packs")
 
 	flag.StringVar(&config.packDir, "packdir", pd, "Path where packages will be installed")
 	flag.StringVar(&config.sapAddr, "sapaddr", "geller.io:3025", "Addr where sap serves")
@@ -43,7 +47,7 @@ func main() {
 	flag.BoolVar(&config.readOnly, "readonly", false, "Whether to allow modifications of installed packs.")
 	flag.Parse()
 
-	pd, err := filepath.Abs(config.packDir)
+	pd, err = filepath.Abs(config.packDir)
 	if err != nil {
 		log.Fatalf("Can't find absolute path for %v: %v\n", config.packDir, err)
 	}

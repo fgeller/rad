@@ -1,0 +1,1372 @@
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" class="redesign no-js"  data-ffo-opensanslight=false data-ffo-opensans=false >
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge"><script type="text/javascript"><![CDATA[(window.NREUM||(NREUM={})).loader_config={xpid:"VgAEV1RTGwABU1NSAAQ="};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({QJf3ax:[function(t,e){function n(t){function e(e,n,a){t&&t(e,n,a),a||(a={});for(var c=s(e),f=c.length,u=i(a,o,r),d=0;f>d;d++)c[d].apply(u,n);return u}function a(t,e){f[t]=s(t).concat(e)}function s(t){return f[t]||[]}function c(){return n(e)}var f={};return{on:a,emit:e,create:c,listeners:s,_events:f}}function r(){return{}}var o="nr@context",i=t("gos");e.exports=n()},{gos:"7eSDFh"}],ee:[function(t,e){e.exports=t("QJf3ax")},{}],3:[function(t){function e(t){try{i.console&&console.log(t)}catch(e){}}var n,r=t("ee"),o=t(1),i={};try{n=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(i.console=!0,-1!==n.indexOf("dev")&&(i.dev=!0),-1!==n.indexOf("nr_dev")&&(i.nrDev=!0))}catch(a){}i.nrDev&&r.on("internal-error",function(t){e(t.stack)}),i.dev&&r.on("fn-err",function(t,n,r){e(r.stack)}),i.dev&&(e("NR AGENT IN DEVELOPMENT MODE"),e("flags: "+o(i,function(t){return t}).join(", ")))},{1:24,ee:"QJf3ax"}],4:[function(t){function e(t,e,n,i,s){try{c?c-=1:r("err",[s||new UncaughtException(t,e,n)])}catch(f){try{r("ierr",[f,(new Date).getTime(),!0])}catch(u){}}return"function"==typeof a?a.apply(this,o(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function n(t){r("err",[t,(new Date).getTime()])}var r=t("handle"),o=t(6),i=t("ee"),a=window.onerror,s=!1,c=0;t("loader").features.err=!0,t(5),window.onerror=e;try{throw new Error}catch(f){"stack"in f&&(t(1),t(2),"addEventListener"in window&&t(3),window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)&&t(4),s=!0)}i.on("fn-start",function(){s&&(c+=1)}),i.on("fn-err",function(t,e,r){s&&(this.thrown=!0,n(r))}),i.on("fn-end",function(){s&&!this.thrown&&c>0&&(c-=1)}),i.on("internal-error",function(t){r("ierr",[t,(new Date).getTime(),!0])})},{1:11,2:10,3:8,4:12,5:3,6:25,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],5:[function(t){if(window.addEventListener){var e=t("handle"),n=t("ee");t(1),window.addEventListener("click",function(){e("inc",["ck"])},!1),window.addEventListener("hashchange",function(){e("inc",["hc"])},!1),n.on("pushState-start",function(){e("inc",["ps"])})}},{1:9,ee:"QJf3ax",handle:"D5DuLP"}],6:[function(t){t("loader").features.ins=!0},{loader:"G9z0Bl"}],7:[function(t){function e(){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var n=t("ee"),r=t("handle"),o=t(1),i=t(2);t("loader").features.stn=!0,t(3);var a=Event;n.on("fn-start",function(t){var e=t[0];e instanceof a&&(this.bstStart=Date.now())}),n.on("fn-end",function(t,e){var n=t[0];n instanceof a&&r("bst",[n,e,this.bstStart,Date.now()])}),o.on("fn-start",function(t,e,n){this.bstStart=Date.now(),this.bstType=n}),o.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),this.bstType])}),i.on("fn-start",function(){this.bstStart=Date.now()}),i.on("fn-end",function(t,e){r("bstTimer",[e,this.bstStart,Date.now(),"requestAnimationFrame"])}),n.on("pushState-start",function(){this.time=Date.now(),this.startPath=location.pathname+location.hash}),n.on("pushState-end",function(){r("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),"addEventListener"in window.performance&&(window.performance.addEventListener("webkitresourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.webkitClearResourceTimings()},!1),window.performance.addEventListener("resourcetimingbufferfull",function(){r("bstResource",[window.performance.getEntriesByType("resource")]),window.performance.clearResourceTimings()},!1)),document.addEventListener("scroll",e,!1),document.addEventListener("keypress",e,!1),document.addEventListener("click",e,!1)}},{1:11,2:10,3:9,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],8:[function(t,e){function n(t){i.inPlace(t,["addEventListener","removeEventListener"],"-",r)}function r(t){return t[1]}var o=t("ee").create(),i=t(1)(o),a=t("gos");if(e.exports=o,n(window),"getPrototypeOf"in Object){for(var s=document;s&&!s.hasOwnProperty("addEventListener");)s=Object.getPrototypeOf(s);s&&n(s);for(var c=XMLHttpRequest.prototype;c&&!c.hasOwnProperty("addEventListener");)c=Object.getPrototypeOf(c);c&&n(c)}else XMLHttpRequest.prototype.hasOwnProperty("addEventListener")&&n(XMLHttpRequest.prototype);o.on("addEventListener-start",function(t,e){function n(){return s}if(t[1]){var r=t[1];if("function"==typeof r){var s=a(r,"nr@wrapped",function(){return i(r,"fn-",n,r.name||"anonymous")});this.wrapped=t[1]=s,o.emit("initEventContext",[t,e],this.wrapped)}else"function"==typeof r.handleEvent&&i.inPlace(r,["handleEvent"],"fn-")}}),o.on("removeEventListener-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{1:26,ee:"QJf3ax",gos:"7eSDFh"}],9:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window.history,["pushState","replaceState"],"-")},{1:26,ee:"QJf3ax"}],10:[function(t,e){var n=t("ee").create(),r=t(1)(n);e.exports=n,r.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),n.on("raf-start",function(t){t[0]=r(t[0],"fn-")})},{1:26,ee:"QJf3ax"}],11:[function(t,e){function n(t,e,n){t[0]=i(t[0],"fn-",null,n)}function r(t,e,n){function r(){return a}this.ctx={};var a={"nr@context":this.ctx};o.emit("initTimerContext",[t,n],a),t[0]=i(t[0],"fn-",r,n)}var o=t("ee").create(),i=t(1)(o);e.exports=o,i.inPlace(window,["setTimeout","setImmediate"],"setTimer-"),i.inPlace(window,["setInterval"],"setInterval-"),i.inPlace(window,["clearTimeout","clearImmediate"],"clearTimeout-"),o.on("setInterval-start",n),o.on("setTimer-start",r)},{1:26,ee:"QJf3ax"}],12:[function(t,e){function n(){f.inPlace(this,p,"fn-",o)}function r(t,e){f.inPlace(e,["onreadystatechange"],"fn-")}function o(t,e){return e}function i(t,e){for(var n in t)e[n]=t[n];return e}var a=t("ee").create(),s=t(1),c=t(2),f=c(a),u=c(s),d=window.XMLHttpRequest,p=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"];e.exports=a,window.XMLHttpRequest=function(t){var e=new d(t);try{a.emit("new-xhr",[],e),e.hasOwnProperty("addEventListener")&&u.inPlace(e,["addEventListener","removeEventListener"],"-",o),e.addEventListener("readystatechange",n,!1)}catch(r){try{a.emit("internal-error",[r])}catch(i){}}return e},i(d,XMLHttpRequest),XMLHttpRequest.prototype=d.prototype,f.inPlace(XMLHttpRequest.prototype,["open","send"],"-xhr-",o),a.on("send-xhr-start",r),a.on("open-xhr-start",r)},{1:8,2:26,ee:"QJf3ax"}],13:[function(t){function e(t){var e=this.params,r=this.metrics;if(!this.ended){this.ended=!0;for(var i=0;c>i;i++)t.removeEventListener(s[i],this.listener,!1);if(!e.aborted){if(r.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var a=t.responseType,f="arraybuffer"===a||"blob"===a||"json"===a?t.response:t.responseText,u=n(f);if(u&&(r.rxSize=u),this.sameOrigin){var d=t.getResponseHeader("X-NewRelic-App-Data");d&&(e.cat=d.split(", ").pop())}}else e.status=0;r.cbTime=this.cbTime,o("xhr",[e,r,this.startTime])}}}function n(t){if("string"==typeof t&&t.length)return t.length;if("object"!=typeof t)return void 0;if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if("undefined"!=typeof FormData&&t instanceof FormData)return void 0;try{return JSON.stringify(t).length}catch(e){return void 0}}function r(t,e){var n=i(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}if(window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)){t("loader").features.xhr=!0;var o=t("handle"),i=t(2),a=t("ee"),s=["load","error","abort","timeout"],c=s.length,f=t(1),u=window.XMLHttpRequest;t(4),t(3),a.on("new-xhr",function(){this.totalCbs=0,this.called=0,this.cbTime=0,this.end=e,this.ended=!1,this.xhrGuids={}}),a.on("open-xhr-start",function(t){this.params={method:t[0]},r(this,t[1]),this.metrics={}}),a.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),a.on("send-xhr-start",function(t,e){var r=this.metrics,o=t[0],i=this;if(r&&o){var f=n(o);f&&(r.txSize=f)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(i.params.aborted=!0),("load"!==t.type||i.called===i.totalCbs&&(i.onloadCalled||"function"!=typeof e.onload))&&i.end(e)}catch(n){try{a.emit("internal-error",[n])}catch(r){}}};for(var u=0;c>u;u++)e.addEventListener(s[u],this.listener,!1)}),a.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),a.on("xhr-load-added",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),a.on("xhr-load-removed",function(t,e){var n=""+f(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),a.on("addEventListener-end",function(t,e){e instanceof u&&"load"===t[0]&&a.emit("xhr-load-added",[t[1],t[2]],e)}),a.on("removeEventListener-end",function(t,e){e instanceof u&&"load"===t[0]&&a.emit("xhr-load-removed",[t[1],t[2]],e)}),a.on("fn-start",function(t,e,n){e instanceof u&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),a.on("fn-end",function(t,e){this.xhrCbStart&&a.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{1:"XL7HBI",2:14,3:12,4:8,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],14:[function(t,e){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");return!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname),r.sameOrigin=!e.hostname||e.hostname===document.domain&&e.port===n.port&&e.protocol===n.protocol,r}},{}],15:[function(t,e){function n(t){return function(){r(t,[(new Date).getTime()].concat(i(arguments)))}}var r=t("handle"),o=t(1),i=t(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(t,e){window.NREUM[e]=n("api-"+e)}),e.exports=window.NREUM},{1:24,2:25,handle:"D5DuLP"}],gos:[function(t,e){e.exports=t("7eSDFh")},{}],"7eSDFh":[function(t,e){function n(t,e,n){if(r.call(t,e))return t[e];var o=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return t[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],D5DuLP:[function(t,e){function n(t,e,n){return r.listeners(t).length?r.emit(t,e,n):void(r.q&&(r.q[t]||(r.q[t]=[]),r.q[t].push(e)))}var r=t("ee").create();e.exports=n,n.ee=r,r.q={}},{ee:"QJf3ax"}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],XL7HBI:[function(t,e){function n(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:i(t,o,function(){return r++})}var r=1,o="nr@id",i=t("gos");e.exports=n},{gos:"7eSDFh"}],id:[function(t,e){e.exports=t("XL7HBI")},{}],G9z0Bl:[function(t,e){function n(){var t=p.info=NREUM.info,e=f.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){s(d,function(e,n){e in t||(t[e]=n)});var n="https"===u.split(":")[0]||t.sslForHttp;p.proto=n?"https://":"http://",a("mark",["onload",i()]);var r=f.createElement("script");r.src=p.proto+t.agent,e.parentNode.insertBefore(r,e)}}function r(){"complete"===f.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),s=t(1),c=window,f=c.document;t(2);var u=(""+location).split("?")[0],d={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-768.min.js"},p=e.exports={offset:i(),origin:u,features:{}};f.addEventListener?(f.addEventListener("DOMContentLoaded",o,!1),c.addEventListener("load",n,!1)):(f.attachEvent("onreadystatechange",r),c.attachEvent("onload",n)),a("mark",["firstbyte",i()])},{1:24,2:15,handle:"D5DuLP"}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],24:[function(t,e){function n(t,e){var n=[],o="",i=0;for(o in t)r.call(t,o)&&(n[i]=e(o,t[o]),i+=1);return n}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],25:[function(t,e){function n(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=n},{}],26:[function(t,e){function n(t){return!(t&&"function"==typeof t&&t.apply&&!t[i])}var r=t("ee"),o=t(1),i="nr@original",a=Object.prototype.hasOwnProperty;e.exports=function(t){function e(t,e,r,a){function nrWrapper(){var n,i,s,f;try{i=this,n=o(arguments),s=r&&r(n,i)||{}}catch(d){u([d,"",[n,i,a],s])}c(e+"start",[n,i,a],s);try{return f=t.apply(i,n)}catch(p){throw c(e+"err",[n,i,p],s),p}finally{c(e+"end",[n,i,f],s)}}return n(t)?t:(e||(e=""),nrWrapper[i]=t,f(t,nrWrapper),nrWrapper)}function s(t,r,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<r.length;c++)s=r[c],a=t[s],n(a)||(t[s]=e(a,f?s+o:o,i,s))}function c(e,n,r){try{t.emit(e,n,r)}catch(o){u([o,e,n,r])}}function f(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){u([r])}for(var o in t)a.call(t,o)&&(e[o]=t[o]);return e}function u(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=r),e.inPlace=s,e.flag=i,e}},{1:25,ee:"QJf3ax"}]},{},["G9z0Bl",4,13,7,6,5]);]]></script><script type="text/javascript"><![CDATA[window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","queueTime":1,"licenseKey":"42869b6ed3","agent":"js-agent.newrelic.com/nr-768.min.js","transactionName":"b1QHMUtVDRdSW0YKXVYeIxBXVxcNXFYdCEdVUEsSUF8KSkVRVxRBFlUKBkxZBgpHAlYMUU1cAAtN","applicationID":"3172075","errorBeacon":"bam.nr-data.net","applicationTime":192}]]></script>
+  <script><![CDATA[(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);]]></script>
+        
+    <title>String - JavaScript | MDN</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <link rel="home" href="https://developer.mozilla.org/en-US/">
+  <link rel="copyright" href="String.html#copyright">
+
+              <link href="../../../../../../../developer.cdn.mozilla.net/static/build/styles/mdn.872df1a270bd.css" rel="stylesheet" type="text/css" />
+      
+    <link href="../../../../../../../developer.cdn.mozilla.net/static/build/styles/wiki.b7ec14b346d8.css" rel="stylesheet" type="text/css" />
+    
+    
+  <!-- common social tags -->
+    <meta property="og:type" content="website">
+  <meta property="og:image" content="https://developer.cdn.mozilla.net/static/img/opengraph-logo.dc4e08e2f6af.png">
+  <meta property="og:site_name" content="Mozilla Developer Network">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="https://developer.cdn.mozilla.net/static/img/opengraph-logo.dc4e08e2f6af.png">
+  <meta name="twitter:site" content="@MozDevNet">
+  <meta name="twitter:creator" content="@MozDevNet">
+
+  <link rel="search" type="application/opensearchdescription+xml" href="https://developer.mozilla.org/en-US/search/xml" title="Mozilla Developer Network">
+
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../../../../developer.cdn.mozilla.net/static/img/favicon144.a6e4162070f4.png">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../../../../../../developer.cdn.mozilla.net/static/img/favicon114.0e9fabd44f85.png">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../../../../../../developer.cdn.mozilla.net/static/img/favicon72.8ff9d87c82a0.png">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="../../../../../../../developer.cdn.mozilla.net/static/img/favicon57.a2490b9a2d76.png">
+  <!-- basic favicon -->
+          <link rel="shortcut icon" href="../../../../../../../developer.cdn.mozilla.net/static/img/favicon32.e02854fdcf73.png">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <script type="text/javascript" src="https://developer.cdn.mozilla.net/static/build/js/html5shiv.c2f325c0e780.js" charset="utf-8">]]></script>  <![endif]-->
+
+    <link rel="alternate" type="application/json" href="String$json">
+  <link rel="canonical" href="String.html" >
+
+            <link rel="alternate" hreflang="bn-BD" href="https://developer.mozilla.org/bn-BD/docs/Web/JavaScript/Reference/Global_Objects/String" title="স্ট্রিং">
+          <link rel="alternate" hreflang="ca" href="https://developer.mozilla.org/ca/docs/Web/JavaScript/Referencia/Objectes_globals/String" title="String">
+          <link rel="alternate" hreflang="cs" href="https://developer.mozilla.org/cs/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="de" href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="es" href="https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/String" title="String">
+          <link rel="alternate" hreflang="fr" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String" title="String">
+          <link rel="alternate" hreflang="id" href="https://developer.mozilla.org/id/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="ja" href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="ko" href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="pl" href="https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/String" title="String">
+          <link rel="alternate" hreflang="pt-BR" href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="pt-PT" href="https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="ru" href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="vi" href="https://developer.mozilla.org/vi/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="zh-CN" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+          <link rel="alternate" hreflang="zh-TW" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">
+      
+  <!-- document-specific social tags -->
+  <meta property="og:title" content="String">
+  <meta property="og:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">
+  <meta name="twitter:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">
+  <meta name="twitter:title" content="String">
+    <meta property="og:description" content="The String global object is a constructor for strings, or a sequence of characters.">
+  <meta name="description" content="The String global object is a constructor for strings, or a sequence of characters.">
+  <meta name="twitter:description" content="The String global object is a constructor for strings, or a sequence of characters.">
+  
+      <script type="text/javascript"><![CDATA[
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-36116321-5', 'mozilla.org');
+    ga('set', 'anonymizeIp', true);
+
+    
+    // dimension9 == "Section editing"
+    
+    (function() {
+        // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+        var win = window;
+        var removeUtms = function(){
+            var location = win.location;
+            if (location.href.indexOf('utm') != -1 && win.history.replaceState) {
+                win.history.replaceState({}, '', location.pathname);
+            }
+        };
+
+        ga('send', 'pageview', {'hitCallback': removeUtms});
+    })();
+]]></script>
+  </head>
+<body data-slug="Web/JavaScript/Reference/Global_Objects/String" contextmenu="edit-history-menu" data-search-url="" class="document  ">
+
+  <script type="text/javascript"><![CDATA[
+    
+
+(function (globals) {
+
+  var django = globals.django || (globals.django = {});
+
+  
+  django.pluralidx = function (n) {
+    var v=(n != 1);
+    if (typeof(v) == 'boolean') {
+      return v ? 1 : 0;
+    } else {
+      return v;
+    }
+  };
+  
+
+  
+  /* gettext identity library */
+
+  django.gettext = function (msgid) { return msgid; };
+  django.ngettext = function (singular, plural, count) { return (count == 1) ? singular : plural; };
+  django.gettext_noop = function (msgid) { return msgid; };
+  django.pgettext = function (context, msgid) { return msgid; };
+  django.npgettext = function (context, singular, plural, count) { return (count == 1) ? singular : plural; };
+  
+
+  django.interpolate = function (fmt, obj, named) {
+    if (named) {
+      return fmt.replace(/%\(\w+\)s/g, function(match){return String(obj[match.slice(2,-2)])});
+    } else {
+      return fmt.replace(/%s/g, function(match){return String(obj.shift())});
+    }
+  };
+
+
+  /* formatting library */
+
+  django.formats = {
+    "DATETIME_FORMAT": "N j, Y, P", 
+    "DATETIME_INPUT_FORMATS": [
+      "%Y-%m-%d %H:%M:%S", 
+      "%Y-%m-%d %H:%M:%S.%f", 
+      "%Y-%m-%d %H:%M", 
+      "%Y-%m-%d", 
+      "%m/%d/%Y %H:%M:%S", 
+      "%m/%d/%Y %H:%M:%S.%f", 
+      "%m/%d/%Y %H:%M", 
+      "%m/%d/%Y", 
+      "%m/%d/%y %H:%M:%S", 
+      "%m/%d/%y %H:%M:%S.%f", 
+      "%m/%d/%y %H:%M", 
+      "%m/%d/%y"
+    ], 
+    "DATE_FORMAT": "N j, Y", 
+    "DATE_INPUT_FORMATS": [
+      "%Y-%m-%d", 
+      "%m/%d/%Y", 
+      "%m/%d/%y"
+    ], 
+    "DECIMAL_SEPARATOR": ".", 
+    "FIRST_DAY_OF_WEEK": "0", 
+    "MONTH_DAY_FORMAT": "F j", 
+    "NUMBER_GROUPING": "3", 
+    "SHORT_DATETIME_FORMAT": "m/d/Y P", 
+    "SHORT_DATE_FORMAT": "m/d/Y", 
+    "THOUSAND_SEPARATOR": ",", 
+    "TIME_FORMAT": "P", 
+    "TIME_INPUT_FORMATS": [
+      "%H:%M:%S", 
+      "%H:%M:%S.%f", 
+      "%H:%M"
+    ], 
+    "YEAR_MONTH_FORMAT": "F Y"
+  };
+
+  django.get_format = function (format_type) {
+    var value = django.formats[format_type];
+    if (typeof(value) == 'undefined') {
+      return format_type;
+    } else {
+      return value;
+    }
+  };
+
+  /* add to global namespace */
+  globals.pluralidx = django.pluralidx;
+  globals.gettext = django.gettext;
+  globals.ngettext = django.ngettext;
+  globals.gettext_noop = django.gettext_noop;
+  globals.pgettext = django.pgettext;
+  globals.npgettext = django.npgettext;
+  globals.interpolate = django.interpolate;
+  globals.get_format = django.get_format;
+
+}(this));
+
+
+
+    (function(win) {
+        'use strict';
+
+                    (function(){
+  var FLAGS = {
+    'compat_api': false,'helpfulness': false,'kumaediting': false,'mdn10_logo': true,'mdn10_tile': true,'page_move': false,'registration_disabled': false,'search_suggestions': false,'section_edit': false,'share_links': false,'spam_checks_enabled': false,'wiki_samples': false,'wiki_spam_exempted': false
+    },
+    SWITCHES = {
+    'wiki_error_on_delete': false,'wiki_force_immediate_rendering': false,'enable_optimizely': false,'welcome_email': true,'application_ACAO': true,'store_revision_ips': true,'dumb_doc_urls': true
+    },
+    SAMPLES = {
+    
+    };
+  window.waffle = {
+    "flag_is_active": function waffle_flag(flag_name) {
+      
+      return !!FLAGS[flag_name];
+    },
+    "switch_is_active": function waffle_switch(switch_name) {
+      
+      return !!SWITCHES[switch_name];
+    },
+    "sample_is_active": function waffle_sample(sample_name) {
+      
+      return !!SAMPLES[sample_name];
+    },
+    "FLAGS": FLAGS,
+    "SWITCHES": SWITCHES,
+    "SAMPLES": SAMPLES
+  };
+})();
+
+        
+        // This needs to be set before ckeditor.js loads
+        window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';
+
+        // This represents the site configuration
+        win.mdn = {
+            // Properties and settings for CKEditor will go here
+            ckeditor: {},
+            // Feature test results and methods will be placed here
+            features: {},
+            // The path to static assets (images, CSS, JS) in MDN
+            staticPath: 'https://developer.cdn.mozilla.net/static/',
+            // Optimizely API
+            optimizely: win['optimizely'] || [],
+            // Site notifications
+                        notifications: [],
+                        // Wiki-specific settings will be placed here
+            wiki: {
+                autosuggestTitleUrl: '/en-US/docs/get-documents'
+            },
+            // Assets that need to be dynamically injected
+            assets: {
+                css: {
+                    'editor-content': ['https://developer.cdn.mozilla.net/static/build/styles/editor-content.9b47d53b7231.css',],
+                    'wiki-compat-tables': ['https://developer.cdn.mozilla.net/static/build/styles/wiki-compat-tables.391e4a87df2f.css',]
+                },
+                js: {
+                    'syntax-prism': ['https://developer.cdn.mozilla.net/static/build/js/syntax-prism.6eb7bfb92959.js',],
+                    'wiki-compat-tables': ['https://developer.cdn.mozilla.net/static/build/js/wiki-compat-tables.51180d53fa35.js',]
+                }
+            }
+        };
+    })(this);
+]]></script>
+    <div class="global-notice">
+    <div class="wrap center">
+              <p><bdi>Join MDN and developers like you at Mozilla&#39;s View Source conference, November 2-4 in Portland, Oregon. Learn more at <a href="https://viewsourceconf.org/">https://viewsourceconf.org/</a>.</bdi></p>
+          </div>
+  </div>
+
+
+  <ul id="nav-access">
+    <li><a href="String.html#document-main" id="skip-main">Skip to main content</a></li>
+    <li><a id="skip-language" href="String.html#language">Select language</a></li>
+          <li><a href="String.html#q" id="skip-search">Skip to search</a></li>
+      </ul>
+
+  <!-- Header -->
+  <header id="main-header"><div class="center">
+
+    <div id="tabzilla">
+        <a href="https://www.mozilla.org/" class="no-track">mozilla</a>
+    </div>
+
+    <div class="clear header-clear"></div>
+
+            <a href="https://developer.mozilla.org/en-US/" class="logo logo-mdn10">Mozilla Developer Network</a>
+    
+    <div id="nav-sec">
+                          <ul>
+                  <li>
+    
+    <form>
+      <div class="oauth-login-container">
+          <div class="oauth-login-options" tabIndex="0">
+              <span class="oauth-login-options-text">
+                <span class="oauth-login-options-text-icons">Sign in with</span>
+                <span class="oauth-login-options-text-no-icons">Sign in</span>
+              </span>
+              <span class="oauth-icon oauth-persona launch-persona-login wait-for-persona disabled" data-service="Persona" data-next="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" title="Persona"><i class="icon-user" aria-hidden="true"></i></span>
+              <span class="oauth-icon oauth-github" data-service="GitHub" data-href="/users/github/login/?next=%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FString" title="GitHub"><i class="icon-github" aria-hidden="true"></i></span>
+          </div>
+          <div class="oauth-login-picker" aria-hidden="true">
+              <ul>
+                  <li class="wait-for-persona disabled"><a href="https://developer.mozilla.org/en-US/users/signin" class="login-link launch-persona-login" data-next="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
+                  <li><a href="https://developer.mozilla.org/users/github/login/?next=%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FString" class="login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
+              </ul>
+          </div>
+      </div>
+    </form>
+</li>
+                </ul>
+            </div>
+
+    <nav id="main-nav" role="navigation"><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web">Web Platform<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu submenu-cols-2 js-submenu" id="nav-platform-submenu">
+          <div class="submenu-column">
+            <div class="title">Technologies</div>
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a></li>
+              <li><a href="../../Tutorials.html">JavaScript</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Graphics">Graphics</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API">APIs / DOM</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/Apps">Apps</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/MathML">MathML</a></li>
+            </ul>
+          </div><div class="submenu-column last">
+            <div class="title">References & Guides</div>
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Learn">Learn the Web</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/Tutorials">Tutorials</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/Reference">References</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide">Developer Guides</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility">Accessibility</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/demos/">Demos</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web">...more docs</a></li>
+            </ul>
+          </div>
+        </div>
+      </li><li><a href="https://developer.mozilla.org/en-US/docs/Zones">Mozilla Docs<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu js-submenu" id="nav-zones-submenu">
+          <div class="submenu-column">
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons">Add-ons</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Firefox">Firefox</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Marketplace">Firefox Marketplace</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Firefox_OS">Firefox OS</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Persona">Persona</a></li>
+            </ul>
+          </div>
+        </div>
+      </li><li><a href="https://developer.mozilla.org/en-US/docs/Tools">Developer Tools</a></li><li><a href="https://developer.mozilla.org/en-US/demos/">Demos</a></li><li><a href="https://developer.mozilla.org/en-US/docs/MDN/Feedback">Feedback<i aria-hidden="true" class="icon-caret-down"></i></a>
+
+        <div class="submenu js-submenu" id="nav-contact-submenu">
+          <div class="submenu-column">
+            <ul>
+                <li><a href="https://support.mozilla.org/">Get Firefox help<i aria-hidden="true" class="icon-external-link"></i></a></li>
+                <li><a href="http://stackoverflow.com/">Get web development help<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/MDN/Community">Join the MDN community</a></li>
+              <li><a href="https://bugzilla.mozilla.org/form.doc">Report a content problem<i aria-hidden="true" class="icon-external-link"></i></a></li>
+              <li><a href="https://bugzilla.mozilla.org/form.mdn">Report a bug<i aria-hidden="true" class="icon-external-link"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+      </li><li class="nav-search-link"><a href="https://developer.mozilla.org/en-US/search" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li><li class="main-nav-search"><form action="https://developer.mozilla.org/en-US/search" method="get" role="search">
+        <div class="search-wrap">
+          <label for="main-q" class="offscreen">Search</label>
+          <input type="search" id="main-q" name="q" placeholder="Search" data-value="" value="" />
+          <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>&nbsp;
+          <button type="submit" class="offscreen">Search</button>
+        </div>
+      </form></li></ul></nav>
+  </div></header>
+
+  <!-- Content will go here -->
+  <main id="content"><div class="center clear">
+  
+   <!-- end is_zone -->
+
+
+    <div class="wiki-main-content" id="document-main"><div class="center">
+            <div class="article-meta">
+        <!-- action buttons -->
+        
+        
+        
+
+  <ul class="page-buttons" data-sticky="false"><li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>Languages</span><i aria-hidden="true" class="icon-globe"></i></button>
+
+        <div class="submenu js-submenu" id="languages-menu-submenu">
+          <div class="submenu-column">
+            <ul id="translations">
+                                                <li><bdi><a rel="internal" href="https://developer.mozilla.org/bn-BD/docs/Web/JavaScript/Reference/Global_Objects/String" title="স্ট্রিং">বাংলা (বাংলাদেশ)</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ca/docs/Web/JavaScript/Referencia/Objectes_globals/String" title="String">Català</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/cs/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">Čeština</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">Deutsch</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/String" title="String">Español</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String" title="String">Français</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/id/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">Bahasa Indonesia</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">日本語</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">한국어</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/String" title="String">Polski</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">Português (do Brasil)</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/pt-PT/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">Português (Europeu)</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">Русский</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/vi/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">Tiếng Việt</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">中文 (简体)</a></bdi></li>
+                                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String" title="String">正體中文 (繁體)</a></bdi></li>
+                              
+                              <li><a href="String$locales.html" rel="nofollow, noindex" id="translations-add">Add a translation</a></li>
+                          </ul>
+          </div>
+        </div></li><li class="page-buttons-edit"><a href="String$edit.html" class="button" data-optimizely-hook="button-edit-doc" id="edit-button">Edit<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>Advanced</span><i aria-hidden="true" class="icon-cog"></i></button>
+
+        <div class="submenu js-submenu" id="advanced-menu-submenu">
+          <!-- this page -->
+          <div class="submenu-column">
+            <div class="title">Advanced</div>
+            <ul>
+                <li><a href="String$history.html" rel="nofollow, noindex">History</a></li>
+                                                                
+                
+                                                                <li class="page-print"><a href="String.html#" onclick="return window.print();">Print this article</a></li>
+            </ul>
+          </div>
+        </div>
+  </li></ul>
+
+        <!-- crumbs -->
+          <nav class="crumbs" role="navigation"><ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="breadcrumbs">
+    <li typeof="v:Breadcrumb"><a href="https://developer.mozilla.org/en-US" rel="v:url" property="v:title">MDN</a></li>
+          <li class="crumb" typeof="v:Breadcrumb"><a href="https://developer.mozilla.org/en-US/docs/Web" rel="v:url" property="v:title">Web technology for developers</a></li>
+          <li class="crumb" typeof="v:Breadcrumb"><a href="../../Tutorials.html" rel="v:url" property="v:title">JavaScript</a></li>
+          <li class="crumb" typeof="v:Breadcrumb"><a href="../../Reference.html" rel="v:url" property="v:title">JavaScript reference</a></li>
+          <li class="crumb" typeof="v:Breadcrumb"><a href="index.html" rel="v:url" property="v:title">Standard built-in objects</a></li>
+        <li class="crumb" typeof="v:Breadcrumb" property="v:title">String</li>
+  </ol></nav>
+      </div>
+
+      <!-- heading -->
+      <div id="wiki-document-head" class="document-head">
+          <span class="from-search-previous-box">
+            <a class="button from-search-previous only-icon disabled" title="Previous Search Result" data-empty-title="No Previous Search Result"><i aria-hidden="true" class="icon-chevron-left"></i></a>
+          </span>
+          <span class="from-search-navigate-wrap">
+            <a href="String.html#" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
+          </span>
+          <div class="from-search-toc submenu">
+            <span class="title">Your Search Results</span>
+            <ol></ol>
+          </div>
+          <span class="from-search-next-box">
+            <a class="button from-search-next only-icon disabled" title="Next Search Result" data-empty-title="No Previous Search Result"><i aria-hidden="true" class="icon-chevron-right"></i></a>
+          </span>
+
+        <h1>String</h1>
+
+        
+                <div class="contributor-avatars" data-all-text="Show all&hellip; " data-has-hidden="1">
+            <span class="quickstat">
+            by 54 contributors:            </span>
+            <ul>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/MexieAndCo" title="View profile: MexieAndCo">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="MexieAndCo" data-src="https://secure.gravatar.com/avatar/a14ee7171dd34b923d3897b4443713ee?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">MexieAndCo</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/FernandoBasso" title="View profile: FernandoBasso">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="FernandoBasso" data-src="https://secure.gravatar.com/avatar/4eec321d4316e16f3cbb269410e2357b?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">FernandoBasso</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/GKFX" title="View profile: GKFX">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="GKFX" data-src="https://secure.gravatar.com/avatar/a7cb8b616d240413f0bca5f3f43e0ef9?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">GKFX</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/Sheppy" title="View profile: Sheppy">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Sheppy" data-src="https://secure.gravatar.com/avatar/945076feb88f2d7003891ffbf06f32bf?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Sheppy</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/fscholz" title="View profile: fscholz">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="fscholz" data-src="https://secure.gravatar.com/avatar/e24391c9174352988d819a9b9ea77c9e?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">fscholz</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/jpmedley" title="View profile: jpmedley">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="jpmedley" data-src="https://secure.gravatar.com/avatar/fde784135f738cc182672e703dea9a4b?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">jpmedley</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/arai" title="View profile: arai">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="arai" data-src="https://secure.gravatar.com/avatar/0432a84805ea7033f4646049963e3bf1?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">arai</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/julienw" title="View profile: julienw">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="julienw" data-src="https://secure.gravatar.com/avatar/a2b625f331361a7110da59a907d79e95?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">julienw</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/tamilvendhank" title="View profile: tamilvendhank">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="tamilvendhank" data-src="https://secure.gravatar.com/avatar/6d210c1377edc4ac704e55f98f4a0cf0?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">tamilvendhank</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/teoli" title="View profile: teoli">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="teoli" data-src="https://secure.gravatar.com/avatar/d0d90148e08e3b64ccf75c46f31442c5?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">teoli</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/omerta77" title="View profile: omerta77">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="omerta77" data-src="https://secure.gravatar.com/avatar/cfbdf076d6c6141e50381b728aa90c34?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">omerta77</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/ramonsnir" title="View profile: ramonsnir">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="ramonsnir" data-src="https://secure.gravatar.com/avatar/cc51af9b368803221c834f5115b4a9cc?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">ramonsnir</noscript></a>
+                </li>
+                            <li class="shown">
+                <a href="https://developer.mozilla.org/en-US/profiles/Mingun" title="View profile: Mingun">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Mingun" data-src="https://secure.gravatar.com/avatar/1df0cfb54ee323991401ff163d80713c?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Mingun</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/exymax" title="View profile: exymax">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="exymax" data-src="https://secure.gravatar.com/avatar/6a1dee125b5c9cf1290238300e08b7d8?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">exymax</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/ziyunfei" title="View profile: ziyunfei">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="ziyunfei" data-src="https://secure.gravatar.com/avatar/2dbf9c055c2b32d3ca45d25be0117423?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">ziyunfei</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/shengyueming" title="View profile: shengyueming">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="shengyueming" data-src="https://secure.gravatar.com/avatar/5add9904f1dc9278c3961a118af10692?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">shengyueming</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Raffzahn" title="View profile: Raffzahn">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Raffzahn" data-src="https://secure.gravatar.com/avatar/9a56e1a501f151f2a86a02c768243519?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Raffzahn</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/kscarfone" title="View profile: kscarfone">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="kscarfone" data-src="https://secure.gravatar.com/avatar/89c1e54a9703125168e40d22316d2b49?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">kscarfone</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/timothykim" title="View profile: timothykim">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="timothykim" data-src="https://secure.gravatar.com/avatar/76f781fecfe75083b282592f16f9f9d7?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">timothykim</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/fusionchess" title="View profile: fusionchess">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="fusionchess" data-src="https://secure.gravatar.com/avatar/46d112721eef52c4c389be201c151bbf?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">fusionchess</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/christophe.hurpeau" title="View profile: christophe.hurpeau">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="christophe.hurpeau" data-src="https://secure.gravatar.com/avatar/8d1c09b1b8873e78d8e7089c9faf6ca5?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">christophe.hurpeau</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Sevenspade" title="View profile: Sevenspade">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Sevenspade" data-src="https://secure.gravatar.com/avatar/64f1bb62d82df9624a0c21b569fb34fe?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Sevenspade</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/ethertank" title="View profile: ethertank">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="ethertank" data-src="https://secure.gravatar.com/avatar/abac73ba2093b500bf7599c76d80280c?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">ethertank</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/williamr" title="View profile: williamr">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="williamr" data-src="https://secure.gravatar.com/avatar/f04ba143f47294ac77328415e5413d62?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">williamr</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/xolve" title="View profile: xolve">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="xolve" data-src="https://secure.gravatar.com/avatar/8bb00903daaba6a14c238611b21ab677?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">xolve</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Norbert" title="View profile: Norbert">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Norbert" data-src="https://secure.gravatar.com/avatar/ee815b9a22c1d7cc968fb18354fb2790?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Norbert</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/island205" title="View profile: island205">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="island205" data-src="https://secure.gravatar.com/avatar/dfd8ec3a8b02aea547de1b092557b97c?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">island205</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Brettz9" title="View profile: Brettz9">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Brettz9" data-src="https://secure.gravatar.com/avatar/4c750582e23fcf068bdde51cc50416d1?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Brettz9</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/lmorchard" title="View profile: lmorchard">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="lmorchard" data-src="https://secure.gravatar.com/avatar/b45c48fc9e05922e2f368a9d7d7d8de1?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">lmorchard</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/daguej" title="View profile: daguej">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="daguej" data-src="https://secure.gravatar.com/avatar/ce4c9b2df2d704c7d54ab740de2d54af?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">daguej</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Marcoos" title="View profile: Marcoos">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Marcoos" data-src="https://secure.gravatar.com/avatar/8c2b8d94668c243dc97bb974d899d145?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Marcoos</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Neil" title="View profile: Neil">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Neil" data-src="https://secure.gravatar.com/avatar/3e42479b6063be4a85f9974d2161dadf?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Neil</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/grendel" title="View profile: grendel">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="grendel" data-src="https://secure.gravatar.com/avatar/7bec8ce3caba5f459b16eca80e087be7?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">grendel</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/evilpie" title="View profile: evilpie">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="evilpie" data-src="https://secure.gravatar.com/avatar/6bb31f7207fc068158047b9c8ad4592d?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">evilpie</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/hapalibashi" title="View profile: hapalibashi">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="hapalibashi" data-src="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">hapalibashi</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/satyr" title="View profile: satyr">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="satyr" data-src="https://secure.gravatar.com/avatar/5b423b0537cb831484ed7e95e968225d?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">satyr</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Johnjbarton" title="View profile: Johnjbarton">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Johnjbarton" data-src="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Johnjbarton</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Chris%20Chittleborough" title="View profile: Chris Chittleborough">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Chris Chittleborough" data-src="https://secure.gravatar.com/avatar/d26e068d4108b893b89a969a4ca60ec9?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Chris Chittleborough</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Roebot" title="View profile: Roebot">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Roebot" data-src="https://secure.gravatar.com/avatar/73cee4f3244a2f18da1192f75bbdf081?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Roebot</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Potappo" title="View profile: Potappo">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Potappo" data-src="https://secure.gravatar.com/avatar/f0ee74ffcc558dd3895fde235b2aec42?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Potappo</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Andr3w" title="View profile: Andr3w">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Andr3w" data-src="https://secure.gravatar.com/avatar/7412878b8591ded048cefef9d47e11d4?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Andr3w</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Mgjbot" title="View profile: Mgjbot">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Mgjbot" data-src="https://secure.gravatar.com/avatar/cde356a1ca3e38301f29fda3dbd5de53?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Mgjbot</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/JasonSpiro" title="View profile: JasonSpiro">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="JasonSpiro" data-src="https://secure.gravatar.com/avatar/5110f411b3699559a985e4eeaba67d81?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">JasonSpiro</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Fredchat" title="View profile: Fredchat">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Fredchat" data-src="https://secure.gravatar.com/avatar/fbcf95d77820f64dd057811f6c97aafe?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Fredchat</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Deltab" title="View profile: Deltab">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Deltab" data-src="https://secure.gravatar.com/avatar/12ed217c239057784bd54297faa8b180?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Deltab</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/JohnJBarton1" title="View profile: JohnJBarton1">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="JohnJBarton1" data-src="https://secure.gravatar.com/avatar/88457ac5fd091ba1fad54a189348a4b1?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">JohnJBarton1</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Geary" title="View profile: Geary">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Geary" data-src="https://secure.gravatar.com/avatar/4bd22084046f375b15ff56ffae8237b0?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Geary</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Ptak82" title="View profile: Ptak82">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Ptak82" data-src="https://secure.gravatar.com/avatar/c971ad02ceb36d77de6f9bc8b0c0d5c1?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Ptak82</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Hongli" title="View profile: Hongli">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Hongli" data-src="https://secure.gravatar.com/avatar/204784d162fece694532d2ef5cdc5ca5?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Hongli</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Maian" title="View profile: Maian">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Maian" data-src="https://secure.gravatar.com/avatar/f3589ad1aadbcba8e9eaffc046dcff90?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Maian</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Mar" title="View profile: Mar">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Mar" data-src="https://secure.gravatar.com/avatar/83e22b95c2652cc418f7a27edca5cb51?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Mar</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Prodoc" title="View profile: Prodoc">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Prodoc" data-src="https://secure.gravatar.com/avatar/92a0b6d891b351cf3daf516a1323b21b?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Prodoc</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Shoe" title="View profile: Shoe">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Shoe" data-src="https://secure.gravatar.com/avatar/191ca42e2ac019a7d0eca27b38ff69c2?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Shoe</noscript></a>
+                </li>
+                            <li class="hidden">
+                <a href="https://developer.mozilla.org/en-US/profiles/Dria" title="View profile: Dria">
+                <noscript data-width="34" data-height="34" data-class="avatar" data-alt="Dria" data-src="https://secure.gravatar.com/avatar/c6c044311a2c98b383718e00964cda72?s=34&amp;r=pg&amp;d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png">Dria</noscript></a>
+                </li>
+                        </ul>
+        </div>
+        
+      </div>
+      
+      <!-- start the main content container -->
+        <div id="wiki-column-container" class="wiki-right-present wiki-left-present">
+
+                    <!-- additional controls row; hidden unless needed -->
+          <div id="wiki-controls" class="column-container column-container-reverse">
+            <div class="column-strip">
+              <!-- Show TOC "show" link -->
+            </div>
+            <div class="column-half">
+            </div>
+            <div class="column-strip quick-links hidden">
+              <a href="String.html#show-quick-links" class="title smaller" id="show-quick-links"><i aria-hidden="true" class="icon-caret-down"></i>Show Sidebar</a>
+            </div>
+          </div>
+          
+          <!-- content row with three strips -->
+          <div class="column-container column-container-reverse">
+
+                          <!-- TOC, approvals, etc -->
+              <div class="column-strip wiki-column" id="wiki-right">
+                            <!-- table of contents -->
+              <div id="toc" class="toc toggleable">
+                <a href="String.html#toc" class="title toggler" data-open-icon="icon-plus" data-closed-icon="icon-minus">In This Article<i></i></a>
+                <ol class="toggle-container">
+                  <li><a href="String.html#Syntax" rel="internal">Syntax</a><ol><li><a href="String.html#Parameters" rel="internal">Parameters</a><li><a href="String.html#Template_strings" rel="internal">Template strings</a><li><a href="String.html#Escape_notation" rel="internal">Escape notation</a><li><a href="String.html#Long_literal_strings" rel="internal">Long literal strings</a></ol></li><li><a href="String.html#Description" rel="internal">Description</a><ol><li><a href="String.html#Character_access" rel="internal">Character access</a><li><a href="String.html#Comparing_strings" rel="internal">Comparing strings</a><li><a href="String.html#Distinction_between_string_primitives_and_String_objects" rel="internal">Distinction between string primitives and <code>String</code> objects</a></ol></li><li><a href="String.html#Properties" rel="internal">Properties</a><li><a href="String.html#Methods" rel="internal">Methods</a><li><a href="String.html#String_generic_methods" rel="internal"><code>String</code> generic methods</a><li><a href="String.html#String_instances" rel="internal"><code>String</code> instances</a><ol><li><a href="String.html#Properties_2" rel="internal">Properties</a><li><a href="String.html#Methods_2" rel="internal">Methods</a><ol><li><a href="String.html#Methods_unrelated_to_HTML" rel="internal">Methods unrelated to HTML</a><li><a href="String.html#HTML_wrapper_methods" rel="internal">HTML wrapper methods</a></ol></li></ol></li><li><a href="String.html#Examples" rel="internal">Examples</a><ol><li><a href="String.html#String_conversion" rel="internal">String conversion</a></ol></li><li><a href="String.html#Specifications" rel="internal">Specifications</a><li><a href="String.html#Browser_compatibility" rel="internal">Browser compatibility</a><li><a href="String.html#See_also" rel="internal">See also</a>
+                </ol>
+                              </div>
+                            </div>
+            
+                                                  
+            <!-- center: main article content -->
+            <div id="wiki-content" class="column-half wiki-column text-content">
+
+              
+              
+                                                                                          
+              <!-- just the article content -->
+              <article id="wikiArticle">
+                                                      <div><section id="Quick_Links" class="Quick_links"><!-- --></section></div>
+
+<p>The <strong><code>String</code></strong> global object is a constructor for strings, or a sequence of characters.</p>
+
+<h2 id="Syntax">Syntax</h2>
+
+<p>String literals take the forms:</p>
+
+<pre class="syntaxbox"><code>'string text'
+"string text"
+"中文 español English हिन्दी العربية português বাংলা русский 日本語 ਪੰਜਾਬੀ 한국어 தமிழ்"</code></pre>
+
+<p>Strings can also be created using the <code>String</code> global object directly:</p>
+
+<pre class="syntaxbox"><code>String(thing)
+new String(thing)</code></pre>
+
+<h3 id="Parameters">Parameters</h3>
+
+<dl>
+ <dt><code>thing</code></dt>
+ <dd>Anything to be converted to a string.</dd>
+</dl>
+
+<h3 id="Template_strings">Template strings</h3>
+
+<p>Since ECMAScript 2015, string literals can also be so-called <a href="../template_strings.html">Template strings</a>:</p>
+
+<pre class="brush: js"><code>`hello world`</code>
+`hello!
+ world!`
+<code>`hello ${who}`</code>
+<code>escape `&lt;a&gt;${who}&lt;/a&gt;`</code></pre>
+
+<dl>
+</dl>
+
+<h3 id="Escape_notation">Escape notation</h3>
+
+<p>Beside regular, printable characters, special characters can be encoded using escape notation:</p>
+
+<table class="standard-table">
+ <thead>
+  <tr>
+   <th scope="col">Code</th>
+   <th scope="col">Output</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td><code>\0</code></td>
+   <td>the NUL character</td>
+  </tr>
+  <tr>
+   <td><code>\'</code></td>
+   <td>single quote</td>
+  </tr>
+  <tr>
+   <td><code>\"</code></td>
+   <td>double quote</td>
+  </tr>
+  <tr>
+   <td><code>\\</code></td>
+   <td>backslash</td>
+  </tr>
+  <tr>
+   <td><code>\n</code></td>
+   <td>new line</td>
+  </tr>
+  <tr>
+   <td><code>\r</code></td>
+   <td>carriage return</td>
+  </tr>
+  <tr>
+   <td><code>\v</code></td>
+   <td>vertical tab</td>
+  </tr>
+  <tr>
+   <td><code>\t</code></td>
+   <td>tab</td>
+  </tr>
+  <tr>
+   <td><code>\b</code></td>
+   <td>backspace</td>
+  </tr>
+  <tr>
+   <td><code>\f</code></td>
+   <td>form feed</td>
+  </tr>
+  <tr>
+   <td><code>\uXXXX</code></td>
+   <td>unicode codepoint</td>
+  </tr>
+  <tr>
+   <td><code>\u{X}</code> ... <code>\u{XXXXXX}</code></td>
+   <td>unicode codepoint <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></td>
+  </tr>
+  <tr>
+   <td><code>\xXX</code></td>
+   <td>the Latin-1 character</td>
+  </tr>
+ </tbody>
+</table>
+
+<p>NOTE: Unlike some other languages, JavaScript makes no distinction between single-quoted strings and double-quoted strings, therefore, the escape sequences above work in strings created with either single or double quotes.</p>
+
+<dl>
+</dl>
+
+<h3 id="Long_literal_strings">Long literal strings</h3>
+
+<p>Sometimes, your code will include strings which are very long. Rather than having lines that go on endlessly, or wrap at the whim of your editor, you may wish to specifically break the string into multiple lines in the source code without affecting the actual string contents. There are two ways you can do this.</p>
+
+<p>You can use the <a href="../Operators/String_Operators.html#Addition_()">+</a> operator to append multiple strings together, like this:</p>
+
+<pre class="brush: js">let longString = "This is a very long string which needs " +
+                 "to wrap across multiple lines because " +
+                 "otherwise my code is unreadable.";
+</pre>
+
+<p>Or you can use the backslash character ("\") at the end of each line to indicate that the string will continue on the next line. Make sure there is no space or any other character after the backslash (except for a line break), or as an indent; otherwise it will not work. That form looks like this:</p>
+
+<pre class="brush: js">let longString = "This is a very long string which needs \
+to wrap across multiple lines because \
+otherwise my code is unreadable.";
+</pre>
+
+<p>Both of these result in identical strings being created.</p>
+
+<h2 id="Description">Description</h2>
+
+<p>Strings are useful for holding data that can be represented in text form. Some of the most-used operations on strings are to check their <a href="String/length.html" title="The length property represents the length of a string."><code>length</code></a>, to build and concatenate them using the <a href="../Operators/String_Operators.html">+ and += string operators</a>, checking for the existence or location of substrings with the <a href="String/indexOf.html" title="The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found."><code>indexOf()</code></a> method, or extracting substrings with the <a href="String/substring.html" title="The substring() method returns a subset of a string between one index and another, or through the end of the string."><code>substring()</code></a> method.</p>
+
+<h3 id="Character_access">Character access</h3>
+
+<p>There are two ways to access an individual character in a string. The first is the <a href="String/charAt.html" title="The charAt() method returns the specified character from a string."><code>charAt()</code></a> method:</p>
+
+<pre class="brush: js">return 'cat'.charAt(1); // returns "a"
+</pre>
+
+<p>The other way (introduced in ECMAScript 5) is to treat the string as an array-like object, where individual characters correspond to a numerical index:</p>
+
+<pre class="brush: js">return 'cat'[1]; // returns "a"
+</pre>
+
+<p>For character access using bracket notation, attempting to delete or assign a value to these properties will not succeed. The properties involved are neither writable nor configurable. (See <a href="Object/defineProperty.html" title="The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object."><code>Object.defineProperty()</code></a> for more information.)</p>
+
+<h3 id="Comparing_strings">Comparing strings</h3>
+
+<p>C developers have the <code>strcmp()</code> function for comparing strings. In JavaScript, you just use the <a href="../Operators/Comparison_Operators.html">less-than and greater-than operators</a>:</p>
+
+<pre class="brush: js">var a = 'a';
+var b = 'b';
+if (a &lt; b) { // true
+  console.log(a + ' is less than ' + b);
+} else if (a &gt; b) {
+  console.log(a + ' is greater than ' + b);
+} else {
+  console.log(a + ' and ' + b + ' are equal.');
+}
+</pre>
+
+<p>A similar result can be achieved using the <a href="String/localeCompare.html" title="The localeCompare() method returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order."><code>localeCompare()</code></a> method inherited by <code>String</code> instances.</p>
+
+<h3 id="Distinction_between_string_primitives_and_String_objects">Distinction between string primitives and <code>String</code> objects</h3>
+
+<p>Note that JavaScript distinguishes between <code>String</code> objects and primitive string values. (The same is true of <a href="Boolean.html" title="The Boolean object is an object wrapper for a boolean value."><code>Boolean</code></a> and <a href="Number.html" title="The Number JavaScript object is a wrapper object allowing you to work with numerical values. A Number object is created using the Number() constructor."><code>Numbers</code></a>.)</p>
+
+<p>String literals (denoted by double or single quotes) and strings returned from <code>String</code> calls in a non-constructor context (i.e., without using the <a href="../Operators/new.html" title="The new operator creates an instance of a user-defined object type or of one of the built-in object types that has a constructor function."><code>new</code></a> keyword) are primitive strings. JavaScript automatically converts primitives to <code>String</code> objects, so that it's possible to use <code>String</code> object methods for primitive strings. In contexts where a method is to be invoked on a primitive string or a property lookup occurs, JavaScript will automatically wrap the string primitive and call the method or perform the property lookup.</p>
+
+<pre class="brush: js">var s_prim = 'foo';
+var s_obj = new String(s_prim);
+
+console.log(typeof s_prim); // Logs "string"
+console.log(typeof s_obj);  // Logs "object"
+</pre>
+
+<p>String primitives and <code>String</code> objects also give different results when using <a href="eval.html" title="The eval() method evaluates JavaScript code represented as a string."><code>eval()</code></a>. Primitives passed to <code>eval</code> are treated as source code; <code>String</code> objects are treated as all other objects are, by returning the object. For example:</p>
+
+<pre class="brush: js">var s1 = '2 + 2';             // creates a string primitive
+var s2 = new String('2 + 2'); // creates a String object
+console.log(eval(s1));        // returns the number 4
+console.log(eval(s2));        // returns the string "2 + 2"
+</pre>
+
+<p>For these reasons, code may break when it encounters <code>String</code> objects when it expects a primitive string instead, although generally authors need not worry about the distinction.</p>
+
+<p>A <code>String</code> object can always be converted to its primitive counterpart with the <a href="String/valueOf.html" title="The valueOf() method returns the primitive value of a String object."><code>valueOf()</code></a> method.</p>
+
+<pre class="brush: js">console.log(eval(s2.valueOf())); // returns the number 4
+</pre>
+
+<div class="note"><strong>Note:</strong> For another possible approach to strings in JavaScript, please read the article about <a href="https://developer.mozilla.org/en-US/Add-ons/Code_snippets/StringView"><code>StringView</code> — a C-like representation of strings based on typed arrays</a>.</div>
+
+<h2 id="Properties">Properties</h2>
+
+<dl>
+ <dt><a href="String/prototype.html" title="The String.prototype property represents the String prototype object."><code>String.prototype</code></a></dt>
+ <dd>Allows the addition of properties to a <code>String</code> object.</dd>
+</dl>
+
+<h2 id="Methods">Methods</h2>
+
+<dl>
+ <dt><a href="String/fromCharCode.html" title="The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values."><code>String.fromCharCode()</code></a></dt>
+ <dd>Returns a string created by using the specified sequence of Unicode values.</dd>
+ <dt><a href="String/fromCodePoint.html" title="The static String.fromCodePoint() method returns a string created by using the specified sequence of code points."><code>String.fromCodePoint()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Returns a string created by using the specified sequence of code points.</dd>
+ <dt><a href="String/raw.html" title="The static String.raw() method is a tag function of template strings, similar to the r prefix in Python or the @ prefix in C# for string literals. It's used to get the raw string form of template strings (that is, the original, uninterpreted text)."><code>String.raw()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Returns a string created from a raw template string.</dd>
+</dl>
+
+<h2 id="String_generic_methods"><code>String</code> generic methods</h2>
+
+<div class="note">
+<p><strong>String generics are non-standard, deprecated and might get removed in the future</strong>. Note that you can not rely on them cross-browser without using the shim that is provided below.</p>
+</div>
+
+<p>The <code>String</code> instance methods are also available in Firefox as of JavaScript 1.6 (though not part of the ECMAScript standard) on the <code>String</code> object for applying <code>String</code> methods to any object:</p>
+
+<pre class="brush: js">var num = 15;
+console.log(String.replace(num, /5/, '2'));
+</pre>
+
+<p><a href="Array.html#Array_generic_methods" title="The JavaScript Array object is a global object that is used in the construction of arrays; which are high-level, list-like objects.">Generics</a> are also available on <a href="Array.html" title="The JavaScript Array object is a global object that is used in the construction of arrays; which are high-level, list-like objects."><code>Array</code></a> methods.</p>
+
+<p>The following is a shim to provide support to non-supporting browsers:</p>
+
+<pre class="brush: js">/*globals define*/
+// Assumes all supplied String instance methods already present
+// (one may use shims for these if not available)
+(function() {
+  'use strict';
+
+  var i,
+    // We could also build the array of methods with the following, but the
+    //   getOwnPropertyNames() method is non-shimable:
+    // Object.getOwnPropertyNames(String).filter(function(methodName) {
+    //   return typeof String[methodName] === 'function';
+    // });
+    methods = [
+      'quote', 'substring', 'toLowerCase', 'toUpperCase', 'charAt',
+      'charCodeAt', 'indexOf', 'lastIndexOf', 'startsWith', 'endsWith',
+      'trim', 'trimLeft', 'trimRight', 'toLocaleLowerCase',
+      'toLocaleUpperCase', 'localeCompare', 'match', 'search',
+      'replace', 'split', 'substr', 'concat', 'slice'
+    ],
+    methodCount = methods.length,
+    assignStringGeneric = function(methodName) {
+      var method = String.prototype[methodName];
+      String[methodName] = function(arg1) {
+        return method.apply(arg1, Array.prototype.slice.call(arguments, 1));
+      };
+    };
+
+  for (i = 0; i &lt; methodCount; i++) {
+    assignStringGeneric(methods[i]);
+  }
+}());
+</pre>
+
+<h2 id="String_instances"><code>String</code> instances</h2>
+
+<h3 id="Properties_2">Properties</h3>
+
+<div><dl><dt><code>String.prototype.constructor</code></dt>
+ <dd>Specifies the function that creates an object's prototype.</dd>
+ <dt><a href="String/length.html" title="The length property represents the length of a string."><code>String.prototype.length</code></a></dt>
+ <dd>Reflects the length of the string.</dd>
+ <dt><code><em>N</em></code></dt>
+ <dd>Used to access the character in the <em>N</em>th position where <em>N</em> is a positive integer between 0 and one less than the value of <a href="String/length.html" title="The length property represents the length of a string."><code>length</code></a>. These properties are read-only.</dd>
+</dl></div>
+
+<h3 id="Methods_2">Methods</h3>
+
+<h4 id="Methods_unrelated_to_HTML">Methods unrelated to HTML</h4>
+
+<div><dl><dt><a href="String/charAt.html" title="The charAt() method returns the specified character from a string."><code>String.prototype.charAt()</code></a></dt>
+ <dd>Returns the character at the specified index.</dd>
+ <dt><a href="String/charCodeAt.html" title="The charCodeAt() method returns the numeric Unicode value of the character at the given index (except for unicode codepoints > 0x10000)."><code>String.prototype.charCodeAt()</code></a></dt>
+ <dd>Returns a number indicating the Unicode value of the character at the given index.</dd>
+ <dt><a href="String/codePointAt.html" title="The codePointAt() method returns a non-negative integer that is the UTF-16 encoded code point value."><code>String.prototype.codePointAt()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Returns a non-negative integer that is the UTF-16 encoded code point value at the given position.</dd>
+ <dt><a href="String/concat.html" title="The concat() method combines the text of two or more strings and returns a new string."><code>String.prototype.concat()</code></a></dt>
+ <dd>Combines the text of two strings and returns a new string.</dd>
+ <dt><a href="String/contains.html" title="The includes() method determines whether one string may be found within another string, returning true or false as appropriate."><code>String.prototype.includes()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Determines whether one string may be found within another string.</dd>
+ <dt><a href="String/endsWith.html" title="The endsWith() method determines whether a string ends with the characters of another string, returning true or false as appropriate."><code>String.prototype.endsWith()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Determines whether a string ends with the characters of another string.</dd>
+ <dt><a href="String/indexOf.html" title="The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found."><code>String.prototype.indexOf()</code></a></dt>
+ <dd>Returns the index within the calling <a href="String.html" title="The String global object is a constructor for strings, or a sequence of characters."><code>String</code></a> object of the first occurrence of the specified value, or -1 if not found.</dd>
+ <dt><a href="String/lastIndexOf.html" title="The lastIndexOf() method returns the index within the calling String object of the last occurrence of the specified value, or -1 if not found. The calling string is searched backward, starting at fromIndex."><code>String.prototype.lastIndexOf()</code></a></dt>
+ <dd>Returns the index within the calling <a href="String.html" title="The String global object is a constructor for strings, or a sequence of characters."><code>String</code></a> object of the last occurrence of the specified value, or -1 if not found.</dd>
+ <dt><a href="String/localeCompare.html" title="The localeCompare() method returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order."><code>String.prototype.localeCompare()</code></a></dt>
+ <dd>Returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order.</dd>
+ <dt><a href="String/match.html" title="The match() method retrieves the matches when matching a string against a regular expression."><code>String.prototype.match()</code></a></dt>
+ <dd>Used to match a regular expression against a string.</dd>
+ <dt><a href="String/normalize.html" title="The normalize() method returns the Unicode Normalization Form of a given string (if the value isn't a string, it will be converted to one first)."><code>String.prototype.normalize()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Returns the Unicode Normalization Form of the calling string value.</dd>
+ <dt><s class="obsoleteElement"><a href="String/quote.html" title='The non-standard quote() method returns a copy of the string, replacing various special characters in the string with their escape sequences and wrapping the result in double-quotes (").'><code>String.prototype.quote()</code></a> <span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></s></dt>
+ <dd><s class="obsoleteElement">Wraps the string in double quotes ("<code>"</code>").</s></dd>
+ <dt><a href="String/repeat.html" title="The repeat() method constructs and returns a new string which contains the specified number of copies of the string on which it was called, concatenated together."><code>String.prototype.repeat()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Returns a string consisting of the elements of the object repeated the given times.</dd>
+ <dt><a href="String/replace.html" title="The replace() method returns a new string with some or all matches of a pattern replaced by a replacement. The pattern can be a string or a RegExp, and the replacement can be a string or a function to be called for each match."><code>String.prototype.replace()</code></a></dt>
+ <dd>Used to find a match between a regular expression and a string, and to replace the matched substring with a new substring.</dd>
+ <dt><a href="String/search.html" title="The search() method executes a search for a match between a regular expression and this String object."><code>String.prototype.search()</code></a></dt>
+ <dd>Executes the search for a match between a regular expression and a specified string.</dd>
+ <dt><a href="String/slice.html" title="The slice() method extracts a section of a string and returns a new string."><code>String.prototype.slice()</code></a></dt>
+ <dd>Extracts a section of a string and returns a new string.</dd>
+ <dt><a href="String/split.html" title="The split() method splits a String object into an array of strings by separating the string into substrings."><code>String.prototype.split()</code></a></dt>
+ <dd>Splits a <a href="String.html" title="The String global object is a constructor for strings, or a sequence of characters."><code>String</code></a> object into an array of strings by separating the string into substrings.</dd>
+ <dt><a href="String/startsWith.html" title="The startsWith() method determines whether a string begins with the characters of another string, returning true or false as appropriate."><code>String.prototype.startsWith()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Determines whether a string begins with the characters of another string.</dd>
+ <dt><a href="String/substr.html" title="The substr() method returns the characters in a string beginning at the specified location through the specified number of characters."><code>String.prototype.substr()</code></a></dt>
+ <dd>Returns the characters in a string beginning at the specified location through the specified number of characters.</dd>
+ <dt><a href="String/substring.html" title="The substring() method returns a subset of a string between one index and another, or through the end of the string."><code>String.prototype.substring()</code></a></dt>
+ <dd>Returns the characters in a string between two indexes into the string.</dd>
+ <dt><a href="String/toLocaleLowerCase.html" title="The toLocaleLowerCase() method returns the calling string value converted to lower case, according to any locale-specific case mappings."><code>String.prototype.toLocaleLowerCase()</code></a></dt>
+ <dd>The characters within a string are converted to lower case while respecting the current locale. For most languages, this will return the same as <a href="String/toLowerCase.html" title="The toLowerCase() method returns the calling string value converted to lowercase."><code>toLowerCase()</code></a>.</dd>
+ <dt><a href="String/toLocaleUpperCase.html" title="The toLocaleUpperCase() method returns the calling string value converted to upper case, according to any locale-specific case mappings."><code>String.prototype.toLocaleUpperCase()</code></a></dt>
+ <dd>The characters within a string are converted to upper case while respecting the current locale. For most languages, this will return the same as <a href="String/toUpperCase.html" title="The toUpperCase() method returns the calling string value converted to uppercase."><code>toUpperCase()</code></a>.</dd>
+ <dt><a href="String/toLowerCase.html" title="The toLowerCase() method returns the calling string value converted to lowercase."><code>String.prototype.toLowerCase()</code></a></dt>
+ <dd>Returns the calling string value converted to lower case.</dd>
+ <dt><a href="String/toSource.html" title="The toSource() method returns a string representing the source code of the object."><code>String.prototype.toSource()</code></a> <span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></dt>
+ <dd>Returns an object literal representing the specified object; you can use this value to create a new object. Overrides the <a href="Object/toSource.html" title="The toSource() method returns a string representing the source code of the object."><code>Object.prototype.toSource()</code></a> method.</dd>
+ <dt><a href="String/toString.html" title="The toString() method returns a string representing the specified object."><code>String.prototype.toString()</code></a></dt>
+ <dd>Returns a string representing the specified object. Overrides the <a href="Object/toString.html" title="The toString() method returns a string representing object."><code>Object.prototype.toString()</code></a> method.</dd>
+ <dt><a href="String/toUpperCase.html" title="The toUpperCase() method returns the calling string value converted to uppercase."><code>String.prototype.toUpperCase()</code></a></dt>
+ <dd>Returns the calling string value converted to uppercase.</dd>
+ <dt><a href="String/trim.html" title="The trim() method removes whitespace from both ends of a string. Whitespace in this context is all the whitespace characters (space, tab, no-break space, etc.) and all the line terminator characters (LF, CR, etc.)."><code>String.prototype.trim()</code></a></dt>
+ <dd>Trims whitespace from the beginning and end of the string. Part of the ECMAScript 5 standard.</dd>
+ <dt><a href="String/trimLeft.html" title="The trimLeft() method removes whitespace from the left end of a string."><code>String.prototype.trimLeft()</code></a> <span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></dt>
+ <dd>Trims whitespace from the left side of the string.</dd>
+ <dt><a href="String/trimRight.html" title="The trimRight() method removes whitespace from the right end of a string."><code>String.prototype.trimRight()</code></a> <span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></dt>
+ <dd>Trims whitespace from the right side of the string.</dd>
+ <dt><a href="String/valueOf.html" title="The valueOf() method returns the primitive value of a String object."><code>String.prototype.valueOf()</code></a></dt>
+ <dd>Returns the primitive value of the specified object. Overrides the <a href="Object/valueOf.html" title="The valueOf() method returns the primitive value of the specified object."><code>Object.prototype.valueOf()</code></a> method.</dd>
+ <dt><a href="String/@@iterator.html" title="The [@@iterator]() method returns a new Iterator object that iterates over the code points of a String value, returning each code point as a String value."><code>String.prototype[@@iterator]()</code></a> <span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></dt>
+ <dd>Returns a new <code>Iterator</code> object that iterates over the code points of a String value, returning each code point as a String value.</dd>
+</dl></div>
+
+<h4 id="HTML_wrapper_methods">HTML wrapper methods</h4>
+
+<div><p>These methods are of limited use, as they provide only a subset of the available HTML tags and attributes.</p>
+
+<dl><dt><a href="String/anchor.html" title="The anchor() method creates an &lt;a> HTML anchor element that is used as a hypertext target."><code>String.prototype.anchor()</code></a></dt>
+ <dd><code><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-name">&lt;a name="name"&gt;</a></code> (hypertext target)</dd>
+ <dt><a href="String/big.html" title="The big() method creates a &lt;big> HTML element that causes a string to be displayed in a big font."><code>String.prototype.big()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/big" title="The HTML Big Element (&lt;big>) makes the text font size one size bigger (for example, from small to medium, or from large to x-large) up to the browser's maximum font size."><code>&lt;big&gt;</code></a></dd>
+ <dt><a href="String/blink.html" title="The blink() method creates a &lt;blink> HTML element that causes a string to blink."><code>String.prototype.blink()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/blink" title="The HTML Blink Element (&lt;blink>) is a non-standard element causing the enclosed text to flash slowly."><code>&lt;blink&gt;</code></a></dd>
+ <dt><a href="String/bold.html" title="The bold() method creates a &lt;b> HTML element that causes a string to be displayed as bold."><code>String.prototype.bold()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/b" title="The HTML &lt;b> Element represents a span of text stylistically different from normal text, without conveying any special importance or relevance. It is typically used for keywords in a summary, product names in a review, or other spans of text whose typical presentation would be boldfaced. Another example of its use is to mark the lead sentence of each paragraph of an article."><code>&lt;b&gt;</code></a></dd>
+ <dt><a href="String/fixed.html" title="The fixed() method creates a &lt;tt> HTML element that causes a string to be displayed in fixed-pitch font."><code>String.prototype.fixed()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/tt" title="The HTML Teletype Text Element (&lt;tt>) produces an inline element displayed in the browser's default monotype font. This element was intended to style text as it would display on a fixed width display, such as a teletype. It probably is more common to display fixed width type using the &lt;code> element."><code>&lt;tt&gt;</code></a></dd>
+ <dt><a href="String/fontcolor.html" title="The fontcolor() method creates a &lt;font> HTML element that causes a string to be displayed in the specified font color."><code>String.prototype.fontcolor()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><code><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font#attr-color">&lt;font color="color"&gt;</a></code></dd>
+ <dt><a href="String/fontsize.html" title="The fontsize() method creates a &lt;font> HTML element that causes a string to be displayed in the specified font size."><code>String.prototype.fontsize()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><code><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font#attr-size">&lt;font size="size"&gt;</a></code></dd>
+ <dt><a href="String/italics.html" title="The italics() method creates an &lt;i> HTML element that causes a string to be italic."><code>String.prototype.italics()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/i" title="The HTML &lt;i> Element represents a range of text that is set off from the normal text for some reason, for example, technical terms, foreign language phrases, or fictional character thoughts. It is typically displayed in italic type."><code>&lt;i&gt;</code></a></dd>
+ <dt><a href="String/link.html" title="The link() method creates an &lt;a> HTML element that causes a string to be displayed as a hypertext link to another URL."><code>String.prototype.link()</code></a></dt>
+ <dd><code><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-href">&lt;a href="rul"&gt;</a></code> (link to URL)</dd>
+ <dt><a href="String/small.html" title="The small() method creates a &lt;small> HTML element that causes a string to be displayed in a small font."><code>String.prototype.small()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/small" title="The HTML Small Element (&lt;small>) makes the text font size one size smaller (for example, from large to medium, or from small to x-small) down to the browser's minimum font size.  In HTML5, this element is repurposed to represent side-comments and small print, including copyright and legal text, independent of its styled presentation."><code>&lt;small&gt;</code></a></dd>
+ <dt><a href="String/strike.html" title="The strike() method creates a &lt;strike> HTML element that causes a string to be displayed as struck-out text."><code>String.prototype.strike()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strike" title="The HTML Strikethrough Element (&lt;strike>) renders text with a strikethrough, or a line through it."><code>&lt;strike&gt;</code></a></dd>
+ <dt><a href="String/sub.html" title="The sub() method creates a &lt;sub> HTML element that causes a string to be displayed as subscript."><code>String.prototype.sub()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sub" title="The HTML Subscript Element (&lt;sub>) defines a span of text that should be displayed, for typographic reasons, lower, and often smaller, than the main span of text."><code>&lt;sub&gt;</code></a></dd>
+ <dt><a href="String/sup.html" title="The sup() method creates a &lt;sup> HTML element that causes a string to be displayed as superscript."><code>String.prototype.sup()</code></a> <span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></dt>
+ <dd><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sup" title="The HTML Superscript Element (&lt;sup>) defines a span of text that should be displayed, for typographic reasons, higher, and often smaller, than the main span of text."><code>&lt;sup&gt;</code></a></dd>
+</dl></div>
+
+<h2 id="Examples">Examples</h2>
+
+<h3 id="String_conversion">String conversion</h3>
+
+<p>It's possible to use <code>String</code> as a "safer" <a href="String/toString.html" title="The toString() method returns a string representing the specified object."><code>toString()</code></a> alternative, as although it still normally calls the underlying <code>toString()</code>, it also works for <a href="null.html" title="The value null is a JavaScript literal representing null or an &quot;empty&quot; value, i.e. no object value is present. It is one of JavaScript's primitive values."><code>null</code></a> and <a href="undefined.html" title="The global undefined property represents the primitive value undefined. It is one of JavaScript's primitive types."><code>undefined</code></a>. For example:</p>
+
+<pre class="brush: js">var outputStrings = [];
+for (var i = 0, n = inputValues.length; i &lt; n; ++i) {
+  outputStrings.push(String(inputValues[i]));
+}
+</pre>
+
+<h2 id="Specifications">Specifications</h2>
+
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <th scope="col">Specification</th>
+   <th scope="col">Status</th>
+   <th scope="col">Comment</th>
+  </tr>
+  <tr>
+   <td><a href="http://www.ecma-international.org/publications/files/ECMA-ST-ARCH/ECMA-262,%201st%20edition,%20June%201997.pdf" class="external" lang="en" title="The 'ECMAScript 1st Edition (ECMA-262)' specification" hreflang="en">ECMAScript 1st Edition (ECMA-262)</a></td>
+   <td><span class="spec-Standard">Standard</span></td>
+   <td>Initial definition.</td>
+  </tr>
+  <tr>
+   <td><a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.5" class="external" lang="en" hreflang="en">ECMAScript 5.1 (ECMA-262)<br><small lang="en-US">The definition of 'String' in that specification.</small></a></td>
+   <td><span class="spec-Standard">Standard</span></td>
+   <td> </td>
+  </tr>
+  <tr>
+   <td><a href="http://www.ecma-international.org/ecma-262/6.0/#sec-string-objects" class="external" lang="en" hreflang="en">ECMAScript 2015 (6th Edition, ECMA-262)<br><small lang="en-US">The definition of 'String' in that specification.</small></a></td>
+   <td><span class="spec-Standard">Standard</span></td>
+   <td> </td>
+  </tr>
+ </tbody>
+</table>
+
+<h2 id="Browser_compatibility">Browser compatibility</h2>
+
+<div><div class="htab"> 
+    <a name="AutoCompatibilityTable" id="AutoCompatibilityTable"></a> 
+    <ul> 
+        <li class="selected"><a>Desktop</a></li> 
+        <li><a>Mobile</a></li> 
+    </ul> 
+</div></div>
+
+<div id="compat-desktop">
+<table class="compat-table">
+ <tbody>
+  <tr>
+   <th>Feature</th>
+   <th>Chrome</th>
+   <th>Firefox (Gecko)</th>
+   <th>Internet Explorer</th>
+   <th>Opera</th>
+   <th>Safari</th>
+  </tr>
+  <tr>
+   <td>Basic support</td>
+   <td>1</td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+  </tr>
+  <tr>
+   <td><code>\u{XXXXXX}</code></td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+   <td><a href="https://developer.mozilla.org/en-US/Firefox/Releases/40" title="Released on 2015-08-11.">40</a> (40)</td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+  </tr>
+ </tbody>
+</table>
+</div>
+
+<div id="compat-mobile">
+<table class="compat-table">
+ <tbody>
+  <tr>
+   <th>Feature</th>
+   <th>Android</th>
+   <th>Chrome for Android</th>
+   <th>Firefox Mobile (Gecko)</th>
+   <th>IE Mobile</th>
+   <th>Opera Mobile</th>
+   <th>Safari Mobile</th>
+  </tr>
+  <tr>
+   <td>Basic support</td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+   <td><span title="Please update this with the earliest version of support." style="color: #888;">(Yes)</span></td>
+  </tr>
+  <tr>
+   <td><code>\u{XXXXXX}</code></td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+   <td>40.0 (40)</td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+   <td><span title="Compatibility unknown; please update this." style="color: rgb(255, 153, 0);">?</span></td>
+  </tr>
+ </tbody>
+</table>
+</div>
+
+<h2 id="See_also">See also</h2>
+
+<ul>
+ <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString" title="DOMString is a UTF-16 String. As JavaScript already uses such strings, DOMString is mapped directly to a String."><code>DOMString</code></a></li>
+ <li><a href="https://developer.mozilla.org/en-US/Add-ons/Code_snippets/StringView"><code>StringView</code> — a C-like representation of strings based on typed arrays</a></li>
+ <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString/Binary">Binary strings</a></li>
+</ul>
+                                                </article>
+
+            
+
+              
+                <!-- contributors -->
+                <div class="wiki-block contributors">
+                  <h2 class="offscreen">Document Tags and Contributors</h2>
+                                      <div class="tag-attach-list contributors-sub">
+    <i aria-hidden="true" class="icon-tags icon-fw"></i>
+    <strong>Tags:</strong>&nbsp;
+    <ul class="tags tags-small">
+              <li><a href="https://developer.mozilla.org/en-US/docs/tag/ECMAScript6">ECMAScript6</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/tag/JavaScript">JavaScript</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/tag/Reference">Reference</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/tag/String">String</a></li>
+          </ul>
+  </div>
+
+                                      <div class="contributors-sub">
+                      <i aria-hidden="true" class="icon-group icon-fw"></i>&nbsp;<strong>Contributors to this page:</strong>         <a href="https://developer.mozilla.org/en-US/profiles/MexieAndCo">MexieAndCo</a>,             <a href="https://developer.mozilla.org/en-US/profiles/FernandoBasso">FernandoBasso</a>,             <a href="https://developer.mozilla.org/en-US/profiles/GKFX">GKFX</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Sheppy">Sheppy</a>,             <a href="https://developer.mozilla.org/en-US/profiles/fscholz">fscholz</a>,             <a href="https://developer.mozilla.org/en-US/profiles/jpmedley">jpmedley</a>,             <a href="https://developer.mozilla.org/en-US/profiles/arai">arai</a>,             <a href="https://developer.mozilla.org/en-US/profiles/julienw">julienw</a>,             <a href="https://developer.mozilla.org/en-US/profiles/tamilvendhank">tamilvendhank</a>,             <a href="https://developer.mozilla.org/en-US/profiles/teoli">teoli</a>,             <a href="https://developer.mozilla.org/en-US/profiles/omerta77">omerta77</a>,             <a href="https://developer.mozilla.org/en-US/profiles/ramonsnir">ramonsnir</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Mingun">Mingun</a>,             <a href="https://developer.mozilla.org/en-US/profiles/exymax">exymax</a>,             <a href="https://developer.mozilla.org/en-US/profiles/ziyunfei">ziyunfei</a>,             <a href="https://developer.mozilla.org/en-US/profiles/shengyueming">shengyueming</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Raffzahn">Raffzahn</a>,             <a href="https://developer.mozilla.org/en-US/profiles/kscarfone">kscarfone</a>,             <a href="https://developer.mozilla.org/en-US/profiles/timothykim">timothykim</a>,             <a href="https://developer.mozilla.org/en-US/profiles/fusionchess">fusionchess</a>,             <a href="https://developer.mozilla.org/en-US/profiles/christophe.hurpeau">christophe.hurpeau</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Sevenspade">Sevenspade</a>,             <a href="https://developer.mozilla.org/en-US/profiles/ethertank">ethertank</a>,             <a href="https://developer.mozilla.org/en-US/profiles/williamr">williamr</a>,             <a href="https://developer.mozilla.org/en-US/profiles/xolve">xolve</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Norbert">Norbert</a>,             <a href="https://developer.mozilla.org/en-US/profiles/island205">island205</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Brettz9">Brettz9</a>,             <a href="https://developer.mozilla.org/en-US/profiles/lmorchard">lmorchard</a>,             <a href="https://developer.mozilla.org/en-US/profiles/daguej">daguej</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Marcoos">Marcoos</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Neil">Neil</a>,             <a href="https://developer.mozilla.org/en-US/profiles/grendel">grendel</a>,             <a href="https://developer.mozilla.org/en-US/profiles/evilpie">evilpie</a>,             <a href="https://developer.mozilla.org/en-US/profiles/hapalibashi">hapalibashi</a>,             <a href="https://developer.mozilla.org/en-US/profiles/satyr">satyr</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Johnjbarton">Johnjbarton</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Chris%20Chittleborough">Chris Chittleborough</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Roebot">Roebot</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Potappo">Potappo</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Andr3w">Andr3w</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Mgjbot">Mgjbot</a>,             <a href="https://developer.mozilla.org/en-US/profiles/JasonSpiro">JasonSpiro</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Fredchat">Fredchat</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Deltab">Deltab</a>,             <a href="https://developer.mozilla.org/en-US/profiles/JohnJBarton1">JohnJBarton1</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Geary">Geary</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Ptak82">Ptak82</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Hongli">Hongli</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Maian">Maian</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Mar">Mar</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Prodoc">Prodoc</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Shoe">Shoe</a>,             <a href="https://developer.mozilla.org/en-US/profiles/Dria">Dria</a>    
+                    </div>
+                  
+                                      <div class="contributors-sub">
+                      <i aria-hidden="true" class="icon-clock-o icon-fw"></i>&nbsp;<strong>Last updated by:</strong>
+                      <a href="https://developer.mozilla.org/en-US/profiles/MexieAndCo">MexieAndCo</a>,
+                      <time datetime="2015-09-30T18:42:04-07:00">Sep 30, 2015, 6:42:04 PM</time>
+                    </div>
+                                  </div>
+                          </div>
+
+                          <!-- quick links and zone subnav strip -->
+              <div id="wiki-left" class="column-strip wiki-column">
+
+              
+                <a href="String.html#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="icon-caret-up"></i>Hide Sidebar</a>
+
+                
+                                  <!-- quick links -->
+                    <div class="quick-links" id="quick-links">
+    <div class="title see-also">See also</div>
+    <ol><li><strong><a href="index.html">Standard built-in objects</a></strong></li><li><strong><a href="String.html"><code>String</code></a></strong></li><li data-default-state="open"><a href="String.html#"><strong>Properties</strong></a><ol><li><a href="String/length.html" title="The length property represents the length of a string."><code>String.length</code></a></li><li><a href="String/prototype.html" title="The String.prototype property represents the String prototype object."><code>String.prototype</code></a></li></ol></li><li data-default-state="open"><a href="String.html#"><strong>Methods</strong></a><ol><li><a href="String/fromCharCode.html" title="The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values."><code>String.fromCharCode()</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="String/fromCodePoint.html" title="The static String.fromCodePoint() method returns a string created by using the specified sequence of code points."><code>String.fromCodePoint()</code></a></li><li><a href="String/anchor.html" title="The anchor() method creates an &lt;a> HTML anchor element that is used as a hypertext target."><code>String.prototype.anchor()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/big.html" title="The big() method creates a &lt;big> HTML element that causes a string to be displayed in a big font."><code>String.prototype.big()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/blink.html" title="The blink() method creates a &lt;blink> HTML element that causes a string to blink."><code>String.prototype.blink()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/bold.html" title="The bold() method creates a &lt;b> HTML element that causes a string to be displayed as bold."><code>String.prototype.bold()</code></a></li><li><a href="String/charAt.html" title="The charAt() method returns the specified character from a string."><code>String.prototype.charAt()</code></a></li><li><a href="String/charCodeAt.html" title="The charCodeAt() method returns the numeric Unicode value of the character at the given index (except for unicode codepoints > 0x10000)."><code>String.prototype.charCodeAt()</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="String/codePointAt.html" title="The codePointAt() method returns a non-negative integer that is the UTF-16 encoded code point value."><code>String.prototype.codePointAt()</code></a></li><li><a href="String/concat.html" title="The concat() method combines the text of two or more strings and returns a new string."><code>String.prototype.concat()</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="String/endsWith.html" title="The endsWith() method determines whether a string ends with the characters of another string, returning true or false as appropriate."><code>String.prototype.endsWith()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/fixed.html" title="The fixed() method creates a &lt;tt> HTML element that causes a string to be displayed in fixed-pitch font."><code>String.prototype.fixed()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/fontcolor.html" title="The fontcolor() method creates a &lt;font> HTML element that causes a string to be displayed in the specified font color."><code>String.prototype.fontcolor()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/fontsize.html" title="The fontsize() method creates a &lt;font> HTML element that causes a string to be displayed in the specified font size."><code>String.prototype.fontsize()</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="String/contains.html" title="The includes() method determines whether one string may be found within another string, returning true or false as appropriate."><code>String.prototype.includes()</code></a></li><li><a href="String/indexOf.html" title="The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found."><code>String.prototype.indexOf()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/italics.html" title="The italics() method creates an &lt;i> HTML element that causes a string to be italic."><code>String.prototype.italics()</code></a></li><li><a href="String/lastIndexOf.html" title="The lastIndexOf() method returns the index within the calling String object of the last occurrence of the specified value, or -1 if not found. The calling string is searched backward, starting at fromIndex."><code>String.prototype.lastIndexOf()</code></a></li><li><a href="String/link.html" title="The link() method creates an &lt;a> HTML element that causes a string to be displayed as a hypertext link to another URL."><code>String.prototype.link()</code></a></li><li><a href="String/localeCompare.html" title="The localeCompare() method returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order."><code>String.prototype.localeCompare()</code></a></li><li><a href="String/match.html" title="The match() method retrieves the matches when matching a string against a regular expression."><code>String.prototype.match()</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="String/normalize.html" title="The normalize() method returns the Unicode Normalization Form of a given string (if the value isn't a string, it will be converted to one first)."><code>String.prototype.normalize()</code></a></li><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="String/quote.html" title='The non-standard quote() method returns a copy of the string, replacing various special characters in the string with their escape sequences and wrapping the result in double-quotes (").'><code>String.prototype.quote()</code></a></s></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="String/repeat.html" title="The repeat() method constructs and returns a new string which contains the specified number of copies of the string on which it was called, concatenated together."><code>String.prototype.repeat()</code></a></li><li><a href="String/replace.html" title="The replace() method returns a new string with some or all matches of a pattern replaced by a replacement. The pattern can be a string or a RegExp, and the replacement can be a string or a function to be called for each match."><code>String.prototype.replace()</code></a></li><li><a href="String/search.html" title="The search() method executes a search for a match between a regular expression and this String object."><code>String.prototype.search()</code></a></li><li><a href="String/slice.html" title="The slice() method extracts a section of a string and returns a new string."><code>String.prototype.slice()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/small.html" title="The small() method creates a &lt;small> HTML element that causes a string to be displayed in a small font."><code>String.prototype.small()</code></a></li><li><a href="String/split.html" title="The split() method splits a String object into an array of strings by separating the string into substrings."><code>String.prototype.split()</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="String/startsWith.html" title="The startsWith() method determines whether a string begins with the characters of another string, returning true or false as appropriate."><code>String.prototype.startsWith()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/strike.html" title="The strike() method creates a &lt;strike> HTML element that causes a string to be displayed as struck-out text."><code>String.prototype.strike()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/sub.html" title="The sub() method creates a &lt;sub> HTML element that causes a string to be displayed as subscript."><code>String.prototype.sub()</code></a></li><li><a href="String/substr.html" title="The substr() method returns the characters in a string beginning at the specified location through the specified number of characters."><code>String.prototype.substr()</code></a></li><li><a href="String/substring.html" title="The substring() method returns a subset of a string between one index and another, or through the end of the string."><code>String.prototype.substring()</code></a></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="String/sup.html" title="The sup() method creates a &lt;sup> HTML element that causes a string to be displayed as superscript."><code>String.prototype.sup()</code></a></li><li><a href="String/toLocaleLowerCase.html" title="The toLocaleLowerCase() method returns the calling string value converted to lower case, according to any locale-specific case mappings."><code>String.prototype.toLocaleLowerCase()</code></a></li><li><a href="String/toLocaleUpperCase.html" title="The toLocaleUpperCase() method returns the calling string value converted to upper case, according to any locale-specific case mappings."><code>String.prototype.toLocaleUpperCase()</code></a></li><li><a href="String/toLowerCase.html" title="The toLowerCase() method returns the calling string value converted to lowercase."><code>String.prototype.toLowerCase()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="String/toSource.html" title="The toSource() method returns a string representing the source code of the object."><code>String.prototype.toSource()</code></a></li><li><a href="String/toString.html" title="The toString() method returns a string representing the specified object."><code>String.prototype.toString()</code></a></li><li><a href="String/toUpperCase.html" title="The toUpperCase() method returns the calling string value converted to uppercase."><code>String.prototype.toUpperCase()</code></a></li><li><a href="String/Trim.html" title="The trim() method removes whitespace from both ends of a string. Whitespace in this context is all the whitespace characters (space, tab, no-break space, etc.) and all the line terminator characters (LF, CR, etc.)."><code>String.prototype.trim()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="String/TrimLeft.html" title="The trimLeft() method removes whitespace from the left end of a string."><code>String.prototype.trimLeft()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="String/TrimRight.html" title="The trimRight() method removes whitespace from the right end of a string."><code>String.prototype.trimRight()</code></a></li><li><a href="String/valueOf.html" title="The valueOf() method returns the primitive value of a String object."><code>String.prototype.valueOf()</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/%40%40iterator" title="The [@@iterator]() method returns a new Iterator object that iterates over the code points of a String value, returning each code point as a String value."><code>String.prototype[@@iterator]()</code></a></li><li><a href="String/raw.html" title="The static String.raw() method is a tag function of template strings, similar to the r prefix in Python or the @ prefix in C# for string literals. It's used to get the raw string form of template strings (that is, the original, uninterpreted text)."><code>String.raw()</code></a></li></ol></li><li><strong>Inheritance:</strong></li><li><strong><a href="Function.html"><code>Function</code></a></strong></li><li><a href="String.html#"><strong>Properties</strong></a><ol><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="Function/arguments.html" title="The function.arguments property refers to an an array-like object corresponding to the arguments passed to a function. Use the simple variable arguments instead."><code>Function.arguments</code></a></li><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="Function/arity.html" title="The arity property used to return the number of arguments expected by the function, however, it no longer exists and has been replaced by the Function.prototype.length property."><code>Function.arity</code></a></s></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="Function/caller.html" title="The function.caller property returns the function that invoked the specified function."><code>Function.caller</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="Function/displayName.html" title="The function.displayName property returns the display name of the function."><code>Function.displayName</code></a></li><li><a href="Function/length.html" title="The length property specifies the number of arguments expected by the function."><code>Function.length</code></a></li><li><span class="sidebar-icon"><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span></span><a href="Function/name.html" title="The function.name property returns the name of the function."><code>Function.name</code></a></li><li><a href="Function/prototype.html" title="The Function.prototype property represents the Function prototype object."><code>Function.prototype</code></a></li></ol></li><li><a href="String.html#"><strong>Methods</strong></a><ol><li><a href="Function/apply.html" title="The apply() method calls a function with a given this value and arguments provided as an array (or an array-like object)."><code>Function.prototype.apply()</code></a></li><li><a href="Function/bind.html" title="The bind() method creates a new function that, when called, has its this keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called."><code>Function.prototype.bind()</code></a></li><li><a href="Function/call.html" title="The call() method calls a function with a given this value and arguments provided individually."><code>Function.prototype.call()</code></a></li><li><a href="Function/isGenerator.html" title="The isGenerator() method determines whether or not a function is a generator."><code>Function.prototype.isGenerator()</code></a></li><li><a href="Function/toSource.html" title="The toSource() method returns a string representing the source code of the object."><code>Function.prototype.toSource()</code></a></li><li><a href="Function/toString.html" title="The toString() method returns a string representing the source code of the function."><code>Function.prototype.toString()</code></a></li></ol></li><li><strong><a href="Object.html"><code>Object</code></a></strong></li><li><a href="String.html#"><strong>Properties</strong></a><ol><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="Object/count.html" title="The __count__ property used to store the count of enumerable properties on the object, but it has been removed."><code>Object.prototype.__count__</code></a></s></li><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="Object/__noSuchMethod__.html" title="The __noSuchMethod__ property references a function to be executed when a non-existent method is called on an object."><code>Object.prototype.__noSuchMethod__</code></a></s></li><li><span class="sidebar-icon"><span title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="Object/Parent.html" title="The __parent__ property used to point to an object's context, but it has been removed."><code>Object.prototype.__parent__</code></a></s></li><li><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="Object/__proto__.html" title="The __proto__ property of Object.prototype is an accessor property (a getter function and a setter function) that exposes the internal [[Prototype]] (either an object or null) of the object through which it is accessed."><code>Object.prototype.__proto__</code></a></li><li><a href="Object/constructor.html" title="Returns a reference to the Object function that created the instance's prototype. Note that the value of this property is a reference to the function itself, not a string containing the function's name. The value is only read-only for primitive values such as 1, true and &quot;test&quot;."><code>Object.prototype.constructor</code></a></li></ol></li><li><a href="String.html#"><strong>Methods</strong></a><ol><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="Object/defineGetter.html" title="The __defineGetter__ method binds an object's property to a function to be called when that property is looked up."><code>Object.prototype.__defineGetter__()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="Object/defineSetter.html" title="The __defineSetter__ method binds an object's property to a function to be called when an attempt is made to set that property."><code>Object.prototype.__defineSetter__()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="Object/__lookupGetter__.html" title="The __lookupGetter__ method returns the function bound as a getter to the specified property."><code>Object.prototype.__lookupGetter__()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><span class="sidebar-icon"><span title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="Object/__lookupSetter__.html" title="The __lookupSetter__ method returns the function bound as a setter to the specified property."><code>Object.prototype.__lookupSetter__()</code></a></li><li><a href="Object/hasOwnProperty.html" title="The hasOwnProperty() method returns a boolean indicating whether the object has the specified property."><code>Object.prototype.hasOwnProperty()</code></a></li><li><a href="Object/isPrototypeOf.html" title="The isPrototypeOf() method tests for an object in another object's prototype chain."><code>Object.prototype.isPrototypeOf()</code></a></li><li><a href="Object/propertyIsEnumerable.html" title="The propertyIsEnumerable() method returns a Boolean indicating whether the specified property is enumerable."><code>Object.prototype.propertyIsEnumerable()</code></a></li><li><a href="Object/toLocaleString.html" title="The toLocaleString() method returns a string representing the object. This method is meant to be overridden by derived objects for locale-specific purposes."><code>Object.prototype.toLocaleString()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="Object/toSource.html" title="The toSource() method returns a string representing the source code of the object."><code>Object.prototype.toSource()</code></a></li><li><a href="Object/toString.html" title="The toString() method returns a string representing object."><code>Object.prototype.toString()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="Object/unwatch.html" title="The unwatch() method removes a watchpoint set with the watch() method."><code>Object.prototype.unwatch()</code></a></li><li><a href="Object/valueOf.html" title="The valueOf() method returns the primitive value of the specified object."><code>Object.prototype.valueOf()</code></a></li><li><span class="sidebar-icon"><span title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="Object/watch.html" title="The watch() method watches for a property to be assigned a value and runs a function when that occurs."><code>Object.prototype.watch()</code></a></li></ol></li></ol>
+  </div>
+                
+                <!-- approvals -->
+                
+              
+              </div>
+                      </div>
+        </div>
+      </div>
+    </div> <!-- ends "main-content" -->
+
+  <menu type="context" id="edit-history-menu">
+    <menuitem data-action="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String$edit" label="Edit page"></menuitem>
+    <menuitem data-action="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String$history" label="View page history"></menuitem>
+  </menu>
+  </div></main>
+
+  <!-- Footer -->
+  <footer><div class="center">
+    <div class="column-container">
+      <div class="column-main">
+                <div class="contentinfo">
+          <p>&copy; 2005-2015 Mozilla Developer Network and individual contributors.</p> <p>Content is available under <a href="https://developer.mozilla.org/en-US/docs/MDN/About#Copyrights_and_licenses">these licenses</a>.</p>          <ul>
+            <li><a href="https://developer.mozilla.org/docs/MDN/About">About MDN</a></li>
+            <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">Terms</a></li>
+            <li><a href="https://www.mozilla.org/privacy/websites/">Privacy</a></li>
+            <li><a href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a></li>
+            <li><a href="https://github.com/mozilla/kuma">Contribute to the code</a></li>
+          </ul>
+        </p>
+                </div>
+      </div>
+      <div class="column-strip">
+                        <form class="languages go" method="get" action="https://developer.mozilla.org/en-US/docs/Web">
+      <label for="language">Other languages:</label>
+      <select id="language" class="wiki-l10n" name="next" dir="ltr">
+        <option value="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" selected>
+          English (US)
+        </option>
+                  <option value="/bn-BD/docs/Web/JavaScript/Reference/Global_Objects/String">
+            বাংলা (বাংলাদেশ)
+          </option>          <option value="/ca/docs/Web/JavaScript/Referencia/Objectes_globals/String">
+            Català
+          </option>          <option value="/cs/docs/Web/JavaScript/Reference/Global_Objects/String">
+            Čeština
+          </option>          <option value="/de/docs/Web/JavaScript/Reference/Global_Objects/String">
+            Deutsch
+          </option>          <option value="/es/docs/Web/JavaScript/Referencia/Objetos_globales/String">
+            Español
+          </option>          <option value="/fr/docs/Web/JavaScript/Reference/Objets_globaux/String">
+            Français
+          </option>          <option value="/id/docs/Web/JavaScript/Reference/Global_Objects/String">
+            Bahasa Indonesia
+          </option>          <option value="/ja/docs/Web/JavaScript/Reference/Global_Objects/String">
+            日本語
+          </option>          <option value="/ko/docs/Web/JavaScript/Reference/Global_Objects/String">
+            한국어
+          </option>          <option value="/pl/docs/Web/JavaScript/Referencje/Obiekty/String">
+            Polski
+          </option>          <option value="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String">
+            Português (do Brasil)
+          </option>          <option value="/pt-PT/docs/Web/JavaScript/Reference/Global_Objects/String">
+            Português (Europeu)
+          </option>          <option value="/ru/docs/Web/JavaScript/Reference/Global_Objects/String">
+            Русский
+          </option>          <option value="/vi/docs/Web/JavaScript/Reference/Global_Objects/String">
+            Tiếng Việt
+          </option>          <option value="/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String">
+            中文 (简体)
+          </option>          <option value="/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/String">
+            正體中文 (繁體)
+          </option>      </select>
+      <noscript><button type="submit">Go</button></noscript>
+    </form>
+                </div>
+    </div>
+  </div></footer>
+
+  <!-- site js -->
+          <!--[if lte IE 8]><script type="text/javascript" src="https://developer.cdn.mozilla.net/static/build/js/selectivizr.bbb127468c5d.js" charset="utf-8">]]></script><![endif]-->
+
+    <form id="_persona_login" method="post" action="https://developer.mozilla.org/users/persona/signin" data-csrf-token-url="/users/persona/csrf" data-request='{"siteName": "Mozilla Developer Network", "siteLogo": "/static/img/opengraph-logo.png"}' data-persona-script="https://login.persona.org/include.js">
+  <input type="hidden" name="csrfmiddlewaretoken" value="" id="_persona_csrf_token" />
+  <input type="hidden" name="next" value="" id="_persona_next_url"/>
+  <input type="hidden" name="process" value="" id="_persona_process"/>
+  <input type="hidden" name="assertion" id="_persona_assertion"/>
+</form>
+
+    <script type="text/javascript" src="../../../../../../../developer.cdn.mozilla.net/static/build/js/main.cf0ecbb40132.js" charset="utf-8">]]></script>
+      <script><![CDATA[
+        if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+      ]]></script>
+
+      
+    <script async type="text/javascript" src="../../../../../../../developer.cdn.mozilla.net/static/build/js/wiki.fde24af41c25.js" charset="utf-8">]]></script>
+    <script type="text/javascript"><![CDATA[
+            mdn.optimizely.push(['activate', 2796520257]);
+  ]]></script>
+
+  
+  
+  
+</body>
+</html>

@@ -24,6 +24,8 @@ wget --random-wait \
      -D facebook.github.io \
      -l 1 \
      -m \
+     --restrict-file-names=windows \
+     -p \
      -P$DOWNLOAD_DIR \
      $SOURCE
 

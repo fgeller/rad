@@ -21,6 +21,8 @@ wget --random-wait \
      -k \
      -H \
      -D django.readthedocs.org \
+     -p \
+     --restrict-file-names=windows \
      -m \
      -l 1 \
      -P$DOWNLOAD_DIR \

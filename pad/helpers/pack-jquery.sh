@@ -24,6 +24,8 @@ wget --random-wait \
      -D api.jquery.com,use.typekit.net,ajax.googleapis.com \
      -m \
      -l 1 \
+     --restrict-file-names=windows \
+     -p \
      -P$DOWNLOAD_DIR \
      $SOURCE
 

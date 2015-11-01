@@ -24,6 +24,8 @@ wget --random-wait \
      -D lodash.com \
      -m \
      -l1 \
+     --restrict-file-names=windows \
+     -p \
      -P$DOWNLOAD_DIR \
      $SOURCE
 

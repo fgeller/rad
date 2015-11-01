@@ -21,6 +21,8 @@ wget --random-wait \
      -e robots=off \
      -k \
      -H \
+     -p \
+     --restrict-file-names=windows \
      -D clojuredocs.org,gravatar.com,avatars.githubusercontent.com \
      -m \
      -P$DOWNLOAD_DIR \

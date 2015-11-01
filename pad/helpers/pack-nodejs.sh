@@ -25,6 +25,8 @@ wget --random-wait \
      -D nodejs.org,fonts.gstatic.com,fonts.googleapis.com \
      -m \
      -l 1 \
+     --restrict-file-names=windows \
+     -p \
      -P$DOWNLOAD_DIR \
      $SOURCE
 

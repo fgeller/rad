@@ -25,6 +25,8 @@ do
 	 -D'godoc.org,maxcdn.bootstrapcdn.com,ajax.googleapis.com' \
 	 -m \
 	 -l1 \
+	 -p \
+	 --restrict-file-names=windows \
 	 -P$DOWNLOAD_DIR \
 	 $SOURCE
 

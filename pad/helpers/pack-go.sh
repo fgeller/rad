@@ -24,6 +24,8 @@ wget --random-wait \
      -D'godoc.org,maxcdn.bootstrapcdn.com,ajax.googleapis.com' \
      -m \
      -l1 \
+     -p \
+     --restrict-file-names=windows \
      -P$DOWNLOAD_DIR \
      $SOURCE
 
@@ -36,22 +38,6 @@ echo "#x-pkginfo { visibility: hidden; }" >> `find $DOWNLOAD_DIR -name "site.css
 
 echo "Manually deleting huge package index."
 rm -fv $DOWNLOAD_DIR/godoc.org/-/index.html
-
-function clean_paths {
-    find $DOWNLOAD_DIR -name "*\\?*" |
-	while read f
-	do
-	    dn=$(dirname $f)
-	    fn=$(basename $f)
-	    in=`echo $fn | sed 's/?/%3F/g'`
-	    rn=`echo $fn | sed 's/?/QN/g'`
-	    echo "Renaming $fn to $rn"
-	    mv -v "$f" "$dn/$rn"
-	    fgrep "$in" -rl . | while read t; do sed -i "s/$in/$rn/g" $t; done
-	done
-}
-
-clean_paths
 
 read -r -d '' PACK_DESC << EOM
 The contents of <a href="http://golang.org">golang.org</a> is licensed under the Creative Commons Attribution 3.0 License.<br />

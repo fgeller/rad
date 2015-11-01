@@ -3,22 +3,26 @@ package main
 import (
 	"../shared"
 
-	"encoding/xml"
 	"io"
 	"log"
 	"path/filepath"
 	"strings"
+
+	"golang.org/x/net/html"
 )
 
 func parseMDNDocFile(filePath string, r io.Reader) []shared.Namespace {
 
 	var nss []shared.Namespace
-	d := xml.NewDecoder(r)
-	d.Strict = false
-	d.AutoClose = xml.HTMLAutoClose
-	d.Entity = xml.HTMLEntity
+	z := html.NewTokenizer(r)
 
-	var t xml.Token
+	// <dt>
+	// 	<a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode"
+	//     title="The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values.">
+	// 	  <code>String.fromCharCode()</code>
+	//   </a>
+	// </dt>
+
 	var err error
 	var inMethods bool
 	var inProperties bool
@@ -28,31 +32,27 @@ func parseMDNDocFile(filePath string, r io.Reader) []shared.Namespace {
 	var href string
 	var name string
 
-	// <dt>
-	// 	<a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode"
-	//     title="The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values.">
-	// 	  <code>String.fromCharCode()</code>
-	//   </a>
-	// </dt>
-
-	for ; err == nil; t, err = d.Token() {
-		se, gotStartElement := t.(xml.StartElement)
-		ee, gotEndElement := t.(xml.EndElement)
-		cd, gotCharData := t.(xml.CharData)
-
+processing:
+	for {
+		t := z.Next()
 		switch {
-		case gotCharData && (inMethods || inProperties) && inDt && inA && inCode:
-			name += string(cd)
+		case t == html.ErrorToken:
+			log.Printf("Finished parsing %v with err=%v\n", filePath, z.Err())
+			break processing
 
-		case gotEndElement:
+		case t == html.TextToken && (inMethods || inProperties) && inDt && inA && inCode:
+			name += string(z.Text())
+
+		case t == html.EndTagToken:
+			bn, _ := z.TagName()
+			tn := string(bn)
 			switch {
-			case ee.Name.Local == "dt":
+			case tn == "dt":
 				inDt = false
-			case ee.Name.Local == "a":
+			case tn == "a":
 				inA = false
-			case (inMethods || inProperties) && inDt && inA && ee.Name.Local == "code":
+			case (inMethods || inProperties) && inDt && inA && tn == "code":
 				inCode = false
-
 				pth := ""
 				tgt := filepath.Join(filepath.Dir(filePath), href)
 				n := ""
@@ -71,25 +71,43 @@ func parseMDNDocFile(filePath string, r io.Reader) []shared.Namespace {
 				href = ""
 			}
 
-			// <h2 id="Methods">Methods</h2>
-			// <h3 id="Methods_2">Methods</h3>
+		case t == html.StartTagToken:
+			bn, hasAttrs := z.TagName()
+			tn := string(bn)
+			readAttrs := func() map[string]string {
+				as := map[string]string{}
+				if !hasAttrs {
+					return as
+				}
+				for {
+					k, v, more := z.TagAttr()
+					as[string(k)] = string(v)
+					if !more {
+						return as
+					}
+				}
+			}
+			attrs := readAttrs()
 
-		case gotStartElement:
 			switch {
-			case se.Name.Local == "h2" || se.Name.Local == "h3":
-				id, err := attr(se, "id")
-				inMethods = err == nil &&
+			case tn == "h2" || tn == "h3":
+				id, ok := attrs["id"]
+				inMethods = ok &&
 					(strings.HasPrefix(id, "Methods") ||
 						strings.HasPrefix(id, "Properties"))
-			case (inMethods || inProperties) && se.Name.Local == "dt":
+
+			case (inMethods || inProperties) && tn == "dt":
 				inDt = true
-			case (inMethods || inProperties) && inDt && se.Name.Local == "a":
-				href, _ = attr(se, "href")
+			case (inMethods || inProperties) && inDt && tn == "a":
+				href, _ = attrs["href"]
 				inA = true
-			case (inMethods || inProperties) && inA && se.Name.Local == "code":
+			case (inMethods || inProperties) && inA && tn == "code":
 				inCode = true
 			}
+
+		default:
 		}
+
 	}
 
 	if len(nss) == 0 {

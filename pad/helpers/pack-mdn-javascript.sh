@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PACK_NAME=mdn-javascript
-SOURCE=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+SOURCE=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Index
 DOWNLOAD_DIR=d/$PACK_NAME
 
 rm -vrf $DOWNLOAD_DIR
@@ -14,26 +14,28 @@ mkdir -p $DOWNLOAD_DIR
 # -H: allow spanning hosts
 # -D: include the following list of domains
 # -m: mirror the given site
+#     -r recursive
+#     -N enabled timestamping
+#     -l inf  recursion level
+#     --no-remove-listing
 # -l: limit the recursion level
 # -P: local directory prefix for downloaded files
+# -p: page requisites
 # -np: no parent
 wget --random-wait \
      -E \
      -e robots=off \
      -k \
      -H \
+     --restrict-file-names=windows \
      --no-check-certificate \
      -D developer.mozilla.org,developer.cdn.mozilla.net,gravatar.com,secure.gravatar.com,i2.wp.com \
+     -R '*$revision*','*$revert*','*$history*','*$locales*','*$edit*','*$json*' \
+     -p \
      -m \
-     -l 2 \
-     -np \
+     -I /en-US/docs/Web/JavaScript/Reference,/static \
      -P$DOWNLOAD_DIR \
      $SOURCE
-
-find $DOWNLOAD_DIR -name "*.html" -exec sed -i -E "s:<span class='hidden'>contributors</span>: :g" {} \;
-find $DOWNLOAD_DIR -name "*.html" -exec sed -i -E 's:<script type="text/javascript">:<script type="text/javascript"><![CDATA[:g' {} \;
-find $DOWNLOAD_DIR -name "*.html" -exec sed -i -E 's:<script>:<script><![CDATA[:g' {} \;
-find $DOWNLOAD_DIR -name "*.html" -exec sed -i -E 's:</script>:]]></script>:g' {} \;
 
 echo '' >> `find $DOWNLOAD_DIR -name "mdn.*.css"`
 echo '' >> `find $DOWNLOAD_DIR -name "mdn.*.css"`
@@ -57,7 +59,3 @@ Pack created on `date`.<br />
 EOM
 
 ../pad -indexer mdn -name $PACK_NAME -desc "$PACK_DESC" -version `date --iso` -source $DOWNLOAD_DIR -dest /tmp/packs
-
-find $DOWNLOAD_DIR -name "*.html" -exec sed -i -E 's:<script type="text/javascript"><!\[CDATA\[:<script type="text/javascript">:g' {} \;
-find $DOWNLOAD_DIR -name "*.html" -exec sed -i -E 's:<script><\!\[CDATA\[:<script>:g' {} \;
-find $DOWNLOAD_DIR -name "*.html" -exec sed -i -E 's:\]\]></script>:</script>:g' {} \;

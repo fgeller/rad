@@ -59,7 +59,7 @@ Displaying installed and available packs:
   * [github.com/gorilla/websocket](https://github.com/gorilla/websocket)
   * [github.com/pborman/uuid](https://github.com/pborman/uuid)
   * [golang.org/x/net/html](https://godoc.org/golang.org/x/net/html)
-* [Java](https://code.google.com/p/go-uuid/)
+* [Java](http://www.oracle.com/technetwork/java/javase/overview/index.html)
 * [jQuery](http://jquery.com)
 * [lodash](http://lodash.com)
 * [node.js](http://nodejs.org)

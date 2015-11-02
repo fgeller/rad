@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"reflect"
 	"regexp"
 	"strings"
@@ -292,6 +294,21 @@ func awaitPing(addr string) error {
 	}
 }
 
+type root string
+
+func (r root) Open(n string) (http.File, error) {
+
+	rn := strings.Replace(n, "\\", "%5C", -1)
+	rn = strings.Replace(rn, "|", "%7C", -1)
+	rn = strings.Replace(rn, "\"", "%22", -1)
+	rn = strings.Replace(rn, "*", "%2A", -1)
+	rn = strings.Replace(rn, "<", "%3C", -1)
+	rn = strings.Replace(rn, ">", "%3E", -1)
+	t := filepath.Join(string(r), rn)
+
+	return os.Open(t)
+}
+
 func serve(addr string) {
 	http.HandleFunc("/ping/", pingHandler)
 	http.HandleFunc("/s", socket)
@@ -301,7 +318,7 @@ func serve(addr string) {
 	http.HandleFunc("/a/", assetHandler)
 	http.HandleFunc("/", assetHandler)
 
-	ps := http.FileServer(http.Dir(config.packDir))
+	ps := http.FileServer(root(config.packDir))
 	http.Handle("/pack/", http.StripPrefix("/pack/", ps))
 
 	log.Printf("Serving on addr http://%v\n", addr)

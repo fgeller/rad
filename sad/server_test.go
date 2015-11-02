@@ -60,6 +60,39 @@ func setup() string {
 	return tmp
 }
 
+// a bit annoying, but this has to go early as it relies on the location of the
+// packDir being passed to the http.FileServer -- which happens only once when
+// these tests are run
+func TestServeEscapedPackFile(t *testing.T) {
+	pd := setup()
+	defer os.RemoveAll(pd)
+
+	fn := "%3C!!.html"
+	_, err := os.Create(filepath.Join(pd, fn))
+	if err != nil {
+		t.Errorf("Error creating escaped file: %v", err)
+		return
+	}
+
+	addr := ensureServe()
+	err = awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error waiting for server to be up: %v", err)
+		return
+	}
+
+	r, err := http.Get("http://" + addr + "/pack/" + fn)
+	if err != nil {
+		t.Errorf("Error getting escaped pack file: %v\n", err)
+		return
+	}
+
+	if r.StatusCode != 200 {
+		t.Errorf("Expected 200 got: %v\n", r)
+		return
+	}
+}
+
 func TestServeInstalledPackInfo(t *testing.T) {
 	resetGlobals()
 

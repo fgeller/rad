@@ -49,6 +49,10 @@ echo 'footer { visibility: hidden; }' >> `find $DOWNLOAD_DIR -name "mdn.*.css"`
 echo 'div#toc { display: none; }' >> `find $DOWNLOAD_DIR -name "mdn.*.css"`
 echo 'div#wiki-left { display: none; }' >> `find $DOWNLOAD_DIR -name "mdn.*.css"`
 
+# TODO: disable
+#  <script async="" src="//www.google-analytics.com/analytics.js"></script>
+#  <script src="http://js-agent.newrelic.com/nr-768.min.js"></script>
+
 read -r -d '' PACK_DESC << EOM
 © 2005-2015 Mozilla Developer Network and individual contributors.<br />
 Content is available under <a href="https://developer.mozilla.org/en-US/docs/MDN/About#Copyrights_and_licenses">these licenses</a>.<br />

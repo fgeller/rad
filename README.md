@@ -55,9 +55,10 @@ Displaying installed and available packs:
 * [Clojure](https://clojuredocs.org)
 * [Django](https://clojuredocs.org)
 * [Go](https://golang.org)
-  * Standard library
-  * [Gorilla Websocket](https://github.com/gorilla/websocket)
-  * [go-uuid](https://code.google.com/p/go-uuid/)
+  * [Standard packages](https://godoc.org/-/go)
+  * [github.com/gorilla/websocket](https://github.com/gorilla/websocket)
+  * [github.com/pborman/uuid](https://github.com/pborman/uuid)
+  * [golang.org/x/net/html](https://godoc.org/golang.org/x/net/html)
 * [Java](https://code.google.com/p/go-uuid/)
 * [jQuery](http://jquery.com)
 * [lodash](http://lodash.com)

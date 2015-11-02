@@ -1,5 +1,5 @@
 #!/bin/bash
-for PACK_INFO in "gorilla-websocket github.com/gorilla/websocket" "go-uuid code.google.com/p/go-uuid/uuid"
+for PACK_INFO in "gorilla-websocket github.com/gorilla/websocket" "go-uuid github.com/pborman/uuid" "go-html golang.org/x/net/html"
 do
     PACK_NAME=`echo $PACK_INFO | cut -d" " -f1`
     SOURCE=http://godoc.org/`echo $PACK_INFO | cut -d" " -f2`

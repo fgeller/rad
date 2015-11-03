@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# N.B.:
+#
+# Works reliably with GNU wget 1.16.1, with the following options:
+# +digest +https +ipv6 +iri +large-file +nls +ntlm +opie -psl +ssl/openssl 
+#
+# Does not work reliably with GNU wget 1.16.3 on OSX
+
 PACK_NAME=mdn-javascript
 SOURCE=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Index
 DOWNLOAD_DIR=d/$PACK_NAME

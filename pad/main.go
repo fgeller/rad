@@ -57,6 +57,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parseNodeJsDocFile)
 	case "mdn":
 		return mk(parseMDNDocFile)
+	case "man":
+		return mk(parseManDocFile)
 	default:
 		log.Fatalf("Unsupported indexer name: %v\n", name)
 	}

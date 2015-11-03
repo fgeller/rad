@@ -62,6 +62,7 @@ Displaying installed and available packs:
 * [Java](http://www.oracle.com/technetwork/java/javase/overview/index.html)
 * [jQuery](http://jquery.com)
 * [lodash](http://lodash.com)
+* [Man pages](http://man7.org/linux/man-pages/index.html)
 * [MDN Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
 * [node.js](http://nodejs.org)
 * [Python](https://www.python.org)

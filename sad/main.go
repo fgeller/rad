@@ -22,6 +22,8 @@ func openURL(url string) {
 		exec.Command("open", url).Run()
 	case "linux":
 		exec.Command("xdg-open", url).Run()
+	case "windows":
+		exec.Command("cmd.exe", "/C", "start", url).Run()
 	}
 }
 
@@ -43,7 +45,7 @@ func main() {
 
 	flag.StringVar(&config.packDir, "packdir", pd, "Path where packages will be installed")
 	flag.StringVar(&config.sapAddr, "sapaddr", "geller.io:3025", "Addr where sap serves")
-	flag.StringVar(&config.addr, "addr", "0.0.0.0:3024", "Addr where sad should serve")
+	flag.StringVar(&config.addr, "addr", "localhost:3024", "Addr where sad should serve")
 	flag.BoolVar(&config.readOnly, "readonly", false, "Whether to allow modifications of installed packs.")
 	flag.Parse()
 

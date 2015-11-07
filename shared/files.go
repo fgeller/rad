@@ -10,12 +10,14 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
 type downloader func(string) (*http.Response, error)
 
 func unzipFile(f *zip.File, dest string) error {
+
 	path := filepath.Join(dest, f.Name)
 	if f.FileInfo().IsDir() {
 		return os.MkdirAll(path, f.Mode())
@@ -33,6 +35,7 @@ func unzipFile(f *zip.File, dest string) error {
 	}
 	defer fc.Close()
 
+	path = MaybeEscapeWinPath(path)
 	dst, err := os.Create(path)
 	if err != nil {
 		return err
@@ -170,20 +173,22 @@ func CopyDir(source string, dest string) (int, error) {
 
 	walker := func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			return err
+			log.Printf("Ignoring err=%v.\n", err)
 		}
 
 		target := filepath.Join(dest, path[len(filepath.Dir(source)):])
-		if info.IsDir() {
+		if err == nil && info.IsDir() {
 			return os.MkdirAll(target, 0755)
 		}
 
+		target = MaybeEscapeWinPath(target)
 		out, err := os.Create(target)
 		if err != nil {
 			return err
 		}
 		defer out.Close()
 
+		path = MaybeEscapeWinPath(path)
 		in, err := os.Open(path)
 		if err != nil {
 			return err
@@ -196,4 +201,12 @@ func CopyDir(source string, dest string) (int, error) {
 	}
 
 	return c, filepath.Walk(source, walker)
+}
+
+func MaybeEscapeWinPath(path string) string {
+	if runtime.GOOS == "windows" {
+		return "\\\\.\\" + path
+	}
+
+	return path
 }

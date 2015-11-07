@@ -305,6 +305,7 @@ func (r root) Open(n string) (http.File, error) {
 	rn = strings.Replace(rn, "<", "%3C", -1)
 	rn = strings.Replace(rn, ">", "%3E", -1)
 	t := filepath.Join(string(r), rn)
+	t = shared.MaybeEscapeWinPath(t)
 
 	return os.Open(t)
 }

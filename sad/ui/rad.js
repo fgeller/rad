@@ -22,6 +22,21 @@ function urlParams() {
 	return urlParams;
 }
 
+function addHistory(name, value) {
+	var ps = urlParams();
+	ps[name] = value;
+
+	var entry = "/"
+	var first = true;
+	for (var k in ps) {
+		entry += first ? "?" : "&";
+		first = false;
+		entry +=  encodeURIComponent(k) + "=" + encodeURIComponent(ps[k])
+	}
+
+	window.history.replaceState(null, "", entry);
+}
+
 // http://stackoverflow.com/a/105074
 function guid() {
 	function s4() {
@@ -467,8 +482,15 @@ var Settings = React.createClass({
 			</div>;
 		}
 
+		var visible = "hidden";
+		var params = urlParams();
+		if (params["ss"] && params["ss"] === "true") {
+			console.log("showSettings=true");
+			visible = "visible";
+		}
+
 		return (
-			<div id="settings-container" onClick={this.hide}>
+			<div id="settings-container" onClick={this.hide} style={{visibility:visible}}>
 				<div id="settings-content" onClick={this.stopEvent}>
 					{ installedDom }
 					{ availableDom }
@@ -524,7 +546,8 @@ var Search = React.createClass({
 	},
 	streamSearch: function(text){
 		this.setState({query: text, selected: 0, results: []});
-		window.history.replaceState(null, "", "/?q="+encodeURIComponent(text));
+		addHistory("q", text);
+
 		var qs = text.split(" ");
 		if (qs.length < 2) {
 			return;
@@ -604,6 +627,7 @@ var Search = React.createClass({
 		}
 	},
 	showSettings: function () {
+		addHistory("ss", "true");
 		document.getElementById("settings-container").style.visibility = "visible";
 	},
 	render: function(){

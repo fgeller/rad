@@ -93,7 +93,7 @@ a:hover {
 }
 
 .readme-column i {
-        margin: 0.2em;
+    margin: 0.2em;
 }
 
 .readme-column {
@@ -258,13 +258,13 @@ a:hover {
 }
 
 #menu-container {
-   font-size: 16pt;
-   display: inline-block;
-   vertical-align: top;
-   position: relative;
-   top: 7pt;
-   margin: 7pt;
-   color: #e8eaf6;
+		font-size: 16pt;
+		display: inline-block;
+		vertical-align: top;
+		position: relative;
+		top: 7pt;
+		margin: 7pt;
+		color: #e8eaf6;
 }
 
 #menu-container i {
@@ -272,7 +272,7 @@ a:hover {
 }
 
 #menu-container:hover {
-   color: #7986cb;
+		color: #7986cb;
 }
 
 #search-field-container {

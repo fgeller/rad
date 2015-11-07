@@ -3,6 +3,7 @@ package main
 import (
 	"../shared"
 
+	"archive/zip"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -49,6 +50,43 @@ type packResp struct {
 	err error
 	pck shared.Pack
 	nss []shared.Namespace
+}
+
+func readArchivePackInfo(path string) (shared.Pack, error) {
+	var p shared.Pack
+
+	r, err := zip.OpenReader(path)
+	if err != nil {
+		return p, err
+	}
+	defer r.Close()
+
+findpackinfo:
+	for _, f := range r.File {
+		fmt.Printf("f.Name %v\n", f.Name)
+		d := filepath.Dir(f.Name)
+		b := filepath.Base(f.Name)
+		if b == "pack.json" {
+			fr, err := f.Open()
+			if err != nil {
+				log.Printf("Ignoring err while opening file in archive: %v\n", err)
+				continue findpackinfo
+			}
+
+			bs, err := ioutil.ReadAll(fr)
+			if err != nil {
+				log.Printf("Ignoring err while reading file in archive: %v\n", err)
+				continue findpackinfo
+			}
+
+			err = json.Unmarshal([]byte(bs), &p)
+			if err == nil && p.Name == d {
+				return p, nil
+			}
+		}
+	}
+
+	return p, fmt.Errorf("Did not find pack info.")
 }
 
 func loadRemotePack(fn string) (shared.Pack, []shared.Namespace, error) {

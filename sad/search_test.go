@@ -120,7 +120,26 @@ func TestFind(t *testing.T) {
 		{
 			name:    "empty string matches anything",
 			packPat: "go",
-			pathPat: "io.ioutil",
+			pathPat: "",
+			memPat:  "",
+			expected: []searchResult{
+				{
+					Namespace: "io.ioutil",
+					Member:    "ReadAll",
+					Target:    "/pack/",
+				},
+				{
+					Namespace: "io.ioutil",
+					Member:    "ReadDir",
+					Target:    "/pack/",
+				},
+			},
+		},
+
+		{
+			name:    "two arguments default to pack and member queries, matching all paths",
+			packPat: "go",
+			pathPat: "read",
 			memPat:  "",
 			expected: []searchResult{
 				{

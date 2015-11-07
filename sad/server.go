@@ -69,6 +69,11 @@ func compileParams(pk, pt, m string) (searchParams, error) {
 	var result searchParams
 	var pats [3]*regexp.Regexp
 
+	if len(m) == 0 {
+		m = pt
+		pt = ".*"
+	}
+
 	for i, p := range [3]string{pk, pt, m} {
 		pat := maybeInsensitive(p)
 		cp, err := regexp.Compile(pat)

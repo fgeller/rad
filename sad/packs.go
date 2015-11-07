@@ -101,53 +101,26 @@ func loadRemotePack(fn string) (shared.Pack, []shared.Namespace, error) {
 	}
 	defer os.RemoveAll(path)
 
-	tmp, err := ioutil.TempDir("", "unzipped")
+	pck, err = readArchivePackInfo(path)
 	if err != nil {
+		log.Printf("Error finding pack info: %v.\n", path, err)
 		return pck, nss, err
 	}
 
-	if err = shared.Unzip(path, tmp); err != nil {
+	if err = shared.Unzip(path, config.packDir); err != nil {
 		log.Printf("Failed to unzip %v: %v\n", path, err)
 		return pck, nss, err
 	}
 
-	fs, err := ioutil.ReadDir(tmp)
-	if err != nil {
-		log.Printf("Failed to read directory contents: %v\n", err)
-		return pck, nss, err
-	}
-
-	if len(fs) != 1 || !fs[0].IsDir() {
-		return pck, nss, fmt.Errorf("Expected one directory in pack directory, got: %v", fs)
-	}
-
-	pn := fs[0].Name()
-
-	log.Printf("Copying contents for [%v] into pack dir.\n", pn)
-	if _, err = shared.CopyDir(filepath.Join(tmp, pn), config.packDir); err != nil {
-		log.Printf("Failed to copy directory into packdir: %v\n", err)
-		return pck, nss, err
-	}
-
-	pf := filepath.Join(config.packDir, pn, "pack.json")
-	pc, err := ioutil.ReadFile(pf)
-	if err != nil {
-		log.Printf("Could not load pack info for %v (err: %v).", pn, err)
-		return pck, nss, err
-	}
-
-	err = json.Unmarshal(pc, &pck)
-	log.Printf("Found pack info for %v.", pn)
-
-	df := filepath.Join(config.packDir, pn, "data.json")
+	df := filepath.Join(config.packDir, pck.Name, "data.json")
 	dc, err := ioutil.ReadFile(df)
 	if err != nil {
-		log.Printf("Skipping: Could not load data for %v (err: %v).", pn, err)
+		log.Printf("Skipping: Could not load data for %v (err: %v).", pck.Name, err)
 		return pck, nss, err
 	}
 
 	err = json.Unmarshal(dc, &nss)
-	log.Printf("Found %v entries for %v.", len(nss), pn)
+	log.Printf("Found %v entries for %v.", len(nss), pck.Name)
 
 	return pck, nss, err
 }

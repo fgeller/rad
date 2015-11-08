@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+  <title>PHP: Function and Method listing - Manual </title>
+
+ <link rel="shortcut icon" href="http://nz2.php.net/favicon.ico">
+ <link rel="search" type="application/opensearchdescription+xml" href="http://php.net/phpnetimprovedsearch.src" title="Add PHP.net search">
+ <link rel="alternate" type="application/atom+xml" href="http://nz2.php.net/releases/feed.php" title="PHP Release feed">
+ <link rel="alternate" type="application/atom+xml" href="http://nz2.php.net/feed.atom" title="PHP: Hypertext Preprocessor">
+
+ <link rel="canonical" href="http://php.net/manual/en/indexes.functions.php">
+ <link rel="shorturl" href="http://php.net/manual/en/indexes.functions.php">
+ <link rel="alternate" href="http://php.net/manual/en/indexes.functions.php" hreflang="x-default">
+
+ <link rel="contents" href="index.php.html">
+ <link rel="index" href="indexes.php.html">
+ <link rel="prev" href="indexes.php.html">
+ <link rel="next" href="indexes.examples.php.html">
+
+ <link rel="alternate" href="indexes.functions.php.html" hreflang="en">
+ <link rel="alternate" href="http://nz2.php.net/manual/pt_BR/indexes.functions.php" hreflang="pt_BR">
+ <link rel="alternate" href="http://nz2.php.net/manual/zh/indexes.functions.php" hreflang="zh">
+ <link rel="alternate" href="http://nz2.php.net/manual/fr/indexes.functions.php" hreflang="fr">
+ <link rel="alternate" href="http://nz2.php.net/manual/de/indexes.functions.php" hreflang="de">
+ <link rel="alternate" href="http://nz2.php.net/manual/ja/indexes.functions.php" hreflang="ja">
+ <link rel="alternate" href="http://nz2.php.net/manual/kr/indexes.functions.php" hreflang="kr">
+ <link rel="alternate" href="http://nz2.php.net/manual/ro/indexes.functions.php" hreflang="ro">
+ <link rel="alternate" href="http://nz2.php.net/manual/ru/indexes.functions.php" hreflang="ru">
+ <link rel="alternate" href="http://nz2.php.net/manual/es/indexes.functions.php" hreflang="es">
+ <link rel="alternate" href="http://nz2.php.net/manual/tr/indexes.functions.php" hreflang="tr">
+
+<link rel="stylesheet" type="text/css" href="../../cached.php@t=1421837618&amp;f=%252Ffonts%252FFira%252Ffira.css" media="screen">
+<link rel="stylesheet" type="text/css" href="../../cached.php@t=1421837618&amp;f=%252Ffonts%252FFont-Awesome%252Fcss%252Ffontello.css" media="screen">
+<link rel="stylesheet" type="text/css" href="../../cached.php@t=1429291204&amp;f=%252Fstyles%252Ftheme-base.css" media="screen">
+<link rel="stylesheet" type="text/css" href="../../cached.php@t=1429259403&amp;f=%252Fstyles%252Ftheme-medium.css" media="screen">
+
+ <!--[if lte IE 7]>
+ <link rel="stylesheet" type="text/css" href="http://nz2.php.net/styles/workarounds.ie7.css" media="screen">
+ <![endif]-->
+
+ <!--[if lte IE 8]>
+ <script type="text/javascript">
+  window.brokenIE = true;
+ </script>
+ <![endif]-->
+
+ <!--[if lte IE 9]>
+ <link rel="stylesheet" type="text/css" href="http://nz2.php.net/styles/workarounds.ie9.css" media="screen">
+ <![endif]-->
+
+ <!--[if IE]>
+ <script type="text/javascript" src="http://nz2.php.net/js/ext/html5.js"></script>
+ <![endif]-->
+
+ <base href="">
+
+</head>
+<body class="docs ">
+
+<nav id="head-nav" class="navbar navbar-fixed-top">
+  <div class="navbar-inner clearfix">
+    <a href="http://nz2.php.net/" class="brand"><img src="../../images/logo.php" width="48" height="24" alt="php"></a>
+    <div id="mainmenu-toggle-overlay"></div>
+    <input type="checkbox" id="mainmenu-toggle">
+    <ul class="nav">
+      <li class=""><a href="http://nz2.php.net/downloads">Downloads</a></li>
+      <li class="active"><a href="http://nz2.php.net/docs.php">Documentation</a></li>
+      <li class=""><a href="http://nz2.php.net/get-involved" >Get Involved</a></li>
+      <li class=""><a href="http://nz2.php.net/support">Help</a></li>
+    </ul>
+    <form class="navbar-search" id="topsearch" action="http://nz2.php.net/search.php">
+      <input type="hidden" name="show" value="quickref">
+      <input type="search" name="pattern" class="search-query" placeholder="Search" accesskey="s">
+    </form>
+  </div>
+  <div id="flash-message"></div>
+</nav>
+<nav id="trick"><div><dl>
+<dt><a href='getting-started.php.html'>Getting Started</a></dt>
+	<dd><a href='introduction.php.html'>Introduction</a></dd>
+	<dd><a href='tutorial.php.html'>A simple tutorial</a></dd>
+<dt><a href='langref.php.html'>Language Reference</a></dt>
+	<dd><a href='language.basic-syntax.php.html'>Basic syntax</a></dd>
+	<dd><a href='language.types.php.html'>Types</a></dd>
+	<dd><a href='language.variables.php.html'>Variables</a></dd>
+	<dd><a href='language.constants.php.html'>Constants</a></dd>
+	<dd><a href='language.expressions.php.html'>Expressions</a></dd>
+	<dd><a href='language.operators.php.html'>Operators</a></dd>
+	<dd><a href='language.control-structures.php.html'>Control Structures</a></dd>
+	<dd><a href='language.functions.php.html'>Functions</a></dd>
+	<dd><a href='language.oop5.php.html'>Classes and Objects</a></dd>
+	<dd><a href='language.namespaces.php.html'>Namespaces</a></dd>
+	<dd><a href='language.errors.php.html'>Errors</a></dd>
+	<dd><a href='language.exceptions.php.html'>Exceptions</a></dd>
+	<dd><a href='language.generators.php.html'>Generators</a></dd>
+	<dd><a href='language.references.php.html'>References Explained</a></dd>
+	<dd><a href='reserved.variables.php.html'>Predefined Variables</a></dd>
+	<dd><a href='reserved.exceptions.php.html'>Predefined Exceptions</a></dd>
+	<dd><a href='reserved.interfaces.php.html'>Predefined Interfaces and Classes</a></dd>
+	<dd><a href='context.php.html'>Context options and parameters</a></dd>
+	<dd><a href='wrappers.php.html'>Supported Protocols and Wrappers</a></dd>
+</dl>
+<dl>
+<dt><a href='security.php.html'>Security</a></dt>
+	<dd><a href='security.intro.php.html'>Introduction</a></dd>
+	<dd><a href='security.general.php.html'>General considerations</a></dd>
+	<dd><a href='security.cgi-bin.php.html'>Installed as CGI binary</a></dd>
+	<dd><a href='security.apache.php.html'>Installed as an Apache module</a></dd>
+	<dd><a href='security.filesystem.php.html'>Filesystem Security</a></dd>
+	<dd><a href='security.database.php.html'>Database Security</a></dd>
+	<dd><a href='security.errors.php.html'>Error Reporting</a></dd>
+	<dd><a href='security.globals.php.html'>Using Register Globals</a></dd>
+	<dd><a href='security.variables.php.html'>User Submitted Data</a></dd>
+	<dd><a href='security.magicquotes.php.html'>Magic Quotes</a></dd>
+	<dd><a href='security.hiding.php.html'>Hiding PHP</a></dd>
+	<dd><a href='security.current.php.html'>Keeping Current</a></dd>
+<dt><a href='features.php.html'>Features</a></dt>
+	<dd><a href='features.http-auth.php.html'>HTTP authentication with PHP</a></dd>
+	<dd><a href='features.cookies.php.html'>Cookies</a></dd>
+	<dd><a href='features.sessions.php.html'>Sessions</a></dd>
+	<dd><a href='features.xforms.php.html'>Dealing with XForms</a></dd>
+	<dd><a href='features.file-upload.php.html'>Handling file uploads</a></dd>
+	<dd><a href='features.remote-files.php.html'>Using remote files</a></dd>
+	<dd><a href='features.connection-handling.php.html'>Connection handling</a></dd>
+	<dd><a href='features.persistent-connections.php.html'>Persistent Database Connections</a></dd>
+	<dd><a href='features.safe-mode.php.html'>Safe Mode</a></dd>
+	<dd><a href='features.commandline.php.html'>Command line usage</a></dd>
+	<dd><a href='features.gc.php.html'>Garbage Collection</a></dd>
+	<dd><a href='features.dtrace.php.html'>DTrace Dynamic Tracing</a></dd>
+</dl>
+<dl>
+<dt><a href='funcref.php.html'>Function Reference</a></dt>
+	<dd><a href='refs.basic.php.php.html'>Affecting PHP's Behaviour</a></dd>
+	<dd><a href='refs.utilspec.audio.php.html'>Audio Formats Manipulation</a></dd>
+	<dd><a href='refs.remote.auth.php.html'>Authentication Services</a></dd>
+	<dd><a href='refs.utilspec.cmdline.php.html'>Command Line Specific Extensions</a></dd>
+	<dd><a href='refs.compression.php.html'>Compression and Archive Extensions</a></dd>
+	<dd><a href='refs.creditcard.php.html'>Credit Card Processing</a></dd>
+	<dd><a href='refs.crypto.php.html'>Cryptography Extensions</a></dd>
+	<dd><a href='refs.database.php.html'>Database Extensions</a></dd>
+	<dd><a href='refs.calendar.php.html'>Date and Time Related Extensions</a></dd>
+	<dd><a href='refs.fileprocess.file.php.html'>File System Related Extensions</a></dd>
+	<dd><a href='refs.international.php.html'>Human Language and Character Encoding Support</a></dd>
+	<dd><a href='refs.utilspec.image.php.html'>Image Processing and Generation</a></dd>
+	<dd><a href='refs.remote.mail.php.html'>Mail Related Extensions</a></dd>
+	<dd><a href='refs.math.php.html'>Mathematical Extensions</a></dd>
+	<dd><a href='refs.utilspec.nontext.php.html'>Non-Text MIME Output</a></dd>
+	<dd><a href='refs.fileprocess.process.php.html'>Process Control Extensions</a></dd>
+	<dd><a href='refs.basic.other.php.html'>Other Basic Extensions</a></dd>
+	<dd><a href='refs.remote.other.php.html'>Other Services</a></dd>
+	<dd><a href='refs.search.php.html'>Search Engine Extensions</a></dd>
+	<dd><a href='refs.utilspec.server.php.html'>Server Specific Extensions</a></dd>
+	<dd><a href='refs.basic.session.php.html'>Session Extensions</a></dd>
+	<dd><a href='refs.basic.text.php.html'>Text Processing</a></dd>
+	<dd><a href='refs.basic.vartype.php.html'>Variable and Type Related Extensions</a></dd>
+	<dd><a href='refs.webservice.php.html'>Web Services</a></dd>
+	<dd><a href='refs.utilspec.windows.php.html'>Windows Only Extensions</a></dd>
+	<dd><a href='refs.xml.php.html'>XML Manipulation</a></dd>
+</dl>
+<dl>
+<dt>Keyboard Shortcuts</dt><dt>?</dt>
+<dd>This help</dd>
+<dt>j</dt>
+<dd>Next menu item</dd>
+<dt>k</dt>
+<dd>Previous menu item</dd>
+<dt>g p</dt>
+<dd>Previous man page</dd>
+<dt>g n</dt>
+<dd>Next man page</dd>
+<dt>G</dt>
+<dd>Scroll to bottom</dd>
+<dt>g g</dt>
+<dd>Scroll to top</dd>
+<dt>g h</dt>
+<dd>Goto homepage</dd>
+<dt>g s</dt>
+<dd>Goto search<br>(current page)</dd>
+<dt>/</dt>
+<dd>Focus search box</dd>
+</dl></div></nav>
+<div id="goto">
+    <div class="search">
+         <div class="text"></div>
+         <div class="results"><ul></ul></div>
+   </div>
+</div>
+
+  <div id="breadcrumbs" class="clearfix">
+    <div id="breadcrumbs-inner">
+          <div class="next">
+        <a href="indexes.examples.php.html">
+          Example listing &raquo;
+        </a>
+      </div>
+              <div class="prev">
+        <a href="indexes.php.html">
+          &laquo; Index listing        </a>
+      </div>
+          <ul>
+            <li><a href='index.php.html'>PHP Manual</a></li>      <li><a href='appendices.php.html'>Appendices</a></li>      <li><a href='indexes.php.html'>Index listing</a></li>      </ul>
+    </div>
+  </div>
+
+
+
+
+<div id="layout" class="clearfix">
+  <section id="layout-content">
+  <div class="page-tools">
+    <div class="change-language">
+      <form action="http://nz2.php.net/manual/change.php" method="get" id="changelang" name="changelang">
+        <fieldset>
+          <label for="changelang-langs">Change language:</label>
+          <select onchange="document.changelang.submit()" name="page" id="changelang-langs">
+            <option value='en/indexes.functions.php' selected="selected">English</option>
+            <option value='pt_BR/indexes.functions.php'>Brazilian Portuguese</option>
+            <option value='zh/indexes.functions.php'>Chinese (Simplified)</option>
+            <option value='fr/indexes.functions.php'>French</option>
+            <option value='de/indexes.functions.php'>German</option>
+            <option value='ja/indexes.functions.php'>Japanese</option>
+            <option value='kr/indexes.functions.php'>Korean</option>
+            <option value='ro/indexes.functions.php'>Romanian</option>
+            <option value='ru/indexes.functions.php'>Russian</option>
+            <option value='es/indexes.functions.php'>Spanish</option>
+            <option value='tr/indexes.functions.php'>Turkish</option>
+            <option value="help-translate.php">Other</option>
+          </select>
+        </fieldset>
+      </form>
+    </div>
+    <div class="edit-bug">
+      <a href="https://edit.php.net/?project=PHP&amp;perm=en/indexes.functions.php">Edit</a>
+      <a href="https://bugs.php.net/report.php?bug_type=Documentation+problem&amp;manpage=indexes.functions">Report a Bug</a>
+    </div>
+  </div><div id="indexes.functions" class="section">
+  <h2 class="title">Function and Method listing</h2>
+  <p class="para">List of all the functions and methods in the manual</p>
+  <p class="gen-index index-for-refentry-toc">
+<a href="indexes.functions.php.html#refentry-index-for-a">a</a>
+<a href="indexes.functions.php.html#refentry-index-for-b">b</a>
+<a href="indexes.functions.php.html#refentry-index-for-c">c</a>
+<a href="indexes.functions.php.html#refentry-index-for-d">d</a>
+<a href="indexes.functions.php.html#refentry-index-for-e">e</a>
+<a href="indexes.functions.php.html#refentry-index-for-f">f</a>
+<a href="indexes.functions.php.html#refentry-index-for-g">g</a>
+<a href="indexes.functions.php.html#refentry-index-for-h">h</a>
+<a href="indexes.functions.php.html#refentry-index-for-i">i</a>
+<a href="indexes.functions.php.html#refentry-index-for-j">j</a>
+<a href="indexes.functions.php.html#refentry-index-for-k">k</a>
+<a href="indexes.functions.php.html#refentry-index-for-l">l</a>
+<a href="indexes.functions.php.html#refentry-index-for-m">m</a>
+<a href="indexes.functions.php.html#refentry-index-for-n">n</a>
+<a href="indexes.functions.php.html#refentry-index-for-o">o</a>
+<a href="indexes.functions.php.html#refentry-index-for-p">p</a>
+<a href="indexes.functions.php.html#refentry-index-for-q">q</a>
+<a href="indexes.functions.php.html#refentry-index-for-r">r</a>
+<a href="indexes.functions.php.html#refentry-index-for-s">s</a>
+<a href="indexes.functions.php.html#refentry-index-for-t">t</a>
+<a href="indexes.functions.php.html#refentry-index-for-u">u</a>
+<a href="indexes.functions.php.html#refentry-index-for-v">v</a>
+<a href="indexes.functions.php.html#refentry-index-for-w">w</a>
+<a href="indexes.functions.php.html#refentry-index-for-x">x</a>
+<a href="indexes.functions.php.html#refentry-index-for-y">y</a>
+<a href="indexes.functions.php.html#refentry-index-for-z">z</a>
+<a href="indexes.functions.php.html#refentry-index-for-_">_</a>
+</p>
+<ul class='gen-index index-for-refentry'><li class='gen-index index-for-a'>a<ul id='refentry-index-for-a'>
+<li><a href="function.abs.php.html" class="index">abs</a> - Absolute value</li>
+<li><a href="function.json-decode.php.html" class="index">json_decode</a> - Decodes a JSON string</li>
+<li><a href="judy.bycount.php.html" class="index">Judy::byCount</a> - Locate the Nth index present in the Judy array</li>
+<li><a href="zmqsocket.construct.php.html" class="index">ZMQSocket::__construct</a> - Construct a new ZMQSocket</li>
+</ul></li>
+</ul>
+
+
+ </div>
+<section id="usernotes">
+ <div class="head">
+  <span class="action"><a href="http://nz2.php.net/manual/add-note.php?sect=indexes.functions&amp;redirect=http://nz2.php.net/manual/en/indexes.functions.php"><img src='../../images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></span>
+  <h3 class="title">User Contributed Notes <span class="count">1 note</span></h3>
+ </div><div id="allnotes">
+  <div class="note" id="117042">  <div class="votes">
+    <div id="Vu117042">
+    <a href="http://nz2.php.net/manual/vote-note.php?id=117042&amp;page=indexes.functions&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd117042">
+    <a href="http://nz2.php.net/manual/vote-note.php?id=117042&amp;page=indexes.functions&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V117042" title="62% like this...">
+    4
+    </div>
+  </div>
+  <a href="indexes.functions.php.html#117042" class="name">
+  <strong class="user"><em>counter at county dot co</em></strong></a><a class="genanchor" href="indexes.functions.php.html#117042"> &para;</a><div class="date" title="2015-04-07 02:17"><strong>7 months ago</strong></div>
+  <div class="text" id="Hcom117042">
+<div class="phpcode"><code><span class="html">
+In case anyone was wondering, the total function/method count in this list as of this date is exactly 9457</span>
+</code></div>
+  </div>
+ </div></div>
+
+ <div class="foot"><a href="http://nz2.php.net/manual/add-note.php?sect=indexes.functions&amp;redirect=http://nz2.php.net/manual/en/indexes.functions.php"><img src='../../images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></div>
+</section>    </section><!-- layout-content -->
+        <aside class='layout-menu'>
+    
+        <ul class='parent-menu-list'>
+                                    <li>
+                <a href="indexes.php.html">Index listing</a>
+    
+                                    <ul class='child-menu-list'>
+    
+                          
+                        <li class="current">
+                            <a href="indexes.functions.php.html" title="Function and Method listing">Function and Method listing</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="indexes.examples.php.html" title="Example listing">Example listing</a>
+                        </li>
+                            
+                    </ul>
+                    
+            </li>
+                        
+                    </ul>
+    </aside>
+
+
+  </div><!-- layout -->
+         
+  <footer>
+    <div class="container footer-content">
+      <div class="row-fluid">
+      <ul class="footmenu">
+        <li><a href="http://nz2.php.net/copyright.php">Copyright &copy; 2001-2015 The PHP Group</a></li>
+        <li><a href="http://nz2.php.net/my.php">My PHP.net</a></li>
+        <li><a href="http://nz2.php.net/contact.php">Contact</a></li>
+        <li><a href="http://nz2.php.net/sites.php">Other PHP.net sites</a></li>
+        <li><a href="http://nz2.php.net/mirrors.php">Mirror sites</a></li>
+        <li><a href="http://nz2.php.net/privacy.php">Privacy policy</a></li>
+      </ul>
+      </div>
+    </div>
+  </footer>
+
+    
+ <!-- External and third party libraries. -->
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="../../cached.php@t=1421837618&amp;f=%252Fjs%252Fext%252Fmodernizr.js"></script>
+<script type="text/javascript" src="../../cached.php@t=1421837618&amp;f=%252Fjs%252Fext%252Fhogan-2.0.0.min.js"></script>
+<script type="text/javascript" src="../../cached.php@t=1421837618&amp;f=%252Fjs%252Fext%252Ftypeahead.min.js"></script>
+<script type="text/javascript" src="../../cached.php@t=1421837618&amp;f=%252Fjs%252Fext%252Fmousetrap.min.js"></script>
+<script type="text/javascript" src="../../cached.php@t=1421837618&amp;f=%252Fjs%252Fsearch.js"></script>
+<script type="text/javascript" src="../../cached.php@t=1435099203&amp;f=%252Fjs%252Fcommon.js"></script>
+
+<a id="toTop" href="javascript:;"><span id="toTopHover"></span><img width="40" height="40" alt="To Top" src="../../images/to-top@2x.png"></a>
+
+</body>
+</html>
+

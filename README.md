@@ -68,6 +68,7 @@ Displaying installed and available packs:
 * [Man pages](http://man7.org/linux/man-pages/index.html)
 * [MDN Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference)
 * [node.js](http://nodejs.org)
+* [PHP](https://www.php.net)
 * [Python](https://www.python.org)
 * [react.js](https://facebook.github.io/react/)
 * [Scala](http://www.scala-lang.org)

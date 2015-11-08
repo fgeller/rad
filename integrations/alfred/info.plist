@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>org.felixgeller.rad</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>27A9463B-0215-42A0-9BB4-927625CBA2DE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D3A46A45-9304-4AD0-866D-7E27EDD86443</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Felix Geller</string>
+	<key>description</key>
+	<string>Search API docs via rad</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>rad</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>plusspaces</key>
+				<false/>
+				<key>url</key>
+				<string>http://localhost:3024/?doc={query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>D3A46A45-9304-4AD0-866D-7E27EDD86443</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>keyword</key>
+				<string>r</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Retrieving results from rad...</string>
+				<key>script</key>
+				<string>require_once('workflows.php');
+$wf = new Workflows();
+
+$orig = "{query}";
+$terms = explode(" ", $orig);
+$pack = $terms[0];
+$path = $terms[1];
+$member = $terms[2];
+
+if (strlen($member) == 0) {
+        $member = $path;
+        $path = "";
+}
+
+$u = "http://localhost:3024/q?limit=5" ;
+$u .= "&amp;pack=".urlencode( $pack ) ;
+$u .= "&amp;path=".urlencode( $path ) ;
+$u .= "&amp;member=".urlencode( $member ) ;
+
+$json = $wf-&gt;request($u);
+$rad_results = json_decode( utf8_encode($json), true );
+$int = 1;
+
+foreach( $rad_results as $result ):
+        $wf-&gt;result($int.'.'.time(), $result["Target"], $result["Member"], $result["Namespace"], 'icon.png');
+        $int++;
+endforeach;
+
+$wf_results = $wf-&gt;results();
+if ( count( $wf_results ) == 0 ):
+        $wf-&gt;result( 'rad', '', 'No results', 'rad found no API docs. u['.$u.']', 'icon.png' );
+endif;
+
+echo $wf-&gt;toxml();
+</string>
+				<key>subtext</key>
+				<string>pack path member</string>
+				<key>title</key>
+				<string>Search API docs via rad</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>27A9463B-0215-42A0-9BB4-927625CBA2DE</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>More information about rad:
+
+    https://github.com/fgeller/rad
+
+This workflow assumes a running rad instance available at:
+    
+    http://localhost:3024
+
+Based on the David Ferguson's Workflow utility class available here:
+
+    https://github.com/jdfwarrior/Workflows</string>
+	<key>uidata</key>
+	<dict>
+		<key>27A9463B-0215-42A0-9BB4-927625CBA2DE</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>D3A46A45-9304-4AD0-866D-7E27EDD86443</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>https://github.com/fgeller/rad</string>
+</dict>
+</plist>

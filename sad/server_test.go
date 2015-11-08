@@ -156,6 +156,66 @@ comparing:
 	}
 }
 
+func TestServeHTTPSearch(t *testing.T) {
+	resetGlobals()
+
+	loadPack(
+		shared.Pack{Name: "x", Created: time.Now()},
+		[]shared.Namespace{{Members: []shared.Member{{Name: "m1"}, {Name: "m2"}}}},
+	)
+
+	addr := ensureServe()
+	err := awaitPing(addr)
+	if err != nil {
+		t.Errorf("Error waiting for server to be up: %v", err)
+		return
+	}
+
+	url := "http://" + addr + "/q?pack=&path=&member=m&limit=1"
+	resp, err := http.Get(url)
+	if err != nil {
+		t.Errorf("Error querying: %v", err)
+		return
+	}
+	if resp.StatusCode != 200 {
+		t.Errorf("Error querying got status code: %v", resp.StatusCode)
+		return
+	}
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		t.Errorf("Error reading response body: %s", err)
+		return
+	}
+	err = resp.Body.Close()
+	if err != nil {
+		t.Errorf("Error closing response body: %v", err)
+		return
+	}
+
+	var actual []searchResult
+	err = json.Unmarshal(data, &actual)
+	if err != nil {
+		t.Errorf("Error while unmarshalling search results [%s]: %v", data, err)
+		return
+	}
+
+	if len(actual) != 1 {
+		t.Errorf("Expected one search result but got %v.\n", actual)
+		return
+	}
+	var expected = []searchResult{
+		{
+			Namespace: "",
+			Member:    "m1",
+			Target:    "/pack",
+		},
+	}
+	if reflect.DeepEqual(expected, actual) {
+		t.Errorf("Unexpected search result, expected:\n%v\nbut got:\n%v\n", expected, actual)
+		return
+	}
+}
+
 func TestServeAvailablePacksInfo(t *testing.T) {
 	resetGlobals()
 	addr := ensureServe()

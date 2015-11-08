@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -153,6 +154,72 @@ loopinstalled:
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(js)
 	return
+}
+
+func query(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/q" {
+		http.Error(w, "Not found", 404)
+		return
+	}
+	if r.Method != "GET" {
+		http.Error(w, "Method not allowed", 405)
+		return
+	}
+
+	query := r.URL.Query()
+	l, err := strconv.Atoi(strings.Join(query["limit"], ""))
+	if err != nil {
+		l = 100
+	}
+	req := searchRequest{
+		Pack:   strings.Join(query["pack"], ""),
+		Path:   strings.Join(query["path"], ""),
+		Member: strings.Join(query["member"], ""),
+		Limit:  int(l),
+	}
+	log.Printf("Received search request %v\n", req)
+
+	params, err := compileParams(req.Pack, req.Path, req.Member)
+	if err != nil {
+		log.Printf("Error while compiling params: %v\n", err)
+		return
+	}
+
+	found := searchResults(params, req.Limit)
+	js, err := json.Marshal(found)
+	if err != nil {
+		log.Printf("Failed to marshal err: %v\n", err)
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+	return
+}
+
+func searchResults(params searchParams, limit int) []searchResult {
+	start := time.Now()
+	results := make(chan searchResult)
+	control := make(chan struct{}, 1)
+	sr := []searchResult{}
+
+	go find(results, control, params)
+	for {
+		res, ok := <-results
+		if !ok {
+			log.Printf("Finished request in %v\n", time.Since(start))
+			return sr
+		}
+
+		sr = append(sr, res)
+		log.Printf("Found result #%v after %v\n", len(sr), time.Since(start))
+		if len(sr) >= limit {
+			log.Printf("Finished request after hitting limit in %v\n", time.Since(start))
+			control <- struct{}{}
+			return sr
+		}
+	}
 }
 
 func socket(w http.ResponseWriter, r *http.Request) {
@@ -317,6 +384,7 @@ func (r root) Open(n string) (http.File, error) {
 
 func serve(addr string) {
 	http.HandleFunc("/ping/", pingHandler)
+	http.HandleFunc("/q", query)
 	http.HandleFunc("/s", socket)
 	http.HandleFunc("/status", status)
 	http.HandleFunc("/install/", installHandler)

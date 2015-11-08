@@ -228,7 +228,6 @@ func TestServeAvailablePacksInfo(t *testing.T) {
 	}
 
 	url := "http://" + addr + "/status"
-	fmt.Printf("asking for url %v\n", url)
 	resp, err := http.Get(url)
 	if err != nil {
 		t.Errorf("Error while querying for packs: %v", err)

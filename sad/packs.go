@@ -63,7 +63,6 @@ func readArchivePackInfo(path string) (shared.Pack, error) {
 
 findpackinfo:
 	for _, f := range r.File {
-		fmt.Printf("f.Name %v\n", f.Name)
 		d := filepath.Dir(f.Name)
 		b := filepath.Base(f.Name)
 		if b == "pack.json" {

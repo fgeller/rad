@@ -26,9 +26,12 @@ Contents:
 
 * [Pictures!](https://github.com/fgeller/rad#pictures)
 * [Available packs](https://github.com/fgeller/rad#available-packs)
+* [Integrations](https://github.com/fgeller/rad#integrations)
+  * [Browser](https://github.com/fgeller/rad#browser)
+  * [Alfred](https://github.com/fgeller/rad#alfred)
+  * [HUBOT + Slack](https://github.com/fgeller/rad#hubot--slack)
 * [Why?](https://github.com/fgeller/rad#why)
 * [How?](https://github.com/fgeller/rad#how)
-* [Integrations](https://github.com/fgeller/rad#integrations)
 * [More packs and contributions](https://github.com/fgeller/rad#more-packs-and-contributions)
 * [Others](https://github.com/fgeller/rad#others)
 
@@ -74,6 +77,49 @@ Displaying installed and available packs:
   * [Kafka](http://kafka.apache.org)
   * [Shapeless](https://github.com/milessabin/shapeless)
   * [Spray](http://spray.io)
+
+## Integrations
+
+While `sad` includes a UI, it might be faster or more convenient to query
+through one of the following integrations:
+
+### Browser
+
+You can save some key strokes by assigning a custom search engine keyword to
+`rad`. For example in Chrome:
+
+![Chrome Search Engine](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/chrome-search-engine.png)
+
+This will allow you to search for documentation by using a custom keyword
+directly from the location bar. To speed things up even more, you can enable
+live loading of documentation in `rad` settings:
+
+![Live updates](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/live-updates.png)
+
+This will allow you to jump directly to the first result after you've entered a
+query in the location bar (`shift + →` and `shift + ←` will cycle through the
+search results if the query wasn't unique).
+
+### Alfred
+
+You can query a running `rad` instance from [Alfred](https://www.alfredapp.com/)
+if you install the included [workflow](https://raw.githubusercontent.com/fgeller/rad/master/integrations/alfred/rad.alfredworkflow).
+Then you can start a query with the configured keyword (the default is simply `r`):
+
+![Alfred](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/alfred.png)
+
+Selecting a result will open the documention in your default browser via `rad`.
+
+### HUBOT + Slack
+
+[rad.coffee](https://github.com/fgeller/rad/blob/master/integrations/rad.coffee)
+is a small [HUBOT](https://hubot.github.com) script that works with the Slack
+adapter:
+
+![HUBOT + Slack](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/hubot-slack.png)
+
+You start a query with the keyword `rad` and the results are links to a running
+`sad` instance.
 
 ## Why?
 
@@ -149,39 +195,6 @@ following example:
       }
     ]
 
-
-## Integrations
-
-While `sad` includes a UI, it might be faster or more convenient to query
-through one of the following integrations:
-
-### Browser
-
-You can save some key strokes by assigning a custom search engine keyword to
-`rad`. For example in Chrome:
-
-![Chrome Search Engine](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/chrome-search-engine.png)
-
-This will allow you to search for documentation by using a custom keyword
-directly from the location bar. To speed things up even more, you can enable
-live loading of documentation in `rad` settings:
-
-![Live updates](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/live-updates.png)
-
-This will allow you to jump directly to the first result after you've entered a
-query in the location bar (`shift + →` and `shift + ←` will cycle through the
-search results if the query wasn't unique).
-
-### HUBOT + Slack
-
-[rad.coffee](https://github.com/fgeller/rad/blob/master/integrations/rad.coffee)
-is a small [HUBOT](https://hubot.github.com) script that works with the Slack
-adapter:
-
-![HUBOT + Slack](https://raw.githubusercontent.com/fgeller/rad/master/screenshots/hubot-slack.png)
-
-You start a query with the keyword `rad` and the results are links to a running
-`sad` instance.
 
 ## More packs and contributions
 

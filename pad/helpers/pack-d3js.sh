@@ -4,8 +4,8 @@ PACK_NAME=d3js
 SOURCE=https://github.com/mbostock/d3/wiki/API-Reference
 DOWNLOAD_DIR=d/$PACK_NAME
 
-# rm -vrf $DOWNLOAD_DIR
-# mkdir -p $DOWNLOAD_DIR
+rm -vrf $DOWNLOAD_DIR
+mkdir -p $DOWNLOAD_DIR
 
 # --random-wait
 # --wait: don't spam the host
@@ -16,18 +16,18 @@ DOWNLOAD_DIR=d/$PACK_NAME
 # -m: mirror the given site
 # -l: limit the recursion level
 # -P: local directory prefix for downloaded files
-# wget --random-wait \
-#      -E \
-#      -e robots=off \
-#      -k \
-#      -H \
-#      -D github.com \
-#      -m \
-#      -l 2 \
-#      -p \
-#      --restrict-file-names=windows \
-#      -P$DOWNLOAD_DIR \
-#      $SOURCE
+wget --random-wait \
+     -E \
+     -e robots=off \
+     -k \
+     -H \
+     -D github.com \
+     -m \
+     -l 1 \
+     -p \
+     --restrict-file-names=windows \
+     -P$DOWNLOAD_DIR \
+     $SOURCE
 
 # TODO
 # disable http://collector.githubapp.com/github/page_view?dimensions[page]=http%3A%2F…8-478-42-0-0-0---0---9-13-10--14-14&&&dimensions[cid]=412254477.1446872816

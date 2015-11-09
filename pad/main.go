@@ -61,6 +61,8 @@ func mkIndexer(name string, source string) indexer {
 		return mk(parseManDocFile)
 	case "php":
 		return mk(parsePHPDocFile)
+	case "d3":
+		return mk(parseD3DocFile)
 	default:
 		log.Fatalf("Unsupported indexer name: %v\n", name)
 	}

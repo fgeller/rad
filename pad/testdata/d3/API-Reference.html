@@ -1,0 +1,2297 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="viewport" content="width=1020">
+    
+    
+    <title>API Reference ¬∑ mbostock/d3 Wiki ¬∑ GitHub</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="../../../opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="../../../fluidicon.png" title="GitHub">
+    <link rel="apple-touch-icon" sizes="57x57" href="../../../apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../../../apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../../../apple-touch-icon-144.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../../../apple-touch-icon-144.png">
+    <meta property="fb:app_id" content="1401488693436528">
+
+      <meta content="@github" name="twitter:site" /><meta content="summary" name="twitter:card" /><meta content="mbostock/d3" name="twitter:title" /><meta content="d3 - A JavaScript visualization library for HTML and SVG." name="twitter:description" /><meta content="https://avatars0.githubusercontent.com/u/230541?v=3&amp;s=400" name="twitter:image:src" />
+      <meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://avatars0.githubusercontent.com/u/230541?v=3&amp;s=400" property="og:image" /><meta content="mbostock/d3" property="og:title" /><meta content="https://github.com/mbostock/d3" property="og:url" /><meta content="d3 - A JavaScript visualization library for HTML and SVG." property="og:description" />
+      <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+    <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+    <link rel="assets" href="https://assets-cdn.github.com/">
+    
+    <meta name="pjax-timeout" content="1000">
+    
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="selected-link" value="repo_wiki" data-pjax-transient>
+
+    <meta name="google-site-verification" content="KT5gs8h0wvaagLKAVWq8bbeNwnZZK1r1XQysX3xurLU">
+    <meta name="google-analytics" content="UA-3769691-2">
+
+<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="765C1207:592A:F3A2F22:563D8257" name="octolytics-dimension-request_id" />
+
+<meta content="Rails, view, wiki#show" data-pjax-transient="true" name="analytics-event" />
+
+
+  <meta class="js-ga-set" name="dimension1" content="Logged Out">
+    <meta class="js-ga-set" name="dimension4" content="Current repo nav">
+
+
+
+
+    <meta name="is-dotcom" content="true">
+        <meta name="hostname" content="github.com">
+    <meta name="user-login" content="">
+
+      <link rel="mask-icon" href="../../../../assets-cdn.github.com/pinned-octocat.svg" color="#4078c0">
+      <link rel="icon" type="image/x-icon" href="../../../../assets-cdn.github.com/favicon.ico">
+
+    <meta content="de7c1889dac7a3fefa813d00224b00133be16e43" name="form-nonce" />
+
+    <link crossorigin="anonymous" href="../../../../assets-cdn.github.com/assets/github-e1c13e7309dc7f723b21b2afc0a6ee6a9e8e5978fe25dccb3251d923cab472df.css" media="all" rel="stylesheet" />
+    <link crossorigin="anonymous" href="../../../../assets-cdn.github.com/assets/github2-8660e134f8078fe75046e2c8cf09a2fd65d94446a9c3d11ecf672cb4c5842b6a.css" media="all" rel="stylesheet" />
+    
+    
+    
+
+
+    <meta http-equiv="x-pjax-version" content="bfd96d846aa5a35d072709105fddd787">
+
+      
+  <meta name="description" content="d3 - A JavaScript visualization library for HTML and SVG.">
+  <meta name="go-import" content="github.com/mbostock/d3 git https://github.com/mbostock/d3.git">
+
+  <meta content="230541" name="octolytics-dimension-user_id" /><meta content="mbostock" name="octolytics-dimension-user_login" /><meta content="943149" name="octolytics-dimension-repository_id" /><meta content="mbostock/d3" name="octolytics-dimension-repository_nwo" /><meta content="true" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="943149" name="octolytics-dimension-repository_network_root_id" /><meta content="mbostock/d3" name="octolytics-dimension-repository_network_root_nwo" />
+  <link href="../commits/master.atom" rel="alternate" title="Recent Commits to d3:master" type="application/atom+xml">
+
+  </head>
+
+
+  <body class="logged_out   env-production  vis-public">
+    <a href="API-Reference.html#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+
+    
+    
+    
+
+
+
+      
+      <div class="header header-logged-out" role="banner">
+  <div class="container clearfix">
+
+    <a class="header-logo-wordmark" href="../../../index.html" data-ga-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
+      <span class="mega-octicon octicon-logo-github"></span>
+    </a>
+
+    <div class="header-actions" role="navigation">
+        <a class="btn btn-primary" href="../../../join.html" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
+      <a class="btn" href="../../../login@return_to=%252Fmbostock%252Fd3%252Fwiki%252FAPI-Reference.html" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
+    </div>
+
+    <div class="site-search repo-scope js-site-search" role="search">
+      <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="https://github.com/mbostock/d3/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/mbostock/d3/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+  <label class="js-chromeless-input-container form-control">
+    <div class="scope-badge">This repository</div>
+    <input type="text"
+      class="js-site-search-focus js-site-search-field is-clearable chromeless-input"
+      data-hotkey="s"
+      name="q"
+      placeholder="Search"
+      aria-label="Search this repository"
+      data-global-scope-placeholder="Search GitHub"
+      data-repo-scope-placeholder="Search"
+      tabindex="1"
+      autocapitalize="off">
+  </label>
+</form>
+    </div>
+
+      <ul class="header-nav left" role="navigation">
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="../../../explore.html" data-ga-click="(Logged out) Header, go to explore, text:explore">Explore</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="../../../features.html" data-ga-click="(Logged out) Header, go to features, text:features">Features</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="../../../../enterprise.github.com/index.html" data-ga-click="(Logged out) Header, go to enterprise, text:enterprise">Enterprise</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="../../../pricing.html" data-ga-click="(Logged out) Header, go to pricing, text:pricing">Pricing</a>
+          </li>
+      </ul>
+
+  </div>
+</div>
+
+
+
+    <div id="start-of-content" class="accessibility-aid"></div>
+
+    <div id="js-flash-container">
+</div>
+
+
+    <div role="main" class="main-content">
+        <div itemscope itemtype="http://schema.org/WebPage">
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+
+      <div class="container">
+
+        <div class="clearfix">
+          
+
+<ul class="pagehead-actions">
+
+  <li>
+      <a href="../../../login@return_to=%252Fmbostock%252Fd3.html"
+    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+    aria-label="You must be signed in to watch a repository" rel="nofollow">
+    <span class="octicon octicon-eye"></span>
+    Watch
+  </a>
+  <a class="social-count" href="../watchers.html">
+    1,927
+  </a>
+
+  </li>
+
+  <li>
+      <a href="../../../login@return_to=%252Fmbostock%252Fd3.html"
+    class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+    aria-label="You must be signed in to star a repository" rel="nofollow">
+    <span class="octicon octicon-star"></span>
+    Star
+  </a>
+
+    <a class="social-count js-social-count" href="../stargazers.html">
+      43,171
+    </a>
+
+  </li>
+
+  <li>
+      <a href="../../../login@return_to=%252Fmbostock%252Fd3.html"
+        class="btn btn-sm btn-with-count tooltipped tooltipped-n"
+        aria-label="You must be signed in to fork a repository" rel="nofollow">
+        <span class="octicon octicon-repo-forked"></span>
+        Fork
+      </a>
+
+    <a href="../network.html" class="social-count">
+      11,420
+    </a>
+  </li>
+</ul>
+
+          <h1 itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public ">
+  <span class="mega-octicon octicon-repo"></span>
+  <span class="author"><a href="../../../mbostock.1.html" class="url fn" itemprop="url" rel="author"><span itemprop="title">mbostock</span></a></span><!--
+--><span class="path-divider">/</span><!--
+--><strong><a href="../../d3.1.html" data-pjax="#js-repo-pjax-container">d3</a></strong>
+
+  <span class="page-context-loader">
+    <img alt="" height="16" src="../../../../assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+  </span>
+
+</h1>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline ">
+        <div class="repository-sidebar clearfix">
+          
+<nav class="sunken-menu repo-nav js-repo-nav js-sidenav-container-pjax js-octicon-loaders"
+     role="navigation"
+     data-pjax="#js-repo-pjax-container"
+     data-issue-count-url="/mbostock/d3/issues/counts">
+  <ul class="sunken-menu-group">
+    <li class="tooltipped tooltipped-w" aria-label="Code">
+      <a href="../../d3.1.html" aria-label="Code" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /mbostock/d3">
+        <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+        <img alt="" class="mini-loader" height="16" src="../../../../assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Issues">
+        <a href="../issues.html" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /mbostock/d3/issues">
+          <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+          <span class="js-issue-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="../../../../assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Pull requests">
+      <a href="../pulls.html" aria-label="Pull requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /mbostock/d3/pulls">
+          <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull requests</span>
+          <span class="js-pull-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="../../../../assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Wiki">
+        <a href="Home.html" aria-label="Wiki" aria-selected="true" class="js-selected-navigation-item selected sunken-menu-item" data-hotkey="g w" data-selected-links="repo_wiki /mbostock/d3/wiki">
+          <span class="octicon octicon-book"></span> <span class="full-word">Wiki</span>
+          <img alt="" class="mini-loader" height="16" src="../../../../assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>      </li>
+  </ul>
+  <div class="sunken-menu-separator"></div>
+  <ul class="sunken-menu-group">
+
+    <li class="tooltipped tooltipped-w" aria-label="Pulse">
+      <a href="../pulse.html" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /mbostock/d3/pulse">
+        <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+        <img alt="" class="mini-loader" height="16" src="../../../../assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Graphs">
+      <a href="../graphs.html" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /mbostock/d3/graphs">
+        <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+        <img alt="" class="mini-loader" height="16" src="../../../../assets-cdn.github.com/images/spinners/octocat-spinner-32.gif" width="16" />
+</a>    </li>
+  </ul>
+
+
+</nav>
+
+            <div class="only-with-full-nav">
+                
+<div class="js-clone-url clone-url open"
+  data-protocol-type="http">
+  <h3 class="text-small text-muted"><span class="text-emphasized">HTTPS</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini text-small text-muted input-monospace js-url-field js-zeroclipboard-target"
+           value="https://github.com/mbostock/d3.git" readonly="readonly" aria-label="HTTPS clone URL">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+<div class="js-clone-url clone-url "
+  data-protocol-type="subversion">
+  <h3 class="text-small text-muted"><span class="text-emphasized">Subversion</span> checkout URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini text-small text-muted input-monospace js-url-field js-zeroclipboard-target"
+           value="https://github.com/mbostock/d3" readonly="readonly" aria-label="Subversion checkout URL">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+
+
+<div class="clone-options text-small text-muted">You can clone with
+  <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="https://github.com/users/set_protocol?protocol_selector=http&amp;protocol_type=clone" class="inline-form js-clone-selector-form " data-form-nonce="de7c1889dac7a3fefa813d00224b00133be16e43" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="4Gdj7vVA8oyt5c4a9u0wh9Hfy47EGMQPre0j+vFa0dcg0XaYBtkd/65BpRCpQpRSrv2jGl4ZRBy4SIepAV0FVQ==" /></div><button class="btn-link js-clone-selector" data-protocol="http" type="submit">HTTPS</button></form> or <!-- </textarea> --><!-- '"` --><form accept-charset="UTF-8" action="https://github.com/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone" class="inline-form js-clone-selector-form " data-form-nonce="de7c1889dac7a3fefa813d00224b00133be16e43" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="XeLu9+V6+3LUjvKGDXuPIrMv5NBHmlWy2Tv7BwzD6M7eMglOI98Yu0QVk80ES0Tb5smgMHVaJNkqNLhrND96sA==" /></div><button class="btn-link js-clone-selector" data-protocol="subversion" type="submit">Subversion</button></form>.
+  <a href="../../../../help.github.com/articles/which-remote-url-should-i-use.html" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <span class="octicon octicon-question"></span>
+  </a>
+</div>
+
+              <a href="../archive/master.zip"
+                 class="btn btn-sm sidebar-button"
+                 aria-label="Download the contents of mbostock/d3 as a zip file"
+                 title="Download the contents of mbostock/d3 as a zip file"
+                 rel="nofollow">
+                <span class="octicon octicon-cloud-download"></span>
+                Download ZIP
+              </a>
+            </div>
+        </div>
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container>
+
+          
+
+<div id="wiki-wrapper" class="wiki-wrapper page">
+<div class="gh-header">
+  <div class="gh-header-show">
+    <h1 class="gh-header-title instapaper_title">API Reference</h1>
+      <div class="gh-header-meta">
+        mynkow edited this page <time datetime="2015-10-29T19:12:26Z" is="relative-time">Oct 29, 2015</time>
+        &middot;
+        <a href="API-Reference/_history.html" class="history">
+          215 revisions
+        </a>
+      </div>
+  </div>
+</div>
+<div id="wiki-content">
+  <div class="wrap has-rightbar">
+
+  <div id="wiki-rightbar">
+    <div class="wiki-pages-box readability-sidebar boxed-group flush js-wiki-pages-box " role="navigation">
+      
+<h3 class="js-wiki-toggle-collapse wiki-auxiliary-content">
+  <span class="octicon octicon-triangle-down caret-expanded"></span>
+  <span class="octicon octicon-triangle-right caret-collapsed"></span>
+  Pages <span class="counter">84</span>
+</h3>
+<div class="boxed-group-inner wiki-auxiliary-content wiki-auxiliary-content-no-bg">
+    <div class="filter-bar">
+      <input type="text" id="wiki-pages-filter" class="filter-input js-filterable-field" placeholder="Find a Page‚Ä¶" aria-label="Find a Page‚Ä¶" tabindex="2">
+    </div>
+
+  <ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
+    <li>
+      <strong><a href="Home.html" class="wiki-page-link">Home</a></strong>
+    </li>
+    <li>
+      <strong><a href="3.0.html" class="wiki-page-link">3.0</a></strong>
+    </li>
+    <li>
+      <strong><a href="3.1.html" class="wiki-page-link">3.1</a></strong>
+    </li>
+    <li>
+      <strong><a href="API--‰∏≠Ê%2596%2587Ê%2589%258BÂ%2586%258C.html" class="wiki-page-link">API  ‰∏≠ÊñáÊâãÂÜå</a></strong>
+    </li>
+    <li>
+      <strong><a href="API-Reference.html" class="wiki-page-link">API Reference</a></strong>
+    </li>
+    <li>
+      <strong><a href="API-Reference-(—%2580—%2583—%2581—%2581–∫–æ—%258F–∑—%258B—%2587–Ω–∞—%258F-–≤–µ—%2580—%2581–∏—%258F).html" class="wiki-page-link">API Reference (—Ä—É—Å—Å–∫–æ—è–∑—ã—á–Ω–∞—è –≤–µ—Ä—Å–∏—è)</a></strong>
+    </li>
+    <li>
+      <strong><a href="Api-Â%258F%2582Ë%2580%2583.html" class="wiki-page-link">Api ÂèÇËÄÉ</a></strong>
+    </li>
+    <li>
+      <strong><a href="Arrays.html" class="wiki-page-link">Arrays</a></strong>
+    </li>
+    <li>
+      <strong><a href="Behaviors.html" class="wiki-page-link">Behaviors</a></strong>
+    </li>
+    <li>
+      <strong><a href="Bundle-Layout.html" class="wiki-page-link">Bundle Layout</a></strong>
+    </li>
+    <li>
+      <strong><a href="Chord-Layout.html" class="wiki-page-link">Chord Layout</a></strong>
+    </li>
+    <li>
+      <strong><a href="Cluster-Layout.html" class="wiki-page-link">Cluster Layout</a></strong>
+    </li>
+    <li>
+      <strong><a href="CN-Home.html" class="wiki-page-link">CN Home</a></strong>
+    </li>
+    <li>
+      <strong><a href="Colors.html" class="wiki-page-link">Colors</a></strong>
+    </li>
+    <li>
+      <strong><a href="Core.html" class="wiki-page-link">Core</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="CSV.html" class="wiki-page-link">CSV</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Drag-Behavior.html" class="wiki-page-link">Drag Behavior</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Force-Layout.html" class="wiki-page-link">Force Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Formatting.html" class="wiki-page-link">Formatting</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Gallery.html" class="wiki-page-link">Gallery</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Geo.html" class="wiki-page-link">Geo</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Geo-Paths.html" class="wiki-page-link">Geo Paths</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Geo-Projections.html" class="wiki-page-link">Geo Projections</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Geo-Streams.html" class="wiki-page-link">Geo Streams</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Geometry.html" class="wiki-page-link">Geometry</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Hierarchy-Layout.html" class="wiki-page-link">Hierarchy Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Histogram-Layout.html" class="wiki-page-link">Histogram Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Hull-Geom.html" class="wiki-page-link">Hull Geom</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="ID-Home.html" class="wiki-page-link">ID Home</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Internals.html" class="wiki-page-link">Internals</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="JP-3.0.html" class="wiki-page-link">JP 3.0</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="JP-API-Reference.html" class="wiki-page-link">JP API Reference</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="JP-Home.html" class="wiki-page-link">JP Home</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="JP-Tutorials.html" class="wiki-page-link">JP Tutorials</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Layouts.html" class="wiki-page-link">Layouts</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Learning-paths.html" class="wiki-page-link">Learning paths</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Localization.html" class="wiki-page-link">Localization</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Math.html" class="wiki-page-link">Math</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Namespaces.html" class="wiki-page-link">Namespaces</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Ordinal-Scales.html" class="wiki-page-link">Ordinal Scales</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Pack-Layout.html" class="wiki-page-link">Pack Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Partition-Layout.html" class="wiki-page-link">Partition Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Pie-Layout.html" class="wiki-page-link">Pie Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Plugins.html" class="wiki-page-link">Plugins</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Polygon-Geom.html" class="wiki-page-link">Polygon Geom</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Quadtree-Geom.html" class="wiki-page-link">Quadtree Geom</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Quantitative-Scales.html" class="wiki-page-link">Quantitative Scales</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Release-Notes.html" class="wiki-page-link">Release Notes</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Requests.html" class="wiki-page-link">Requests</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Scales.html" class="wiki-page-link">Scales</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Selection-(russians).html" class="wiki-page-link">Selection (russians)</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Selections.html" class="wiki-page-link">Selections</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Stack-Layout.html" class="wiki-page-link">Stack Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="SVG.html" class="wiki-page-link">SVG</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="SVG-Axes.html" class="wiki-page-link">SVG Axes</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="SVG-Controls.html" class="wiki-page-link">SVG Controls</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="SVG-Events.html" class="wiki-page-link">SVG Events</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="SVG-Shapes.html" class="wiki-page-link">SVG Shapes</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Time.html" class="wiki-page-link">Time</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Time-Formatting.html" class="wiki-page-link">Time Formatting</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Time-Intervals.html" class="wiki-page-link">Time Intervals</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Time-Scales.html" class="wiki-page-link">Time Scales</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Transitions.html" class="wiki-page-link">Transitions</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Tree-Layout.html" class="wiki-page-link">Tree Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Treemap-Layout.html" class="wiki-page-link">Treemap Layout</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Tutorials.html" class="wiki-page-link">Tutorials</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="TW-Home.html" class="wiki-page-link">TW Home</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Upgrading-to-3.0.html" class="wiki-page-link">Upgrading to 3.0</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Voronoi-Geom.html" class="wiki-page-link">Voronoi Geom</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Zoom-Behavior.html" class="wiki-page-link">Zoom Behavior</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="–%2592—%258B–±–æ—%2580–∫–∏.html" class="wiki-page-link">–í—ã–±–æ—Ä–∫–∏</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Â%2588%2586Â%258C∫Â∏%2583Â±%2580.html" class="wiki-page-link">ÂàÜÂå∫Â∏ÉÂ±Ä</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Â±%2582Ê¨°Â∏%2583Â±%2580.html" class="wiki-page-link">Â±ÇÊ¨°Â∏ÉÂ±Ä</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Â∏%2583Â±%2580.html" class="wiki-page-link">Â∏ÉÂ±Ä</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Ê%2595∞Â≠¶.html" class="wiki-page-link">Êï∞Â≠¶</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Ê%2595∞Áª%2584.html" class="wiki-page-link">Êï∞ÁªÑ</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Ê%259C¨Â%259C∞Â%258C%2596.html" class="wiki-page-link">Êú¨Âú∞Âåñ</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Ê†∏Âø%2583Â%2587ΩÊ%2595∞.html" class="wiki-page-link">Ê†∏ÂøÉÂáΩÊï∞</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Ê†ºÂº%258FÂ%258C%2596.html" class="wiki-page-link">Ê†ºÂºèÂåñ</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Á%259F©ÂΩ¢Ê†%2591Â∏%2583Â±%2580.html" class="wiki-page-link">Áü©ÂΩ¢Ê†ëÂ∏ÉÂ±Ä</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="ËØ∑Ê±%2582.html" class="wiki-page-link">ËØ∑Ê±Ç</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="Ëø%2587Ê∏°.html" class="wiki-page-link">ËøáÊ∏°</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="È%2580%2589Ê%258B©Â%2599®.html" class="wiki-page-link">ÈÄâÊã©Âô®</a></strong>
+    </li>
+    <li class="wiki-more-pages">
+      <strong><a href="È%2580%2589Ê%258B©È%259B%2586.html" class="wiki-page-link">ÈÄâÊã©ÈõÜ</a></strong>
+    </li>
+    <li class="wiki-more-pages-link">
+      <a href="API-Reference.html#" class="js-wiki-more-pages-link">
+        Show 69 more pages‚Ä¶
+      </a>
+    </li>
+  </ul>
+</div>
+
+    </div>
+
+
+    <div class="clone-url">
+      <h5>Clone this wiki locally</h5>
+      <div class="input-group js-zeroclipboard-container">
+        <input type="text" class="input-mini text-small text-muted input-monospace js-url-field js-zeroclipboard-target"
+               value="https://github.com/mbostock/d3.wiki.git" readonly="readonly">
+        <span class="input-group-button">
+          <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+        </span>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div id="wiki-body" class="gollum-markdown-content instapaper_body">
+    <div class="markdown-body">
+      <blockquote>
+<p><a href="Home.html">Wiki</a> ‚ñ∏ <strong>API Reference</strong></p>
+</blockquote>
+
+<p>Everything in D3 is scoped under the <code>d3</code> namespace.</p>
+
+<p>D3 uses <a href="http://semver.org">semantic versioning</a>. You can find the current version of D3 as <code>d3.version</code>.</p>
+
+<p>See one of:</p>
+
+<ul>
+<li>
+<a href="API-Reference.html#d3behavior-behaviors">Behaviors</a> - reusable interaction behaviors</li>
+<li>
+<a href="API-Reference.html#d3-core">Core</a> - selections, transitions, data, localization, colors, etc.</li>
+<li>
+<a href="API-Reference.html#d3geo-geography">Geography</a> - project spherical coordinates, latitude &amp; longitude math</li>
+<li>
+<a href="API-Reference.html#d3geom-geometry">Geometry</a> - utilities for 2D geometry, such as Voronoi diagrams and quadtrees</li>
+<li>
+<a href="API-Reference.html#d3layout-layouts">Layouts</a> - derive secondary data for positioning elements</li>
+<li>
+<a href="API-Reference.html#d3scale-scales">Scales</a> - convert between data and visual encodings</li>
+<li>
+<a href="API-Reference.html#d3svg-svg">SVG</a> - utilities for creating Scalable Vector Graphics</li>
+<li>
+<a href="API-Reference.html#d3time-time">Time</a> - parse or format times, compute calendar intervals, etc.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3-core" class="anchor" href="API-Reference.html#d3-core" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Core.html">d3 (core)</a>
+</h2>
+
+<h3>
+<a id="user-content-selections" class="anchor" href="API-Reference.html#selections" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Selections.html">Selections</a>
+</h3>
+
+<ul>
+<li>
+<a href="Selections.html#d3_event">d3.event</a> - access the current user event for interaction.</li>
+<li>
+<a href="Selections.html#d3_mouse">d3.mouse</a> - gets the mouse position relative to a specified container.</li>
+<li>
+<a href="Selections.html#d3_select">d3.select</a> - select an element from the current document.</li>
+<li>
+<a href="Selections.html#d3_selectAll">d3.selectAll</a> - select multiple elements from the current document.</li>
+<li>
+<a href="Selections.html#d3_selection">d3.selection</a> - augment the selection prototype, or test instance types.</li>
+<li>
+<a href="Selections.html#d3_touch">d3.touch</a> - gets a touch position relative to a specified container.</li>
+<li>
+<a href="Selections.html#d3_touches">d3.touches</a> - gets the touch positions relative to a specified container.</li>
+<li>
+<a href="Selections.html#append">selection.append</a> - create and append new elements.</li>
+<li>
+<a href="Selections.html#attr">selection.attr</a> - get or set attribute values.</li>
+<li>
+<a href="Selections.html#call">selection.call</a> - call a function passing in the current selection.</li>
+<li>
+<a href="Selections.html#classed">selection.classed</a> - add or remove CSS classes.</li>
+<li>
+<a href="Selections.html#data">selection.data</a> - get or set data for a group of elements, while computing a relational join.</li>
+<li>
+<a href="Selections.html#datum">selection.datum</a> - get or set data for individual elements, without computing a join.</li>
+<li>
+<a href="Selections.html#each">selection.each</a> - call a function for each selected element.</li>
+<li>
+<a href="Selections.html#empty">selection.empty</a> - returns true if the selection is empty.</li>
+<li>
+<a href="Selections.html#enter">selection.enter</a> - returns placeholders for missing elements.</li>
+<li>
+<a href="Selections.html#exit">selection.exit</a> - returns elements that are no longer needed.</li>
+<li>
+<a href="Selections.html#filter">selection.filter</a> - filter a selection based on data.</li>
+<li>
+<a href="Selections.html#html">selection.html</a> - get or set inner HTML content.</li>
+<li>
+<a href="Selections.html#insert">selection.insert</a> - create and insert new elements before existing elements.</li>
+<li>
+<a href="Selections.html#interrupt">selection.interrupt</a> - immediately interrupt the current transition, if any.</li>
+<li>
+<a href="Selections.html#node">selection.node</a> - returns the first node in the selection.</li>
+<li>
+<a href="Selections.html#on">selection.on</a> - add or remove event listeners for interaction.</li>
+<li>
+<a href="Selections.html#order">selection.order</a> - reorders elements in the document to match the selection.</li>
+<li>
+<a href="Selections.html#property">selection.property</a> - get or set raw properties.</li>
+<li>
+<a href="Selections.html#remove">selection.remove</a> - remove elements from the document.</li>
+<li>
+<a href="Selections.html#select">selection.select</a> - subselect a descendant element for each selected element.</li>
+<li>
+<a href="Selections.html#selectAll">selection.selectAll</a> - subselect multiple descendants for each selected element.</li>
+<li>
+<a href="Selections.html#size">selection.size</a> - returns the number of elements in the selection.</li>
+<li>
+<a href="Selections.html#sort">selection.sort</a> - sort elements in the document based on data.</li>
+<li>
+<a href="Selections.html#style">selection.style</a> - get or set style properties.</li>
+<li>
+<a href="Selections.html#text">selection.text</a> - get or set text content.</li>
+<li>
+<a href="Selections.html#transition">selection.transition</a> - start a transition on the selected elements.</li>
+</ul>
+
+<h3>
+<a id="user-content-transitions" class="anchor" href="API-Reference.html#transitions" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Transitions.html">Transitions</a>
+</h3>
+
+<ul>
+<li>
+<a href="Transitions.html#d3_ease">d3.ease</a> - customize transition timing.</li>
+<li>
+<a href="Transitions.html#d3_timer">d3.timer</a> - start a custom animation timer.</li>
+<li>
+<a href="Transitions.html#d3_interpolate">d3.interpolate</a> - interpolate two values.</li>
+<li>
+<a href="Transitions.html#d3_interpolateArray">d3.interpolateArray</a> - interpolate two arrays of values.</li>
+<li>
+<a href="Transitions.html#d3_interpolateHcl">d3.interpolateHcl</a> - interpolate two HCL colors.</li>
+<li>
+<a href="Transitions.html#d3_interpolateHsl">d3.interpolateHsl</a> - interpolate two HSL colors.</li>
+<li>
+<a href="Transitions.html#d3_interpolateLab">d3.interpolateLab</a> - interpolate two L*a*b* colors.</li>
+<li>
+<a href="Transitions.html#d3_interpolateNumber">d3.interpolateNumber</a> - interpolate two numbers.</li>
+<li>
+<a href="Transitions.html#d3_interpolateObject">d3.interpolateObject</a> - interpolate two arbitrary objects.</li>
+<li>
+<a href="Transitions.html#d3_interpolateRgb">d3.interpolateRgb</a> - interpolate two RGB colors.</li>
+<li>
+<a href="Transitions.html#d3_interpolateRound">d3.interpolateRound</a> - interpolate two integers.</li>
+<li>
+<a href="Transitions.html#d3_interpolateString">d3.interpolateString</a> - interpolate two strings.</li>
+<li>
+<a href="Transitions.html#d3_interpolateTransform">d3.interpolateTransform</a> - interpolate two 2D matrix transforms.</li>
+<li>
+<a href="Transitions.html#d3_interpolateZoom">d3.interpolateZoom</a> - zoom and pan between two points smoothly.</li>
+<li>
+<a href="Transitions.html#d3_interpolators">d3.interpolators</a> - register a custom interpolator.</li>
+<li>
+<a href="Transitions.html#d3_timer_flush">d3.timer.flush</a> - immediately execute any zero-delay timers.</li>
+<li>
+<a href="Transitions.html#d3_transition">d3.transition</a> - start an animated transition.</li>
+<li>
+<a href="Transitions.html#_ease">ease</a> - a parametric easing function.</li>
+<li>
+<a href="Transitions.html#_interpolate">interpolate</a> - a parametric interpolation function.</li>
+<li>
+<a href="Transitions.html#attr">transition.attr</a> - smoothly transition to the new attribute value.</li>
+<li>
+<a href="Transitions.html#attrTween">transition.attrTween</a> - smoothly transition between two attribute values</li>
+<li>
+<a href="Transitions.html#call">transition.call</a> - call a function passing in the current transition.</li>
+<li>
+<a href="Transitions.html#delay">transition.delay</a> - specify per-element delay in milliseconds.</li>
+<li>
+<a href="Transitions.html#duration">transition.duration</a> - specify per-element duration in milliseconds.</li>
+<li>
+<a href="Transitions.html#each">transition.each</a> - add a listener for transition end events.</li>
+<li>
+<a href="Transitions.html#ease">transition.ease</a> - specify transition easing function.</li>
+<li>
+<a href="Transitions.html#empty">transition.empty</a> - returns true if the transition is empty.</li>
+<li>
+<a href="Transitions.html#filter">transition.filter</a> - filter a transition based on data.</li>
+<li>
+<a href="Transitions.html#node">transition.node</a> - returns the first node in the transition.</li>
+<li>
+<a href="Transitions.html#remove">transition.remove</a> - remove selected elements at the end of a transition.</li>
+<li>
+<a href="Transitions.html#select">transition.select</a> - start a transition on a descendant element for each selected element.</li>
+<li>
+<a href="Transitions.html#selectAll">transition.selectAll</a> - start a transition on multiple descendants for each selected element.</li>
+<li>
+<a href="Transitions.html#size">transition.size</a> - returns the number of elements in the selection.</li>
+<li>
+<a href="Transitions.html#style">transition.style</a> - smoothly transition to the new style property value.</li>
+<li>
+<a href="Transitions.html#styleTween">transition.styleTween</a> - smoothly transition between two style property values.</li>
+<li>
+<a href="Transitions.html#text">transition.text</a> - set the text content when the transition starts.</li>
+<li>
+<a href="Transitions.html#transition">transition.transition</a> - when this transition ends, start another one on the same elements.</li>
+<li>
+<a href="Transitions.html#tween">transition.tween</a> - specify a custom tween operator to run as part of the transition.</li>
+</ul>
+
+<h3>
+<a id="user-content-working-with-arrays" class="anchor" href="API-Reference.html#working-with-arrays" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Arrays.html">Working with Arrays</a>
+</h3>
+
+<ul>
+<li>
+<a href="Arrays.html#d3_ascending">d3.ascending</a> - compare two values for sorting.</li>
+<li>
+<a href="Arrays.html#d3_bisectLeft">d3.bisectLeft</a> - search for a value in a sorted array.</li>
+<li>
+<a href="Arrays.html#d3_bisector">d3.bisector</a> - bisect using an accessor or comparator.</li>
+<li>
+<a href="Arrays.html#d3_bisectRight">d3.bisectRight</a> - search for a value in a sorted array.</li>
+<li>
+<a href="Arrays.html#d3_bisect">d3.bisect</a> - search for a value in a sorted array.</li>
+<li>
+<a href="Arrays.html#d3_descending">d3.descending</a> - compare two values for sorting.</li>
+<li>
+<a href="Arrays.html#d3_deviation">d3.deviation</a> - compute the standard deviation of an array of numbers.</li>
+<li>
+<a href="Arrays.html#d3_entries">d3.entries</a> - list the key-value entries of an associative array.</li>
+<li>
+<a href="Arrays.html#d3_extent">d3.extent</a> - find the minimum and maximum value in an array.</li>
+<li>
+<a href="Arrays.html#d3_keys">d3.keys</a> - list the keys of an associative array.</li>
+<li>
+<a href="Arrays.html#d3_map">d3.map</a> - a shim for ES6 maps, since objects are not hashes!</li>
+<li>
+<a href="Arrays.html#map_empty">map.empty</a> - returns false if the map has at least one entry.</li>
+<li>
+<a href="Arrays.html#map_entries">map.entries</a> - returns the map‚Äôs array of entries (key-values objects).</li>
+<li>
+<a href="Arrays.html#map_forEach">map.forEach</a> - calls the specified function for each entry in the map.</li>
+<li>
+<a href="Arrays.html#map_get">map.get</a> - returns the value for the specified key.</li>
+<li>
+<a href="Arrays.html#map_has">map.has</a> - returns true if the map contains the specified key.</li>
+<li>
+<a href="Arrays.html#map_keys">map.keys</a> - returns the map‚Äôs array of keys.</li>
+<li>
+<a href="Arrays.html#map_remove">map.remove</a> - removes the entry for specified key.</li>
+<li>
+<a href="Arrays.html#map_set">map.set</a> - sets the value for the specified key.</li>
+<li>
+<a href="Arrays.html#map_size">map.size</a> - returns the number of entries in the map.</li>
+<li>
+<a href="Arrays.html#map_values">map.values</a> - returns the map‚Äôs array of values.</li>
+<li>
+<a href="Arrays.html#d3_max">d3.max</a> - find the maximum value in an array.</li>
+<li>
+<a href="Arrays.html#d3_mean">d3.mean</a> - compute the arithmetic mean of an array of numbers.</li>
+<li>
+<a href="Arrays.html#d3_median">d3.median</a> - compute the median of an array of numbers (the 0.5-quantile).</li>
+<li>
+<a href="Arrays.html#d3_merge">d3.merge</a> - merge multiple arrays into one array.</li>
+<li>
+<a href="Arrays.html#d3_min">d3.min</a> - find the minimum value in an array.</li>
+<li>
+<a href="Arrays.html#d3_nest">d3.nest</a> - group array elements hierarchically.</li>
+<li>
+<a href="Arrays.html#nest_entries">nest.entries</a> - evaluate the nest operator, returning an array of key-values tuples.</li>
+<li>
+<a href="Arrays.html#nest_key">nest.key</a> - add a level to the nest hierarchy.</li>
+<li>
+<a href="Arrays.html#nest_map">nest.map</a> - evaluate the nest operator, returning an associative array.</li>
+<li>
+<a href="Arrays.html#nest_rollup">nest.rollup</a> - specify a rollup function for leaf values.</li>
+<li>
+<a href="Arrays.html#nest_sortKeys">nest.sortKeys</a> - sort the current nest level by key.</li>
+<li>
+<a href="Arrays.html#nest_sortValues">nest.sortValues</a> - sort the leaf nest level by value.</li>
+<li>
+<a href="Arrays.html#d3_pairs">d3.pairs</a> - returns an array of adjacent pairs of elements.</li>
+<li>
+<a href="Arrays.html#d3_permute">d3.permute</a> - reorder an array of elements according to an array of indexes.</li>
+<li>
+<a href="Arrays.html#d3_quantile">d3.quantile</a> - compute a quantile for a sorted array of numbers.</li>
+<li>
+<a href="Arrays.html#d3_range">d3.range</a> - generate a range of numeric values.</li>
+<li>
+<a href="Arrays.html#d3_set">d3.set</a> - a shim for ES6 sets, since objects are not hashes!</li>
+<li>
+<a href="Arrays.html#set_add">set.add</a> - adds the specified value.</li>
+<li>
+<a href="Arrays.html#set_empty">set.empty</a> - returns true if the set has at least one value.</li>
+<li>
+<a href="Arrays.html#set_forEach">set.forEach</a> - calls the specified function for each value in the set.</li>
+<li>
+<a href="Arrays.html#set_has">set.has</a> - returns true if the set contains the specified value.</li>
+<li>
+<a href="Arrays.html#set_remove">set.remove</a> - removes the specified value.</li>
+<li>
+<a href="Arrays.html#set_size">set.size</a> - returns the number of values in the set.</li>
+<li>
+<a href="Arrays.html#set_values">set.values</a> - returns the set‚Äôs array of values.</li>
+<li>
+<a href="Arrays.html#d3_shuffle">d3.shuffle</a> - randomize the order of an array.</li>
+<li>
+<a href="Arrays.html#d3_sum">d3.sum</a> - compute the sum of an array of numbers.</li>
+<li>
+<a href="Arrays.html#d3_transpose">d3.transpose</a> - transpose an array of arrays.</li>
+<li>
+<a href="Arrays.html#d3_values">d3.values</a> - list the values of an associated array.</li>
+<li>
+<a href="Arrays.html#d3_variance">d3.variance</a> - compute the variance of an array of numbers.</li>
+<li>
+<a href="Arrays.html#d3_zip">d3.zip</a> - transpose a variable number of arrays.</li>
+</ul>
+
+<h3>
+<a id="user-content-math" class="anchor" href="API-Reference.html#math" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Math.html">Math</a>
+</h3>
+
+<ul>
+<li>
+<a href="Math.html#random_bates">d3.random.bates</a> - generate a random number with a Bates distribution.</li>
+<li>
+<a href="Math.html#random_irwinHall">d3.random.irwinHall</a> - generate a random number with an Irwin‚ÄìHall distribution.</li>
+<li>
+<a href="Math.html#random_logNormal">d3.random.logNormal</a> - generate a random number with a log-normal distribution.</li>
+<li>
+<a href="Math.html#random_normal">d3.random.normal</a> - generate a random number with a normal distribution.</li>
+<li>
+<a href="Math.html#d3_transform">d3.transform</a> - compute the standard form of a 2D matrix transform.</li>
+</ul>
+
+<h3>
+<a id="user-content-loading-external-resources" class="anchor" href="API-Reference.html#loading-external-resources" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Requests.html">Loading External Resources</a>
+</h3>
+
+<ul>
+<li>
+<a href="CSV.html">d3.csv</a> - request a comma-separated values (CSV) file.</li>
+<li>
+<a href="Requests.html#d3_html">d3.html</a> - request an HTML document fragment.</li>
+<li>
+<a href="Requests.html#d3_json">d3.json</a> - request a JSON blob.</li>
+<li>
+<a href="Requests.html#d3_text">d3.text</a> - request a text file.</li>
+<li>
+<a href="CSV.html#tsv">d3.tsv</a> - request a tab-separated values (TSV) file.</li>
+<li>
+<a href="Requests.html#d3_xhr">d3.xhr</a> - request a resource using XMLHttpRequest.</li>
+<li>
+<a href="Requests.html#d3_xml">d3.xml</a> - request an XML document fragment.</li>
+<li>
+<a href="Requests.html#abort">xhr.abort</a> - abort an outstanding request.</li>
+<li>
+<a href="Requests.html#get">xhr.get</a> - issue a GET request.</li>
+<li>
+<a href="Requests.html#header">xhr.header</a> - set a request header.</li>
+<li>
+<a href="Requests.html#mimeType">xhr.mimeType</a> - set the Accept request header and override the response MIME type.</li>
+<li>
+<a href="Requests.html#on">xhr.on</a> - add an event listener for "progress", "load" or "error" events.</li>
+<li>
+<a href="Requests.html#post">xhr.post</a> - issue a POST request.</li>
+<li>
+<a href="Requests.html#response">xhr.response</a> - set a response mapping function.</li>
+<li>
+<a href="Requests.html#send">xhr.send</a> - issue a request with the specified method and data.</li>
+</ul>
+
+<h3>
+<a id="user-content-string-formatting" class="anchor" href="API-Reference.html#string-formatting" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Formatting.html">String Formatting</a>
+</h3>
+
+<ul>
+<li>
+<a href="Formatting.html#d3_format">d3.format</a> - format a number as a string.</li>
+<li>
+<a href="Formatting.html#d3_formatPrefix">d3.formatPrefix</a> - returns the <a href="http://en.wikipedia.org/wiki/Metric_prefix">SI prefix</a> for the specified value and precision.</li>
+<li>
+<a href="Formatting.html#d3_requote">d3.requote</a> - quote a string for use in a regular expression.</li>
+<li>
+<a href="Formatting.html#d3_round">d3.round</a> - rounds a value to some digits after the decimal point.</li>
+</ul>
+
+<h3>
+<a id="user-content-csv-formatting-d3csv" class="anchor" href="API-Reference.html#csv-formatting-d3csv" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="CSV.html">CSV Formatting (d3.csv)</a>
+</h3>
+
+<ul>
+<li>
+<a href="CSV.html#formatRows">d3.csv.formatRows</a> - format an array of tuples into a CSV string.</li>
+<li>
+<a href="CSV.html#format">d3.csv.format</a> - format an array of objects into a CSV string.</li>
+<li>
+<a href="CSV.html#parseRows">d3.csv.parseRows</a> - parse a CSV string into tuples, ignoring the header row.</li>
+<li>
+<a href="CSV.html#parse">d3.csv.parse</a> - parse a CSV string into objects using the header row.</li>
+<li>
+<a href="CSV.html#csv">d3.csv</a> - request a comma-separated values (CSV) file.</li>
+<li>
+<a href="CSV.html#dsv">d3.dsv</a> - create a parser/formatter for the specified delimiter and mime type.</li>
+<li>
+<a href="CSV.html#tsv_formatRows">d3.tsv.formatRows</a> - format an array of tuples into a TSV string.</li>
+<li>
+<a href="CSV.html#tsv_format">d3.tsv.format</a> - format an array of objects into a TSV string.</li>
+<li>
+<a href="CSV.html#tsv_parseRows">d3.tsv.parseRows</a> - parse a TSV string into tuples, ignoring the header row.</li>
+<li>
+<a href="CSV.html#tsv_parse">d3.tsv.parse</a> - parse a TSV string into objects using the header row.</li>
+<li>
+<a href="CSV.html#tsv">d3.tsv</a> - request a tab-separated values (TSV) file.</li>
+</ul>
+
+<h3>
+<a id="user-content-localization" class="anchor" href="API-Reference.html#localization" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Localization.html">Localization</a>
+</h3>
+
+<ul>
+<li>
+<a href="Localization.html#d3_locale">d3.locale</a> - create a new locale using the specified strings.</li>
+<li>
+<a href="Localization.html#locale_numberFormat">locale.numberFormat</a> - create a new number formatter.</li>
+<li>
+<a href="Localization.html#locale_timeFormat">locale.timeFormat</a> - create a new time formatter / parser.</li>
+</ul>
+
+<h3>
+<a id="user-content-colors" class="anchor" href="API-Reference.html#colors" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Colors.html">Colors</a>
+</h3>
+
+<ul>
+<li>
+<a href="Colors.html#d3_hcl">d3.hcl</a> - specify a color in HCL space.</li>
+<li>
+<a href="Colors.html#d3_hsl">d3.hsl</a> - specify a color in HSL space.</li>
+<li>
+<a href="Colors.html#d3_lab">d3.lab</a> - specify a color in L*a*b* space.</li>
+<li>
+<a href="Colors.html#d3_rgb">d3.rgb</a> - specify a color in RGB space.</li>
+<li>
+<a href="Colors.html#hcl_brighter">hcl.brighter</a> - increase lightness by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#hcl_darker">hcl.darker</a> - decrease lightness by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#hcl_rgb">hcl.rgb</a> - convert from HCL to RGB.</li>
+<li>
+<a href="Colors.html#hcl_toString">hcl.toString</a> - convert an HCL color to a string.</li>
+<li>
+<a href="Colors.html#hsl_brighter">hsl.brighter</a> - increase lightness by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#hsl_darker">hsl.darker</a> - decrease lightness by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#hsl_rgb">hsl.rgb</a> - convert from HSL to RGB.</li>
+<li>
+<a href="Colors.html#hsl_toString">hsl.toString</a> - convert an HSL color to a string.</li>
+<li>
+<a href="Colors.html#lab_brighter">lab.brighter</a> - increase lightness by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#lab_darker">lab.darker</a> - decrease lightness by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#lab_rgb">lab.rgb</a> - convert from L*a*b* to RGB.</li>
+<li>
+<a href="Colors.html#lab_toString">lab.toString</a> - convert a L*a*b* color to a string.</li>
+<li>
+<a href="Colors.html#rgb_brighter">rgb.brighter</a> - increase RGB channels by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#rgb_darker">rgb.darker</a> - decrease RGB channels by some exponential factor (gamma).</li>
+<li>
+<a href="Colors.html#rgb_hsl">rgb.hsl</a> - convert from RGB to HSL.</li>
+<li>
+<a href="Colors.html#rgb_toString">rgb.toString</a> - convert an RGB color to a string.</li>
+</ul>
+
+<h3>
+<a id="user-content-namespaces" class="anchor" href="API-Reference.html#namespaces" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Namespaces.html">Namespaces</a>
+</h3>
+
+<ul>
+<li>
+<a href="Namespaces.html#prefix">d3.ns.prefix</a> - access or extend known XML namespaces.</li>
+<li>
+<a href="Namespaces.html#qualify">d3.ns.qualify</a> - qualify a prefixed name, such as "xlink:href".</li>
+</ul>
+
+<h3>
+<a id="user-content-internals" class="anchor" href="API-Reference.html#internals" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Internals.html">Internals</a>
+</h3>
+
+<ul>
+<li>
+<a href="Internals.html#d3_dispatch">d3.dispatch</a> - create a custom event dispatcher.</li>
+<li>
+<a href="Internals.html#functor">d3.functor</a> - create a function that returns a constant.</li>
+<li>
+<a href="Internals.html#rebind">d3.rebind</a> - rebind an inherited getter/setter method to a subclass.</li>
+<li>
+<a href="Internals.html#dispatch_on">dispatch.on</a> - register or unregister an event listener.</li>
+<li>
+<a href="Internals.html#_dispatch">dispatch.type</a> - dispatch an event to registered listeners.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3scale-scales" class="anchor" href="API-Reference.html#d3scale-scales" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Scales.html">d3.scale (Scales)</a>
+</h2>
+
+<h3>
+<a id="user-content-quantitative" class="anchor" href="API-Reference.html#quantitative" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Quantitative-Scales.html#quantitative">Quantitative</a>
+</h3>
+
+<ul>
+<li>
+<a href="Quantitative-Scales.html#identity">d3.scale.identity</a> - construct a linear identity scale.</li>
+<li>
+<a href="Quantitative-Scales.html#linear">d3.scale.linear</a> - construct a linear quantitative scale.</li>
+<li>
+<a href="Quantitative-Scales.html#log">d3.scale.log</a> - construct a quantitative scale with an logarithmic transform.</li>
+<li>
+<a href="Quantitative-Scales.html#pow">d3.scale.pow</a> - construct a quantitative scale with an exponential transform.</li>
+<li>
+<a href="Quantitative-Scales.html#quantile">d3.scale.quantile</a> - construct a quantitative scale mapping to quantiles.</li>
+<li>
+<a href="Quantitative-Scales.html#quantize">d3.scale.quantize</a> - construct a linear quantitative scale with a discrete output range.</li>
+<li>
+<a href="Quantitative-Scales.html#sqrt">d3.scale.sqrt</a> - construct a quantitative scale with a square root transform.</li>
+<li>
+<a href="Quantitative-Scales.html#threshold">d3.scale.threshold</a> - construct a threshold scale with a discrete output range.</li>
+<li>
+<a href="Quantitative-Scales.html#identity_copy">identity.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Quantitative-Scales.html#identity_domain">identity.domain</a> - get or set the scale's domain and range.</li>
+<li>
+<a href="Quantitative-Scales.html#_identity">identity.invert</a> - equivalent to identity; the identity function.</li>
+<li>
+<a href="Quantitative-Scales.html#identity_domain">identity.range</a> - equivalent to identity.domain.</li>
+<li>
+<a href="Quantitative-Scales.html#identity_tickFormat">identity.tickFormat</a> - get a formatter for displaying tick values.</li>
+<li>
+<a href="Quantitative-Scales.html#identity_ticks">identity.ticks</a> - get representative values from the domain.</li>
+<li>
+<a href="Quantitative-Scales.html#_identity">identity</a> - the identity function.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_clamp">linear.clamp</a> - enable or disable clamping of the output range.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_copy">linear.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_domain">linear.domain</a> - get or set the scale's input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_interpolate">linear.interpolate</a> - get or set the scale's output interpolator.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_invert">linear.invert</a> - get the domain value corresponding to a given range value.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_nice">linear.nice</a> - extend the scale domain to nice round numbers.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_rangeRound">linear.rangeRound</a> - set the scale's output range, and enable rounding.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_range">linear.range</a> - get or set the scale's output range.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_tickFormat">linear.tickFormat</a> - get a formatter for displaying tick values.</li>
+<li>
+<a href="Quantitative-Scales.html#linear_ticks">linear.ticks</a> - get representative values from the input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#_linear">linear</a> - get the range value corresponding to a given domain value.</li>
+<li>
+<a href="Quantitative-Scales.html#log_clamp">log.clamp</a> - enable or disable clamping of the output range.</li>
+<li>
+<a href="Quantitative-Scales.html#log_copy">log.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Quantitative-Scales.html#log_domain">log.domain</a> - get or set the scale's input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#log_interpolate">log.interpolate</a> - get or set the scale's output interpolator.</li>
+<li>
+<a href="Quantitative-Scales.html#log_invert">log.invert</a> - get the domain value corresponding to a given range value.</li>
+<li>
+<a href="Quantitative-Scales.html#log_nice">log.nice</a> - extend the scale domain to nice powers of ten.</li>
+<li>
+<a href="Quantitative-Scales.html#log_rangeRound">log.rangeRound</a> - set the scale's output range, and enable rounding.</li>
+<li>
+<a href="Quantitative-Scales.html#log_range">log.range</a> - get or set the scale's output range.</li>
+<li>
+<a href="Quantitative-Scales.html#log_tickFormat">log.tickFormat</a> - get a formatter for displaying tick values.</li>
+<li>
+<a href="Quantitative-Scales.html#log_ticks">log.ticks</a> - get representative values from the input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#_log">log</a> - get the range value corresponding to a given domain value.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_clamp">pow.clamp</a> - enable or disable clamping of the output range.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_copy">pow.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_domain">pow.domain</a> - get or set the scale's input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_exponent">pow.exponent</a> - get or set the exponent power.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_interpolate">pow.interpolate</a> - get or set the scale's output interpolator.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_invert">pow.invert</a> - get the domain value corresponding to a given range value.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_nice">pow.nice</a> - extend the scale domain to nice round numbers.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_rangeRound">pow.rangeRound</a> - set the scale's output range, and enable rounding.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_range">pow.range</a> - get or set the scale's output range.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_tickFormat">pow.tickFormat</a> - get a formatter for displaying tick values.</li>
+<li>
+<a href="Quantitative-Scales.html#pow_ticks">pow.ticks</a> - get representative values from the input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#_pow">pow</a> - get the range value corresponding to a given domain value.</li>
+<li>
+<a href="Quantitative-Scales.html#quantile_copy">quantile.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Quantitative-Scales.html#quantile_domain">quantile.domain</a> - get or set the scale's input domain (as discrete values).</li>
+<li>
+<a href="Quantitative-Scales.html#quantile_invertExtent">quantile.invertExtent</a> - get the domain values for the specified range value.</li>
+<li>
+<a href="Quantitative-Scales.html#quantile_quantiles">quantile.quantiles</a> - get the scale's quantile bin thresholds.</li>
+<li>
+<a href="Quantitative-Scales.html#quantile_range">quantile.range</a> - get or set the scale's output range (as discrete values).</li>
+<li>
+<a href="Quantitative-Scales.html#_quantile">quantile</a> - get the range value corresponding to a given domain value.</li>
+<li>
+<a href="Quantitative-Scales.html#quantize_copy">quantize.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Quantitative-Scales.html#quantize_domain">quantize.domain</a> - get or set the scale's input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#quantize_invertExtent">quantize.invertExtent</a> - get the domain values for the specified range value.</li>
+<li>
+<a href="Quantitative-Scales.html#quantize_range">quantize.range</a> - get or set the scale's output range (as discrete values).</li>
+<li>
+<a href="Quantitative-Scales.html#_quantize">quantize</a> - get the range value corresponding to a given domain value.</li>
+<li>
+<a href="Quantitative-Scales.html#threshold_copy">threshold.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Quantitative-Scales.html#threshold_domain">threshold.domain</a> - get or set the scale's input domain.</li>
+<li>
+<a href="Quantitative-Scales.html#threshold_invertExtent">threshold.invertExtent</a> - get the domain values for the specified range value.</li>
+<li>
+<a href="Quantitative-Scales.html#threshold_range">threshold.range</a> - get or set the scale's output range (as discrete values).</li>
+<li>
+<a href="Quantitative-Scales.html#_threshold">threshold</a> - get the range value corresponding to a given domain value.</li>
+</ul>
+
+<h3>
+<a id="user-content-ordinal" class="anchor" href="API-Reference.html#ordinal" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Ordinal-Scales.html#ordinal">Ordinal</a>
+</h3>
+
+<ul>
+<li>
+<a href="Ordinal-Scales.html#category10">d3.scale.category10</a> - construct an ordinal scale with ten categorical colors.</li>
+<li>
+<a href="Ordinal-Scales.html#category20b">d3.scale.category20b</a> - construct an ordinal scale with twenty categorical colors.</li>
+<li>
+<a href="Ordinal-Scales.html#category20c">d3.scale.category20c</a> - construct an ordinal scale with twenty categorical colors.</li>
+<li>
+<a href="Ordinal-Scales.html#category20">d3.scale.category20</a> - construct an ordinal scale with twenty categorical colors.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal">d3.scale.ordinal</a> - construct an ordinal scale.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_copy">ordinal.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_domain">ordinal.domain</a> - get or set the scale's input domain.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_rangeBands">ordinal.rangeBands</a> - divide a continuous output range for discrete bands.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_rangeBand">ordinal.rangeBand</a> - get the discrete range band width.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_rangeExtent">ordinal.rangeExtent</a> - get the minimum and maximum values of the output range.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_rangePoints">ordinal.rangePoints</a> - divide a continuous output range for discrete points.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_rangeRoundBands">ordinal.rangeRoundBands</a> - divide a continuous output range for discrete bands.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_rangeRoundPoints">ordinal.rangeRoundPoints</a> - divide a continuous output range for discrete points.</li>
+<li>
+<a href="Ordinal-Scales.html#ordinal_range">ordinal.range</a> - get or set the scale's output range.</li>
+<li>
+<a href="Ordinal-Scales.html#_ordinal">ordinal</a> - get the range value corresponding to a given domain value.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3svg-svg" class="anchor" href="API-Reference.html#d3svg-svg" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="SVG.html">d3.svg (SVG)</a>
+</h2>
+
+<h3>
+<a id="user-content-shapes" class="anchor" href="API-Reference.html#shapes" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="SVG-Shapes.html">Shapes</a>
+</h3>
+
+<ul>
+<li>
+<a href="SVG-Shapes.html#arc_centroid">arc.centroid</a> - compute the arc centroid.</li>
+<li>
+<a href="SVG-Shapes.html#arc_cornerRadius">arc.cornerRadius</a> - get or set the corner radius accessor.</li>
+<li>
+<a href="SVG-Shapes.html#arc_endAngle">arc.endAngle</a> - get or set the end angle accessor.</li>
+<li>
+<a href="SVG-Shapes.html#arc_innerRadius">arc.innerRadius</a> - get or set the inner radius accessor.</li>
+<li>
+<a href="SVG-Shapes.html#arc_outerRadius">arc.outerRadius</a> - get or set the outer radius accessor.</li>
+<li>
+<a href="SVG-Shapes.html#arc_padAngle">arc.padAngle</a> - get or set the pad angle accessor.</li>
+<li>
+<a href="SVG-Shapes.html#arc_padRadius">arc.padRadius</a> - get or set the pad radius accessor.</li>
+<li>
+<a href="SVG-Shapes.html#arc_startAngle">arc.startAngle</a> - get or set the start angle accessor.</li>
+<li>
+<a href="SVG-Shapes.html#_arc">arc</a> - generate a solid arc, as in a pie or donut chart.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial_angle">area.angle</a> - get or set the <em>angle</em> accessors.</li>
+<li>
+<a href="SVG-Shapes.html#area_defined">area.defined</a> - control whether the area is defined at a given point.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial_defined">area.defined</a> - control whether the area is defined at a given point.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial_endAngle">area.endAngle</a> - get or set the <em>angle</em> (topline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial_innerRadius">area.innerRadius</a> - get or set the inner <em>radius</em> (baseline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_interpolate">area.interpolate</a> - get or set the interpolation mode.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial_outerRadius">area.outerRadius</a> - get or set the outer <em>radius</em> (topline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial_radius">area.radius</a> - get or set the <em>radius</em> accessors.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial_startAngle">area.startAngle</a> - get or set the <em>angle</em> (baseline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_tension">area.tension</a> - get or set the cardinal spline tension.</li>
+<li>
+<a href="SVG-Shapes.html#area_x0">area.x0</a> - get or set the <em>x0</em>-coordinate (baseline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_x1">area.x1</a> - get or set the <em>x1</em>-coordinate (topline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_x">area.x</a> - get or set the <em>x</em>-coordinate accessors.</li>
+<li>
+<a href="SVG-Shapes.html#area_y0">area.y0</a> - get or set the <em>y0</em>-coordinate (baseline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_y1">area.y1</a> - get or set the <em>y1</em>-coordinate (topline) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#area_y">area.y</a> - get or set the <em>y</em>-coordinate accessors.</li>
+<li>
+<a href="SVG-Shapes.html#_area">area</a> - generate a piecewise linear area, as in an area chart.</li>
+<li>
+<a href="SVG-Shapes.html#_area_radial">area</a> - generate a piecewise linear area, as in a polar area chart.</li>
+<li>
+<a href="SVG-Shapes.html#chord_endAngle">chord.endAngle</a> - get or set the arc end angle accessor.</li>
+<li>
+<a href="SVG-Shapes.html#chord_radius">chord.radius</a> - get or set the arc radius accessor.</li>
+<li>
+<a href="SVG-Shapes.html#chord_source">chord.source</a> - get or set the source arc accessor.</li>
+<li>
+<a href="SVG-Shapes.html#chord_startAngle">chord.startAngle</a> - get or set the arc start angle accessor.</li>
+<li>
+<a href="SVG-Shapes.html#chord_target">chord.target</a> - get or set the target arc accessor.</li>
+<li>
+<a href="SVG-Shapes.html#_chord">chord</a> - generate a quadratic B√©zier connecting two arcs, as in a chord diagram.</li>
+<li>
+<a href="SVG-Shapes.html#arc">d3.svg.arc</a> - create a new arc generator.</li>
+<li>
+<a href="SVG-Shapes.html#area_radial">d3.svg.area.radial</a> - create a new area generator.</li>
+<li>
+<a href="SVG-Shapes.html#area">d3.svg.area</a> - create a new area generator.</li>
+<li>
+<a href="SVG-Shapes.html#chord">d3.svg.chord</a> - create a new chord generator.</li>
+<li>
+<a href="SVG-Shapes.html#diagonal_radial">d3.svg.diagonal.radial</a> - create a new diagonal generator.</li>
+<li>
+<a href="SVG-Shapes.html#diagonal">d3.svg.diagonal</a> - create a new diagonal generator.</li>
+<li>
+<a href="SVG-Shapes.html#line_radial">d3.svg.line.radial</a> - create a new radial line generator.</li>
+<li>
+<a href="SVG-Shapes.html#line">d3.svg.line</a> - create a new line generator.</li>
+<li>
+<a href="SVG-Shapes.html#symbolTypes">d3.svg.symbolTypes</a> - the array of supported symbol types.</li>
+<li>
+<a href="SVG-Shapes.html#symbol">d3.svg.symbol</a> - create a new symbol generator.</li>
+<li>
+<a href="SVG-Shapes.html#diagonal_projection">diagonal.projection</a> - get or set an optional point transform.</li>
+<li>
+<a href="SVG-Shapes.html#diagonal_source">diagonal.source</a> - get or set the source point accessor.</li>
+<li>
+<a href="SVG-Shapes.html#diagonal_target">diagonal.target</a> - get or set the target point accessor.</li>
+<li>
+<a href="SVG-Shapes.html#_diagonal">diagonal</a> - generate a two-dimensional B√©zier connector, as in a node-link diagram.</li>
+<li>
+<a href="SVG-Shapes.html#_diagonal_radial">diagonal</a> - generate a two-dimensional B√©zier connector, as in a node-link diagram.</li>
+<li>
+<a href="SVG-Shapes.html#line_radial_angle">line.angle</a> - get or set the <em>angle</em> accessor.</li>
+<li>
+<a href="SVG-Shapes.html#line_defined">line.defined</a> - control whether the line is defined at a given point.</li>
+<li>
+<a href="SVG-Shapes.html#line_radial_defined">line.defined</a> - control whether the line is defined at a given point.</li>
+<li>
+<a href="SVG-Shapes.html#line_interpolate">line.interpolate</a> - get or set the interpolation mode.</li>
+<li>
+<a href="SVG-Shapes.html#line_radial_interpolate">line.interpolate</a> - get or set the interpolation mode.</li>
+<li>
+<a href="SVG-Shapes.html#line_radial_radius">line.radius</a> - get or set the <em>radius</em> accessor.</li>
+<li>
+<a href="SVG-Shapes.html#line_radial_tension">line.tension</a> - get or set the cardinal spline tension.</li>
+<li>
+<a href="SVG-Shapes.html#line_tension">line.tension</a> - get or set the cardinal spline tension.</li>
+<li>
+<a href="SVG-Shapes.html#line_x">line.x</a> - get or set the <em>x</em>-coordinate accessor.</li>
+<li>
+<a href="SVG-Shapes.html#line_y">line.y</a> - get or set the <em>y</em>-coordinate accessor.</li>
+<li>
+<a href="SVG-Shapes.html#_line">line</a> - generate a piecewise linear curve, as in a line chart.</li>
+<li>
+<a href="SVG-Shapes.html#_line_radial">line</a> - generate a piecewise linear curve, as in a polar line chart.</li>
+<li>
+<a href="SVG-Shapes.html#symbol_size">symbol.size</a> - get or set the symbol size (in square pixels) accessor.</li>
+<li>
+<a href="SVG-Shapes.html#symbol_type">symbol.type</a> - get or set the symbol type accessor.</li>
+<li>
+<a href="SVG-Shapes.html#_symbol">symbol</a> - generate categorical symbols, as in a scatterplot.</li>
+</ul>
+
+<h3>
+<a id="user-content-axes" class="anchor" href="API-Reference.html#axes" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="SVG-Axes.html">Axes</a>
+</h3>
+
+<ul>
+<li>
+<a href="SVG-Axes.html#innerTickSize">axis.innerTickSize</a> - specify the size of inner ticks.</li>
+<li>
+<a href="SVG-Axes.html#orient">axis.orient</a> - get or set the axis orientation.</li>
+<li>
+<a href="SVG-Axes.html#outerTickSize">axis.outerTickSize</a> - specify the size of outer ticks.</li>
+<li>
+<a href="SVG-Axes.html#scale">axis.scale</a> - get or set the axis scale.</li>
+<li>
+<a href="SVG-Axes.html#tickFormat">axis.tickFormat</a> - override the tick formatting for labels.</li>
+<li>
+<a href="SVG-Axes.html#tickPadding">axis.tickPadding</a> - specify padding between ticks and tick labels.</li>
+<li>
+<a href="SVG-Axes.html#tickSize">axis.tickSize</a> - specify the size of major, minor and end ticks.</li>
+<li>
+<a href="SVG-Axes.html#ticks">axis.ticks</a> - control how ticks are generated for the axis.</li>
+<li>
+<a href="SVG-Axes.html#tickValues">axis.tickValues</a> - specify tick values explicitly.</li>
+<li>
+<a href="SVG-Axes.html#_axis">axis</a> - creates or updates an axis for the given selection or transition.</li>
+<li>
+<a href="SVG-Axes.html#axis">d3.svg.axis</a> - create a new axis generator.</li>
+</ul>
+
+<h3>
+<a id="user-content-controls" class="anchor" href="API-Reference.html#controls" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="SVG-Controls.html">Controls</a>
+</h3>
+
+<ul>
+<li>
+<a href="SVG-Controls.html#brush_clear">brush.clear</a> - reset the brush extent.</li>
+<li>
+<a href="SVG-Controls.html#brush_empty">brush.empty</a> - whether or not the brush extent is empty.</li>
+<li>
+<a href="SVG-Controls.html#brush_event">brush.event</a> - dispatch brush events after setting the extent.</li>
+<li>
+<a href="SVG-Controls.html#brush_extent">brush.extent</a> - the brush‚Äôs extent in zero, one or two dimensions.</li>
+<li>
+<a href="SVG-Controls.html#brush_on">brush.on</a> - listeners for when the brush is moved.</li>
+<li>
+<a href="SVG-Controls.html#brush_x">brush.x</a> - the brush‚Äôs <i>x</i>-scale, for horizontal brushing.</li>
+<li>
+<a href="SVG-Controls.html#brush_y">brush.y</a> - the brush‚Äôs <i>y</i>-scale, for vertical brushing.</li>
+<li>
+<a href="SVG-Controls.html#_brush">brush</a> - apply a brush to the given selection or transition.</li>
+<li>
+<a href="SVG-Controls.html#brush">d3.svg.brush</a> - click and drag to select one- or two-dimensional regions.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3time-time" class="anchor" href="API-Reference.html#d3time-time" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Time.html">d3.time (Time)</a>
+</h2>
+
+<h3>
+<a id="user-content-time-formatting" class="anchor" href="API-Reference.html#time-formatting" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Time-Formatting.html">Time Formatting</a>
+</h3>
+
+<ul>
+<li>
+<a href="Time-Formatting.html#format_iso">d3.time.format.iso</a> - the ISO 8601 UTC time formatter.</li>
+<li>
+<a href="Time-Formatting.html#format_multi">d3.time.format.multi</a> - create a new local multi-resolution time formatter.</li>
+<li>
+<a href="Time-Formatting.html#format_utc">d3.time.format.utc</a> - create a new UTC time formatter for a given specifier.</li>
+<li>
+<a href="Time-Formatting.html#format">d3.time.format</a> - create a new local time formatter for a given specifier.</li>
+<li>
+<a href="Time-Formatting.html#parse">format.parse</a> - parse a string into a date.</li>
+<li>
+<a href="Time-Formatting.html#_format">format</a> - format a date into a string.</li>
+</ul>
+
+<h3>
+<a id="user-content-time-scales" class="anchor" href="API-Reference.html#time-scales" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Time-Scales.html">Time Scales</a>
+</h3>
+
+<ul>
+<li>
+<a href="Time-Scales.html#scale">d3.time.scale</a> - construct a linear time scale.</li>
+<li>
+<a href="Time-Scales.html#clamp">scale.clamp</a> - enable or disable clamping of the output range.</li>
+<li>
+<a href="Time-Scales.html#copy">scale.copy</a> - create a new scale from an existing scale.</li>
+<li>
+<a href="Time-Scales.html#domain">scale.domain</a> - get or set the scale's input domain.</li>
+<li>
+<a href="Time-Scales.html#interpolate">scale.interpolate</a> - get or set the scale's output interpolator.</li>
+<li>
+<a href="Time-Scales.html#invert">scale.invert</a> - get the domain value corresponding to a given range value.</li>
+<li>
+<a href="Time-Scales.html#nice">scale.nice</a> - extend the scale domain to nice round numbers.</li>
+<li>
+<a href="Time-Scales.html#rangeRound">scale.rangeRound</a> - set the scale's output range, and enable rounding.</li>
+<li>
+<a href="Time-Scales.html#range">scale.range</a> - get or set the scale's output range.</li>
+<li>
+<a href="Time-Scales.html#tickFormat">scale.tickFormat</a> - get a formatter for displaying tick values.</li>
+<li>
+<a href="Time-Scales.html#ticks">scale.ticks</a> - get representative values from the input domain.</li>
+<li>
+<a href="Time-Scales.html#_scale">scale</a> - get the range value corresponding to a given domain value.</li>
+</ul>
+
+<h3>
+<a id="user-content-time-intervals" class="anchor" href="API-Reference.html#time-intervals" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Time-Intervals.html">Time Intervals</a>
+</h3>
+
+<ul>
+<li>
+<a href="Time-Intervals.html#dayOfYear">d3.time.dayOfYear</a> - computes the day number.</li>
+<li>
+<a href="Time-Intervals.html#day">d3.time.days</a> - alias for day.range.</li>
+<li>
+<a href="Time-Intervals.html#day">d3.time.day</a> - every day (12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#fridayOfYear">d3.time.fridayOfYear</a> - computes the friday-based week number.</li>
+<li>
+<a href="Time-Intervals.html#fridays">d3.time.fridays</a> - alias for friday.range.</li>
+<li>
+<a href="Time-Intervals.html#friday">d3.time.friday</a> - every Friday (e.g., February 5, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#hours">d3.time.hours</a> - alias for hour.range.</li>
+<li>
+<a href="Time-Intervals.html#hour">d3.time.hour</a> - every hour (e.g., 1:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#interval">d3.time.interval</a> - a time interval in local time.</li>
+<li>
+<a href="Time-Intervals.html#minutes">d3.time.minutes</a> - alias for minute.range.</li>
+<li>
+<a href="Time-Intervals.html#minute">d3.time.minute</a> - every minute (e.g., 1:02 AM).</li>
+<li>
+<a href="Time-Intervals.html#mondayOfYear">d3.time.mondayOfYear</a> - computes the monday-based week number.</li>
+<li>
+<a href="Time-Intervals.html#mondays">d3.time.mondays</a> - alias for monday.range.</li>
+<li>
+<a href="Time-Intervals.html#monday">d3.time.monday</a> - every Monday (e.g., February 5, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#months">d3.time.months</a> - alias for month.range.</li>
+<li>
+<a href="Time-Intervals.html#month">d3.time.month</a> - every month (e.g., February 1, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#saturdayOfYear">d3.time.saturdayOfYear</a> - computes the saturday-based week number.</li>
+<li>
+<a href="Time-Intervals.html#saturdays">d3.time.saturdays</a> - alias for saturday.range.</li>
+<li>
+<a href="Time-Intervals.html#saturday">d3.time.saturday</a> - every Saturday (e.g., February 5, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#seconds">d3.time.seconds</a> - alias for second.range.</li>
+<li>
+<a href="Time-Intervals.html#second">d3.time.second</a> - every second (e.g., 1:02:03 AM).</li>
+<li>
+<a href="Time-Intervals.html#sundayOfYear">d3.time.sundayOfYear</a> - computes the sunday-based week number.</li>
+<li>
+<a href="Time-Intervals.html#sundays">d3.time.sundays</a> - alias for sunday.range.</li>
+<li>
+<a href="Time-Intervals.html#sunday">d3.time.sunday</a> - every Sunday (e.g., February 5, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#thursdayOfYear">d3.time.thursdayOfYear</a> - computes the thursday-based week number.</li>
+<li>
+<a href="Time-Intervals.html#thursdays">d3.time.thursdays</a> - alias for thursday.range.</li>
+<li>
+<a href="Time-Intervals.html#thursday">d3.time.thursday</a> - every Thursday (e.g., February 5, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#tuesdayOfYear">d3.time.tuesdayOfYear</a> - computes the tuesday-based week number.</li>
+<li>
+<a href="Time-Intervals.html#tuesdays">d3.time.tuesdays</a> - alias for tuesday.range.</li>
+<li>
+<a href="Time-Intervals.html#tuesday">d3.time.tuesday</a> - every Tuesday (e.g., February 5, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#tuesdayOfYear">d3.time.wednesdayOfYear</a> - computes the wednesday-based week number.</li>
+<li>
+<a href="Time-Intervals.html#wednesdays">d3.time.wednesdays</a> - alias for wednesday.range.</li>
+<li>
+<a href="Time-Intervals.html#wednesday">d3.time.wednesday</a> - every Wednesday (e.g., February 5, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#weekOfYear">d3.time.weekOfYear</a> - alias for sundayOfYear.</li>
+<li>
+<a href="Time-Intervals.html#weeks">d3.time.weeks</a> - alias for sunday.range.</li>
+<li>
+<a href="Time-Intervals.html#week">d3.time.week</a> - alias for sunday.</li>
+<li>
+<a href="Time-Intervals.html#years">d3.time.years</a> - alias for year.range.</li>
+<li>
+<a href="Time-Intervals.html#year">d3.time.year</a> - every year (e.g., January 1, 12:00 AM).</li>
+<li>
+<a href="Time-Intervals.html#interval_ceil">interval.ceil</a> - rounds up to the nearest interval.</li>
+<li>
+<a href="Time-Intervals.html#interval_floor">interval.floor</a> - rounds down to the nearest interval.</li>
+<li>
+<a href="Time-Intervals.html#interval_offset">interval.offset</a> - returns a date offset by some interval.</li>
+<li>
+<a href="Time-Intervals.html#interval_range">interval.range</a> - returns dates within the specified range.</li>
+<li>
+<a href="Time-Intervals.html#interval_round">interval.round</a> - rounds up or down to the nearest interval.</li>
+<li>
+<a href="Time-Intervals.html#interval_utc">interval.utc</a> - returns the UTC-equivalent time interval.</li>
+<li>
+<a href="Time-Intervals.html#_interval">interval</a> - alias for interval.floor.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3layout-layouts" class="anchor" href="API-Reference.html#d3layout-layouts" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Layouts.html">d3.layout (Layouts)</a>
+</h2>
+
+<h3>
+<a id="user-content-bundle" class="anchor" href="API-Reference.html#bundle" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Bundle-Layout.html">Bundle</a>
+</h3>
+
+<ul>
+<li>
+<a href="Bundle-Layout.html#_bundle">bundle</a> - apply Holten's <em>hierarchical bundling</em> algorithm to edges.</li>
+<li>
+<a href="Bundle-Layout.html#bundle">d3.layout.bundle</a> - construct a new default bundle layout.</li>
+</ul>
+
+<h3>
+<a id="user-content-chord" class="anchor" href="API-Reference.html#chord" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Chord-Layout.html">Chord</a>
+</h3>
+
+<ul>
+<li>
+<a href="Chord-Layout.html#chords">chord.chords</a> - retrieve the computed chord angles.</li>
+<li>
+<a href="Chord-Layout.html#groups">chord.groups</a> - retrieve the computed group angles.</li>
+<li>
+<a href="Chord-Layout.html#matrix">chord.matrix</a> - get or set the matrix data backing the layout.</li>
+<li>
+<a href="Chord-Layout.html#padding">chord.padding</a> - get or set the angular padding between chord segments.</li>
+<li>
+<a href="Chord-Layout.html#sortChords">chord.sortChords</a> - get or set the comparator function for chords (z-order).</li>
+<li>
+<a href="Chord-Layout.html#sortGroups">chord.sortGroups</a> - get or set the comparator function for groups.</li>
+<li>
+<a href="Chord-Layout.html#sortSubgroups">chord.sortSubgroups</a> - get or set the comparator function for subgroups.</li>
+<li>
+<a href="Chord-Layout.html#chord">d3.layout.chord</a> - produce a chord diagram from a matrix of relationships.</li>
+</ul>
+
+<h3>
+<a id="user-content-cluster" class="anchor" href="API-Reference.html#cluster" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Cluster-Layout.html">Cluster</a>
+</h3>
+
+<ul>
+<li>
+<a href="Cluster-Layout.html#children">cluster.children</a> - get or set the accessor function for child nodes.</li>
+<li>
+<a href="Cluster-Layout.html#links">cluster.links</a> - compute the parent-child links between tree nodes.</li>
+<li>
+<a href="Cluster-Layout.html#nodeSize">cluster.nodeSize</a> - specify a fixed size for each node.</li>
+<li>
+<a href="Cluster-Layout.html#nodes">cluster.nodes</a> - compute the cluster layout and return the array of nodes.</li>
+<li>
+<a href="Cluster-Layout.html#separation">cluster.separation</a> - get or set the spacing function between neighboring nodes.</li>
+<li>
+<a href="Cluster-Layout.html#size">cluster.size</a> - get or set the layout size in <em>x</em> and <em>y</em>.</li>
+<li>
+<a href="Cluster-Layout.html#sort">cluster.sort</a> - get or set the comparator function for sibling nodes.</li>
+<li>
+<a href="Cluster-Layout.html#_cluster">cluster</a> - alias for cluster.nodes.</li>
+<li>
+<a href="Cluster-Layout.html#cluster">d3.layout.cluster</a> - cluster entities into a dendrogram.</li>
+</ul>
+
+<h3>
+<a id="user-content-force" class="anchor" href="API-Reference.html#force" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Force-Layout.html">Force</a>
+</h3>
+
+<ul>
+<li>
+<a href="Force-Layout.html#force">d3.layout.force</a> - position linked nodes using physical simulation.</li>
+<li>
+<a href="Force-Layout.html#alpha">force.alpha</a> - get or set the layout's cooling parameter.</li>
+<li>
+<a href="Force-Layout.html#chargeDistance">force.chargeDistance</a> - get or set the maximum charge distance.</li>
+<li>
+<a href="Force-Layout.html#charge">force.charge</a> - get or set the charge strength.</li>
+<li>
+<a href="Force-Layout.html#drag">force.drag</a> - bind a behavior to nodes to allow interactive dragging.</li>
+<li>
+<a href="Force-Layout.html#friction">force.friction</a> - get or set the friction coefficient.</li>
+<li>
+<a href="Force-Layout.html#gravity">force.gravity</a> - get or set the gravity strength.</li>
+<li>
+<a href="Force-Layout.html#linkDistance">force.linkDistance</a> - get or set the link distance.</li>
+<li>
+<a href="Force-Layout.html#linkStrength">force.linkStrength</a> - get or set the link strength.</li>
+<li>
+<a href="Force-Layout.html#links">force.links</a> - get or set the array of links between nodes.</li>
+<li>
+<a href="Force-Layout.html#nodes">force.nodes</a> - get or set the array of nodes to layout.</li>
+<li>
+<a href="Force-Layout.html#on">force.on</a> - listen to updates in the computed layout positions.</li>
+<li>
+<a href="Force-Layout.html#resume">force.resume</a> - reheat the cooling parameter and restart simulation.</li>
+<li>
+<a href="Force-Layout.html#size">force.size</a> - get or set the layout size in <em>x</em> and <em>y</em>.</li>
+<li>
+<a href="Force-Layout.html#start">force.start</a> - start or restart the simulation when the nodes change.</li>
+<li>
+<a href="Force-Layout.html#stop">force.stop</a> - immediately terminate the simulation.</li>
+<li>
+<a href="Force-Layout.html#theta">force.theta</a> - get or set the accuracy of the charge interaction.</li>
+<li>
+<a href="Force-Layout.html#tick">force.tick</a> - run the layout simulation one step.</li>
+</ul>
+
+<h3>
+<a id="user-content-hierarchy" class="anchor" href="API-Reference.html#hierarchy" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Hierarchy-Layout.html">Hierarchy</a>
+</h3>
+
+<ul>
+<li>
+<a href="Hierarchy-Layout.html#hierarchy">d3.layout.hierarchy</a> - derive a custom hierarchical layout implementation.</li>
+<li>
+<a href="Hierarchy-Layout.html#children">hierarchy.children</a> - get or set the accessor function for child nodes.</li>
+<li>
+<a href="Hierarchy-Layout.html#links">hierarchy.links</a> - compute the parent-child links between tree nodes.</li>
+<li>
+<a href="Hierarchy-Layout.html#nodes">hierarchy.nodes</a> - compute the layout and return the array of nodes.</li>
+<li>
+<a href="Hierarchy-Layout.html#revalue">hierarchy.revalue</a> - recompute the hierarchy values.</li>
+<li>
+<a href="Hierarchy-Layout.html#sort">hierarchy.sort</a> - get or set the comparator function for sibling nodes.</li>
+<li>
+<a href="Hierarchy-Layout.html#value">hierarchy.value</a> - get or set the value accessor function.</li>
+<li>
+<a href="Hierarchy-Layout.html#_hierarchy">hierarchy</a> - alias for hierarchy.nodes.</li>
+</ul>
+
+<h3>
+<a id="user-content-histogram" class="anchor" href="API-Reference.html#histogram" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Histogram-Layout.html">Histogram</a>
+</h3>
+
+<ul>
+<li>
+<a href="Histogram-Layout.html#histogram">d3.layout.histogram</a> - construct a new default histogram layout.</li>
+<li>
+<a href="Histogram-Layout.html#bins">histogram.bins</a> - specify how values are organized into bins.</li>
+<li>
+<a href="Histogram-Layout.html#frequency">histogram.frequency</a> - compute the distribution as counts or probabilities.</li>
+<li>
+<a href="Histogram-Layout.html#range">histogram.range</a> - get or set the considered value range.</li>
+<li>
+<a href="Histogram-Layout.html#value">histogram.value</a> - get or set the value accessor function.</li>
+<li>
+<a href="Histogram-Layout.html#_histogram">histogram</a> - compute the distribution of data using quantized bins.</li>
+</ul>
+
+<h3>
+<a id="user-content-pack" class="anchor" href="API-Reference.html#pack" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Pack-Layout.html">Pack</a>
+</h3>
+
+<ul>
+<li>
+<a href="Pack-Layout.html#pack">d3.layout.pack</a> - produce a hierarchical layout using recursive circle-packing.</li>
+<li>
+<a href="Pack-Layout.html#children">pack.children</a> - get or set the children accessor function.</li>
+<li>
+<a href="Pack-Layout.html#links">pack.links</a> - compute the parent-child links between tree nodes.</li>
+<li>
+<a href="Pack-Layout.html#nodes">pack.nodes</a> - compute the pack layout and return the array of nodes.</li>
+<li>
+<a href="Pack-Layout.html#padding">pack.padding</a> - specify the layout padding in (approximate) pixels.</li>
+<li>
+<a href="Pack-Layout.html#radius">pack.radius</a> - specify the node radius, rather than deriving it from value.</li>
+<li>
+<a href="Pack-Layout.html#size">pack.size</a> - specify the layout size in <em>x</em> and <em>y</em>.</li>
+<li>
+<a href="Pack-Layout.html#sort">pack.sort</a> - control the order in which sibling nodes are traversed.</li>
+<li>
+<a href="Pack-Layout.html#value">pack.value</a> - get or set the value accessor used to size circles.</li>
+<li>
+<a href="Pack-Layout.html#_pack">pack</a> - alias for pack.nodes.</li>
+</ul>
+
+<h3>
+<a id="user-content-partition" class="anchor" href="API-Reference.html#partition" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Partition-Layout.html">Partition</a>
+</h3>
+
+<ul>
+<li>
+<a href="Partition-Layout.html#partition">d3.layout.partition</a> - recursively partition a node tree into a sunburst or icicle.</li>
+<li>
+<a href="Partition-Layout.html#children">partition.children</a> - get or set the children accessor function.</li>
+<li>
+<a href="Partition-Layout.html#links">partition.links</a> - compute the parent-child links between tree nodes.</li>
+<li>
+<a href="Partition-Layout.html#nodes">partition.nodes</a> - compute the partition layout and return the array of nodes.</li>
+<li>
+<a href="Partition-Layout.html#size">partition.size</a> - specify the layout size in <em>x</em> and <em>y</em>.</li>
+<li>
+<a href="Partition-Layout.html#sort">partition.sort</a> - control the order in which sibling nodes are traversed.</li>
+<li>
+<a href="Partition-Layout.html#value">partition.value</a> - get or set the value accessor used to size circles.</li>
+<li>
+<a href="Partition-Layout.html#_partition">partition</a> - alias for partition.nodes.</li>
+</ul>
+
+<h3>
+<a id="user-content-pie" class="anchor" href="API-Reference.html#pie" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Pie-Layout.html">Pie</a>
+</h3>
+
+<ul>
+<li>
+<a href="Pie-Layout.html#pie">d3.layout.pie</a> - construct a new default pie layout.</li>
+<li>
+<a href="Pie-Layout.html#endAngle">pie.endAngle</a> - get or set the overall end angle of the pie.</li>
+<li>
+<a href="Pie-Layout.html#padAngle">pie.padAngle</a> - get or set the pad angle of the pie.</li>
+<li>
+<a href="Pie-Layout.html#sort">pie.sort</a> - control the clockwise order of pie slices.</li>
+<li>
+<a href="Pie-Layout.html#startAngle">pie.startAngle</a> - get or set the overall start angle of the pie.</li>
+<li>
+<a href="Pie-Layout.html#value">pie.value</a> - get or set the value accessor function.</li>
+<li>
+<a href="Pie-Layout.html#_pie">pie</a> - compute the start and end angles for arcs in a pie or donut chart.</li>
+</ul>
+
+<h3>
+<a id="user-content-stack" class="anchor" href="API-Reference.html#stack" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Stack-Layout.html">Stack</a>
+</h3>
+
+<ul>
+<li>
+<a href="Stack-Layout.html#stack">d3.layout.stack</a> - construct a new default stack layout.</li>
+<li>
+<a href="Stack-Layout.html#offset">stack.offset</a> - specify the overall baseline algorithm.</li>
+<li>
+<a href="Stack-Layout.html#order">stack.order</a> - control the order in which series are stacked.</li>
+<li>
+<a href="Stack-Layout.html#out">stack.out</a> - get or set the output function for storing the baseline.</li>
+<li>
+<a href="Stack-Layout.html#values">stack.values</a> - get or set the values accessor function per series.</li>
+<li>
+<a href="Stack-Layout.html#x">stack.x</a> - get or set the <em>x</em>-dimension accessor function.</li>
+<li>
+<a href="Stack-Layout.html#y">stack.y</a> - get or set the <em>y</em>-dimension accessor function.</li>
+<li>
+<a href="Stack-Layout.html#_stack">stack</a> - compute the baseline for each series in a stacked bar or area chart.</li>
+</ul>
+
+<h3>
+<a id="user-content-tree" class="anchor" href="API-Reference.html#tree" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Tree-Layout.html">Tree</a>
+</h3>
+
+<ul>
+<li>
+<a href="Tree-Layout.html#tree">d3.layout.tree</a> - position a tree of nodes tidily.</li>
+<li>
+<a href="Tree-Layout.html#children">tree.children</a> - get or set the children accessor function.</li>
+<li>
+<a href="Tree-Layout.html#links">tree.links</a> - compute the parent-child links between tree nodes.</li>
+<li>
+<a href="Tree-Layout.html#nodeSize">tree.nodeSize</a> - specify a fixed size for each node.</li>
+<li>
+<a href="Tree-Layout.html#nodes">tree.nodes</a> - compute the tree layout and return the array of nodes.</li>
+<li>
+<a href="Tree-Layout.html#separation">tree.separation</a> - get or set the spacing function between neighboring nodes.</li>
+<li>
+<a href="Tree-Layout.html#size">tree.size</a> - specify the layout size in <em>x</em> and <em>y</em>.</li>
+<li>
+<a href="Tree-Layout.html#sort">tree.sort</a> - control the order in which sibling nodes are traversed.</li>
+<li>
+<a href="Tree-Layout.html#_tree">tree</a> - alias for tree.nodes.</li>
+</ul>
+
+<h3>
+<a id="user-content-treemap" class="anchor" href="API-Reference.html#treemap" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Treemap-Layout.html">Treemap</a>
+</h3>
+
+<ul>
+<li>
+<a href="Treemap-Layout.html#treemap">d3.layout.treemap</a> - use recursive spatial subdivision to display a tree of nodes.</li>
+<li>
+<a href="Treemap-Layout.html#children">treemap.children</a> - get or set the children accessor function.</li>
+<li>
+<a href="Treemap-Layout.html#links">treemap.links</a> - compute the parent-child links between tree nodes.</li>
+<li>
+<a href="Treemap-Layout.html#mode">treemap.mode</a> - change the treemap layout algorithm.</li>
+<li>
+<a href="Treemap-Layout.html#nodes">treemap.nodes</a> - compute the treemap layout and return the array of nodes.</li>
+<li>
+<a href="Treemap-Layout.html#padding">treemap.padding</a> - specify the padding between a parent and its children.</li>
+<li>
+<a href="Treemap-Layout.html#round">treemap.round</a> - enable or disable rounding to exact pixels.</li>
+<li>
+<a href="Treemap-Layout.html#size">treemap.size</a> - specify the layout size in <em>x</em> and <em>y</em>.</li>
+<li>
+<a href="Treemap-Layout.html#sort">treemap.sort</a> - control the order in which sibling nodes are traversed.</li>
+<li>
+<a href="Treemap-Layout.html#sticky">treemap.sticky</a> - make the layout sticky for stable updates.</li>
+<li>
+<a href="Treemap-Layout.html#value">treemap.value</a> - get or set the value accessor used to size treemap cells.</li>
+<li>
+<a href="Treemap-Layout.html#_treemap">treemap</a> - alias for treemap.nodes.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3geo-geography" class="anchor" href="API-Reference.html#d3geo-geography" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Geo.html">d3.geo (Geography)</a>
+</h2>
+
+<h3>
+<a id="user-content-paths" class="anchor" href="API-Reference.html#paths" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Geo-Paths.html">Paths</a>
+</h3>
+
+<ul>
+<li>
+<a href="Geo-Paths.html#circle_angle">circle.angle</a> - specify the angular radius in degrees.</li>
+<li>
+<a href="Geo-Paths.html#circle_origin">circle.origin</a> - specify the origin in latitude and longitude.</li>
+<li>
+<a href="Geo-Paths.html#circle_precision">circle.precision</a> - specify the precision of the piecewise circle.</li>
+<li>
+<a href="Geo-Paths.html#_circle">circle</a> - generate a piecewise circle as a Polygon.</li>
+<li>
+<a href="Geo-Paths.html#area">d3.geo.area</a> - compute the spherical area of a given feature.</li>
+<li>
+<a href="Geo-Paths.html#bounds">d3.geo.bounds</a> - compute the latitude-longitude bounding box for a given feature.</li>
+<li>
+<a href="Geo-Paths.html#centroid">d3.geo.centroid</a> - compute the spherical centroid of a given feature.</li>
+<li>
+<a href="Geo-Paths.html#circle">d3.geo.circle</a> - create a circle generator.</li>
+<li>
+<a href="Geo-Paths.html#distance">d3.geo.distance</a> - compute the great-arc distance between two points.</li>
+<li>
+<a href="Geo-Paths.html#graticule">d3.geo.graticule</a> - create a graticule generator.</li>
+<li>
+<a href="Geo-Paths.html#interpolate">d3.geo.interpolate</a> - interpolate between two points along a great arc.</li>
+<li>
+<a href="Geo-Paths.html#length">d3.geo.length</a> - compute the length of a line string or the perimeter of a polygon.</li>
+<li>
+<a href="Geo-Paths.html#path">d3.geo.path</a> - create a new geographic path generator.</li>
+<li>
+<a href="Geo-Paths.html#rotation">d3.geo.rotation</a> - create a rotation function for the specified angles [Œª, œÜ, Œ≥].</li>
+<li>
+<a href="Geo-Paths.html#graticule_extent">graticule.extent</a> - get or set the major &amp; minor extents.</li>
+<li>
+<a href="Geo-Paths.html#graticule_lines">graticule.lines</a> - generate an array of LineStrings of meridians and parallels.</li>
+<li>
+<a href="Geo-Paths.html#graticule_majorExtent">graticule.majorExtent</a> - get or set the major extent.</li>
+<li>
+<a href="Geo-Paths.html#graticule_majorStep">graticule.majorStep</a> - get or set the major step intervals.</li>
+<li>
+<a href="Geo-Paths.html#graticule_minorExtent">graticule.minorExtent</a> - get or set the minor extent.</li>
+<li>
+<a href="Geo-Paths.html#graticule_minorStep">graticule.minorStep</a> - get or set the minor step intervals.</li>
+<li>
+<a href="Geo-Paths.html#graticule_outline">graticule.outline</a> - generate a Polygon of the graticule‚Äôs extent.</li>
+<li>
+<a href="Geo-Paths.html#graticule_precision">graticule.precision</a> - get or set the latitudinal precision.</li>
+<li>
+<a href="Geo-Paths.html#graticule_step">graticule.step</a> - get or set the major &amp; minor step intervals.</li>
+<li>
+<a href="Geo-Paths.html#_graticule">graticule</a> - generate a MultiLineString of meridians and parallels.</li>
+<li>
+<a href="Geo-Paths.html#path_area">path.area</a> - compute the projected area of a given feature.</li>
+<li>
+<a href="Geo-Paths.html#path_bounds">path.bounds</a> - compute the projected bounds of a given feature.</li>
+<li>
+<a href="Geo-Paths.html#path_centroid">path.centroid</a> - compute the projected centroid of a given feature.</li>
+<li>
+<a href="Geo-Paths.html#path_context">path.context</a> - get or set the render context.</li>
+<li>
+<a href="Geo-Paths.html#path_pointRadius">path.pointRadius</a> - get or set the radius to display point features.</li>
+<li>
+<a href="Geo-Paths.html#path_projection">path.projection</a> - get or set the geographic projection.</li>
+<li>
+<a href="Geo-Paths.html#_path">path</a> - project the specified feature and render it to the context.</li>
+<li>
+<a href="Geo-Paths.html#rotation_invert">rotation.invert</a> - inverse-rotate the given location around the sphere.</li>
+<li>
+<a href="Geo-Paths.html#_rotation">rotation</a> - rotate the given location around the sphere.</li>
+</ul>
+
+<h3>
+<a id="user-content-projections" class="anchor" href="API-Reference.html#projections" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Geo-Projections.html">Projections</a>
+</h3>
+
+<ul>
+<li>
+<a href="Geo-Projections.html#albers_parallels">albers.parallels</a> - get or set the projection's two standard parallels.</li>
+<li>
+<a href="Geo-Projections.html#albersUsa">d3.geo.albersUsa</a> - a composite Albers projection for the United States.</li>
+<li>
+<a href="Geo-Projections.html#albers">d3.geo.albers</a> - the Albers equal-area conic projection.</li>
+<li>
+<a href="Geo-Projections.html#azimuthalEqualArea_raw">d3.geo.azimuthalEqualArea.raw</a> - the raw azimuthal equal-area projection.</li>
+<li>
+<a href="Geo-Projections.html#azimuthalEqualArea">d3.geo.azimuthalEqualArea</a> - the azimuthal equal-area projection.</li>
+<li>
+<a href="Geo-Projections.html#azimuthalEquidistant_raw">d3.geo.azimuthalEquidistant.raw</a> - the azimuthal equidistant projection.</li>
+<li>
+<a href="Geo-Projections.html#azimuthalEquidistant">d3.geo.azimuthalEquidistant</a> - the azimuthal equidistant projection.</li>
+<li>
+<a href="Geo-Projections.html#conicConformal_raw">d3.geo.conicConformal.raw</a> - the raw conic conformal projection.</li>
+<li>
+<a href="Geo-Projections.html#conicConformal">d3.geo.conicConformal</a> - the conic conformal projection.</li>
+<li>
+<a href="Geo-Projections.html#conicEqualArea_raw">d3.geo.conicEqualArea.raw</a> the raw conic equal-area (a.k.a. Albers) projection.</li>
+<li>
+<a href="Geo-Projections.html#conicEqualArea">d3.geo.conicEqualArea</a> the conic equal-area (a.k.a. Albers) projection.</li>
+<li>
+<a href="Geo-Projections.html#conicEquidistant_raw">d3.geo.conicEquidistant.raw</a> - the raw conic equidistant projection.</li>
+<li>
+<a href="Geo-Projections.html#conicEquidistant">d3.geo.conicEquidistant</a> - the conic equidistant projection.</li>
+<li>
+<a href="Geo-Projections.html#equirectangular_raw">d3.geo.equirectangular.raw</a> - the raw equirectangular (plate carr√©e) projection.</li>
+<li>
+<a href="Geo-Projections.html#equirectangular">d3.geo.equirectangular</a> - the equirectangular (plate carre√©) projection.</li>
+<li>
+<a href="Geo-Projections.html#gnomonic_raw">d3.geo.gnomonic.raw</a> - the raw gnomonic projection.</li>
+<li>
+<a href="Geo-Projections.html#gnomonic">d3.geo.gnomonic</a> - the gnomonic projection.</li>
+<li>
+<a href="Geo-Projections.html#mercator_raw">d3.geo.mercator.raw</a> - the raw Mercator projection.</li>
+<li>
+<a href="Geo-Projections.html#mercator">d3.geo.mercator</a> - the spherical Mercator projection.</li>
+<li>
+<a href="Geo-Projections.html#orthographic_raw">d3.geo.orthographic.raw</a> - the raw azimuthal orthographic projection.</li>
+<li>
+<a href="Geo-Projections.html#orthographic">d3.geo.orthographic</a> - the azimuthal orthographic projection.</li>
+<li>
+<a href="Geo-Projections.html#projectionMutator">d3.geo.projectionMutator</a> - create a standard projection from a mutable raw projection.</li>
+<li>
+<a href="Geo-Projections.html#projection">d3.geo.projection</a> - create a standard projection from a raw projection.</li>
+<li>
+<a href="Geo-Projections.html#stereographic_raw">d3.geo.stereographic.raw</a> - the raw azimuthal stereographic projection.</li>
+<li>
+<a href="Geo-Projections.html#stereographic">d3.geo.stereographic</a> - the azimuthal stereographic projection.</li>
+<li>
+<a href="Geo-Projections.html#transverseMercator_raw">d3.geo.transverseMercator.raw</a> - the raw transverse Mercator projection.</li>
+<li>
+<a href="Geo-Projections.html#center">projection.center</a> - get or set the projection‚Äôs center location.</li>
+<li>
+<a href="Geo-Projections.html#clipAngle">projection.clipAngle</a> - get or set the radius of the projection‚Äôs clip circle.</li>
+<li>
+<a href="Geo-Projections.html#clipExtent">projection.clipExtent</a> - get or set the projection‚Äôs viewport clip extent, in pixels.</li>
+<li>
+<a href="Geo-Projections.html#invert">projection.invert</a> - invert the projection for the specified point.</li>
+<li>
+<a href="Geo-Projections.html#precision">projection.precision</a> - get or set the precision threshold for adaptive resampling.</li>
+<li>
+<a href="Geo-Projections.html#rotate">projection.rotate</a> - get or set the projection‚Äôs three-axis rotation.</li>
+<li>
+<a href="Geo-Projections.html#scale">projection.scale</a> - get or set the projection‚Äôs scale factor.</li>
+<li>
+<a href="Geo-Projections.html#stream">projection.stream</a> - wrap the specified stream listener, projecting input geometry.</li>
+<li>
+<a href="Geo-Projections.html#translate">projection.translate</a> - get or set the projection‚Äôs translation position.</li>
+<li>
+<a href="Geo-Projections.html#_projection">projection</a> - project the specified location.</li>
+</ul>
+
+<h3>
+<a id="user-content-streams" class="anchor" href="API-Reference.html#streams" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Geo-Streams.html">Streams</a>
+</h3>
+
+<ul>
+<li>
+<a href="Geo-Streams.html#clipExtent_extent">clipExtent.extent</a> - sets the clip extent.</li>
+<li>
+<a href="Geo-Streams.html#clipExtent">d3.geo.clipExtent</a> - a stream transform that clips geometries to a given axis-aligned rectangle.</li>
+<li>
+<a href="Geo-Streams.html#stream">d3.geo.stream</a> - convert a GeoJSON object to a geometry stream.</li>
+<li>
+<a href="Geo-Streams.html#transform">d3.geo.transform</a> - transform streaming geometries.</li>
+<li>
+<a href="Geo-Streams.html#stream_lineEnd">stream.lineEnd</a> - indicate the end of a line or ring.</li>
+<li>
+<a href="Geo-Streams.html#stream_lineStart">stream.lineStart</a> - indicate the start of a line or ring.</li>
+<li>
+<a href="Geo-Streams.html#stream_point">stream.point</a> - indicate an <em>x</em>, <em>y</em> (and optionally <em>z</em>) coordinate.</li>
+<li>
+<a href="Geo-Streams.html#stream_polygonEnd">stream.polygonEnd</a> - indicate the end of a polygon.</li>
+<li>
+<a href="Geo-Streams.html#stream_polygonStart">stream.polygonStart</a> - indicate the start of a polygon.</li>
+<li>
+<a href="Geo-Streams.html#stream_sphere">stream.sphere</a> - indicate a sphere.</li>
+<li>
+<a href="Geo-Streams.html#transform_stream">transform.stream</a> - wraps a given stream.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3geom-geometry" class="anchor" href="API-Reference.html#d3geom-geometry" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Geometry.html">d3.geom (Geometry)</a>
+</h2>
+
+<h3>
+<a id="user-content-voronoi" class="anchor" href="API-Reference.html#voronoi" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Voronoi-Geom.html">Voronoi</a>
+</h3>
+
+<ul>
+<li>
+<a href="Voronoi-Geom.html#voronoi">d3.geom.voronoi</a> - create a Voronoi layout with default accessors.</li>
+<li>
+<a href="Voronoi-Geom.html#clipExtent">voronoi.clipExtent</a> - get or set the clip extent for the tesselation.</li>
+<li>
+<a href="Voronoi-Geom.html#links">voronoi.links</a> - compute the Delaunay mesh as a network of links.</li>
+<li>
+<a href="Voronoi-Geom.html#triangles">voronoi.triangles</a> - compute the Delaunay mesh as a triangular tessellation.</li>
+<li>
+<a href="Voronoi-Geom.html#x">voronoi.x</a> - get or set the x-coordinate accessor for each point.</li>
+<li>
+<a href="Voronoi-Geom.html#y">voronoi.y</a> - get or set the y-coordinate accessor for each point.</li>
+<li>
+<a href="Voronoi-Geom.html#_voronoi">voronoi</a> - compute the Voronoi tessellation for the specified points.</li>
+</ul>
+
+<h3>
+<a id="user-content-quadtree" class="anchor" href="API-Reference.html#quadtree" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Quadtree-Geom.html">Quadtree</a>
+</h3>
+
+<ul>
+<li>
+<a href="Quadtree-Geom.html#quadtree">d3.geom.quadtree</a> - constructs a quadtree for an array of points.</li>
+<li>
+<a href="Quadtree-Geom.html#add">quadtree.add</a> - add a point to the quadtree.</li>
+<li>
+<a href="Quadtree-Geom.html#find">quadtree.find</a> - find the closest point in the quadtree.</li>
+<li>
+<a href="Quadtree-Geom.html#visit">quadtree.visit</a> - recursively visit nodes in the quadtree.</li>
+</ul>
+
+<h3>
+<a id="user-content-polygon" class="anchor" href="API-Reference.html#polygon" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Polygon-Geom.html">Polygon</a>
+</h3>
+
+<ul>
+<li>
+<a href="Polygon-Geom.html#polygon">d3.geom.polygon</a> - create a polygon from the specified array of points.</li>
+<li>
+<a href="Polygon-Geom.html#area">polygon.area</a> - compute the counterclockwise area of this polygon.</li>
+<li>
+<a href="Polygon-Geom.html#centroid">polygon.centroid</a> - compute the area centroid of this polygon.</li>
+<li>
+<a href="Polygon-Geom.html#clip">polygon.clip</a> - clip the specified polygon to this polygon.</li>
+</ul>
+
+<h3>
+<a id="user-content-hull" class="anchor" href="API-Reference.html#hull" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Hull-Geom.html">Hull</a>
+</h3>
+
+<ul>
+<li>
+<a href="Hull-Geom.html#hull">d3.geom.hull</a> - create a convex hull layout with default accessors.</li>
+<li>
+<a href="Hull-Geom.html#_hull">hull</a> - compute the convex hull for the given array of points.</li>
+<li>
+<a href="Hull-Geom.html#x">hull.x</a> - get or set the <em>x</em>-coordinate accessor.</li>
+<li>
+<a href="Hull-Geom.html#y">hull.y</a> - get or set the <em>y</em>-coordinate accessor.</li>
+</ul>
+
+<h2>
+<a id="user-content-d3behavior-behaviors" class="anchor" href="API-Reference.html#d3behavior-behaviors" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Behaviors.html">d3.behavior (Behaviors)</a>
+</h2>
+
+<h3>
+<a id="user-content-drag" class="anchor" href="API-Reference.html#drag" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Drag-Behavior.html">Drag</a>
+</h3>
+
+<ul>
+<li><a href="Drag-Behavior.html#drag">d3.behavior.drag</a></li>
+<li><a href="Drag-Behavior.html#on">drag.on</a></li>
+<li><a href="Drag-Behavior.html#origin">drag.origin</a></li>
+</ul>
+
+<h3>
+<a id="user-content-zoom" class="anchor" href="API-Reference.html#zoom" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="Zoom-Behavior.html">Zoom</a>
+</h3>
+
+<ul>
+<li>
+<a href="Zoom-Behavior.html#zoom">d3.behavior.zoom</a> - create a zoom behavior.</li>
+<li>
+<a href="Zoom-Behavior.html#center">zoom.center</a> - an optional focal point for mousewheel zooming.</li>
+<li>
+<a href="Zoom-Behavior.html#duration">zoom.duration</a> - get or set the dblclick transition duration.</li>
+<li>
+<a href="Zoom-Behavior.html#event">zoom.event</a> - dispatch zoom events after setting the scale or translate.</li>
+<li>
+<a href="Zoom-Behavior.html#on">zoom.on</a> - listeners for when the scale or translate changes.</li>
+<li>
+<a href="Zoom-Behavior.html#scaleExtent">zoom.scaleExtent</a> - optional limits on the scale factor.</li>
+<li>
+<a href="Zoom-Behavior.html#scale">zoom.scale</a> - the current scale factor.</li>
+<li>
+<a href="Zoom-Behavior.html#size">zoom.size</a> - the dimensions of the viewport.</li>
+<li>
+<a href="Zoom-Behavior.html#translate">zoom.translate</a> - the current translate offset.</li>
+<li>
+<a href="Zoom-Behavior.html#x">zoom.x</a> - an optional scale whose domain is bound to the <em>x</em> extent of the viewport.</li>
+<li>
+<a href="Zoom-Behavior.html#y">zoom.y</a> - an optional scale whose domain is bound to the <em>y</em> extent of the viewport.</li>
+<li>
+<a href="Zoom-Behavior.html#_zoom">zoom</a> - apply the zoom behavior to the selected elements.</li>
+</ul>
+
+    </div>
+
+  </div>
+  </div>
+</div>
+</div>
+
+
+        </div>
+      </div>
+      <div class="modal-backdrop"></div>
+    </div>
+  </div>
+
+
+    </div>
+
+      <div class="container">
+  <div class="site-footer" role="contentinfo">
+    <ul class="site-footer-links right">
+        <li><a href="../../../../status.github.com/index.html" data-ga-click="Footer, go to status, text:status">Status</a></li>
+      <li><a href="../../../../developer.github.com/index.html" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li><a href="../../../../training.github.com/index.html" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li><a href="../../../../shop.github.com/index.html" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li><a href="../../../blog.html" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a href="../../../about.html" data-ga-click="Footer, go to about, text:about">About</a></li>
+        <li><a href="../../../pricing.html" data-ga-click="Footer, go to pricing, text:pricing">Pricing</a></li>
+
+    </ul>
+
+    <a href="../../../index.html" aria-label="Homepage">
+      <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+</a>
+    <ul class="site-footer-links">
+      <li>&copy; 2015 <span title="0.11641s from github-fe131-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="../../../site/terms.html" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
+        <li><a href="../../../site/privacy.html" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
+        <li><a href="../../../security.html" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li><a href="../../../contact.html" data-ga-click="Footer, go to contact, text:contact">Contact</a></li>
+        <li><a href="../../../../help.github.com/index.html" data-ga-click="Footer, go to help, text:help">Help</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+    
+    
+    
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <button type="button" class="flash-close js-flash-close js-ajax-error-dismiss" aria-label="Dismiss error">
+        <span class="octicon octicon-x"></span>
+      </button>
+      Something went wrong with that request. Please try again.
+    </div>
+
+
+      <script crossorigin="anonymous" src="../../../../assets-cdn.github.com/assets/frameworks-2e7fc3d264a208e1383de85b815379beccff56c1f977714515d4cac7820eef3e.js"></script>
+      <script async="async" crossorigin="anonymous" src="../../../../assets-cdn.github.com/assets/github-e3b6c0d7324e75ba03f85bd9a58697e1fb0c02d10c9326805d511fa6cb6a0d21.js"></script>
+      
+        <script crossorigin="anonymous" src="../../../../assets-cdn.github.com/assets/wiki-2a65218f52c4b635a09dc2b9af49a1339687c2aaf65661558681f03767f8d7c6.js"></script>
+
+    <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner hidden">
+      <span class="octicon octicon-alert"></span>
+      <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="API-Reference.html">Reload</a> to refresh your session.</span>
+      <span class="signed-out-tab-flash">You signed out in another tab or window. <a href="API-Reference.html">Reload</a> to refresh your session.</span>
+    </div>
+  </body>
+</html>
+

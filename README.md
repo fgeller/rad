@@ -56,6 +56,7 @@ Displaying installed and available packs:
 ## Available packs
 
 * [Clojure](https://clojuredocs.org)
+* [D3.js](https://d3js.org)
 * [Django](https://clojuredocs.org)
 * [Go](https://golang.org)
   * [Standard packages](https://godoc.org/-/go)

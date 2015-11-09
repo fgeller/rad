@@ -73,7 +73,7 @@ Displaying installed and available packs:
 * [Python](https://www.python.org)
 * [react.js](https://facebook.github.io/react/)
 * [Scala](http://www.scala-lang.org)
-  * Standard library (split into compiler, library and reflect)
+  * [Standard library (split into compiler, library and reflect)](http://www.scala-lang.org/api/current/)
   * [akka](http://www.scala-lang.org)
   * [Gremlin-Scala](https://github.com/mpollmeier/gremlin-scala)
   * [Kafka](http://kafka.apache.org)

@@ -97,7 +97,8 @@ type PackInfo struct {
 }
 
 type StatusInfo struct {
-	Packs PackInfo
+	Packs   PackInfo
+	Version string
 }
 
 func availablePacks() []shared.Pack {
@@ -142,6 +143,7 @@ loopinstalled:
 			Installed: filteredInstalled,
 			Available: available,
 		},
+		Version: global.buildVersion,
 	}
 
 	js, err := json.Marshal(info)

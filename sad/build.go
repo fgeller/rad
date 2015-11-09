@@ -3,6 +3,7 @@ package main
 import (
 	"../shared"
 
+	"bytes"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -13,14 +14,55 @@ import (
 	"time"
 )
 
-func writeAssets(assets map[string]shared.Asset) error {
+func fileHeader(imports []string) string {
+	out := `package main
+
+`
+	if len(imports) > 0 {
+		qi := []string{}
+		for _, i := range imports {
+			qi = append(qi, fmt.Sprintf("\"%v\"", i))
+		}
+		out += `import (
+	` + strings.Join(qi, `	
+`) + `)
+`
+	}
+
+	return out
+}
+
+func registerBuildVersion() string {
+	cmd := exec.Command("git", "rev-parse", "HEAD")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+
+	err := cmd.Run()
+	if err != nil {
+		log.Fatalf("Error identifying version err=%v.\n", err)
+	}
+
+	v := out.String()[:7]
+	log.Printf("Identified build version [%v].\n", v)
+
+	str := `
+
+func registerBuildVersion() {
+	global.buildVersion = "` + v + `"
+}
+`
+
+	return str
+}
+
+func writeGeneratedInfo(contents string) error {
 	log.Printf("Generating assets in %v\n", config.assetsOut)
+	return ioutil.WriteFile(config.assetsOut, []byte(contents), 0755)
+}
 
-	tmpl := `package main
+func registerAssets(assets map[string]shared.Asset) string {
 
-import (
-	"../shared"
-)
+	tmpl := `
 
 func registerAssets() {
 `
@@ -38,18 +80,20 @@ func registerAssets() {
 	tmpl += `
 }
 `
-	return ioutil.WriteFile(config.assetsOut, []byte(tmpl), 0755)
+
+	return tmpl
 }
 
-func resetGeneratedAssets() {
+func resetGeneratedInfo() {
 	err := ioutil.WriteFile(
 		config.assetsOut,
 		[]byte(`package main
+func registerBuildVersion() {}
 func registerAssets() {}
 `),
 		0755,
 	)
-	log.Printf("Reset generated assets file (err: %v).", err)
+	log.Printf("Reset generated file (err: %v).", err)
 }
 
 func findSources() ([]string, error) {
@@ -75,7 +119,7 @@ func findSources() ([]string, error) {
 
 func build(out string, assetsDir string) error {
 	start := time.Now()
-	resetGeneratedAssets()
+	resetGeneratedInfo()
 
 	assets, err := shared.LoadAssets(assetsDir)
 	if err != nil {
@@ -84,10 +128,13 @@ func build(out string, assetsDir string) error {
 	log.Printf("Assets loaded in %v\n", time.Since(start))
 
 	last := time.Now()
-	if err = writeAssets(assets); err != nil {
+	contents := fileHeader([]string{"../shared"})
+	contents += registerBuildVersion()
+	contents += registerAssets(assets)
+	if err = writeGeneratedInfo(contents); err != nil {
 		return err
 	}
-	log.Printf("Wrote assets out in %v\n", time.Since(last))
+	log.Printf("Generated info in %v\n", time.Since(last))
 
 	sources, err := findSources()
 	if err != nil {
@@ -119,7 +166,7 @@ func build(out string, assetsDir string) error {
 		return err
 	}
 
-	resetGeneratedAssets()
+	resetGeneratedInfo()
 	log.Printf("Done, happy serving! (after %v)", time.Since(start))
 	return nil
 }

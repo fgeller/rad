@@ -5,14 +5,16 @@ import (
 )
 
 var global struct {
-	packs  chan packReq
-	master bool // should make this a mutex
-	assets map[string]shared.Asset
+	packs        chan packReq
+	master       bool // should make this a mutex
+	assets       map[string]shared.Asset
+	buildVersion string
 }
 
 func setupGlobals() {
 	global.packs = make(chan packReq)
 	global.assets = map[string]shared.Asset{}
+	global.buildVersion = ""
 	go packMaster()
 }
 

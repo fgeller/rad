@@ -387,6 +387,7 @@ var Settings = React.createClass({
 				this.setState({
 					installedPacks: data.Packs.Installed,
 					availablePacks: data.Packs.Available,
+					buildVersion: data.Version,
 				});
 				this.props.updatePacks(data.Packs.Installed)
 			}.bind(this)
@@ -500,6 +501,12 @@ var Settings = React.createClass({
 						autoLoad={this.props.autoLoad}
 						updateSettings={this.props.updateSettings}
 					/>
+					<div className="settings-header">Build Info</div>
+					<div className="settings-label-value">
+						<div className="settings-label">Version</div>
+						<div className="settings-value"><a href="https://github.com/fgeller/rad/commit/{this.state.buildVersion}">{this.state.buildVersion}</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

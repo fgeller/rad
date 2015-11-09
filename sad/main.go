@@ -57,6 +57,7 @@ func main() {
 
 	setupGlobals()
 	loadInstalled()
+	registerBuildVersion()
 	registerAssets()
 	go waitAndOpenUrl("http://" + config.addr)
 	serve(config.addr)

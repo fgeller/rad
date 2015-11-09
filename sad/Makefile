@@ -24,7 +24,7 @@ snapshot:
 	BUILD_PROF=true $(MAKE) build
 	tar Jcf sad-`date -I`-`git rev-parse HEAD | cut -c-7`-`uname -s -m | tr ' ' '-'`.xz sad
 
-release-win:
+release-windows:
 	BUILD_OS=windows BUILD_ARCH=amd64 $(MAKE) build
 	tar Jcf sad-`git describe --abbrev=0 --tags`-win-amd64.xz sad.exe
 
@@ -36,7 +36,7 @@ release-darwin:
 	BUILD_OS=darwin BUILD_ARCH=amd64 $(MAKE) build
 	tar Jcf sad-`git describe --abbrev=0 --tags`-darwin-amd64.xz sad
 
-release: release-linux release-darwin
+release: release-linux release-darwin release-windows
 
 run:
 	./sad -sapaddr 0.0.0.0:3025

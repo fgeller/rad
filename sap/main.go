@@ -55,8 +55,7 @@ func packsHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error opening archive %v: %v", fi.Name(), err)
 			continue
 		}
-
-		defer r.Close() // TODO
+		defer r.Close()
 
 		for _, f := range r.File {
 			if filepath.Base(f.Name) == "pack.json" {

@@ -89,16 +89,15 @@ findpackinfo:
 }
 
 func loadRemotePack(fn string) (shared.Pack, []shared.Namespace, error) {
-	// TODO: review for cleanup after failure
 	var pck shared.Pack
 	var nss []shared.Namespace
 
 	path, err := shared.DownloadToTemp("http://" + config.sapAddr + "/pack/" + fn)
+	defer os.RemoveAll(path)
 	if err != nil {
 		log.Printf("Error downloading pack: %v\n", err)
 		return pck, nss, err
 	}
-	defer os.RemoveAll(path)
 
 	pck, err = readArchivePackInfo(path)
 	if err != nil {
@@ -106,20 +105,28 @@ func loadRemotePack(fn string) (shared.Pack, []shared.Namespace, error) {
 		return pck, nss, err
 	}
 
+	pd := filepath.Join(config.packDir, pck.Name)
 	if err = shared.Unzip(path, config.packDir); err != nil {
-		log.Printf("Failed to unzip %v: %v\n", path, err)
+		log.Printf("Failed to unzip %v (err=%v), removing dir %v\n", path, err, pd)
+		os.RemoveAll(pd)
 		return pck, nss, err
 	}
 
 	df := filepath.Join(config.packDir, pck.Name, "data.json")
 	dc, err := ioutil.ReadFile(df)
 	if err != nil {
-		log.Printf("Skipping: Could not load data for %v (err: %v).", pck.Name, err)
+		log.Printf("Skipping: Could not load data for %v (err=%v) removing dir %v.", pck.Name, err, pd)
+		os.RemoveAll(pd)
 		return pck, nss, err
 	}
 
 	err = json.Unmarshal(dc, &nss)
 	log.Printf("Found %v entries for %v.", len(nss), pck.Name)
+	if err != nil {
+		log.Printf("Failed to unmarshal data for %v (err=%v) removing dir %v.", pck.Name, err, pd)
+		os.RemoveAll(pd)
+		return pck, nss, err
+	}
 
 	return pck, nss, err
 }

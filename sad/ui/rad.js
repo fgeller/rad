@@ -402,6 +402,7 @@ var Settings = React.createClass({
 		}
 	},
 	hide: function() {
+		addHistory("ss", "false");
 		document.getElementById("settings-container").style.visibility = "hidden";
 	},
 	stopEvent: function(e) {

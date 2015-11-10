@@ -487,7 +487,6 @@ var Settings = React.createClass({
 		var visible = "hidden";
 		var params = urlParams();
 		if (params["ss"] && params["ss"] === "true") {
-			console.log("showSettings=true");
 			visible = "visible";
 		}
 

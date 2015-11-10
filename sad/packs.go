@@ -187,7 +187,9 @@ func packMaster() {
 		}
 		delete(packs, req.pck.Name)
 		delete(docs, req.pck.Name)
-		os.RemoveAll(filepath.Join(config.packDir, req.pck.Name)) // TODO log
+		pd := filepath.Join(config.packDir, req.pck.Name)
+		log.Printf("Removing directory %v\n", pd)
+		os.RemoveAll(pd)
 	}
 
 	reset := func(req packReq) {

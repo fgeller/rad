@@ -15,12 +15,22 @@ import (
 
 func populatePackDir() (map[string][]shared.Namespace, []shared.Pack) {
 
-	p1 := shared.Pack{Name: "p1", Type: "java", Created: time.Now()}
+	p1 := shared.Pack{
+		Name:      "p1",
+		Type:      "java",
+		Created:   time.Now(),
+		NameCount: 1,
+	}
 	p1Data := []shared.Namespace{
 		{Path: "A", Members: []shared.Member{{Name: "M1", Target: "T1"}}},
 	}
 
-	p2 := shared.Pack{Name: "p2", Type: "go", Created: time.Now()}
+	p2 := shared.Pack{
+		Name:      "p2",
+		Type:      "go",
+		Created:   time.Now(),
+		NameCount: 1,
+	}
 	p2Data := []shared.Namespace{
 		{Path: "B", Members: []shared.Member{{Name: "M2", Target: "T2"}}},
 	}

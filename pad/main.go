@@ -157,12 +157,18 @@ func mkPack(conf config) (string, error) {
 	}
 	log.Printf("Made targets relative to pack folder.\n")
 
+	nc := 0
+	for _, ns := range entries {
+		nc += len(ns.Members)
+	}
+
 	pack := shared.Pack{
 		Name:        conf.name,
 		Type:        conf.Type,
 		Version:     conf.version,
 		Created:     time.Now(),
 		Description: conf.description,
+		NameCount:   nc,
 	}
 
 	// 2. serialize conf

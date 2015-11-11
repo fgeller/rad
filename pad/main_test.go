@@ -18,6 +18,7 @@ func TestMkPack(t *testing.T) {
 	packSource := filepath.Join("testdata", "jdk")
 	packVersion := "1.2.3"
 	desc := "This<br />Is<br />Usually<br />HTML"
+	nameCount := 30
 	dest, err := filepath.Abs(".")
 	if err != nil {
 		t.Errorf("Error finding absolute path: %v", err)
@@ -80,6 +81,10 @@ func TestMkPack(t *testing.T) {
 
 	if pack.Description != desc {
 		t.Errorf("Expected pack description: %v\ngot:\n%v", desc, pack.Description)
+	}
+
+	if pack.NameCount != nameCount {
+		t.Errorf("Expected name count: %v\ngot:\n%v", nameCount, pack.NameCount)
 	}
 
 	packDataFile := filepath.Join(tmpDir, packName, "data.json")

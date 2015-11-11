@@ -16,6 +16,7 @@ type Pack struct {
 	Installing  bool // TODO remove need for this guy
 	Created     time.Time
 	Description string
+	NameCount   int
 }
 
 type Member struct {

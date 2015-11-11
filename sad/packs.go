@@ -168,6 +168,10 @@ func packMaster() {
 
 	sendPacks := func(req packReq) {
 		for n, p := range packs {
+			p.NameCount = 0
+			for _, ns := range docs[n] {
+				p.NameCount += len(ns.Members)
+			}
 			req.res <- packResp{pck: p, nss: docs[n]}
 		}
 		for _, p := range installing {

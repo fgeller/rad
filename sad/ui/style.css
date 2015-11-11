@@ -182,7 +182,7 @@ a:hover {
 #settings-content {
     margin: 1em auto;
     padding: .5em 1.5em;
-    width: 400pt;
+    width: 500pt;
     background-color: #fff;
     overflow-x: hidden;
     overflow-y: auto;
@@ -228,20 +228,21 @@ a:hover {
 }
 
 .settings-pack-row-label {
-    width: 23%;
+    width: 18%;
     font-weight: 400;
     height: 1.6em;
     display: inline-block;
 }
 .settings-pack-row-value {
     vertical-align: bottom;
-    width: 23%;
+    width: 18%;
     height: 1.6em;
     overflow-x: hidden;
     display: inline-block;
 }
 .settings-pack-row-value.settings-pack-button {
     vertical-align: bottom;
+		text-align: right;
     width: 4%;
     height: 1.6em;
     overflow-x: hidden;

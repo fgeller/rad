@@ -39,7 +39,7 @@ func waitAndOpenUrl(url string) {
 func main() {
 	u, err := user.Current()
 	if err != nil {
-		log.Fatalf("Coudln't access user: %v", err)
+		log.Fatalf("Couldn't access user: %v", err)
 	}
 	pd := filepath.Join(u.HomeDir, ".rad", "sad-packs")
 

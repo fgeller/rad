@@ -31,7 +31,7 @@ func awaitPing(addr string) error {
 }
 
 func TestGenerateAssetsSourceFile(t *testing.T) {
-	defer resetGeneratedAssets()
+	defer resetGeneratedInfo()
 	dir := "testdata/assets"
 	config.assetsOut = "generated_assets.go"
 
@@ -41,12 +41,12 @@ func TestGenerateAssetsSourceFile(t *testing.T) {
 		return
 	}
 
-	if err = writeAssets(assets); err != nil {
+	if err = generate(assets); err != nil {
 		t.Errorf("Error while generating assets source: %v", err)
 		return
 	}
 
-	cmd := exec.Command("gofmt", "-e", "-l", config.assetsOut)
+	cmd := exec.Command("gofmt", "-e", "-d", config.assetsOut)
 	out, err := cmd.CombinedOutput()
 	if err != nil || len(out) != 0 {
 		t.Errorf("Expected generated file to be well-formed, err %v, out:\n%s", err, out)
@@ -55,7 +55,7 @@ func TestGenerateAssetsSourceFile(t *testing.T) {
 }
 
 func TestBuildBinaryWithAssets(t *testing.T) {
-	defer resetGeneratedAssets()
+	defer resetGeneratedInfo()
 	out, err := filepath.Abs("test-sad")
 
 	if err != nil {

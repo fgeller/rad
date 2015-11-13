@@ -25,8 +25,8 @@ func fileHeader(imports []string) string {
 		}
 		out += `import (
 	` + strings.Join(qi, `	
-`) + `)
-`
+`) + `
+)`
 	}
 
 	return out
@@ -49,8 +49,7 @@ func registerBuildVersion() string {
 
 func registerBuildVersion() {
 	global.buildVersion = "` + v + `"
-}
-`
+}`
 
 	return str
 }
@@ -117,6 +116,13 @@ func findSources() ([]string, error) {
 	return sources, nil
 }
 
+func generate(as map[string]shared.Asset) error {
+	contents := fileHeader([]string{"../shared"})
+	contents += registerBuildVersion()
+	contents += registerAssets(as)
+	return writeGeneratedInfo(contents)
+}
+
 func build(out string, assetsDir string) error {
 	start := time.Now()
 	resetGeneratedInfo()
@@ -128,10 +134,7 @@ func build(out string, assetsDir string) error {
 	log.Printf("Assets loaded in %v\n", time.Since(start))
 
 	last := time.Now()
-	contents := fileHeader([]string{"../shared"})
-	contents += registerBuildVersion()
-	contents += registerAssets(assets)
-	if err = writeGeneratedInfo(contents); err != nil {
+	if err = generate(assets); err != nil {
 		return err
 	}
 	log.Printf("Generated info in %v\n", time.Since(last))

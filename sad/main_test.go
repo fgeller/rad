@@ -74,6 +74,20 @@ func populatePackDir() (map[string][]shared.Namespace, []shared.Pack) {
 	return data, []shared.Pack{p2, p1}
 }
 
+func TestFindHomeDir(t *testing.T) {
+
+	hd, err := findHomeDir()
+	if err != nil {
+		t.Errorf("Error finding home dir: %v", err)
+		return
+	}
+
+	if len(hd) <= 0 {
+		t.Errorf("Error finding home dir, empty dir.")
+		return
+	}
+}
+
 func TestLoadInstalledPack(t *testing.T) {
 	defer os.RemoveAll(setup())
 	expectedDocs, expectedPacks := populatePackDir()

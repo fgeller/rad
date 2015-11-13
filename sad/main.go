@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
 	"os/exec"
 	"os/user"
 	"path/filepath"
@@ -36,12 +37,26 @@ func waitAndOpenUrl(url string) {
 	log.Printf("Couldn't get ping, slow startup?\n")
 }
 
-func main() {
-	u, err := user.Current()
-	if err != nil {
-		log.Fatalf("Couldn't access user: %v", err)
+func findHomeDir() (string, error) {
+	hd := os.Getenv("HOME")
+	if len(hd) > 0 {
+		return hd, nil
 	}
-	pd := filepath.Join(u.HomeDir, ".rad", "sad-packs")
+
+	u, err := user.Current()
+	if err == nil && len(u.HomeDir) != 0 {
+		return u.HomeDir, nil
+	}
+
+	return "", err
+}
+
+func main() {
+	hd, err := findHomeDir()
+	if err != nil {
+		log.Fatalf("Couldn't find home dir: %v", err)
+	}
+	pd := filepath.Join(hd, ".rad", "sad-packs")
 
 	flag.StringVar(&config.packDir, "packdir", pd, "Path where packages will be installed")
 	flag.StringVar(&config.sapAddr, "sapaddr", "geller.io:3025", "Addr where sap serves")

@@ -1,3 +1,38 @@
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: url(/MaterialIcons-Regular.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 .mdl-grid {
 		background-color: #3f51b5;
 		color: rgba(255, 255, 255, 0.94)
@@ -15,6 +50,19 @@
 		padding-left: 12px;
 		padding-right: 12px;
 		color: rgba(255, 255, 255, 0.56);
+}
+
+.mdl-tabs__tab.scrollindicator {
+		width: 25px;
+}
+
+.mdl-tabs__tab.scrollindicator i {
+		padding-top: 20px;
+}
+
+#menu {
+		margin-top: 20px;
+		margin-left: 10px;
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
@@ -36,9 +84,14 @@
 .mdl-tabs__tab.last-tab {
 		width: 30px;
 }
+
 .mdl-tabs__tab .path {
 		font-size: 11px;
 		color: rgba(255, 255, 255, .54);
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member {
+		color: rgba(255, 255, 255, 0.94);
 }
 
 .mdl-tabs__tab .member {

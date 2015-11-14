@@ -1,3 +1,56 @@
+.mdl-grid {
+		background-color: #3f51b5;
+		color: rgba(255, 255, 255, 0.94)
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
+		background: #c2185b;
+}
+
+.mdl-tabs__tab {
+		text-transform: none;
+		height: 68px;
+		line-height: 33px;
+		width: 120px;
+		padding-left: 12px;
+		padding-right: 12px;
+		color: rgba(255, 255, 255, 0.56);
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+		color: rgba(255, 255, 255, 0.94);
+}
+
+.mdl-textfield__label {
+		color: rgba(255, 255, 255, .54);
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+		color: rgba(255, 255, 255, .54);
+}
+
+.mdl-textfield__input {
+		border-bottom: 1px solid rgba(255, 255, 255, .54);
+}
+
+.mdl-tabs__tab.last-tab {
+		width: 30px;
+}
+.mdl-tabs__tab .path {
+		font-size: 11px;
+		color: rgba(255, 255, 255, .54);
+}
+
+.mdl-tabs__tab .member {
+		font-size: 14px;
+		color: rgba(255, 255, 255, .54);
+}
+
+.mdl-tabs__tab-bar {
+		height: 68px;
+		border-bottom: 0;
+}
+
 body {
     font-family: Roboto, sans-serif;
     font-weight: 100;

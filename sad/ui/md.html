@@ -3,46 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <title>rad</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="material.min.css">
     <script src="keymaster.js"></script>
     <script src="lodash.min.js"></script>
     <script src="material.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-		<div id="nav-container" style="background-color:green;">
+		<div id="nav-container">
 			<div class="mdl-grid mdl-grid--no-spacing">
-				<div class="mdl-cell mdl-cell--1-col" style="background-color:red;">
-					<button id="demo-menu-lower-left"
-						class="mdl-button mdl-js-button mdl-button--icon">
-						<i class="material-icons">more_vert</i>
-					</button>
+				<div class="mdl-cell mdl-cell--4-col">
+					<div class="mdl-grid mdl-grid--no-spacing">
+						<div class="mdl-cell mdl-cell--2-col">
+							<button id="demo-menu-lower-left"
+								class="mdl-button mdl-js-button mdl-button--icon">
+								<i class="material-icons">more_vert</i>
+							</button>
 
-					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-						for="demo-menu-lower-left">
-						<li class="mdl-menu__item">Some Action</li>
-						<li class="mdl-menu__item">Another Action</li>
-						<li disabled class="mdl-menu__item">Disabled Action</li>
-						<li class="mdl-menu__item">Yet Another Action</li>
-					</ul>
-				</div>
-				<div class="mdl-cell mdl-cell--5-col mdl-cell--stretch" style="background-color:tomato;">
-
-					<form action="#">
-						<div class="mdl-textfield mdl-js-textfield">
-							<input class="mdl-textfield__input" type="text" id="sample1">
-							<label class="mdl-textfield__label" for="sample1">Text...</label>
+							<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+								for="demo-menu-lower-left">
+								<li class="mdl-menu__item">Help</li>
+								<li class="mdl-menu__item">Packages</li>
+								<li class="mdl-menu__item">Settings</li>
+							</ul>
 						</div>
-					</form>
-
+						<div class="mdl-cell mdl-cell--10-col">
+							<form action="#">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+									<input class="mdl-textfield__input" type="text" id="sample3">
+									<label class="mdl-textfield__label" for="sample3"><span id="search-label-pack">pack</span> path member</label>
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
-				<div class="mdl-cell mdl-cell--6-col" style="background-color:orange;">
+				<div class="mdl-cell mdl-cell--8-col">
 					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 						<div class="mdl-tabs__tab-bar">
-							<a href="#starks-panel" class="mdl-tabs__tab is-active">Starks</a>
-							<a href="#lannisters-panel" class="mdl-tabs__tab">Lannisters</a>
-							<a href="#targaryens-panel" class="mdl-tabs__tab">Targaryens</a>
+							<a href="#lannisters-panel" class="mdl-tabs__tab">
+								<div class="member">*core-java-api*</div>
+								<div class="path">clojure.java.javadoc</div>
+							</a>
+							<a href="#targaryens-panel" class="mdl-tabs__tab">
+								<div class="member">andThen</div>
+								<div class="path">scala.concurrent.Future</div>
+							</a>
+							<a href="#x-panel" class="mdl-tabs__tab">
+								<div class="member">columnNumber</div>
+								<div class="path">Error.prototype</div>
+							</a>
 						</div>
 					</div>
 				</div>

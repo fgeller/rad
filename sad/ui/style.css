@@ -61,7 +61,7 @@
 }
 
 #menu {
-		margin-top: 20px;
+		margin-top: 25px;
 		margin-left: 10px;
 }
 
@@ -90,12 +90,27 @@
 		color: rgba(255, 255, 255, .54);
 }
 
-.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member {
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member,
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .path {
 		color: rgba(255, 255, 255, 0.94);
 }
 
+.mdl-button {
+		margin-top: 25px;
+}
+.mdl-textfield {
+		margin-top: 10px;
+}
+.mdl-tabs {
+		margin-top: 10px;
+}
+
+/* .mdl-textfield__label:after { */
+/* 		bottom: 15px; */
+/* } */
+
 .mdl-tabs__tab .member {
-		font-size: 14px;
+		font-size: 15px;
 		color: rgba(255, 255, 255, .54);
 }
 

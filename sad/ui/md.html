@@ -14,35 +14,30 @@
   <body>
 		<div id="nav-container">
 			<div class="mdl-grid mdl-grid--no-spacing">
-				<div class="mdl-cell mdl-cell--4-col">
-					<div class="mdl-grid mdl-grid--no-spacing">
-						<div class="mdl-cell mdl-cell--2-col">
-							<button id="menu" class="mdl-button mdl-js-button mdl-button--icon">
-								<i class="material-icons">more_vert</i>
-							</button>
 
-							<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
-								for="demo-menu-lower-left">
-								<li class="mdl-menu__item">Help</li>
-								<li class="mdl-menu__item">Packages</li>
-								<li class="mdl-menu__item">Settings</li>
-							</ul>
+				<div class="mdl-cell mdl-cell--4-col">
+					<button id="menu" class="mdl-button mdl-js-button mdl-button--icon">
+						<i class="material-icons">more_vert</i>
+					</button>
+					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+						for="menu">
+						<li class="mdl-menu__item">Help</li>
+						<li class="mdl-menu__item">Packages</li>
+						<li class="mdl-menu__item">Settings</li>
+					</ul>
+
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="sample3">
+						<i class="material-icons">search</i>
+					</label>
+
+					<form action="#">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="sample3">
+							<label class="mdl-textfield__label" for="sample3"><span id="search-label-pack">pack</span> path member</label>
 						</div>
-						<div class="mdl-cell mdl-cell--2-col">
-							<label class="mdl-button mdl-js-button mdl-button--icon" for="sample3">
-								<i class="material-icons">search</i>
-							</label>
-						</div>
-						<div class="mdl-cell mdl-cell--8-col">
-							<form action="#">
-								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-									<input class="mdl-textfield__input" type="text" id="sample3">
-									<label class="mdl-textfield__label" for="sample3"><span id="search-label-pack">pack</span> path member</label>
-								</div>
-							</form>
-						</div>
-					</div>
+					</form>
 				</div>
+
 				<div class="mdl-cell mdl-cell--8-col">
 					<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 						<div class="mdl-tabs__tab-bar">

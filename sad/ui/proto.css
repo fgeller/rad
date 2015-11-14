@@ -1,41 +1,43 @@
 @font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(/MaterialIcons-Regular.eot); /* For IE6-8 */
-  src: url(/MaterialIcons-Regular.woff2) format('woff2');
+		font-family: 'Material Icons';
+		font-style: normal;
+		font-weight: 400;
+		src: url(/MaterialIcons-Regular.eot);
+		src: url(/MaterialIcons-Regular.woff2) format('woff2');
 }
 
 .material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
+		font-family: 'Material Icons';
+		font-weight: normal;
+		font-style: normal;
+		font-size: 24px;
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		line-height: 1;
+		text-transform: none;
+		letter-spacing: normal;
+		word-wrap: normal;
+		white-space: nowrap;
+		direction: ltr;
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+		-moz-osx-font-smoothing: grayscale;
+		font-feature-settings: 'liga';
 }
 
 .mdl-grid {
 		background-color: #3f51b5;
 		color: rgba(255, 255, 255, 0.94)
+}
+
+.mdl-cell {
+		display: inline-block;
+		height: 68px;
+}
+
+.mdl-cell * {
+		display: inline-block;
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
@@ -45,29 +47,35 @@
 .mdl-tabs__tab {
 		text-transform: none;
 		height: 68px;
-		line-height: 33px;
+		line-height: 22px;
 		width: 120px;
-		padding-left: 12px;
-		padding-right: 12px;
+		padding-top: 0px;
+		padding-left: 10px;
+		padding-right: 10px;
 		color: rgba(255, 255, 255, 0.56);
 }
 
-.mdl-tabs__tab.scrollindicator {
-		width: 25px;
-}
-
-.mdl-tabs__tab.scrollindicator i {
-		padding-top: 20px;
-}
-
-#menu {
-		margin-top: 25px;
-		margin-left: 10px;
+.mdl-tabs__tab .mdl-tabs__ripple-container {
+		height: 68px;
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
 		color: rgba(255, 255, 255, 0.94);
+		height: 68px;
 }
+
+.mdl-tabs__tab.scrollindicator {
+		width: 20px;
+}
+
+.mdl-tabs__tab.scrollindicator i {
+		padding-top: 22px;
+}
+
+.mdl-textfield {
+		width: 200px;
+}
+
 
 .mdl-textfield__label {
 		color: rgba(255, 255, 255, .54);
@@ -81,13 +89,18 @@
 		border-bottom: 1px solid rgba(255, 255, 255, .54);
 }
 
-.mdl-tabs__tab.last-tab {
-		width: 30px;
+.mdl-tabs__tab div {
+		color: rgba(255, 255, 255, .54);
+}
+
+.mdl-tabs__tab .member {
+		margin-top: 10px;
+		font-size: 14px;
 }
 
 .mdl-tabs__tab .path {
+		margin-top: 5px;
 		font-size: 11px;
-		color: rgba(255, 255, 255, .54);
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member,
@@ -95,19 +108,8 @@
 		color: rgba(255, 255, 255, 0.94);
 }
 
-.mdl-button {
-		margin-top: 25px;
-}
-.mdl-textfield {
-		margin-top: 10px;
-}
 .mdl-tabs {
-		margin-top: 10px;
-}
-
-.mdl-tabs__tab .member {
-		font-size: 15px;
-		color: rgba(255, 255, 255, .54);
+		height: 68px;
 }
 
 .mdl-tabs__tab-bar {

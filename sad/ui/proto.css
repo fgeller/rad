@@ -39,7 +39,7 @@
 		height: 68px;
 }
 
-.mdl-cell * {
+.mdl-cell > * {
 		display: inline-block;
 }
 
@@ -72,6 +72,10 @@
 		width: 20px;
 }
 
+a:hover.scrollindicator i {
+		color: rgba(255, 255, 255, .94);
+}
+
 .mdl-tabs__tab.scrollindicator i {
 		padding-top: 22px;
 }
@@ -101,12 +105,12 @@
 
 .mdl-tabs__tab .member {
 		margin-top: 10px;
-		font-size: 15px;
+		font-size: 16px;
 }
 
 .mdl-tabs__tab .path {
 		margin-top: 5px;
-		font-size: 11px;
+		font-size: 10px;
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member,
@@ -115,11 +119,19 @@
 }
 
 .mdl-tabs {
+		background-color: #3f51b5;
 		height: 68px;
+}
+
+.mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
+		background: rgb(255, 255, 255);
+}
+
+*:not(.mdl-menu__item-ripple-container) > .mdl-ripple {
+		background: rgb(255, 255, 255);
 }
 
 .mdl-tabs__tab-bar {
 		height: 68px;
 		border-bottom: 0;
 }
-

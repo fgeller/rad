@@ -28,28 +28,39 @@
 		font-feature-settings: 'liga';
 }
 
-#nav-container .mdl-grid {
+#nav {
 		background-color: #3f51b5;
-		color: rgba(255, 255, 255, 0.94);
+		text-align: left;
 		box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
 }
 
-#nav-container .mdl-cell {
-		display: inline-block;
-		height: 68px;
+#nav .mdl-grid {
+		color: rgba(255, 255, 255, 0.94);
+		margin: 0;
+		max-width: 840px;
 }
 
-#nav-container .mdl-cell > * {
+#nav .mdl-cell {
+		display: inline-block;
+		height: 78px;
+}
+
+#nav .mdl-cell > * {
 		display: inline-block;
 }
 
-#nav-container .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
+#nav #search > * {
+		display: inline-block;
+		padding: 5px;
+}
+
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
 		background: #c2185b;
 }
 
-#nav-container .mdl-tabs__tab {
+#nav .mdl-tabs__tab {
 		text-transform: none;
-		height: 68px;
+		height: 78px;
 		line-height: 22px;
 		width: 120px;
 		padding-top: 0px;
@@ -59,74 +70,74 @@
 		font-weight: 400;
 }
 
-#nav-container .mdl-tabs__tab .mdl-tabs__ripple-container {
-		height: 68px;
+#nav .mdl-tabs__tab .mdl-tabs__ripple-container {
+		height: 78px;
 }
 
-#nav-container .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
 		color: rgba(255, 255, 255, 0.94);
-		height: 68px;
+		height: 78px;
 }
 
-#nav-container .mdl-tabs__tab.scrollindicator {
+#nav .mdl-tabs__tab.scrollindicator {
 		width: 20px;
 }
 
-#nav-container a:hover.scrollindicator i {
+#nav a:hover.scrollindicator i {
 		color: rgba(255, 255, 255, .94);
 }
 
-#nav-container .mdl-tabs__tab.scrollindicator i {
-		padding-top: 22px;
+#nav .mdl-tabs__tab.scrollindicator i {
+		padding-top: 28px;
 }
 
-#nav-container .mdl-textfield {
+#nav .mdl-textfield {
 		width: 200px;
 }
 
-#nav-container .mdl-textfield__label {
+#nav .mdl-textfield__label {
 		color: rgba(255, 255, 255, .54);
 }
 
-#nav-container .mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+#nav .mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
 		color: rgba(255, 255, 255, .54);
 }
 
-#nav-container .mdl-textfield__input {
+#nav .mdl-textfield__input {
 		border-bottom: 1px solid rgba(255, 255, 255, .54);
 }
 
-#nav-container .mdl-tabs__tab .path,
-#nav-container .mdl-tabs__tab .member {
+#nav .mdl-tabs__tab .path,
+#nav .mdl-tabs__tab .member {
 		width: 120px;
 		color: rgba(255, 255, 255, .54);
 }
 
-#nav-container .mdl-tabs__tab .member {
-		margin-top: 10px;
+#nav .mdl-tabs__tab .member {
+		margin-top: 15px;
 		font-size: 16px;
 }
 
-#nav-container .mdl-tabs__tab .path {
+#nav .mdl-tabs__tab .path {
 		margin-top: 5px;
 		font-size: 10px;
 }
 
-#nav-container .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member,
-#nav-container .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .path {
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member,
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .path {
 		color: rgba(255, 255, 255, 0.94);
 }
 
-#nav-container .mdl-tabs {
+#nav .mdl-tabs {
 		background-color: #3f51b5;
-		height: 68px;
+		height: 78px;
 }
 
-#nav-container *:not(.mdl-menu__item-ripple-container) > .mdl-ripple {
+#nav *:not(.mdl-menu__item-ripple-container) > .mdl-ripple {
 		background: rgb(255, 255, 255);
 }
 
-#nav-container .mdl-tabs__tab-bar {
-		height: 68px;
+#nav .mdl-tabs__tab-bar {
+		height: 78px;
 		border-bottom: 0;
 }

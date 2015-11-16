@@ -157,8 +157,10 @@ var Search = React.createClass({
 		if (this.state.sock) {
 			this.state.sock.close();
 		}
+
 		var sock = socket();
 		this.setState({sock: sock, results: []});
+		document.dispatchEvent(ev("SearchResults", []));
 
 		sock.onmessage = function(msg) {
 			var entry = JSON.parse(msg.data);

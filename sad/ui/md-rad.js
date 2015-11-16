@@ -211,9 +211,17 @@ var SearchResult = React.createClass({
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
 	},
+	loadDocumentation: function () {
+		console.log("loading "+this.props.target);
+		document.getElementById("ifrm").src = this.props.target;
+	},
 	render: function() {
 		return (
-			<a id={"search-result-"+this.props.index} className="mdl-tabs__tab">
+			<a
+				id={"search-result-"+this.props.index}
+				className="mdl-tabs__tab"
+				onClick={this.loadDocumentation}
+			>
 				<div className="member">{this.props.member}</div>
 				<div className="path">{this.props.path}</div>
 			</a>
@@ -254,6 +262,7 @@ var SearchResults = React.createClass({
 					key={"search-result-"+guid()}
 					member={r["Member"]}
 					path={r["Namespace"]}
+					target={r["Target"]}
 				/>
 			);
 		}
@@ -274,10 +283,17 @@ var SearchResults = React.createClass({
 	}
 });
 
-var Rad = React.createClass({
-	componentDidUpdate: function() {
-		componentHandler.upgradeDom();
-	},
+var DocumentationFrame = React.createClass({
+	render: function() {
+		return (
+			<div id="doc-container">
+				<iframe id="ifrm" />
+			</div>
+		);
+	}
+});
+
+var Nav = React.createClass({
 	render: function() {
 		return (
 			<div id="nav">
@@ -290,6 +306,20 @@ var Rad = React.createClass({
 						<SearchResults />
 					</div>
 				</div>
+			</div>
+		);
+	}
+});
+
+var Rad = React.createClass({
+	componentDidUpdate: function() {
+		componentHandler.upgradeDom();
+	},
+	render: function() {
+		return (
+			<div>
+				<Nav />
+				<DocumentationFrame />
 			</div>
 		);
 	}

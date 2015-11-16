@@ -95,6 +95,10 @@ key.filter = function(event){
 	return !(tagName == 'INPUT' || tagName == 'SELECT' || tagName == 'TEXTAREA');
 }
 
+var ev = function (n, data) {
+	return new CustomEvent(n, {detail: data});
+};
+
 //
 // Components
 //
@@ -159,8 +163,7 @@ var Search = React.createClass({
 		sock.onmessage = function(msg) {
 			var entry = JSON.parse(msg.data);
 			this.setState({results: this.state.results.concat([entry])});
-			console.log("pushing results: ", this.state.results);
-			this.props.pushResults(this.state.results);
+			document.dispatchEvent(ev("SearchResults", this.state.results));
 		}.bind(this);
 
 		sock.onopen = function() {
@@ -214,15 +217,19 @@ var SearchResult = React.createClass({
 });
 
 var SearchResults = React.createClass({
-	pushResults: function(results) {
-		this.setState({results: results});
-		console.log("pushed results", this.state.results);
+	updateResults: function(ev) {
+		this.setState({ results: ev.detail });
 	},
 	getInitialState: function() {
 		return { results: [] };
 	},
+	componentDidMount: function () {
+		document.addEventListener("SearchResults", this.updateResults.bind(this));
+	},
+	componentWillUnmount: function () {
+		document.removeEventListener("SearchResults", this.updateResults.bind(this));
+	},
 	render: function() {
-		console.log("changing search results");
 		var results = [];
 		for (var i = 0; i < this.state.results.length; i++) {
 			var r = this.state.results[i];
@@ -249,22 +256,16 @@ var Rad = React.createClass({
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
 	},
-	pushResults: function(results) {
-		console.log("passing results through Rad", results);
-		this.refs.searchResults.pushResults(results);
-	},
 	render: function() {
-		var searchResults = <SearchResults ref="searchResults" />;
-
 		return (
 			<div id="nav">
 				<div className="mdl-grid mdl-grid--no-spacing">
 					<div className="mdl-cell mdl-cell--5-col">
 						<Menu />
-						<Search pushResults={this.pushResults} />
+						<Search />
 					</div>
 					<div className="mdl-cell mdl-cell--7-col">
-						{ searchResults }
+						<SearchResults />
 					</div>
 				</div>
 			</div>

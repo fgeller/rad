@@ -118,7 +118,7 @@ var Menu = React.createClass({
 
 var Search = React.createClass({
 	parseQuery: function(q) {
-		var ps = { Limit: 5, Pack: "", Path: "", Member: "" };
+		var ps = { Limit: 3, Pack: "", Path: "", Member: "" };
 		var qs = q.split(" ");
 		if (qs.length == 1) {
 			ps.Pack = qs[0];
@@ -159,7 +159,8 @@ var Search = React.createClass({
 		sock.onmessage = function(msg) {
 			var entry = JSON.parse(msg.data);
 			this.setState({results: this.state.results.concat([entry])});
-			console.log("results: ", this.state.results);
+			console.log("pushing results: ", this.state.results);
+			this.props.pushResults(this.state.results);
 		}.bind(this);
 
 		sock.onopen = function() {
@@ -201,26 +202,40 @@ var Search = React.createClass({
 	}
 });
 
-var SearchResults = React.createClass({
+var SearchResult = React.createClass({
 	render: function() {
+		return (
+			<a className="mdl-tabs__tab">
+				<div className="member">{this.props.member}</div>
+				<div className="path">{this.props.path}</div>
+			</a>
+		);
+	}
+});
+
+var SearchResults = React.createClass({
+	pushResults: function(results) {
+		this.setState({results: results});
+		console.log("pushed results", this.state.results);
+	},
+	getInitialState: function() {
+		return { results: [] };
+	},
+	render: function() {
+		console.log("changing search results");
+		var results = [];
+		for (var i = 0; i < this.state.results.length; i++) {
+			var r = this.state.results[i];
+			results.push(<SearchResult member={r["Member"]} path={r["Namespace"]} />);
+		}
+
 		return (
 			<div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 				<div className="mdl-tabs__tab-bar">
 					<a className="mdl-tabs__tab scrollindicator">
 						<i className="material-icons scrollindicator scrollindicator--left disabled"></i>
 					</a>
-					<a className="mdl-tabs__tab">
-						<div className="member">*core-java-api*</div>
-						<div className="path">clojure.java.javadoc</div>
-					</a>
-					<a className="mdl-tabs__tab">
-						<div className="member">andThen</div>
-						<div className="path">scala.concurrent.FutureFutureFuture</div>
-					</a>
-					<a className="mdl-tabs__tab">
-						<div className="member">columnNumberColumnNumber</div>
-						<div className="path">Error.prototypeprototypeprototype</div>
-					</a>
+					{results}
 					<a className="mdl-tabs__tab scrollindicator">
 						<i className="material-icons scrollindicator scrollindicator--right"></i>
 					</a>
@@ -234,16 +249,22 @@ var Rad = React.createClass({
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
 	},
+	pushResults: function(results) {
+		console.log("passing results through Rad", results);
+		this.refs.searchResults.pushResults(results);
+	},
 	render: function() {
+		var searchResults = <SearchResults ref="searchResults" />;
+
 		return (
 			<div id="nav">
 				<div className="mdl-grid mdl-grid--no-spacing">
 					<div className="mdl-cell mdl-cell--5-col">
 						<Menu />
-						<Search />
+						<Search pushResults={this.pushResults} />
 					</div>
 					<div className="mdl-cell mdl-cell--7-col">
-						<SearchResults />
+						{ searchResults }
 					</div>
 				</div>
 			</div>

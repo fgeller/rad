@@ -99,6 +99,10 @@
 		color: rgba(255, 255, 255, .54);
 }
 
+#nav .mdl-textfield__label .highlight {
+		color: rgba(255, 255, 255, .94);
+}
+
 #nav .mdl-textfield--floating-label.is-focused .mdl-textfield__label, .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
 		color: rgba(255, 255, 255, .54);
 }

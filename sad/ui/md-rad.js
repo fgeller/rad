@@ -208,9 +208,12 @@ var Search = React.createClass({
 });
 
 var SearchResult = React.createClass({
+	componentDidUpdate: function() {
+		componentHandler.upgradeDom();
+	},
 	render: function() {
 		return (
-			<a className="mdl-tabs__tab">
+			<a id={"search-result-"+this.props.index} className="mdl-tabs__tab">
 				<div className="member">{this.props.member}</div>
 				<div className="path">{this.props.path}</div>
 			</a>
@@ -219,6 +222,9 @@ var SearchResult = React.createClass({
 });
 
 var SearchResults = React.createClass({
+	componentDidUpdate: function() {
+		componentHandler.upgradeDom();
+	},
 	updateResults: function(ev) {
 		this.setState({ results: ev.detail });
 	},
@@ -233,21 +239,35 @@ var SearchResults = React.createClass({
 	},
 	render: function() {
 		var results = [];
+
+		results.push(
+			<a className="mdl-tabs__tab scrollindicator">
+				<i className="material-icons scrollindicator scrollindicator--left disabled"></i>
+			</a>
+		);
+
 		for (var i = 0; i < this.state.results.length; i++) {
 			var r = this.state.results[i];
-			results.push(<SearchResult member={r["Member"]} path={r["Namespace"]} />);
+			results.push(
+				<SearchResult
+					index={i}
+					key={"search-result-"+guid()}
+					member={r["Member"]}
+					path={r["Namespace"]}
+				/>
+			);
 		}
 
+		results.push(
+			<a className="mdl-tabs__tab scrollindicator">
+				<i className="material-icons scrollindicator scrollindicator--right"></i>
+			</a>
+		);
+
 		return (
-			<div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+				<div id="search-results" key={"search-results-"+guid()} className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 				<div className="mdl-tabs__tab-bar">
-					<a className="mdl-tabs__tab scrollindicator">
-						<i className="material-icons scrollindicator scrollindicator--left disabled"></i>
-					</a>
 					{results}
-					<a className="mdl-tabs__tab scrollindicator">
-						<i className="material-icons scrollindicator scrollindicator--right"></i>
-					</a>
 				</div>
 			</div>
 		);

@@ -392,7 +392,12 @@ func serve(addr string) {
 	http.HandleFunc("/install/", installHandler)
 	http.HandleFunc("/remove/", removeHandler)
 	http.HandleFunc("/a/", assetHandler)
-	http.HandleFunc("/", assetHandler)
+	if config.devMode {
+		log.Printf("Serving assets from ui folder.\n")
+		http.Handle("/", http.FileServer(http.Dir("ui")))
+	} else {
+		http.HandleFunc("/", assetHandler)
+	}
 
 	ps := http.FileServer(root(config.packDir))
 	http.Handle("/pack/", http.StripPrefix("/pack/", ps))

@@ -15,6 +15,7 @@ var config struct {
 	sapAddr  string
 	addr     string
 	readOnly bool
+	devMode  bool
 }
 
 func openURL(url string) {
@@ -62,6 +63,7 @@ func main() {
 	flag.StringVar(&config.sapAddr, "sapaddr", "geller.io:3025", "Addr where sap serves")
 	flag.StringVar(&config.addr, "addr", "localhost:3024", "Addr where sad should serve")
 	flag.BoolVar(&config.readOnly, "readonly", false, "Whether to allow modifications of installed packs.")
+	flag.BoolVar(&config.devMode, "devmode", false, "Whether to run in dev mode.")
 	flag.Parse()
 
 	pd, err = filepath.Abs(config.packDir)

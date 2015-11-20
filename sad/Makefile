@@ -41,4 +41,4 @@ release-darwin:
 release: release-linux release-darwin release-windows
 
 run:
-	./sad -sapaddr 0.0.0.0:3025
+	./sad -sapaddr 0.0.0.0:3025 -devmode=true

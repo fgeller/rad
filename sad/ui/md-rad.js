@@ -121,8 +121,11 @@ var Menu = React.createClass({
 });
 
 var Search = React.createClass({
+	getInitialState: function() {
+		return {};
+	},
 	parseQuery: function(q) {
-		var ps = { Limit: 3, Pack: "", Path: "", Member: "" };
+		var ps = { Limit: 10, Pack: "", Path: "", Member: "" };
 		var qs = q.split(" ");
 		if (qs.length == 1) {
 			ps.Pack = qs[0];
@@ -149,9 +152,6 @@ var Search = React.createClass({
 		var ps = this.parseQuery(query);
 		this.highlightLabels(ps);
 		this.streamSearch(ps);
-	},
-	getInitialState: function() {
-		return {};
 	},
 	streamSearch: function(ps) {
 		if (this.state.sock) {
@@ -211,16 +211,25 @@ var SearchResult = React.createClass({
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
 	},
+	select: function (e) {
+		document.dispatchEvent(ev("SelectSearchResult", this.props.index));
+		console.log("select event", e);
+	},
+	componentWillMount() {
+		if (this.props.selected) {
+			/* this.loadDocumentation(); */
+		}
+	},
 	loadDocumentation: function () {
-		console.log("loading "+this.props.target);
 		document.getElementById("ifrm").src = this.props.target;
 	},
 	render: function() {
+		var cn = "mdl-tabs__tab" + (this.props.selected ? " is-selected" : "");
 		return (
 			<a
 				id={"search-result-"+this.props.index}
-				className="mdl-tabs__tab"
-				onClick={this.loadDocumentation}
+				className={cn}
+				onClick={this.select}
 			>
 				<div className="member">{this.props.member}</div>
 				<div className="path">{this.props.path}</div>
@@ -230,53 +239,103 @@ var SearchResult = React.createClass({
 });
 
 var SearchResults = React.createClass({
-	componentDidUpdate: function() {
-		componentHandler.upgradeDom();
+	getInitialState: function() {
+		return {
+			selection: 0,
+			visibleStart: 0,
+			visibleEnd: 0,
+			results: [],
+			visibleResults: []
+		};
 	},
 	updateResults: function(ev) {
-		this.setState({ results: ev.detail });
+		this.setState({
+			results: ev.detail,
+			selection: 0,
+			visibleStart: 0,
+			visibleEnd: Math.min(3, ev.detail.length)
+		});
 	},
-	getInitialState: function() {
-		return { results: [] };
+	updateSelection: function(ev) {
+		var n = ev.detail;
+		var ns = {
+			visibleStart: this.state.visibleStart,
+			visibleEnd: this.state.visibleEnd,
+			selection: n
+		};
+		if (n < ns.visibleStart) {
+			ns.visibleStart = n;
+			ns.visibleEnd = n + 3;
+		} else if (n >= ns.visibleEnd) {
+			ns.visibleEnd = ns.visibleEnd + 1;
+			ns.visibleStart = ns.visibleEnd - 3;
+		}
+		console.log("new state for result selection", ns);
+		this.setState(ns);
 	},
 	componentDidMount: function () {
 		document.addEventListener("SearchResults", this.updateResults.bind(this));
+		document.addEventListener("SelectSearchResult", this.updateSelection.bind(this));
+	},
+	componentDidUpdate: function() {
+		componentHandler.upgradeDom();
 	},
 	componentWillUnmount: function () {
 		document.removeEventListener("SearchResults", this.updateResults.bind(this));
+		document.removeEventListener("SelectSearchResult", this.updateSelection.bind(this));
 	},
-	render: function() {
+	instantiateSearchResult: function(index, data) {
+		return (
+			<SearchResult
+				index={index}
+				selected={this.state.selection === index}
+				key={"search-result-"+guid()}
+				member={data["Member"]}
+				path={data["Namespace"]}
+				target={data["Target"]}
+			/>
+		);
+	},
+	moveSelectionLeft: function() {
+		var n = Math.max(0, this.state.selection - 1);
+		document.dispatchEvent(ev("SelectSearchResult", n));
+	},
+	moveSelectionRight: function() {
+		var n = Math.min(this.state.results.length - 1, this.state.selection + 1);
+		document.dispatchEvent(ev("SelectSearchResult", n));
+	},
+	visibleResults: function() {
 		var results = [];
 
-		results.push(
-			<a className="mdl-tabs__tab scrollindicator">
-				<i className="material-icons scrollindicator scrollindicator--left disabled"></i>
-			</a>
-		);
-
-		for (var i = 0; i < this.state.results.length; i++) {
-			var r = this.state.results[i];
+		if (this.state.results.length > 1) {
 			results.push(
-				<SearchResult
-					index={i}
-					key={"search-result-"+guid()}
-					member={r["Member"]}
-					path={r["Namespace"]}
-					target={r["Target"]}
-				/>
+				<a className="mdl-tabs__tab scrollindicator" onClick={this.moveSelectionLeft}>
+					<i className="material-icons scrollindicator scrollindicator--left disabled"></i>
+				</a>
 			);
 		}
 
-		results.push(
-			<a className="mdl-tabs__tab scrollindicator">
-				<i className="material-icons scrollindicator scrollindicator--right"></i>
-			</a>
-		);
+		for (var i = this.state.visibleStart; i < this.state.visibleEnd; i++) {
+			var r = this.state.results[i];
+			results.push(this.instantiateSearchResult(i, r));
+		}
+
+		if (this.state.results.length > 1) {
+			results.push(
+				<a className="mdl-tabs__tab scrollindicator" onClick={this.moveSelectionRight}>
+					<i className="material-icons scrollindicator scrollindicator--right"></i>
+				</a>
+			);
+		}
+
+		return results;
+	},
+	render: function() {
 
 		return (
 				<div id="search-results" key={"search-results-"+guid()} className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 				<div className="mdl-tabs__tab-bar">
-					{results}
+					{this.visibleResults()}
 				</div>
 			</div>
 		);

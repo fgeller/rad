@@ -54,7 +54,7 @@
 		padding: 5px;
 }
 
-#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-selected:after {
 		background: #c2185b;
 }
 
@@ -74,7 +74,7 @@
 		height: 78px;
 }
 
-#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-selected {
 		color: rgba(255, 255, 255, 0.94);
 		height: 78px;
 }
@@ -127,8 +127,8 @@
 		font-size: 10px;
 }
 
-#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .member,
-#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active .path {
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-selected .member,
+#nav .mdl-tabs.is-upgraded .mdl-tabs__tab.is-selected .path {
 		color: rgba(255, 255, 255, 0.94);
 }
 

@@ -8,10 +8,7 @@ build:
 	rm -vf sad
 	rm -rf assets
 	mkdir -p assets
-	cp -r ui/!(rad.js) assets/
-	babel --out-file assets/rad.js ui/rad.js
-	babel --out-file assets/md-rad.js ui/md-rad.js
-	babel --out-file assets/md2-rad.js ui/md2-rad.js
+	cp -r ui/* assets/
 	go run build.go -v -prof=${BUILD_PROF} -os ${BUILD_OS} -arch ${BUILD_ARCH}
 
 test: buildtest apptest

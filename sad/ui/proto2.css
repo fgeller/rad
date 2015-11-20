@@ -1,0 +1,134 @@
+body {
+		background-color: #fff;
+		font-family: Roboto, sans-serif;
+}
+
+#search {
+		top: 20px;
+		right: 20px;
+		position: absolute;
+		background-color: #fff;
+		width: 372px;
+		border: 1px solid rgba(0,0,0,.12);
+		border-radius: 2px;
+		padding: 0 5px 0 5px;
+		z-index: 10;
+}
+
+#search-fields {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+}
+
+#search-results {
+		width: 100%;
+		padding-bottom: 5px;
+}
+
+#search-results .mdl-data-table {
+		width: 100%;
+}
+
+#search > * {
+		display: inline-flex;
+}
+
+.mdl-data-table {
+		border: 0px;
+}
+
+.mdl-data-table td {
+		border-top: 1px solid rgba(0, 0, 0, .12);
+		border-bottom: 0px;
+}
+
+#search-results .mdl-data-table tbody tr:is-selected,
+#search-results .mdl-data-table tbody tr:hover {
+		background-color: #e3f2fd;
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+.mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+		color: rgba(0, 0, 0, 0.26);
+}
+
+.mdl-textfield__label .highlight {
+		color: rgba(0, 0, 0, .94);
+}
+.mdl-data-table td:last-of-type {
+		padding-right: 36px;
+		width: 140px;
+		max-width: 186px;
+		text-align: right;
+		overflow: hidden;
+		text-overflow: ellipsis;
+}
+.mdl-data-table td:first-of-type {
+		padding-left: 36px;
+		color: rgba(0, 0, 0, 0.94);
+		width: 140px;
+		max-width: 186px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+}
+
+.mdl-textfield__label:after {
+		background-color: white;
+}
+
+.mdl-data-table td {
+		color: rgba(0, 0, 0, 0.54);
+		padding: 10px;
+}
+
+.mdl-textfield__input {
+		border: 0px;
+}
+
+#doc-container {
+    position: fixed;
+    vertical-align: top;
+    margin-top: 0px;
+    left: 0;
+    top: 10pt;
+    width: 100%;
+    height: 100%;
+		z-index: 1;
+}
+
+#ifrm {
+    height: 100%;
+    width: 100%;
+    border: 0px;
+}
+
+@font-face {
+		font-family: 'Material Icons';
+		font-style: normal;
+		font-weight: 400;
+		src: url(/MaterialIcons-Regular.eot);
+		src: url(/MaterialIcons-Regular.woff2) format('woff2');
+		src: url(/MaterialIcons-Regular.woff) format('woff');
+		src: url(/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+		font-family: 'Material Icons';
+		font-weight: normal;
+		font-style: normal;
+		font-size: 24px;
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		line-height: 1;
+		text-transform: none;
+		letter-spacing: normal;
+		word-wrap: normal;
+		white-space: nowrap;
+		direction: ltr;
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+		-moz-osx-font-smoothing: grayscale;
+		font-feature-settings: 'liga';
+}

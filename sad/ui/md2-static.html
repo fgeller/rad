@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script src="/material.min.js"></script>
+    <link rel="stylesheet" href="/material.min.css">
+    <link rel="stylesheet" href="/proto2.css">
+  </head>
+  <body>
+		<div id="search">
+			<div id="search-fields">
+				<div>
+					<button id="demo-menu-lower-left"
+						class="mdl-button mdl-js-button mdl-button--icon">
+						<i class="material-icons">more_vert</i>
+					</button>
+					<ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+						for="demo-menu-lower-left">
+						<li class="mdl-menu__item">Help</li>
+						<li class="mdl-menu__item">Packages</li>
+						<li class="mdl-menu__item">Configuration</li>
+					</ul>
+				</div>
+
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="text" id="sample3">
+					<label class="mdl-textfield__label" for="sample3">
+						<span id="search-label-pack">pack</span>
+						<span id="search-label-path">path</span>
+						<span id="search-label-member">member</span>
+					</label>
+				</div>
+
+				<div>
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="sample3">
+						<i class="material-icons">search</i>
+					</label>
+				</div>
+			</div>
+
+			<table id="search-results" class="mdl-data-table mdl-js-data-table">
+				<tbody>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">andThen</td>
+						<td>scala.concurrent.Future</td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">WalkFunc</td>
+						<td>path.filepath</td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">ex-info</td>
+						<td>core</td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">..</td>
+						<td>core.threading</td>
+					</tr>
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">hello there</td>
+						<td>world.new.brave</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+  </body>
+</html>

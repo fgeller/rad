@@ -265,7 +265,6 @@ var SearchResults = React.createClass({
 	updateSelection: function(ev) {
 		var n = ev.detail;
 		var ns = {selection: n};
-		console.log("update selection", ns);
 		this.setState(ns);
 	},
 	componentDidMount: function () {

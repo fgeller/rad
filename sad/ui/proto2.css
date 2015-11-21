@@ -43,9 +43,9 @@ body {
 		border-bottom: 0px;
 }
 
-#search-results .mdl-data-table tbody tr:is-selected,
+#search-results .mdl-data-table tbody tr.is-selected,
 #search-results .mdl-data-table tbody tr:hover {
-		background-color: #e3f2fd;
+		background-color: #e8eaf6;
 }
 
 .mdl-textfield--floating-label.is-focused .mdl-textfield__label,

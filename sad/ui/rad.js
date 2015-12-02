@@ -233,6 +233,11 @@ var SearchBar = React.createClass({
 
 var SearchResult = React.createClass({
 	displayName: "SearchResult",
+	componentDidMount: function() {
+		if (this.props.selected) {
+			this.loadDocumentation();
+		}
+	},
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
 	},
@@ -240,8 +245,11 @@ var SearchResult = React.createClass({
 		this.loadDocumentation();
 		publish("SelectSearchResult", this.props.index);
 	},
-	loadDocumentation: function () {
-		document.getElementById("ifrm").src = this.props.target;
+	loadDocumentation: function () { // TODO maybe debounce this guy.
+		var ifrm = document.getElementById("ifrm");
+		if (ifrm.src != this.props.target) {
+			ifrm.src = this.props.target;
+		}
 	},
 	render: function() {
 		var cn = this.props.selected ? "is-selected" : "";

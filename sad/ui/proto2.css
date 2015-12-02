@@ -34,6 +34,10 @@ body {
 		display: inline-flex;
 }
 
+#menu-button {
+		margin-right: 5px;
+}
+
 .mdl-data-table {
 		border: 0px;
 }

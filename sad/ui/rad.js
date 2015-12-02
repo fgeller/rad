@@ -267,9 +267,31 @@ var SearchResults = React.createClass({
 		var ns = {selection: n};
 		this.setState(ns);
 	},
+	moveSelectionUp: function() {
+		var n = Math.max(0, this.state.selection - 1);
+		publish("SelectSearchResult", n);
+	},
+	moveSelectionDown: function() {
+		var n = Math.min(this.state.results.length - 1, this.state.selection + 1);
+		publish("SelectSearchResult", n);
+	},
 	componentDidMount: function () {
 		document.addEventListener("SearchResults", this.updateResults.bind(this));
 		document.addEventListener("SelectSearchResult", this.updateSelection.bind(this));
+
+		key.unbind('down');
+		key('down', function(event) {
+			this.moveSelectionDown();
+			event.cancelBubble = true;
+			return false;
+		}.bind(this));
+
+		key.unbind('up');
+		key('up', function(event) {
+			this.moveSelectionUp();
+			event.cancelBubble = true;
+			return false;
+		}.bind(this));
 	},
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
@@ -288,14 +310,6 @@ var SearchResults = React.createClass({
 				target: data["Target"]
 			})
 		);
-	},
-	moveSelectionLeft: function() {
-		var n = Math.max(0, this.state.selection - 1);
-		publish("SelectSearchResult", n);
-	},
-	moveSelectionRight: function() {
-		var n = Math.min(this.state.results.length - 1, this.state.selection + 1);
-		publish("SelectSearchResult", n);
 	},
 	domResults: function() {
 		var results = [];

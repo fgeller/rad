@@ -110,17 +110,48 @@ var el = React.createElement;
 
 var Menu = React.createClass({
 	displayName: "Menu",
+	showAbout: function() {
+		var about = document.getElementById("dialog-about");
+		about.showModal();
+	},
 	render: function() {
 		return (
 			el("div", {id: "menu"},
-				el("button", {id:"menu-button", className:"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"},
-					el("i", {className:"material-icons"}, "more_vert")
-				),
-				el("ul", {className:"mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect", htmlFor:"menu-button"},
-					el("li", {className: "mdl-menu__item"}, "Help"),
-					el("li", {className: "mdl-menu__item"}, "Packages"),
-					el("li", {className: "mdl-menu__item"}, "Settings")
-				)
+				 el("button", {id:"menu-button", className:"mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"},
+						el("i", {className:"material-icons"}, "more_vert")
+				 ),
+				 el("ul", {className:"mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect", htmlFor:"menu-button"},
+						el("li", {className: "mdl-menu__item"}, "Help"),
+						el("li", {className: "mdl-menu__item"}, "Packages"),
+						el("li", {className: "mdl-menu__item"}, "Settings"),
+						el("li", {className: "mdl-menu__item", onClick: this.showAbout.bind(this)}, "About")
+				 ),
+				 el(About, {})
+			)
+		);
+	}
+});
+
+var About = React.createClass({
+	displayName: "About",
+	close: function() {
+		var about = document.getElementById("dialog-about");
+		about.close();
+	},
+	render: function() {
+		return (
+			el("dialog", {className: "mdl-dialog", id: "dialog-about"},
+				 el("h4", {className: "mdl-dialog__title"}, "About"),
+				 el("div", {className: "mdl-dialog__content"},
+						el("p", {},
+							 "More information at ",
+							 el("a", {href:"https://github.com/fgeller/rad"}, "github.com/fgeller/rad")
+						),
+						el("p", {}, "Build version: TODO")
+				 ),
+				 el("div", {className: "mdl-dialog__actions"},
+						el("button", {className: "mdl-button close", type: "button", onClick:this.close.bind(this)}, "Dismiss")
+				 )
 			)
 		);
 	}

@@ -10,10 +10,10 @@ var SettingsDefaults = {
 function urlParams() {
 	var urlParams = {};
 	var match,
-		pl     = /\+/g,  // Regex for replacing addition symbol with a space
-		search = /([^&=]+)=?([^&]*)/g,
-		decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-		query  = window.location.search.substring(1);
+			pl     = /\+/g,  // Regex for replacing addition symbol with a space
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query  = window.location.search.substring(1);
 
 	while (match = search.exec(query)) {
 		urlParams[decode(match[1])] = decode(match[2]);
@@ -41,15 +41,15 @@ function addHistory(name, value) {
 function guid() {
 	function s4() {
 		return Math.floor((1 + Math.random()) * 0x10000)
-			.toString(16)
-			.substring(1);
+							 .toString(16)
+							 .substring(1);
 	}
 	return (
 		s4() + s4() + '-' +
-			s4() + '-' +
-			s4() + '-' +
-			s4() + '-' +
-			s4() + s4() + s4()
+		s4() + '-' +
+		s4() + '-' +
+		s4() + '-' +
+		s4() + s4() + s4()
 	);
 }
 
@@ -162,9 +162,9 @@ var SearchButton = React.createClass({
 	render: function() {
 		return (
 			el("div", {},
-				el("label", {className: "mdl-button mdl-js-button mdl-button--icon", htmlFor: "search-field"},
-					el("i", {className: "material-icons"}, "search")
-				)
+				 el("label", {className: "mdl-button mdl-js-button mdl-button--icon", htmlFor: "search-field"},
+						el("i", {className: "material-icons"}, "search")
+				 )
 			)
 		);
 	}
@@ -230,20 +230,20 @@ var SearchField = React.createClass({
 	render: function() {
 		return (
 			el("div", {className:"mdl-textfield mdl-js-textfield mdl-textfield--floating-label"},
-				el("input", {
-					className: "mdl-textfield__input",
-					ref: "searchFieldInput",
-					type: "text",
-					id: "search-field",
-					onChange: this.search.bind(this)
-				}),
-				el("label", {className:"mdl-textfield__label", htmlFor: "search-field"},
-					el("span", {id: "search-label-pack"}, "pack"),
-					" ",
-					el("span", {id: "search-label-path"}, "path"),
-					" ",
-					el("span", {id: "search-label-member"}, "member")
-				)
+				 el("input", {
+					 className: "mdl-textfield__input",
+					 ref: "searchFieldInput",
+					 type: "text",
+					 id: "search-field",
+					 onChange: this.search.bind(this)
+				 }),
+				 el("label", {className:"mdl-textfield__label", htmlFor: "search-field"},
+						el("span", {id: "search-label-pack"}, "pack"),
+						" ",
+						el("span", {id: "search-label-path"}, "path"),
+						" ",
+						el("span", {id: "search-label-member"}, "member")
+				 )
 			)
 		);
 	}
@@ -254,9 +254,9 @@ var SearchBar = React.createClass({
 	render: function() {
 		return (
 			el("div", {id: "search-fields"},
-				el(Menu, {}),
-				el(SearchField, {}),
-				el(SearchButton, {})
+				 el(Menu, {}),
+				 el(SearchField, {}),
+				 el(SearchButton, {})
 			)
 		);
 	}
@@ -286,8 +286,8 @@ var SearchResult = React.createClass({
 		var cn = this.props.selected ? "is-selected" : "";
 		return (
 			el("tr", {id:"search-result-"+this.props.index, className: cn, onClick: this.select.bind(this)},
-				el("td", {className: "mdl-data-table__cell--non-numeric"}, this.props.member),
-				el("td", {className: "mdl-data-table__cell--non-numeric"}, this.props.path)
+				 el("td", {className: "mdl-data-table__cell--non-numeric"}, this.props.member),
+				 el("td", {className: "mdl-data-table__cell--non-numeric"}, this.props.path)
 			)
 		);
 	}
@@ -362,9 +362,9 @@ var SearchResults = React.createClass({
 		var d = this.state.results.length == 0 ? "none" : "block";
 		return (
 			el("div", {id: "search-results", style: {display: d}},
-				el("table", {className:"mdl-data-table mdl-js-data-table"},
-					el("tbody", {}, this.domResults())
-				)
+				 el("table", {className:"mdl-data-table mdl-js-data-table"},
+						el("tbody", {}, this.domResults())
+				 )
 			)
 		);
 	}
@@ -375,8 +375,8 @@ var Search = React.createClass({
 	render: function() {
 		return (
 			el("div", {id: "search"},
-				el(SearchBar, {}),
-				el(SearchResults, {})
+				 el(SearchBar, {}),
+				 el(SearchResults, {})
 			)
 		);
 	}
@@ -387,7 +387,7 @@ var DocumentationFrame = React.createClass({
 	render: function() {
 		return (
 			el("div", {id: "doc-container"},
-				el("iframe", {id: "ifrm"})
+				 el("iframe", {id: "ifrm"})
 			)
 		);
 	}
@@ -401,8 +401,8 @@ var Rad = React.createClass({
 	render: function() {
 		return (
 			el("div", {},
-				el(Search, {}),
-				el(DocumentationFrame, {})
+				 el(Search, {}),
+				 el(DocumentationFrame, {})
 			)
 		);
 	}

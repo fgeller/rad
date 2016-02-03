@@ -120,8 +120,9 @@ var Menu = React.createClass({
 		};
 	},
 	updateStatus: function(ev) {
-		var installed = ev.detail.Packs.Installed.map(function(p) { return {name: p.Name, installed: !p.Installing}});
-		var available = ev.detail.Packs.Available.map(function(p) { return {name: p.Name, installed: false}});
+		console.log(ev.detail);
+		var installed = ev.detail.Packs.Installed.map(function(p) { return {name: p.Name, installed: !p.Installing, count: p.NameCount}});
+		var available = ev.detail.Packs.Available.map(function(p) { return {name: p.Name, installed: false, count: p.NameCount}});
 		this.setState({
 			version: ev.detail.Version,
 			packs: installed.concat(available)
@@ -167,13 +168,14 @@ var Pack = React.createClass({
 		if (this.props.installed) {
 		}
 		return (
-			el("li", {className: "mdl-list__item mdl-list__item"},
+			el("li", {className: "mdl-list__item mdl-list__item--two-line"},
 				 el("span", {className: "mdl-list__item-primary-content"},
 						el("i", {className: "material-icons mdl-list__item-avatar"}, "info"),
-						this.props.name
+						el("span", {className: "mdl-list__item-text"}, this.props.name),
+						el("span", {className: "mdl-list__item-sub-title"}, this.props.count + " entries")
 				 ),
-				 el("span", {className: "mdl-list__item-secondary-action"},
-						el("label", {className: "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", htmlFor:checkBoxId},
+				 el("span", {className: "mdl-list__item-secondary-content"},
+						el("label", {className: "mdl-list__item-secondary-action mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", htmlFor:checkBoxId},
 							 el("input", checkBoxOptions)
 						)
 				 )

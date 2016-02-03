@@ -151,3 +151,7 @@ body {
 i.material-icons {
 		display: inline;
 }
+
+.mdl-list__item--two-line .mdl-list__item-primary-content .mdl-list__item-sub-title {
+		padding-left: 53px;
+}

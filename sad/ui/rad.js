@@ -82,7 +82,6 @@ function socket() {
 }
 
 key('/', function(event) {
-	console.log("setting search-field focus");
 	document.getElementById("search-field").focus();
 	event.cancelBubble = true;
 	return false;
@@ -114,6 +113,33 @@ var Menu = React.createClass({
 		var about = document.getElementById("dialog-about");
 		about.showModal();
 	},
+	getInitialState: function() {
+		return {
+			version: "Loading...",
+			packs: []
+		};
+	},
+	updateStatus: function(ev) {
+		var installed = ev.detail.Packs.Installed.map(function(p) { return {name: p.Name, installed: !p.Installing}});
+		var available = ev.detail.Packs.Available.map(function(p) { return {name: p.Name, installed: false}});
+		this.setState({
+			version: ev.detail.Version,
+			packs: installed.concat(available)
+		});
+	},
+	componentDidMount: function() {
+		document.addEventListener("Status", this.updateStatus.bind(this));
+		get("/status", function(resp) {
+			publish("Status", resp);
+		});
+	},
+	componentWillUnmount: function() {
+		document.removeEventListener("Status", this.updateStatus.bind(this));
+	},
+	showPacks: function() {
+		var packs = document.getElementById("dialog-packs");
+		packs.showModal();
+	},
 	render: function() {
 		return (
 			el("div", {id: "menu"},
@@ -122,11 +148,65 @@ var Menu = React.createClass({
 				 ),
 				 el("ul", {className:"mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect", htmlFor:"menu-button"},
 						el("li", {className: "mdl-menu__item"}, "Help"),
-						el("li", {className: "mdl-menu__item"}, "Packages"),
+						el("li", {className: "mdl-menu__item", onClick: this.showPacks.bind(this)}, "Packs"),
 						el("li", {className: "mdl-menu__item"}, "Settings"),
 						el("li", {className: "mdl-menu__item", onClick: this.showAbout.bind(this)}, "About")
 				 ),
-				 el(About, {})
+				 el(Packs, {packs: this.state.packs}),
+				 el(About, {version: this.state.version})
+			)
+		);
+	}
+});
+
+var Pack = React.createClass({
+	displayName: "Pack",
+	render: function() {
+		var checkBoxId = "pack-checkbox-"+this.props.idx;
+		var checkBoxOptions = {className: "mdl-checkbox__input", type:"checkbox", id:checkBoxId};
+		if (this.props.installed) {
+		}
+		return (
+			el("li", {className: "mdl-list__item mdl-list__item"},
+				 el("span", {className: "mdl-list__item-primary-content"},
+						el("i", {className: "material-icons mdl-list__item-avatar"}, "info"),
+						this.props.name
+				 ),
+				 el("span", {className: "mdl-list__item-secondary-action"},
+						el("label", {className: "mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", htmlFor:checkBoxId},
+							 el("input", checkBoxOptions)
+						)
+				 )
+			)
+		);
+	}
+});
+
+var Packs = React.createClass({
+	displayName: "Packs",
+	close: function() {
+		var packs = document.getElementById("dialog-packs");
+		packs.close();
+	},
+	render: function() {
+		var packs = [];
+		for (var i = 0; i < this.props.packs.length; i++) {
+			var p = this.props.packs[i];
+			p.idx = i;
+			packs.push(el(Pack, p));
+		}
+
+		return (
+			el("dialog", {className: "mdl-dialog", id: "dialog-packs"},
+				 el("h4", {className: "mdl-dialog__title"}, "Packs"),
+				 el("div", {className: "mdl-dialog__content"},
+						el("div", {},
+							 el("ul", {className: "mdl-list"}, packs)
+						)
+				 ),
+				 el("div", {className: "mdl-dialog__actions"},
+						el("button", {className: "mdl-button close", type: "button", onClick:this.close.bind(this)}, "Dismiss")
+				 )
 			)
 		);
 	}
@@ -147,7 +227,7 @@ var About = React.createClass({
 							 "More information at ",
 							 el("a", {href:"https://github.com/fgeller/rad"}, "github.com/fgeller/rad")
 						),
-						el("p", {}, "Build version: TODO")
+						el("p", {}, "Build version: "+this.props.version)
 				 ),
 				 el("div", {className: "mdl-dialog__actions"},
 						el("button", {className: "mdl-button close", type: "button", onClick:this.close.bind(this)}, "Dismiss")

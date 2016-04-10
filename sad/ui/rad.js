@@ -416,8 +416,7 @@ var loadDoc = function (target) {
 
 var loadDocDelayed = (function() {
 	var timer = 0;
-	var delay = 1000;
-	return function(target) {
+	return function(delay, target) {
 		clearTimeout(timer);
 		timer = setTimeout(function () { loadDoc(target); }, delay);
 	};
@@ -427,10 +426,13 @@ var SearchResult = React.createClass({
 	displayName: "SearchResult",
 	componentDidMount: function() {
 		if (this.props.selected) {
-			loadDocDelayed(this.props.target);
+			loadDocDelayed(1000, this.props.target);
 		}
 	},
 	componentDidUpdate: function() {
+		if (this.props.selected) {
+			loadDocDelayed(300, this.props.target);
+		}
 		componentHandler.upgradeDom();
 	},
 	select: function (e) {

@@ -120,7 +120,6 @@ var Menu = React.createClass({
 	},
 	updateStatus: function(ev) {
 		var packs = ev.detail.Packs;
-		console.debug("status packs", packs);
 		var installed = packs.Installed.map(
 			function(p) {
 				return {
@@ -258,7 +257,6 @@ var Pack = React.createClass({
 			id:checkBoxId,
 			onClick: this.toggleInstall.bind(this)
 		};
-		console.log("re-rendering pack info");
 		if (this.state.installed) {
 			checkBoxOptions.checked = "checked";
 		}

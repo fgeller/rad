@@ -409,25 +409,35 @@ var SearchBar = React.createClass({
 	}
 });
 
+var loadDoc = function (target) {
+	var ifrm = document.getElementById("ifrm");
+	if (ifrm.src != target) {
+		ifrm.src = target;
+	}
+}
+
+var loadDocDelayed = (function() {
+	var timer = 0;
+	var delay = 1000;
+	return function(target) {
+		clearTimeout(timer);
+		timer = setTimeout(function () { loadDoc(target); }, delay);
+	};
+})();
+
 var SearchResult = React.createClass({
 	displayName: "SearchResult",
 	componentDidMount: function() {
 		if (this.props.selected) {
-			this.loadDocumentation();
+			loadDocDelayed(this.props.target);
 		}
 	},
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
 	},
 	select: function (e) {
-		this.loadDocumentation();
+		loadDoc(this.props.target);
 		publish("SelectSearchResult", this.props.index);
-	},
-	loadDocumentation: function () { // TODO maybe debounce this guy.
-		var ifrm = document.getElementById("ifrm");
-		if (ifrm.src != this.props.target) {
-			ifrm.src = this.props.target;
-		}
 	},
 	render: function() {
 		var cn = this.props.selected ? "is-selected" : "";

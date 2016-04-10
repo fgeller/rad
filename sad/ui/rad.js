@@ -53,18 +53,17 @@ function guid() {
 	);
 }
 
-function get(path, success) {
+function get(path, success, error) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.responseType = "json";
 	xhttp.onreadystatechange = function() {
-		if (xhttp.readyState == 4 && xhttp.status == 200) {
-			if (xhttp.status == 200) {
+		if (xhttp.readyState == 4) {
+			if (Math.round(xhttp.status/100) == 2) {
 				return success(xhttp.response);
 			}
 
-			console.log("Failed to react to non-200 xhttp:", xhttp);
+			error && error(xhttp.response);
 		}
-
 	};
 	xhttp.open("GET", path, true);
 	xhttp.send();
@@ -120,9 +119,29 @@ var Menu = React.createClass({
 		};
 	},
 	updateStatus: function(ev) {
-		console.log(ev.detail);
-		var installed = ev.detail.Packs.Installed.map(function(p) { return {name: p.Name, installed: !p.Installing, count: p.NameCount}});
-		var available = ev.detail.Packs.Available.map(function(p) { return {name: p.Name, installed: false, count: p.NameCount}});
+		var packs = ev.detail.Packs;
+		console.debug("status packs", packs);
+		var installed = packs.Installed.map(
+			function(p) {
+				return {
+					name: p.Name,
+					installed: !p.Installing,
+					count: p.NameCount
+				}
+			}
+		);
+		var available = packs.Available.map(
+			function(p) {
+				return {
+					name: p.Name,
+					file: p.File,
+					installed: false,
+					count: p.NameCount
+				}
+			}
+		);
+		console.log("INSTALLED", packs.Installed)
+
 		this.setState({
 			version: ev.detail.Version,
 			packs: installed.concat(available)
@@ -131,6 +150,7 @@ var Menu = React.createClass({
 	componentDidMount: function() {
 		document.addEventListener("Status", this.updateStatus.bind(this));
 		get("/status", function(resp) {
+			console.log("RESP", resp);
 			publish("Status", resp);
 		});
 	},
@@ -160,41 +180,21 @@ var Menu = React.createClass({
 	}
 });
 
-var Pack = React.createClass({
-	displayName: "Pack",
-	render: function() {
-		var checkBoxId = "pack-checkbox-"+this.props.idx;
-		var checkBoxOptions = {className: "mdl-checkbox__input", type:"checkbox", id:checkBoxId};
-		if (this.props.installed) {
-		}
-		return (
-			el("li", {className: "mdl-list__item mdl-list__item--two-line"},
-				 el("span", {className: "mdl-list__item-primary-content"},
-						el("i", {className: "material-icons mdl-list__item-avatar"}, "info"),
-						el("span", {className: "mdl-list__item-text"}, this.props.name),
-						el("span", {className: "mdl-list__item-sub-title"}, this.props.count + " entries")
-				 ),
-				 el("span", {className: "mdl-list__item-secondary-content"},
-						el("label", {className: "mdl-list__item-secondary-action mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", htmlFor:checkBoxId},
-							 el("input", checkBoxOptions)
-						)
-				 )
-			)
-		);
-	}
-});
-
 var Packs = React.createClass({
 	displayName: "Packs",
 	close: function() {
 		var packs = document.getElementById("dialog-packs");
 		packs.close();
 	},
+	componentDidUpdate: function() {
+		componentHandler.upgradeDom();
+	},
 	render: function() {
 		var packs = [];
 		for (var i = 0; i < this.props.packs.length; i++) {
 			var p = this.props.packs[i];
 			p.idx = i;
+			console.log("PUSHING P", p, this.props.packs)
 			packs.push(el(Pack, p));
 		}
 
@@ -208,6 +208,75 @@ var Packs = React.createClass({
 				 ),
 				 el("div", {className: "mdl-dialog__actions"},
 						el("button", {className: "mdl-button close", type: "button", onClick:this.close.bind(this)}, "Dismiss")
+				 )
+			)
+		);
+	}
+});
+
+var warn = function(msg) {
+	alert(msg);
+};
+
+var Pack = React.createClass({
+	displayName: "Pack",
+	install: function() {
+		get(
+			"/install/"+this.props.file,
+			function () {this.setState({installed: true});}.bind(this),
+			function () { warn("Failed to install package.");}.bind(this)
+		);
+	},
+	remove: function () {
+		get(
+			"/remove/"+this.props.name,
+			function () {
+				console.log("setting installed: false for", this);
+				document.getElementById("pack-checkbox-label-"+this.props.idx).MaterialCheckbox.uncheck();
+				this.setState({installed: false});
+			}.bind(this),
+			function () {
+				console.log("remove failed for some reason", arguments);
+			}.bind(this)
+		);
+	},
+	toggleInstall: function() {
+		console.log("Pack props", this.props);
+		if (this.state.installed) {
+			return this.remove();
+		}
+		return this.install();
+	},
+	getInitialState: function () {
+		return {
+			installed: this.props.installed
+		};
+	},
+	render: function() {
+		var checkBoxId = "pack-checkbox-"+this.props.idx;
+		var checkBoxLabelId = "pack-checkbox-label-"+this.props.idx;
+		var checkBoxOptions = {
+			className: "mdl-checkbox__input",
+			type:"checkbox",
+			id:checkBoxId,
+			onClick: this.toggleInstall.bind(this)
+		};
+		console.log("re-rendering pack info");
+		if (this.state.installed) {
+			checkBoxOptions.checked = "checked";
+			console.log("set checkbox option to checked", checkBoxOptions);
+		}
+		return (
+			el("li", {className: "mdl-list__item mdl-list__item--two-line"},
+				 el("span", {className: "mdl-list__item-primary-content"},
+						el("i", {className: "material-icons mdl-list__item-avatar"}, "info"),
+						el("span", {className: "mdl-list__item-text"}, this.props.name),
+						el("span", {className: "mdl-list__item-sub-title"}, this.props.count + " entries")
+				 ),
+				 el("span", {className: "mdl-list__item-secondary-content"},
+						el("label", {id: checkBoxLabelId, className: "mdl-list__item-secondary-action mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect", htmlFor:checkBoxId},
+							 el("input", checkBoxOptions)
+						)
 				 )
 			)
 		);

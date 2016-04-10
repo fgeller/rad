@@ -140,7 +140,6 @@ var Menu = React.createClass({
 				}
 			}
 		);
-		console.log("INSTALLED", packs.Installed)
 
 		this.setState({
 			version: ev.detail.Version,
@@ -150,7 +149,6 @@ var Menu = React.createClass({
 	componentDidMount: function() {
 		document.addEventListener("Status", this.updateStatus.bind(this));
 		get("/status", function(resp) {
-			console.log("RESP", resp);
 			publish("Status", resp);
 		});
 	},
@@ -194,7 +192,6 @@ var Packs = React.createClass({
 		for (var i = 0; i < this.props.packs.length; i++) {
 			var p = this.props.packs[i];
 			p.idx = i;
-			console.log("PUSHING P", p, this.props.packs)
 			packs.push(el(Pack, p));
 		}
 
@@ -264,7 +261,6 @@ var Pack = React.createClass({
 		console.log("re-rendering pack info");
 		if (this.state.installed) {
 			checkBoxOptions.checked = "checked";
-			console.log("set checkbox option to checked", checkBoxOptions);
 		}
 		return (
 			el("li", {className: "mdl-list__item mdl-list__item--two-line"},

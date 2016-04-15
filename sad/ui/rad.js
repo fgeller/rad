@@ -140,9 +140,14 @@ var Menu = React.createClass({
 			}
 		);
 
+		var notInstalled = function (a) {
+			return !(installed.find(function (i) { return i.name == a.name; }));
+		};
+		var filteredAvailable = available.filter(notInstalled);
+
 		this.setState({
 			version: ev.detail.Version,
-			packs: installed.concat(available)
+			packs: installed.concat(filteredAvailable)
 		});
 	},
 	componentDidMount: function() {

@@ -69,10 +69,10 @@ function get(path, success, error) {
 	xhttp.send();
 }
 
-function socket() {
+function socket(path) {
 	var host = window.location.hostname;
 	var port = window.location.port;
-	var conn = new WebSocket("ws://"+host+":"+port+"/s");
+	var conn = new WebSocket("ws://"+host+":"+port+"/"+path);
 	conn.onopen = function () { console.log("WebSocket open.") }
 	conn.onerror = function (err) { console.log("WebSocket error", err) }
 	conn.onmessage = function (msg) { console.log("Got message", msg) }
@@ -113,13 +113,10 @@ var Menu = React.createClass({
 		about.showModal();
 	},
 	getInitialState: function() {
-		return {
-			version: "Loading...",
-			packs: []
-		};
+		return {version: "Loading...", packs: []};
 	},
-	updateStatus: function(ev) {
-		var packs = ev.detail.Packs;
+	updateStatus: function(info) {
+		var packs = info.Packs;
 		var installed = packs.Installed.map(
 			function(p) {
 				return {
@@ -146,18 +143,42 @@ var Menu = React.createClass({
 		var filteredAvailable = available.filter(notInstalled);
 
 		this.setState({
-			version: ev.detail.Version,
+			version: info.Version,
 			packs: installed.concat(filteredAvailable)
 		});
 	},
+	dispatchControl: function (resp) {
+		if (resp.detail.Typ == "StatusResponse") {
+			return this.updateStatus(resp.detail.Data);
+		}
+
+		console.log("UNSUPPORTED CONTROL MESSAGE", resp);
+	},
 	componentDidMount: function() {
-		document.addEventListener("Status", this.updateStatus.bind(this));
-		get("/status", function(resp) {
-			publish("Status", resp);
-		});
+		if (this.state.sock) {
+			this.state.sock.close();
+		}
+
+		document.addEventListener("Control", this.dispatchControl.bind(this));
+
+		var sock = socket("c");
+		this.setState({sock: sock, version: "Loading...", packs: []});
+
+		sock.onmessage = function(msg) {
+			var entry = JSON.parse(msg.data);
+			publish("Control", entry);
+		}.bind(this);
+
+		sock.onopen = function() {
+			sock.send(JSON.stringify({Typ:"StatusRequest",Data:{}}));
+		}.bind(this);
+
+		sock.onclose = function() {
+			console.log("Control channel closed.", arguments);
+		}.bind(this);
 	},
 	componentWillUnmount: function() {
-		document.removeEventListener("Status", this.updateStatus.bind(this));
+		document.removeEventListener("Control", this.dispatchControl.bind(this));
 	},
 	showPacks: function() {
 		var packs = document.getElementById("dialog-packs");
@@ -358,7 +379,7 @@ var SearchField = React.createClass({
 			this.state.sock.close();
 		}
 
-		var sock = socket();
+		var sock = socket("s");
 		this.setState({sock: sock, results: []});
 		publish("SearchResults", []);
 

@@ -21,6 +21,16 @@ import (
 
 var upgrader = websocket.Upgrader{}
 
+type controlRequest struct {
+	Typ  string
+	Data interface{}
+}
+
+type controlResponse struct {
+	Typ  string
+	Data interface{}
+}
+
 type searchRequest struct {
 	Pack   string
 	Path   string
@@ -120,9 +130,28 @@ func availablePacks() []shared.Pack {
 	return availablePacks
 }
 
-func status(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Got status request for %v\n", r.URL.Path)
+func dispatchControl(sock *websocket.Conn) {
+	var req controlRequest
+	defer sock.Close()
 
+	for {
+		err := sock.ReadJSON(&req)
+		if err != nil {
+			log.Printf("Closing control socket. err=%v", err)
+			return
+		}
+		log.Printf("Received control request %v\n", req)
+
+		switch req.Typ {
+		case "StatusRequest":
+			go streamStatus(sock)
+		default:
+			log.Printf("UNKNOWN REQUEST TYPE %v", req.Typ)
+		}
+	}
+}
+
+func streamStatus(sock *websocket.Conn) {
 	installed := installedPacks()
 	filteredInstalled := []shared.Pack{}
 	available := availablePacks()
@@ -146,16 +175,30 @@ loopinstalled:
 		Version: global.buildVersion,
 	}
 
-	js, err := json.Marshal(info)
+	err := sock.WriteJSON(controlResponse{Typ: "StatusResponse", Data: info})
 	if err != nil {
-		log.Printf("Failed to marshal err: %v\n", err)
-		http.Error(w, err.Error(), 500)
+		log.Printf("Error while writing status info: %v\n", err)
+		return
+	}
+}
+
+func controlSocket(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/c" {
+		http.Error(w, "Not found", 404)
+		return
+	}
+	if r.Method != "GET" {
+		http.Error(w, "Method not allowed", 405)
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
-	return
+	c, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Printf("Error while upgrading request: %v\n", err)
+		return
+	}
+
+	go dispatchControl(c)
 }
 
 func query(w http.ResponseWriter, r *http.Request) {
@@ -224,7 +267,7 @@ func searchResults(params searchParams, limit int) []searchResult {
 	}
 }
 
-func socket(w http.ResponseWriter, r *http.Request) {
+func searchSocket(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/s" {
 		http.Error(w, "Not found", 404)
 		return
@@ -387,10 +430,8 @@ func (r root) Open(n string) (http.File, error) {
 func serve(addr string) {
 	http.HandleFunc("/ping/", pingHandler)
 	http.HandleFunc("/q", query)
-	http.HandleFunc("/s", socket)
-	http.HandleFunc("/status", status)
-	http.HandleFunc("/install/", installHandler)
-	http.HandleFunc("/remove/", removeHandler)
+	http.HandleFunc("/s", searchSocket)
+	http.HandleFunc("/c", controlSocket)
 	http.HandleFunc("/a/", assetHandler)
 	if config.devMode {
 		log.Printf("Serving assets from ui folder.\n")

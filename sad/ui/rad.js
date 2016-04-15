@@ -372,6 +372,17 @@ var SearchField = React.createClass({
 			console.log("Finished request, found " + this.state.results.length + " results, params:", ps);
 		}.bind(this);
 	},
+	componentWillMount: function() {
+		this.delayedSearch = (function () {
+			var timer = 0;
+			var delay = 140;
+			return function () {
+				clearTimeout(timer);
+				timer = setTimeout(function () { this.search(); }.bind(this), delay);
+			}
+		})();
+		console.log("installed delayed search.");
+	},
 	render: function() {
 		return (
 			el("div", {className:"mdl-textfield mdl-js-textfield mdl-textfield--floating-label"},
@@ -380,7 +391,7 @@ var SearchField = React.createClass({
 					 ref: "searchFieldInput",
 					 type: "text",
 					 id: "search-field",
-					 onChange: this.search.bind(this)
+					 onChange: this.delayedSearch.bind(this)
 				 }),
 				 el("label", {className:"mdl-textfield__label", htmlFor: "search-field"},
 						el("span", {id: "search-label-pack"}, "pack"),

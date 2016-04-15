@@ -434,9 +434,20 @@ var SearchResult = React.createClass({
 	componentDidUpdate: function() {
 		componentHandler.upgradeDom();
 	},
-	select: function (e) {
+	maybeSelect: function (ev) {
+		if (ev.detail == this.props.index) {
+			this.select();
+		}
+	},
+	componentDidMount: function () {
+		document.addEventListener("SelectSearchResult", this.maybeSelect.bind(this));
+	},
+	componentWillUnmount: function () {
+		document.removeEventListener("SelectSearchResult", this.maybeSelect.bind(this));
+	},
+	select: function () {
 		loadDoc(this.props.target);
-		publish("SelectSearchResult", this.props.index);
+		publish("MarkSearchResult", this.props.index);
 	},
 	render: function() {
 		var cn = this.props.selected ? "is-selected" : "";
@@ -464,15 +475,22 @@ var SearchResults = React.createClass({
 	},
 	moveSelectionUp: function() {
 		var n = Math.max(0, this.state.selection - 1);
-		publish("SelectSearchResult", n);
+		publish("MarkSearchResult", n);
 	},
 	moveSelectionDown: function() {
 		var n = Math.min(this.state.results.length - 1, this.state.selection + 1);
-		publish("SelectSearchResult", n);
+		publish("MarkSearchResult", n);
 	},
 	componentDidMount: function () {
 		document.addEventListener("SearchResults", this.updateResults.bind(this));
-		document.addEventListener("SelectSearchResult", this.updateSelection.bind(this));
+		document.addEventListener("MarkSearchResult", this.updateSelection.bind(this));
+
+		key.unbind('return');
+		key('return', function(event) {
+			publish("SelectSearchResult", this.state.selection);
+			event.cancelBubble = true;
+			return false;
+		}.bind(this));
 
 		key.unbind('down');
 		key('down', function(event) {
@@ -493,7 +511,7 @@ var SearchResults = React.createClass({
 	},
 	componentWillUnmount: function () {
 		document.removeEventListener("SearchResults", this.updateResults.bind(this));
-		document.removeEventListener("SelectSearchResult", this.updateSelection.bind(this));
+		document.removeEventListener("MarkSearchResult", this.updateSelection.bind(this));
 	},
 	instantiateSearchResult: function(index, data) {
 		return (

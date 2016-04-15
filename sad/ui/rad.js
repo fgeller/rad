@@ -172,7 +172,6 @@ var Menu = React.createClass({
 				 el("ul", {className:"mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect", htmlFor:"menu-button"},
 						el("li", {className: "mdl-menu__item"}, "Help"),
 						el("li", {className: "mdl-menu__item", onClick: this.showPacks.bind(this)}, "Packs"),
-						el("li", {className: "mdl-menu__item"}, "Settings"),
 						el("li", {className: "mdl-menu__item", onClick: this.showAbout.bind(this)}, "About")
 				 ),
 				 el(Packs, {packs: this.state.packs}),

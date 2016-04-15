@@ -385,7 +385,6 @@ var SearchField = React.createClass({
 				timer = setTimeout(function () { this.search(); }.bind(this), delay);
 			}
 		})();
-		console.log("installed delayed search.");
 	},
 	render: function() {
 		return (

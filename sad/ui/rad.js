@@ -525,8 +525,25 @@ var SearchResults = React.createClass({
 	},
 	domResults: function() {
 		var results = [];
-		for (var i = 0; i < this.state.results.length; i++) {
-			var r = this.state.results[i];
+		var comparer = function(a, b) {
+			if (a.Member.length < b.Member.length) {
+				return -1;
+			}
+			if (b.Member.length > b.Member.length) {
+				return 1;
+			}
+			if (a.Member < b.Member) {
+				return -1;
+			}
+			if (b.Member < a.Member) {
+				return 1;
+			}
+
+			return 0;
+		};
+		var sortedResults = this.state.results.sort(comparer);
+		for (var i = 0; i < sortedResults.length; i++) {
+			var r = sortedResults[i];
 			results.push(this.instantiateSearchResult(i, r));
 		}
 		return results;
